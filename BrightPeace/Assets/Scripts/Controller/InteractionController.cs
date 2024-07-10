@@ -7,7 +7,6 @@ public class InteractionController : MonoBehaviour
 {
     [SerializeField]
     private float range;                //  상호작용 거리
-    private bool activated = false;     //  상호작용 여부
     private RaycastHit hitInfo;         //  충돌체 정보
 
     [SerializeField] private LayerMask layerMask;
@@ -15,7 +14,6 @@ public class InteractionController : MonoBehaviour
     void Update()
     {
         CheckInteraction();
-        PickupAction();
     }
 
     void CheckInteraction()
@@ -30,7 +28,6 @@ public class InteractionController : MonoBehaviour
             if(hitInfo.transform.tag == "Door")
             {
                 DoorInfoAppear();
-
             }
 
         }
@@ -42,20 +39,18 @@ public class InteractionController : MonoBehaviour
 
     void ItemInfoAppear()
     {
-        activated = true;
         actionText.gameObject.SetActive(true);
         actionText.text = hitInfo.transform.GetComponent<Item>().itemData.itemName + "Get " + "<color=yellow>" + "E Key" + "</color>";
+        PickupAction();
     }
 
     void DoorInfoAppear()
     {
-        activated = true;
         actionText.gameObject.SetActive(true);
-        actionText.text = "Get " + "<color=yellow>"+ "E Key" + "</color>";
+        actionText.text = "Open door " + "<color=yellow>"+ "E Key" + "</color>";
     }
     void InfoDisapper()
     {
-        activated = false;
         actionText.gameObject.SetActive(false);
     }
 
@@ -63,17 +58,11 @@ public class InteractionController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("2");
-            if (activated)
+            if (hitInfo.transform != null)
             {
-                Debug.Log("3");
-                if (hitInfo.transform != null)
-                {
-                    Debug.Log("4");
-                    Debug.Log(hitInfo.transform.GetComponent<Item>().itemData.itemName + " 획득했습니다.");
-                    Destroy(hitInfo.transform.gameObject);
-                    InfoDisapper();
-                }
+                Debug.Log(hitInfo.transform.GetComponent<Item>().itemData.itemName + " 획득했습니다.");
+                Destroy(hitInfo.transform.gameObject);
+                InfoDisapper();
             }
         }
     }
