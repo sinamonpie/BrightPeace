@@ -9,6 +9,7 @@ public class InteractionController : MonoBehaviour
     [SerializeField]
     private float range;                //  상호작용 거리
     private RaycastHit hitInfo;         //  충돌체 정보
+    private Ray ray;
 
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private TMP_Text actionText;
@@ -23,7 +24,9 @@ public class InteractionController : MonoBehaviour
 
     void CheckInteraction()
     {
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hitInfo, range, layerMask))
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hitInfo, range, layerMask))
         {
 
             if (hitInfo.transform.tag == "Item")
