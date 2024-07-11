@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,6 +13,9 @@ public class InteractionController : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private TMP_Text actionText;
     [SerializeField] private Inventory inventory;
+
+    DoorController doorController;
+
     void Update()
     {
         CheckInteraction();
@@ -21,7 +25,8 @@ public class InteractionController : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hitInfo, range, layerMask))
         {
-            if(hitInfo.transform.tag == "Item")
+
+            if (hitInfo.transform.tag == "Item")
             {
                 ItemInfoAppear();
             }
@@ -49,6 +54,7 @@ public class InteractionController : MonoBehaviour
     {
         actionText.gameObject.SetActive(true);
         actionText.text = "Open door " + "<color=yellow>"+ "E Key" + "</color>";
+        DoorAction();
     }
     void InfoDisapper()
     {
@@ -64,6 +70,19 @@ public class InteractionController : MonoBehaviour
                 Debug.Log(hitInfo.transform.GetComponent<Item>().itemData.itemName + " »πµÊ«ﬂΩ¿¥œ¥Ÿ.");
 /*                inventory.GetItem(hitInfo.transform.GetComponent<Item>().itemData);*/
                 Destroy(hitInfo.transform.gameObject);
+                InfoDisapper();
+            }
+        }
+    }
+
+    void DoorAction()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (hitInfo.transform != null)
+            {
+                hitInfo.transform.GetComponent<DoorController>().DoorControl();
+                Debug.Log(hitInfo);
                 InfoDisapper();
             }
         }
