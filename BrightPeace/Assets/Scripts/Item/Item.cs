@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] public ItemData itemData;
+    public ItemData itemData;
 
     public virtual void UseItem()
     {
-        //  일회성
+        Destroy(gameObject);
         //  사용 효과 재정의
     }
 }

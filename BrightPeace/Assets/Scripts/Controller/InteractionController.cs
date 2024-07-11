@@ -11,6 +11,7 @@ public class InteractionController : MonoBehaviour
 
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private TMP_Text actionText;
+    [SerializeField] private Inventory inventory;
     void Update()
     {
         CheckInteraction();
@@ -40,7 +41,7 @@ public class InteractionController : MonoBehaviour
     void ItemInfoAppear()
     {
         actionText.gameObject.SetActive(true);
-        actionText.text = hitInfo.transform.GetComponent<Item>().itemData.itemName + "Get " + "<color=yellow>" + "E Key" + "</color>";
+        actionText.text = hitInfo.transform.GetComponent<Item>().itemData.itemName + " Get " + "<color=yellow>" + "E Key" + "</color>";
         PickupAction();
     }
 
@@ -61,6 +62,7 @@ public class InteractionController : MonoBehaviour
             if (hitInfo.transform != null)
             {
                 Debug.Log(hitInfo.transform.GetComponent<Item>().itemData.itemName + " »πµÊ«ﬂΩ¿¥œ¥Ÿ.");
+/*                inventory.GetItem(hitInfo.transform.GetComponent<Item>().itemData);*/
                 Destroy(hitInfo.transform.gameObject);
                 InfoDisapper();
             }
