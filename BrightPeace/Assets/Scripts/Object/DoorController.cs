@@ -9,6 +9,8 @@ public class DoorController : MonoBehaviour
 
     public GameObject pivot = null;
 
+    public bool useAble = true;
+
     private float doorAngle = 90;
 
     private void Start()
@@ -22,15 +24,22 @@ public class DoorController : MonoBehaviour
 
     public void DoorControl()
     {
-        if (DoorRotation)
+        if(useAble)
         {
-            // 일반 문
-            UseDoor(pivot, -doorAngle);
+            if (DoorRotation)
+            {
+                // 일반 문
+                UseDoor(pivot, -doorAngle);
+            }
+            else
+            {
+                // 피벗없는 문
+                UseDoor(pivot, doorAngle);
+            }
         }
         else
         {
-            // 피벗없는 문
-            UseDoor(pivot, doorAngle);
+
         }
     }
 
