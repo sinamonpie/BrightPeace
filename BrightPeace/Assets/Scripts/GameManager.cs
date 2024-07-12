@@ -32,6 +32,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void LoadLoginScene()
+    {
+        SceneManager.LoadSceneAsync(0);
+    }
+
     public void LoadLobbyScene()
     {
         SceneManager.LoadSceneAsync(1);
