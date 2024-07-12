@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class InteractionController : MonoBehaviour
+public class ActionController : MonoBehaviour
 {
     [SerializeField]
     private float range;                //  ��ȣ�ۿ� �Ÿ�
