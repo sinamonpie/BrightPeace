@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: MediKit
   m_EditorClassIdentifier: 
   itemName: MediKit
-  itemImage: {fileID: 21300000, guid: 70632ddfe8e71b04b8f90ef7e29a9e98, type: 3}
-  itemPrefab: {fileID: 1769630822085726160, guid: 86b8d4d19c04d7b44bf19737c725609b,
+  itemImage: {fileID: 21300000, guid: 5603bab5cf646074f93fb8dc4006f46f, type: 3}
+  itemPrefab: {fileID: 2905104776763244844, guid: 86b8d4d19c04d7b44bf19737c725609b,
     type: 3}

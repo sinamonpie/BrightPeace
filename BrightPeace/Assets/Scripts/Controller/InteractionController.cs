@@ -4,16 +4,20 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
+
 public class InteractionController : MonoBehaviour
 {
     [SerializeField]
-    private float range;                //  »óÈ£ÀÛ¿ë °Å¸®
-    private RaycastHit hitInfo;         //  Ãæµ¹Ã¼ Á¤º¸
+    private float range;                //  ï¿½ï¿½È£ï¿½Û¿ï¿½ ï¿½Å¸ï¿½
+    private RaycastHit hitInfo;         //  ï¿½æµ¹Ã¼ ï¿½ï¿½ï¿½ï¿½
     private Ray ray;
-
+    private bool isInvenFull;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private TMP_Text actionText;
-    [SerializeField] private Inventory inventory;
+
+    DoorController doorController;
+    public Inventory inventory;
 
     void Update()
     {
@@ -68,9 +72,16 @@ public class InteractionController : MonoBehaviour
         {
             if (hitInfo.transform != null)
             {
-                Debug.Log(hitInfo.transform.GetComponent<Item>().itemData.itemName + " È¹µæÇß½À´Ï´Ù.");
-/*                inventory.GetItem(hitInfo.transform.GetComponent<Item>().itemData);*/
-                Destroy(hitInfo.transform.gameObject);
+                isInvenFull = inventory.AddItem(hitInfo.transform.GetComponent<Item>().itemData);
+                if (isInvenFull)
+                {
+                    Debug.Log(hitInfo.transform.GetComponent<Item>().itemData.itemName + " È¹ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
+                    Destroy(hitInfo.transform.gameObject);
+                }
+                else
+                {
+                    Debug.Log("ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¡ï¿½ï¿½ï¿½Ï´ï¿½.");
+                }
                 InfoDisapper();
             }
         }

@@ -11,7 +11,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public string roomName = "";
     public int roomCount = 0;
 
-    private bool isMatch = false;
+    public bool isMatch = false;
 
     private static PhotonManager instance;
 
@@ -40,21 +40,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Connect();
     }
 
-    private void Update()
-    {
-    }
-
     public void LeaveRoomBtn()
     {
         LeaveRoom();
     }
 
-    public void CreateJoinRoom()
+    public void CreateRoomBtn()
     {
-        if (roomCount == 0)
-            CreateRoom();
-        else
-            JoinMatching();
+        CreateRoom();
+    }
+
+    public void JoinMatchBtn()
+    {
+        JoinMatching();
     }
 
     private void Connect()
@@ -83,14 +81,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             Debug.Log("Not Connect");
     }
 
-    public void JoinLobby(string nick = null)
+    public void JoinLobby(string _nick = null)
     {
         if(PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InLobby)
         {
-            if(nick == null || nick.Equals(""))
+            if(_nick == null || _nick.Equals(""))
             {
                 nick = "Player" + Random.Range(0, 1000).ToString();
             }
+            else
+            {
+                nick = _nick;
+            }
+
             PhotonNetwork.LocalPlayer.NickName = nick.Trim();
             PhotonNetwork.JoinLobby();
         }
@@ -116,19 +119,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         if(PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LeaveRoom(false);
-            //foreach(var player in PhotonNetwork.PlayerListOthers)
-            //{
-            //}
+            foreach(var player in PhotonNetwork.CurrentRoom.Players)
+            {
+                if(player.Value != PhotonNetwork.LocalPlayer)
+                {
+                    ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
+                    hashtable.Add("kicked", true);
+
+                    player.Value.SetCustomProperties(hashtable);
+                }
+            }
+
         }
+        PhotonNetwork.LeaveRoom();
     }
 
-    public void JoinRoom(string room)
+    public void JoinRoom(string _room)
     {
         if(PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InRoom)
         {
-            roomName = room;
-            PhotonNetwork.JoinRoom(room);
+            roomName = _room;
+            PhotonNetwork.JoinRoom(_room);
         }
     }
 
@@ -166,6 +177,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 5 });
     }
 
+
+
+
+    /// <summary>
+    /// //////////////////////////////////////////////////////////////////////
+    /// </summary>
     public override void OnConnectedToMaster()
     {
         Debug.Log("서버 접속");
@@ -186,7 +203,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Player : " + nick + " Join Room");
+        Debug.Log("Player : " + nick + " Join Room : " + PhotonNetwork.CurrentRoom.Name);
         isMatch = false;
 
     }
@@ -195,9 +212,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Join Room Failed : " + message);
         if (PhotonNetwork.IsConnected)
-        {
             JoinLobby();
-        }
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -215,6 +230,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Debug.Log("Player : " + nick + "LeaveRoom");
+        if (PhotonNetwork.IsConnected)
+            JoinLobby();
     }
 
     public override void OnCreatedRoom()
@@ -232,5 +249,29 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         roomCount = roomList.Count;
+        foreach(var room in roomList)
+        {
+            if(room.RemovedFromList)
+            {
+                roomCount--;
+            }
+        }
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        if(targetPlayer == PhotonNetwork.LocalPlayer)
+        {
+            if(changedProps["kicked"] != null)
+            {
+                if((bool)changedProps["kicked"])
+                {
+                    string[] _removeProperties = new string[1];
+                    _removeProperties[0] = "kicked";
+                    PhotonNetwork.RemovePlayerCustomProperties(_removeProperties);
+                    PhotonNetwork.LeaveRoom();
+                }
+            }
+        }
     }
 }
