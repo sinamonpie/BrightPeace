@@ -5,28 +5,42 @@ using UnityEngine;
 public class DoorController : MonoBehaviour
 {
     public bool isClose = true;
+    public bool DoorRotation = true;
+
+    public GameObject pivot = null;
+
+    private float doorAngle = 90;
+
+    private void Start()
+    {
+        if(pivot == null)
+        {
+            pivot = this.gameObject;
+        }
+    }
+
 
     public void DoorControl()
     {
-        if(isClose)
+        if (DoorRotation)
         {
-            DoorOpen();
+            // 일반 문
+            UseDoor(pivot, -doorAngle);
         }
         else
         {
-            DoorClose();
+            // 피벗없는 문
+            UseDoor(pivot, doorAngle);
         }
     }
 
-    void DoorOpen()
+    void UseDoor(GameObject pivot, float y)
     {
-        transform.Rotate(0, 90, 0);
-        isClose = false;
-    }
-
-    void DoorClose()
-    {
-        transform.Rotate(0, -90, 0);
-        isClose = true;
+        if (!isClose)
+        {
+            y = -y;
+        }
+        pivot.transform.Rotate(0, y, 0);
+        isClose = !isClose;
     }
 }

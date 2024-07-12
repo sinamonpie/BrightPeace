@@ -2504,6 +2504,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8604365320452928840, guid: beef3bcde1610f04aa96275436147bb9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8604723204727784050, guid: beef3bcde1610f04aa96275436147bb9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8605160569769651574, guid: beef3bcde1610f04aa96275436147bb9,
         type: 3}
       propertyPath: m_Name
@@ -5284,6 +5294,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isClose: 1
+  DoorRotation: 1
+  pivot: {fileID: 0}
 --- !u!1 &1122685960
 GameObject:
   m_ObjectHideFlags: 0

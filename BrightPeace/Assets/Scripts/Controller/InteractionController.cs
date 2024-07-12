@@ -15,8 +15,6 @@ public class InteractionController : MonoBehaviour
     [SerializeField] private TMP_Text actionText;
     [SerializeField] private Inventory inventory;
 
-    DoorController doorController;
-
     void Update()
     {
         CheckInteraction();
