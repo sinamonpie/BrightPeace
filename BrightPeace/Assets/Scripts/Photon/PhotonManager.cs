@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
@@ -173,7 +174,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        roomName = nick + "_" + Random.Range(0, 1000).ToString();
+        roomName = PhotonNetwork.LocalPlayer.UserId + "_" + Random.Range(0, 1000).ToString();
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 5 });
     }
 
@@ -186,7 +187,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("서버 접속");
-        JoinLobby();
+        if (nick != null && !nick.Equals(""))
+            JoinLobby();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -197,6 +199,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("Player : " + nick + " Join Lobby");
+        if (SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[0]))
+            GameManager.Instance.LoadLobbyScene();
         if (isMatch)
             JoinMatching();
     }

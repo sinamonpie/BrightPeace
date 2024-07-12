@@ -2,10 +2,13 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject player = null;
+    public List<string> sceneName = new List<string>();
+
 
     private static GameManager instance;
 
@@ -29,17 +32,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-    }
-
     public void LoadLobbyScene()
     {
-        
+        SceneManager.LoadSceneAsync(1);
     }
 
     public void LoadRoomScene()
     {
-
+        SceneManager.LoadSceneAsync(2);
     }
 }
