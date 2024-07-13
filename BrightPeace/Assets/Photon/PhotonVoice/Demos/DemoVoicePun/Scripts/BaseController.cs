@@ -78,7 +78,7 @@ namespace ExitGames.Demos.DemoPunVoice
             }
 
         }
-
+        //캐릭터 초기 컴포넌트 설정
         protected virtual void Init()
         {
             this.rigidBody = this.GetComponent<Rigidbody>();
@@ -87,13 +87,14 @@ namespace ExitGames.Demos.DemoPunVoice
             _animIDSpeed = Animator.StringToHash("Speed");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
-
+        
+        //카메라 설정
         protected virtual void SetCamera()
         {
             this.camTrans = this.ControllerCamera.transform;
             this.camTrans.position += this.cameraDistance * this.transform.forward;
         }
-
+        //애니메이션 관련
         protected virtual void UpdateAnimator(float h, float v)
         {
             // Create a boolean that is true if either of the input axes is non-zero.
@@ -111,6 +112,7 @@ namespace ExitGames.Demos.DemoPunVoice
             animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
         }
 
+        //발소리 관련 소스 *지우지 말 것*
         private void OnFootstep(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
@@ -149,7 +151,7 @@ namespace ExitGames.Demos.DemoPunVoice
         {
             if (camera != null) { camera.gameObject.SetActive(false); }
         }
-
+        // Move 가상함수
         protected abstract void Move(float h, float v);
     }
 }

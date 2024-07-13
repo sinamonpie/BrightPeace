@@ -33,7 +33,7 @@ namespace ExitGames.Demos.DemoPunVoice
             base.SetCamera();
             this.mouseLook.Init(this.transform, this.camTrans);
         }
-
+        //캐릭터 이동
         protected override void Move(float h, float v)
         {
             // always move along the camera forward as it is the direction that it being aimed at
@@ -48,7 +48,7 @@ namespace ExitGames.Demos.DemoPunVoice
         {
             this.RotateView();
         }
-
+        
         private void RotateView()
         {
             // get the rotation before it's changed
