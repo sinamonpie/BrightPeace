@@ -8240,6 +8240,11 @@ PrefabInstance:
       propertyPath: lockDoor
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 70385732667904758, guid: beef3bcde1610f04aa96275436147bb9,
+        type: 3}
+      propertyPath: unlockDoor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8591566892667245894, guid: beef3bcde1610f04aa96275436147bb9,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
