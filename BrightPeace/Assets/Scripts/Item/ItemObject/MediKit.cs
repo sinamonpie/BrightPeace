@@ -6,7 +6,6 @@ public class MediKit : Item
 {
     public override void UseItem()
     {
-        base.UseItem();
         Debug.Log("Use Potion");
     }
 }

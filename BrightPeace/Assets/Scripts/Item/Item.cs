@@ -8,7 +8,5 @@ public class Item : MonoBehaviour
 
     public virtual void UseItem()
     {
-        Destroy(gameObject);
-        //  사용 효과 재정의
     }
 }

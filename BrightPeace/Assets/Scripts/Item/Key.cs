@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Key : Item
 {
-    void UseItem()
+    public override void UseItem()
     {
-
+        Debug.Log("Use Key");
     }
 }

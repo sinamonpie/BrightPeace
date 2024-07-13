@@ -27,7 +27,8 @@ public class Slot : MonoBehaviour
     public void UseItemSlot()
     {
         if(item != null) 
-        { 
+        {
+            item.itemPrefab.transform.GetComponentInChildren<Item>().UseItem();
             ClearSlot();
         }
     }
