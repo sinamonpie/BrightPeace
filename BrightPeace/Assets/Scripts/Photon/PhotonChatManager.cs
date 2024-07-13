@@ -20,6 +20,10 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public static PhotonChatManager Instance

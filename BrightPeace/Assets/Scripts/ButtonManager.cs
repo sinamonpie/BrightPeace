@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
@@ -35,6 +36,12 @@ public class ButtonManager : MonoBehaviour
 
     public void CreateRoomBtn()
     {
+        if (!PhotonNetwork.IsConnected)
+        {
+            alertManager.SetMessage("서버와 연결되지않았습니다.\n잠시 후 다시 시도해주세요.");
+            return;
+        }
+
         selectWind.SetActive(false);
         selectSecurity.SetActive(true);
         PhotonManager.Instance.CreateRoom();
@@ -42,6 +49,12 @@ public class ButtonManager : MonoBehaviour
 
     public void MatchingBtn()
     {
+        if (!PhotonNetwork.IsConnected)
+        {
+            alertManager.SetMessage("서버와 연결되지않았습니다.\n잠시 후 다시 시도해주세요.");
+            return;
+        }
+
         selectWind.SetActive(false);
         selectMental.SetActive(true);
         PhotonManager.Instance.JoinMatching();
@@ -60,8 +73,25 @@ public class ButtonManager : MonoBehaviour
         selectWind.SetActive(true);
     }
 
+    public void LeaveRoomBtn()
+    {
+        PhotonManager.Instance.LeaveRoom();
+    }
+
     public void LeaveLobbyBtn()
     {
         PhotonManager.Instance.LeaveLobby();
+    }
+
+    public void Update()
+    {
+        if(PhotonNetwork.InLobby && SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[1]))
+        {
+            if (PhotonManager.Instance.isKicked)
+            {
+                alertManager.SetMessage("방장이 나갔습니다.\n다시 매칭해주세요.");
+                PhotonManager.Instance.isKicked = false;
+            }
+        }
     }
 }

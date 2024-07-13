@@ -13,6 +13,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public int roomCount = 0;
 
     public bool isMatch = false;
+    public bool isKicked = false;
 
     private static PhotonManager instance;
 
@@ -34,6 +35,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Start()
@@ -41,25 +46,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Connect();
     }
 
-    public void LeaveRoomBtn()
-    {
-        LeaveRoom();
-    }
-
-    public void CreateRoomBtn()
-    {
-        CreateRoom();
-    }
-
-    public void JoinMatchBtn()
-    {
-        JoinMatching();
-    }
-
     private void Connect()
     {
         if(PhotonNetwork.IsConnected)
         {
+            nick = "";
             Debug.Log("Photon Connected");
         }
         else
@@ -72,7 +63,23 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void Disconnect()
     {
         if (PhotonNetwork.IsConnected)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                foreach (var player in PhotonNetwork.CurrentRoom.Players)
+                {
+                    if (player.Value != PhotonNetwork.LocalPlayer)
+                    {
+                        ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
+                        hashtable.Add("kicked", true);
+
+                        player.Value.SetCustomProperties(hashtable);
+                    }
+                }
+
+            }
             PhotonNetwork.Disconnect();
+        }
         else
             Debug.Log("Not Connect");
     }
@@ -174,8 +181,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
 
 
-
-
     /// <summary>
     /// //////////////////////////////////////////////////////////////////////
     /// </summary>
@@ -183,7 +188,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("서버 접속");
         if (nick != null && !nick.Equals(""))
-            JoinLobby();
+            JoinLobby(nick);
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -194,10 +199,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("Player : " + nick + " Join Lobby");
-        if (isMatch)
-            JoinMatching();
         if (!SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[1]))
             GameManager.Instance.LoadLobbyScene();
+        if (isMatch)
+            JoinMatching();
     }
 
     public override void OnJoinedRoom()
@@ -213,19 +218,20 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Join Room Failed : " + message);
         if (PhotonNetwork.IsConnected)
-            JoinLobby();
+            JoinLobby(nick);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log("Join Random Room Failed : " + message);
         if (PhotonNetwork.IsConnected)
-            JoinLobby();
+            JoinLobby(nick);
     }
 
     public override void OnLeftLobby()
     {
         Debug.Log("Player " + nick + " Leave Lobby");
+        nick = "";
         if (!SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[0]))
             GameManager.Instance.LoadLoginScene();
     }
@@ -234,7 +240,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Player : " + nick + "LeaveRoom");
         if (PhotonNetwork.IsConnected)
-            JoinLobby();
+            JoinLobby(nick);
     }
 
     public override void OnCreatedRoom()
@@ -248,7 +254,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Create Room Failed : " + message);
         if (PhotonNetwork.IsConnected)
-            JoinLobby();
+            JoinLobby(nick);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -273,6 +279,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 {
                     string[] _removeProperties = new string[1];
                     _removeProperties[0] = "kicked";
+                    isKicked = true;
                     PhotonNetwork.RemovePlayerCustomProperties(_removeProperties);
                     PhotonNetwork.LeaveRoom();
                 }
