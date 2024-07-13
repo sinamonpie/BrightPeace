@@ -4,19 +4,17 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class ActionController : MonoBehaviour
 {
     [SerializeField]
-    private float range;                //  ��ȣ�ۿ� �Ÿ�
-    private RaycastHit hitInfo;         //  �浹ü ����
+    private float range;
+    private RaycastHit hitInfo;
     private Ray ray;
     private bool isInvenFull;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private TMP_Text actionText;
 
-    DoorController doorController;
     public Inventory inventory;
 
     void Update()
