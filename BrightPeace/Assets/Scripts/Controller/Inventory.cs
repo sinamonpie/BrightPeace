@@ -14,7 +14,6 @@ public class Inventory : MonoBehaviour
 
     [SerializeField]
     private Slot currentSlot;       //  현재 슬롯
-    private int slotsCount;         //  획득한 아이템 슬롯 수
     void Start()
     {
         slots = SlotsParent.GetComponentsInChildren<Slot>();
@@ -29,37 +28,30 @@ public class Inventory : MonoBehaviour
         }
         else if(Input.GetKeyUp(KeyCode.Alpha2)) 
         {
-            if(slotsCount > 1)
-            {
-                CurrentSlot(1);
-            }
+            CurrentSlot(1);
         }
         else if (Input.GetKeyUp(KeyCode.Alpha3))
         {
-            if(slotsCount > 2)
-            {
-                CurrentSlot(2);
-            }
+
+            CurrentSlot(2);
+
         }
 
 
-        if(currentSlot != null)
+        if(currentSlot != null)     // 아이템 사용
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKeyDown(KeyCode.F))
             {
-                //  아이템 사용 함수
+                currentSlot.UseItemSlot();
             }
         }
     }
 
     void CurrentSlot(int index)
     {
-        if (slots[index].item != null)
-        {
-            currentSlot = slots[index];
-        }
+        currentSlot = slots[index];
 
-        for (int i = 0; i < slotsCount; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
             if (i == index)
             {
@@ -78,7 +70,6 @@ public class Inventory : MonoBehaviour
             if (slots[i].item == null)
             {
                 slots[i].AddItem(item);
-                slotsCount++;
                 return true;
             }
         }

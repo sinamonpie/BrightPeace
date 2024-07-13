@@ -24,6 +24,14 @@ public class Slot : MonoBehaviour
         SetColor(255f, 255f, 255f);
     }
 
+    public void UseItemSlot()
+    {
+        if(item != null) 
+        { 
+            ClearSlot();
+        }
+    }
+
     public void ClearSlot()
     {
         item = null;
