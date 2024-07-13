@@ -21,14 +21,22 @@ namespace ExitGames.Demos.DemoPunVoice
     {
         public Camera ControllerCamera;
 
+        public AudioClip[] FootstepAudioClips;
+        [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
+
         protected Rigidbody rigidBody;
         protected Animator animator;
         protected Transform camTrans;             // A reference to transform of the third person camera
+
+        private float _animationBlend;
+        private int _animIDSpeed;
+        private int _animIDMotionSpeed;
 
         private float h, v;
 
         [SerializeField]
         protected float speed = 5f;
+        protected float SpeedChangeRate = 10.0f;
 
         [SerializeField]
         private float cameraDistance = 0f;
@@ -75,6 +83,9 @@ namespace ExitGames.Demos.DemoPunVoice
         {
             this.rigidBody = this.GetComponent<Rigidbody>();
             this.animator = this.GetComponent<Animator>();
+
+            _animIDSpeed = Animator.StringToHash("Speed");
+            _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
         protected virtual void SetCamera()
@@ -88,7 +99,28 @@ namespace ExitGames.Demos.DemoPunVoice
             // Create a boolean that is true if either of the input axes is non-zero.
             bool walking = h != 0 || v != 0;
             // Tell the animator whether or not the player is walking.
-            this.animator.SetBool("IsWalking", walking);
+            //this.animator.SetBool("IsWalking", walking);
+
+            _animationBlend = Mathf.Lerp(_animationBlend, speed, Time.deltaTime * SpeedChangeRate);
+            if (_animationBlend < 0.01f) _animationBlend = 0f;
+
+            float dir = v >= 0 ? 1f : -1f;
+            float inputMagnitude = walking ? 5f : 0f;
+
+            animator.SetFloat(_animIDSpeed, dir * _animationBlend);
+            animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+        }
+
+        private void OnFootstep(AnimationEvent animationEvent)
+        {
+            if (animationEvent.animatorClipInfo.weight > 0.5f)
+            {
+                if (FootstepAudioClips.Length > 0)
+                {
+                    var index = Random.Range(0, FootstepAudioClips.Length);
+                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.localPosition, FootstepAudioVolume);
+                }
+            }
         }
 
         protected virtual void FixedUpdate()

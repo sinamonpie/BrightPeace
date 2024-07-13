@@ -22,6 +22,7 @@ namespace ExitGames.Demos.DemoPunVoice
         private float oldYRotation;
         private Quaternion velRotation;
 
+
         public Vector3 Velocity
         {
             get { return this.rigidBody.velocity; }
