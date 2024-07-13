@@ -53,6 +53,6 @@ public class DoorController : MonoBehaviour
 
     public void UnlockDoor()
     {
-
+        useAble = true;
     }
 }

@@ -17,6 +17,8 @@ public class ActionController : MonoBehaviour
 
     public Inventory inventory;
 
+    private bool canDoor = false;
+
     void Update()
     {
         CheckInteraction();
@@ -36,6 +38,7 @@ public class ActionController : MonoBehaviour
             
             if(hitInfo.transform.tag == "Door")
             {
+                canDoor = true;
                 DoorInfoAppear();
             }
 
@@ -62,6 +65,7 @@ public class ActionController : MonoBehaviour
     void InfoDisapper()
     {
         actionText.gameObject.SetActive(false);
+        canDoor = false;
     }
 
     void PickupAction()
@@ -103,5 +107,15 @@ public class ActionController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool CanDoorAction()
+    {
+        return canDoor;
+    }
+
+    public void UnlockDoor()
+    {
+        hitInfo.transform.GetComponent<DoorController>().UnlockDoor();
     }
 }
