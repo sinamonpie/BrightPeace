@@ -48,6 +48,6 @@ public class GameManager : MonoBehaviour
 
     public void LoadRoomScene()
     {
-        SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadScene(2);
     }
 }
