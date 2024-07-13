@@ -91,9 +91,16 @@ public class ActionController : MonoBehaviour
         {
             if (hitInfo.transform != null)
             {
-                hitInfo.transform.GetComponent<DoorController>().DoorControl();
-                Debug.Log(hitInfo);
-                InfoDisapper();
+                if (hitInfo.transform.GetComponent<DoorController>().UseableDoor())
+                {
+                    hitInfo.transform.GetComponent<DoorController>().DoorControl();
+                    Debug.Log(hitInfo);
+                    InfoDisapper();
+                }
+                else
+                {
+                    // 문 잠겨있음 알림띄우기
+                }
             }
         }
     }

@@ -24,22 +24,15 @@ public class DoorController : MonoBehaviour
 
     public void DoorControl()
     {
-        if(useAble)
+        if (DoorRotation)
         {
-            if (DoorRotation)
-            {
-                // 일반 문
-                UseDoor(pivot, -doorAngle);
-            }
-            else
-            {
-                // 피벗없는 문
-                UseDoor(pivot, doorAngle);
-            }
+            // 일반 문
+            UseDoor(pivot, -doorAngle);
         }
         else
         {
-
+            // 피벗없는 문
+            UseDoor(pivot, doorAngle);
         }
     }
 
@@ -51,5 +44,15 @@ public class DoorController : MonoBehaviour
         }
         pivot.transform.Rotate(0, y, 0);
         isClose = !isClose;
+    }
+
+    public bool UseableDoor()
+    {
+        return useAble;
+    }
+
+    public void UnlockDoor()
+    {
+
     }
 }
