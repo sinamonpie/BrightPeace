@@ -11,6 +11,8 @@ public class Inventory : MonoBehaviour
     private GameObject SlotsParent;
     private SlotBackGround[] slotsBg;
     private Slot[] slots;
+    float wheelInput;
+    int currentSlotNum;
 
     [SerializeField]
     private Slot currentSlot;       //  현재 슬롯
@@ -22,29 +24,47 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
+        wheelInput = Input.GetAxis("Mouse ScrollWheel");
+
         if (Input.GetKeyUp(KeyCode.Alpha1)) 
         {
-            CurrentSlot(0);
+            currentSlotNum = 0;
         }
         else if(Input.GetKeyUp(KeyCode.Alpha2)) 
         {
-            CurrentSlot(1);
+            currentSlotNum = 1;
         }
         else if (Input.GetKeyUp(KeyCode.Alpha3))
         {
-
-            CurrentSlot(2);
-
+            currentSlotNum = 2;
+        }
+        else if (wheelInput > 0)
+        {
+            currentSlotNum++;
+            if (currentSlotNum > slots.Length - 1)
+            {
+                currentSlotNum = 0;
+            }
+        }
+        else if (wheelInput < 0)
+        {
+            currentSlotNum--;
+            if (currentSlotNum < 0)
+            {
+                currentSlotNum = slots.Length - 1;
+            }
         }
 
+        CurrentSlot(currentSlotNum);
 
-        if(currentSlot != null)     // 아이템 사용
+        if (currentSlot != null)     // 아이템 사용
         {
             if(Input.GetKeyDown(KeyCode.F))
             {
                 currentSlot.UseItemSlot();
             }
         }
+
     }
 
     void CurrentSlot(int index)
