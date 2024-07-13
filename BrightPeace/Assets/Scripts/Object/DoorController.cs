@@ -9,7 +9,7 @@ public class DoorController : MonoBehaviour
 
     public GameObject pivot = null;
 
-    public bool useAble = true;
+    public bool lockDoor = true;
 
     private float doorAngle = 90;
 
@@ -48,11 +48,11 @@ public class DoorController : MonoBehaviour
 
     public bool UseableDoor()
     {
-        return useAble;
+        return lockDoor;
     }
 
     public void UnlockDoor()
     {
-        useAble = true;
+        lockDoor = true;
     }
 }
