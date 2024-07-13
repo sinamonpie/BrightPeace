@@ -12,15 +12,11 @@ public class Slot : MonoBehaviour
         itemImage = transform.GetComponent<Image>();
         color = itemImage.color;
     }
-
     public void SetColor(float r, float g, float b)
     {
         Color color = new Color(r, g, b);
         itemImage.color = color;
     }
-
-
-
     public void AddItem(ItemData item)
     {
         this.item = item;

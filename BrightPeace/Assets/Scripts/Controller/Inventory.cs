@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,8 +13,8 @@ public class Inventory : MonoBehaviour
     private Slot[] slots;
 
     [SerializeField]
-    private Slot currentSlot;
-    private int slotsCount;
+    private Slot currentSlot;       //  현재 슬롯
+    private int slotsCount;         //  획득한 아이템 슬롯 수
     void Start()
     {
         slots = SlotsParent.GetComponentsInChildren<Slot>();
@@ -46,8 +45,10 @@ public class Inventory : MonoBehaviour
 
         if(currentSlot != null)
         {
-            
-            //  아이템 사용 함수
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                //  아이템 사용 함수
+            }
         }
     }
 
