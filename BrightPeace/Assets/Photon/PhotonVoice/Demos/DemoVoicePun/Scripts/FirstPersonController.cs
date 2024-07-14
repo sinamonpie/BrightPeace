@@ -32,13 +32,18 @@ namespace ExitGames.Demos.DemoPunVoice
         //캐릭터 이동
         protected override void Move(float h, float v)
         {
+            //카메라 방향 기준으로 이동
             this.dir = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0) * new Vector3(h * speed * Time.deltaTime, 0, v * speed * Time.deltaTime);
+
+            if (!controller.isGrounded)
+            {
+                dir.y += _gravity * Time.deltaTime;
+            }
 
             if (dir != Vector3.zero)
             {
                 controller.Move(dir);
             }
-            //카메라 방향 이동 구현***
         }
 
         private void Update()

@@ -34,6 +34,7 @@ namespace ExitGames.Demos.DemoPunVoice
         private float _animationBlend;
         private int _animIDSpeed;
         private int _animIDMotionSpeed;
+        protected float _gravity = -9.8f;
 
         protected Vector3 dir;
         protected float h, v;
@@ -80,7 +81,6 @@ namespace ExitGames.Demos.DemoPunVoice
             {
                 this.enabled = false;
             }
-
         }
         //캐릭터 초기 컴포넌트 설정
         protected virtual void Init()
@@ -131,19 +131,20 @@ namespace ExitGames.Demos.DemoPunVoice
 
         protected virtual void FixedUpdate()
         {
-            // Store the input axes.
-            this.h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
-            this.v = CrossPlatformInputManager.GetAxisRaw("Vertical");
+                // Store the input axes.
+                this.h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
+                this.v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 #if MOBILE_INPUT
             if (Mathf.Abs(this.h) < 0.5f) { this.h = 0f; }
             else { this.h = Mathf.Sign(this.h); }
             if (Mathf.Abs(this.v) < 0.5f) { this.v = 0f; }
             else { this.v = Mathf.Sign(this.v); }
-#endif  
-            // send input to the animator
-            this.UpdateAnimator(this.h, this.v);
-            // Move the player around the scene.
-            this.Move(this.h, this.v);
+#endif
+                // send input to the animator
+                this.UpdateAnimator(this.h, this.v);
+            
+                // Move the player around the scene.
+                this.Move(this.h, this.v);
         }
 
         protected virtual void ShowCamera(Camera camera)
@@ -156,11 +157,6 @@ namespace ExitGames.Demos.DemoPunVoice
             if (camera != null) { camera.gameObject.SetActive(false); }
         }
 
-        /*protected virtual bool GroundCheck()
-        {
-
-        }
-        */
         // Move 가상함수
         protected abstract void Move(float h, float v);
     }
