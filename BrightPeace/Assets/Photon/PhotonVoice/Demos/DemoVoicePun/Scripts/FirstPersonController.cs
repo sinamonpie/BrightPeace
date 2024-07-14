@@ -12,6 +12,7 @@ namespace ExitGames.Demos.DemoPunVoice
 {
 
     using UnityEngine;
+    using UnityEngine.EventSystems;
 
     public class FirstPersonController : BaseController
     {
@@ -22,26 +23,27 @@ namespace ExitGames.Demos.DemoPunVoice
         private float oldYRotation;
         private Quaternion velRotation;
 
-
-        public Vector3 Velocity
-        {
-            get { return this.rigidBody.velocity; }
-        }
-
         protected override void SetCamera()
         {
             base.SetCamera();
             this.mouseLook.Init(this.transform, this.camTrans);
         }
+
         //캐릭터 이동
         protected override void Move(float h, float v)
         {
-            // always move along the camera forward as it is the direction that it being aimed at
-            Vector3 desiredMove = this.camTrans.forward * v + this.camTrans.right * h;
-            desiredMove.x = desiredMove.x * this.speed;
-            desiredMove.z = desiredMove.z * this.speed;
-            desiredMove.y = 0;
-            this.rigidBody.velocity = desiredMove;
+            //카메라 방향 기준으로 이동
+            this.dir = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0) * new Vector3(h * speed * Time.deltaTime, 0, v * speed * Time.deltaTime);
+
+            if (!controller.isGrounded)
+            {
+                dir.y += _gravity * Time.deltaTime;
+            }
+
+            if (dir != Vector3.zero)
+            {
+                controller.Move(dir);
+            }
         }
 
         private void Update()
@@ -56,8 +58,6 @@ namespace ExitGames.Demos.DemoPunVoice
             this.mouseLook.LookRotation(this.transform, this.camTrans);
             // Rotate the rigidbody velocity to match the new direction that the character is looking
             this.velRotation = Quaternion.AngleAxis(this.transform.eulerAngles.y - this.oldYRotation, Vector3.up);
-            this.rigidBody.velocity = this.velRotation * this.rigidBody.velocity;
         }
     }
-
 }

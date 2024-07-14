@@ -11,28 +11,33 @@
 namespace ExitGames.Demos.DemoPunVoice
 {
     using Photon.Pun;
+    using Unity.VisualScripting;
     using UnityEngine;
     using UnityStandardAssets.CrossPlatformInput;
 
     [RequireComponent(typeof(PhotonView))]
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(Animator))]
     public abstract class BaseController : MonoBehaviour
     {
+       
+
         public Camera ControllerCamera;
 
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
-        protected Rigidbody rigidBody;
+        protected CharacterController controller;
         protected Animator animator;
         protected Transform camTrans;             // A reference to transform of the third person camera
 
         private float _animationBlend;
         private int _animIDSpeed;
         private int _animIDMotionSpeed;
+        protected float _gravity = -9.8f;
 
-        private float h, v;
+        protected Vector3 dir;
+        protected float h, v;
 
         [SerializeField]
         protected float speed = 5f;
@@ -76,12 +81,11 @@ namespace ExitGames.Demos.DemoPunVoice
             {
                 this.enabled = false;
             }
-
         }
         //캐릭터 초기 컴포넌트 설정
         protected virtual void Init()
         {
-            this.rigidBody = this.GetComponent<Rigidbody>();
+            this.controller = this.GetComponent<CharacterController>();
             this.animator = this.GetComponent<Animator>();
 
             _animIDSpeed = Animator.StringToHash("Speed");
@@ -127,19 +131,20 @@ namespace ExitGames.Demos.DemoPunVoice
 
         protected virtual void FixedUpdate()
         {
-            // Store the input axes.
-            this.h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
-            this.v = CrossPlatformInputManager.GetAxisRaw("Vertical");
+                // Store the input axes.
+                this.h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
+                this.v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 #if MOBILE_INPUT
             if (Mathf.Abs(this.h) < 0.5f) { this.h = 0f; }
             else { this.h = Mathf.Sign(this.h); }
             if (Mathf.Abs(this.v) < 0.5f) { this.v = 0f; }
             else { this.v = Mathf.Sign(this.v); }
-#endif  
-            // send input to the animator
-            this.UpdateAnimator(this.h, this.v);
-            // Move the player around the scene.
-            this.Move(this.h, this.v);
+#endif
+                // send input to the animator
+                this.UpdateAnimator(this.h, this.v);
+            
+                // Move the player around the scene.
+                this.Move(this.h, this.v);
         }
 
         protected virtual void ShowCamera(Camera camera)
@@ -151,7 +156,11 @@ namespace ExitGames.Demos.DemoPunVoice
         {
             if (camera != null) { camera.gameObject.SetActive(false); }
         }
+
         // Move 가상함수
         protected abstract void Move(float h, float v);
     }
 }
+
+
+/*바닥 체크, 경사면 이동(계단), 처음 시작할 때 떠있는 문제*/
