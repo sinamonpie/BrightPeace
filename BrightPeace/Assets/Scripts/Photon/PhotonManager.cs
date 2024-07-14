@@ -217,7 +217,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Debug.Log("Join Room Failed : " + message);
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected&&!PhotonNetwork.InLobby)
             JoinLobby(nick);
     }
 
@@ -225,7 +225,20 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Join Random Room Failed : " + message);
         if (PhotonNetwork.IsConnected)
-            JoinLobby(nick);
+        {
+            if(PhotonNetwork.InLobby)
+            {
+                AlertManager alert = FindObjectOfType<AlertManager>();
+                if(alert != null)
+                {
+                    alert.SetMessage("매칭이 오래 걸립니다.\n잠시 후 다시 시도해주세요.");
+                }
+            }
+            else
+            {
+                JoinLobby(nick);
+            }
+        }
     }
 
     public override void OnLeftLobby()
@@ -239,7 +252,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Debug.Log("Player : " + nick + "LeaveRoom");
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected && !PhotonNetwork.InLobby)
             JoinLobby(nick);
     }
 
@@ -253,7 +266,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         Debug.Log("Create Room Failed : " + message);
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected && !PhotonNetwork.InLobby)
             JoinLobby(nick);
     }
 
