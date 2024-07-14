@@ -11,20 +11,23 @@
 namespace ExitGames.Demos.DemoPunVoice
 {
     using Photon.Pun;
+    using Unity.VisualScripting;
     using UnityEngine;
     using UnityStandardAssets.CrossPlatformInput;
 
     [RequireComponent(typeof(PhotonView))]
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(Animator))]
     public abstract class BaseController : MonoBehaviour
     {
+       
+
         public Camera ControllerCamera;
 
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
-        protected Rigidbody rigidBody;
+        protected CharacterController controller;
         protected Animator animator;
         protected Transform camTrans;             // A reference to transform of the third person camera
 
@@ -32,7 +35,8 @@ namespace ExitGames.Demos.DemoPunVoice
         private int _animIDSpeed;
         private int _animIDMotionSpeed;
 
-        private float h, v;
+        protected Vector3 dir;
+        protected float h, v;
 
         [SerializeField]
         protected float speed = 5f;
@@ -81,7 +85,7 @@ namespace ExitGames.Demos.DemoPunVoice
         //캐릭터 초기 컴포넌트 설정
         protected virtual void Init()
         {
-            this.rigidBody = this.GetComponent<Rigidbody>();
+            this.controller = this.GetComponent<CharacterController>();
             this.animator = this.GetComponent<Animator>();
 
             _animIDSpeed = Animator.StringToHash("Speed");
@@ -151,7 +155,16 @@ namespace ExitGames.Demos.DemoPunVoice
         {
             if (camera != null) { camera.gameObject.SetActive(false); }
         }
+
+        /*protected virtual bool GroundCheck()
+        {
+
+        }
+        */
         // Move 가상함수
         protected abstract void Move(float h, float v);
     }
 }
+
+
+/*바닥 체크, 경사면 이동(계단), 처음 시작할 때 떠있는 문제*/
