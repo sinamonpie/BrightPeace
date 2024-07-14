@@ -59,9 +59,13 @@ public class Inventory : MonoBehaviour
 
         if (currentSlot != null)     // 아이템 사용
         {
-            if(Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyUp(KeyCode.F))
             {
                 currentSlot.UseItemSlot();
+            }
+            else if (Input.GetKeyUp(KeyCode.G)) 
+            {
+                currentSlot.DropItem();
             }
         }
 
@@ -82,7 +86,6 @@ public class Inventory : MonoBehaviour
 
         }
     }
-    
     public bool AddItem(ItemData item)
     {
         for(int i = 0; i < slots.Length; i++)

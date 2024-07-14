@@ -59,7 +59,14 @@ public class ActionController : MonoBehaviour
     void DoorInfoAppear()
     {
         actionText.gameObject.SetActive(true);
-        actionText.text = "Open door " + "<color=yellow>"+ "E Key" + "</color>";
+        if (hitInfo.transform.GetComponent<DoorController>().isClose)
+        {
+            actionText.text = "Open door " + "<color=yellow>" + "E Key" + "</color>";
+        }
+        else 
+        {
+            actionText.text = "Close door " + "<color=yellow>" + "E Key" + "</color>";
+        }
         DoorAction();
     }
     void InfoDisapper()
@@ -77,12 +84,12 @@ public class ActionController : MonoBehaviour
                 isInvenFull = inventory.AddItem(hitInfo.transform.GetComponent<Item>().itemData);
                 if (isInvenFull)
                 {
-                    Debug.Log(hitInfo.transform.GetComponent<Item>().itemData.itemName + " ȹ���߽��ϴ�.");
+                    Debug.Log("Get " + hitInfo.transform.GetComponent<Item>().itemData.itemName);
                     Destroy(hitInfo.transform.gameObject);
                 }
                 else
                 {
-                    Debug.Log("�κ��丮�� ���� á���ϴ�.");
+                    Debug.Log("Full Inventory");
                 }
                 InfoDisapper();
             }
