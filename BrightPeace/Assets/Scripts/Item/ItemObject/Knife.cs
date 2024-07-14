@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Knife : Item
 {
-    public override void UseItem()
+    public override bool UseItem()
     {
         Debug.Log("Use Knife");
+        return true;
     }
 }

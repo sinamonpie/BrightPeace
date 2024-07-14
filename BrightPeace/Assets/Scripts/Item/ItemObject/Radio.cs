@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Radio : Item
 {
-    public override void UseItem()
+    public override bool UseItem()
     {
         Debug.Log("Use Radio");
+        return true;
     }
 }

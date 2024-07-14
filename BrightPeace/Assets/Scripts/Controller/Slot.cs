@@ -7,6 +7,7 @@ public class Slot : MonoBehaviour
     public ItemData item;           // »πµÊ«— æ∆¿Ã≈€
     public Image itemImage;         // »πµÊ«— æ∆¿Ã≈€ ¿ÃπÃ¡ˆ
     private Color color;
+    private bool itemUseSuccess;
     void Start()
     {
         itemImage = transform.GetComponent<Image>();
@@ -38,8 +39,12 @@ public class Slot : MonoBehaviour
     {
         if(item != null) 
         {
-            item.itemPrefab.transform.GetComponentInChildren<Item>().UseItem();
-            ClearSlot();
+            itemUseSuccess = item.itemPrefab.transform.GetComponentInChildren<Item>().UseItem();
+
+            if(itemUseSuccess) 
+            {
+                ClearSlot();
+            }
         }
     }
 

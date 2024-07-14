@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Gun : Item
 {
-    public override void UseItem()
+    public override bool UseItem()
     {
         Debug.Log("Use Gun");
+        return true;
     }
 }

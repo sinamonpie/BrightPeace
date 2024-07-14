@@ -6,7 +6,8 @@ public class Item : MonoBehaviour
 {
     public ItemData itemData;
 
-    public virtual void UseItem()
+    public virtual bool UseItem()
     {
+        return true;
     }
 }
