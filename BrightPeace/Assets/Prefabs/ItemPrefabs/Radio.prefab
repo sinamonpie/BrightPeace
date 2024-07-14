@@ -132,17 +132,17 @@ PrefabInstance:
     - target: {fileID: 6057163958185639923, guid: 012fd46e0027d83488f19d562d66eb4f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.01989262
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6057163958185639923, guid: 012fd46e0027d83488f19d562d66eb4f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.075623274
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6057163958185639923, guid: 012fd46e0027d83488f19d562d66eb4f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0029936284
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6057163958185639923, guid: 012fd46e0027d83488f19d562d66eb4f,
         type: 3}
@@ -204,19 +204,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6877122962814842694}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2540063546298039917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7287666824371127175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8ce2cbb618fdb84d8494dd0d7729655, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 00f870dc151f1cd47a7e683c14a8f7ea, type: 2}
 --- !u!65 &7527913327034784808
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -230,3 +217,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 0.3, z: 0.08}
   m_Center: {x: 0, y: 0.15, z: 0}
+--- !u!114 &2540063546298039917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7287666824371127175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ce2cbb618fdb84d8494dd0d7729655, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 00f870dc151f1cd47a7e683c14a8f7ea, type: 2}
