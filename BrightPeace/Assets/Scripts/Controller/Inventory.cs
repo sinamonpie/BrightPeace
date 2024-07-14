@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,8 +8,8 @@ using UnityEngine.UIElements;
 public class Inventory : MonoBehaviour
 {
 
-    [SerializeField] 
-    private GameObject SlotsParent;
+    [SerializeField] private GameObject SlotsParent;
+    [SerializeField] private TMP_Text alertText;
     private SlotBackGround[] slotsBg;
     private Slot[] slots;
     float wheelInput;
@@ -62,6 +63,13 @@ public class Inventory : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.F))
             {
                 currentSlot.UseItemSlot();
+                if (currentSlot.transform.GetComponent<Slot>().UsedItem())
+                {
+                    alertText.gameObject.SetActive(true);
+                    alertText.text = currentSlot.item.itemName + " 을(를) 사용했습니다.";
+                    currentSlot.ClearSlot();
+                    Invoke("DisAlert", 2f);
+                }
             }
             else if (Input.GetKeyUp(KeyCode.G)) 
             {
@@ -97,6 +105,10 @@ public class Inventory : MonoBehaviour
             }
         }
         return false;
+    }
+    public void DisAlert()
+    {
+        alertText.gameObject.SetActive(false);
     }
 
 }

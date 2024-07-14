@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class Slot : MonoBehaviour
@@ -40,12 +41,12 @@ public class Slot : MonoBehaviour
         if(item != null) 
         {
             itemUseSuccess = item.itemPrefab.transform.GetComponentInChildren<Item>().UseItem();
-
-            if(itemUseSuccess) 
-            {
-                ClearSlot();
-            }
         }
+    }
+
+    public bool UsedItem()
+    {
+        return itemUseSuccess;
     }
 
     public void ClearSlot()

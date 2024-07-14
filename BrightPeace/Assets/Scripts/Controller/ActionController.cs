@@ -14,6 +14,7 @@ public class ActionController : MonoBehaviour
     private bool isInvenFull;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private TMP_Text actionText;
+    [SerializeField] private TMP_Text alertText;
 
     public Inventory inventory;
 
@@ -52,20 +53,21 @@ public class ActionController : MonoBehaviour
     void ItemInfoAppear()
     {
         actionText.gameObject.SetActive(true);
-        actionText.text = hitInfo.transform.GetComponent<Item>().itemData.itemName + " Get " + "<color=yellow>" + "E Key" + "</color>";
+        actionText.text = hitInfo.transform.GetComponent<Item>().itemData.itemName + " 획득하기 " + "<color=yellow>" + "E Key" + "</color>";
         PickupAction();
     }
 
     void DoorInfoAppear()
     {
         actionText.gameObject.SetActive(true);
+
         if (hitInfo.transform.GetComponent<DoorController>().isClose)
         {
-            actionText.text = "Open door " + "<color=yellow>" + "E Key" + "</color>";
+            actionText.text = "문 열기 " + "<color=yellow>" + "E키" + "</color>";
         }
-        else 
+        else
         {
-            actionText.text = "Close door " + "<color=yellow>" + "E Key" + "</color>";
+            actionText.text = "문 닫기 " + "<color=yellow>" + "E키" + "</color>";
         }
         DoorAction();
     }
@@ -84,7 +86,7 @@ public class ActionController : MonoBehaviour
                 isInvenFull = inventory.AddItem(hitInfo.transform.GetComponent<Item>().itemData);
                 if (isInvenFull)
                 {
-                    Debug.Log("Get " + hitInfo.transform.GetComponent<Item>().itemData.itemName);
+                    Debug.Log("획득하기 " + hitInfo.transform.GetComponent<Item>().itemData.itemName);
                     Destroy(hitInfo.transform.gameObject);
                 }
                 else
@@ -110,7 +112,9 @@ public class ActionController : MonoBehaviour
                 }
                 else
                 {
-                    // 문 잠겨있음 알림띄우기
+                    alertText.gameObject.SetActive(true);
+                    alertText.text = "문이 잠겼습니다.";
+                    Invoke("DisAlert", 1f);
                 }
             }
         }
@@ -124,5 +128,10 @@ public class ActionController : MonoBehaviour
     public void UnlockDoor()
     {
         hitInfo.transform.GetComponent<DoorController>().UnlockDoor();
+    }
+
+    public void DisAlert()
+    {
+        alertText.gameObject.SetActive(false);
     }
 }
