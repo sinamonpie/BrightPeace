@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
@@ -71,9 +72,15 @@ public class Inventory : MonoBehaviour
                     Invoke("DisAlert", 2f);
                 }
             }
-            else if (Input.GetKeyUp(KeyCode.G)) 
+
+            if (Input.GetKeyUp(KeyCode.G)) 
             {
-                currentSlot.DropItem();
+                Vector3 PlayerPos = transform.parent.position;
+                Vector3 PlayerFwd = transform.parent.forward;
+                GameObject itemGo = Instantiate<GameObject>(currentSlot.item.itemPrefab);
+                itemGo.transform.position = PlayerPos + PlayerFwd;
+                Debug.Log("Drop " + currentSlot.item.itemName);
+                currentSlot.ClearSlot();
             }
         }
 

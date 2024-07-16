@@ -26,16 +26,6 @@ public class Slot : MonoBehaviour
         SetColor(255f, 255f, 255f);
     }
 
-    public void DropItem()
-    {
-        Vector3 PlayerPos = GameObject.FindWithTag("Player").transform.position;
-        Vector3 PlayerFwd = GameObject.FindWithTag("Player").transform.forward;
-        GameObject itemGo = Instantiate<GameObject>(item.itemPrefab);
-        itemGo.transform.position = PlayerPos + PlayerFwd;
-        Debug.Log("Drop " + item.itemName);
-        ClearSlot();
-    }
-
     public void UseItemSlot()
     {
         if(item != null) 
@@ -54,5 +44,6 @@ public class Slot : MonoBehaviour
         item = null;
         itemImage.sprite = null;
         itemImage.color = color;
+        itemUseSuccess = false;
     }
 }

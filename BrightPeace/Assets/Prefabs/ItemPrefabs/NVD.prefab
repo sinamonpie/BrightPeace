@@ -277,6 +277,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: f41b8496db893d043b5f87da900a9632, type: 2}
+  overlay: {fileID: 167757092576426837, guid: 4a23c3cab7679594d8aad4213c6af20c, type: 3}
+  playerIndicatorPrefab: {fileID: 1203392004142626670, guid: 4e8fbe9869660e444b57a2312d77e7bc,
+    type: 3}
+  wallHackTime: 2
 --- !u!4 &4636959453369301936 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4792238198587746, guid: aad4642f97fb545e19ddf2a5c0599eb3,
