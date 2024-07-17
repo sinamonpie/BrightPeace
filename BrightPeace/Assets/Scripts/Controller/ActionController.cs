@@ -43,6 +43,11 @@ public class ActionController : MonoBehaviour
                 DoorInfoAppear();
             }
 
+            if(hitInfo.transform.tag == "Endig")
+            {
+                EndigInfoAppear();
+            }
+
         }
         else
         {
@@ -135,5 +140,10 @@ public class ActionController : MonoBehaviour
         alertText.gameObject.SetActive(false);
     }
 
+    void EndigInfoAppear()
+    {
+        actionText.gameObject.SetActive(true);
+        actionText.text = "<color=yellow>" + " 탈출하기 " + "E Key" + "</color>";
+    }
 
 }
