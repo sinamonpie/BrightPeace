@@ -4469,9 +4469,10 @@ GameObject:
   - component: {fileID: 8581497025256911774}
   - component: {fileID: 8592280953107396784}
   - component: {fileID: 8614136575265724128}
-  m_Layer: 0
+  - component: {fileID: 2944295045393480371}
+  m_Layer: 6
   m_Name: MainDoor
-  m_TagString: Untagged
+  m_TagString: Endig
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -4555,6 +4556,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: fa7d1e57e63142a44880d53cb83b1781, type: 3}
+--- !u!114 &2944295045393480371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8604367122496853544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9bd76e97d9fc4b49a682e8425a7e02a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerItem1: {fileID: 2572372524444635814, guid: 312975a718437594c86dffa5eff86cc2,
+    type: 3}
+  triggerItem2: {fileID: 2572372524444635814, guid: 312975a718437594c86dffa5eff86cc2,
+    type: 3}
+  triggerItem3: {fileID: 2572372524444635814, guid: 312975a718437594c86dffa5eff86cc2,
+    type: 3}
 --- !u!1 &8604409324610155446
 GameObject:
   m_ObjectHideFlags: 0
