@@ -59,21 +59,32 @@ public class Inventory : MonoBehaviour
 
         CurrentSlot(currentSlotNum);
 
-        if (currentSlot != null)     // 아이템 사용
+        if (currentSlot.item != null)     
         {
-            if (Input.GetKeyUp(KeyCode.F))
+            if (currentSlot.item.itemType == ItemData.ItemType.Used)    //  소모품
             {
-                currentSlot.UseItemSlot();
-                if (currentSlot.transform.GetComponent<Slot>().UsedItem())
+                if (Input.GetKeyUp(KeyCode.F))
                 {
-                    alertText.gameObject.SetActive(true);
-                    alertText.text = currentSlot.item.itemName + " 을(를) 사용했습니다.";
-                    currentSlot.ClearSlot();
-                    Invoke("DisAlert", 2f);
+                    currentSlot.UseItemSlot();                          //   아이템 사용
+                    if (currentSlot.transform.GetComponent<Slot>().UsedItem())
+                    {
+                        StartCoroutine(TextAlert());
+                        alertText.text = currentSlot.item.itemName + " 을(를) 사용했습니다.";
+                        currentSlot.ClearSlot();
+                    }
                 }
             }
+            else if (currentSlot.item.itemType == ItemData.ItemType.Equip)
+            {
+                                                                        //  장비 
+            }
+            else if (currentSlot.item.itemType == ItemData.ItemType.Escape)
+            {   
+                                                                        // 탈출 장비
+            }
 
-            if (Input.GetKeyUp(KeyCode.G)) 
+
+                if (Input.GetKeyUp(KeyCode.G)) 
             {
                 Vector3 PlayerPos = transform.parent.position;
                 Vector3 PlayerFwd = transform.parent.forward;
@@ -113,8 +124,12 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
-    public void DisAlert()
+
+    IEnumerator TextAlert()
     {
+        alertText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+
         alertText.gameObject.SetActive(false);
     }
 
