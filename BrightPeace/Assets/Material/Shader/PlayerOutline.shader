@@ -1,6 +1,6 @@
 Shader"Outlined/Regular" {
     Properties {
-        _Color ("Main Color", Color) = (0, 0, 0, 0)
+        _Color ("Main Color", Color) = (0.1, 0.1, 0.1, 1)
         _OutlineColor ("Outline Color", Color) = (1, 1, 0, 1) // 노란색 외곽선
         _Outline ("Outline width", Range (0, 1)) = 0.1
         _MainTex ("Base (RGB)", 2D) = "white" { }
@@ -22,7 +22,7 @@ ZWrite Off
 
             CGPROGRAM
 #include "UnityCG.cginc"
-            
+
 struct appdata
 {
     float4 vertex : POSITION;
@@ -35,8 +35,9 @@ struct v2f
     float4 color : COLOR;
 };
 
-uniform float _Outline;
-uniform float4 _OutlineColor;
+float _Outline;
+float4 _Color;
+float4 _OutlineColor;
 
 v2f vert(appdata v)
 {
@@ -78,7 +79,7 @@ void surf(Input IN, inout SurfaceOutput o)
 {
     fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
     o.Albedo = c.rgb;
-    o.Alpha = c.a * _Color.a;
+    o.Alpha = c.a;
 }
         ENDCG
     }
