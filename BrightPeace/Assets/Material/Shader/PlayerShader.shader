@@ -2,8 +2,8 @@ Shader"Custom/PlayerShader"
 {
     Properties
     {
-        _OutlineColor ("Outline Color", Color) = (1,1,0,1) // 노란색
-        _OutlineThickness ("Outline Thickness", Range (0.002, 0.03)) = 0.01
+        _Color ("Player Apply Color", Color) = (1,1,0,1) // 노란색
+        _Thickness ("Player Apply Thickness", Range (0.002, 0.03)) = 0.01
         _MainTex ("Base (RGB)", 2D) = "white" {}
     }
     SubShader
@@ -31,16 +31,16 @@ struct v2f
     float4 color : COLOR;
 };
 
-float _OutlineThickness;
-float4 _OutlineColor;
+float _Thickness;
+float4 _Color;
 
 v2f vert(appdata v)
 {
                 
     v2f o;
     float3 norm = mul((float3x3) UNITY_MATRIX_IT_MV, v.normal);
-    o.pos = UnityObjectToClipPos(v.vertex + float4(norm * _OutlineThickness, 0));
-    o.color = _OutlineColor;
+    o.pos = UnityObjectToClipPos(v.vertex + float4(norm * _Thickness, 0));
+    o.color = _Color;
     return o;
 }
 
