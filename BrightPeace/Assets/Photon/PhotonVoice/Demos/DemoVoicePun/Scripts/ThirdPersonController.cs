@@ -20,7 +20,8 @@ namespace ExitGames.Demos.DemoPunVoice
         private float movingTurnSpeed = 360;
 
         protected override void Move(float h, float v)
-        { 
+        {
+            this.rigidBody.velocity = v * this.speed * this.transform.forward;
             this.transform.rotation *= Quaternion.AngleAxis(this.movingTurnSpeed * h * Time.deltaTime, Vector3.up);
         }
     }

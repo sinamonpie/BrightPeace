@@ -66,11 +66,6 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
                 StartGame(GameMode.Client);
                 //StartCoroutine(JoinRandomRoom());
             }
-            if (GUI.Button(new Rect(0, 120, 200, 40), "JoinCancle"))
-            {
-                isMatch = false;
-                //StopCoroutine(JoinRandomRoom());
-            }
         }
         else if (!_runner.IsServer)
         {
