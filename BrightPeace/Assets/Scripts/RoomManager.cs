@@ -1,9 +1,15 @@
-using Photon.Pun;
-using System.Collections;
+using Fusion;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomManager : MonoBehaviour
+public struct RoomPlayerData : INetworkStruct
+{
+    [Networked, Capacity(24)]
+    public string Nickname { get => default; set { } }
+    public bool IsConnected;
+}
+
+public class RoomManager : NetworkBehaviour
 {
     private static RoomManager instance = null;
 
@@ -12,6 +18,11 @@ public class RoomManager : MonoBehaviour
     public Transform securitySpawn;
 
     public GameObject[] gameObjects;
+
+    [Networked]
+    [Capacity(32)]
+    [HideInInspector]
+    public NetworkDictionary<PlayerRef, RoomPlayerData> PlayerData { get; }
 
     public static RoomManager Instance
     {
@@ -26,28 +37,6 @@ public class RoomManager : MonoBehaviour
 
     private void Awake()
     {
-        if(PhotonNetwork.IsMasterClient)
-        {
-            camears[0].gameObject.SetActive(true);
-            camears[1].gameObject.SetActive(false);
-            GameObject obj = PhotonNetwork.Instantiate(gameObjects[0].name, securitySpawn.position, securitySpawn.rotation);
-            obj.transform.SetParent(securitySpawn);
-        }
-        else
-        {
-            camears[0].gameObject.SetActive(false);
-            camears[1].gameObject.SetActive(true);
-
-            foreach(var trans in patientSpawn)
-            {
-                if(trans.childCount == 0)
-                {
-                    GameObject obj = PhotonNetwork.Instantiate(gameObjects[1].name, trans.position, trans.rotation);
-                    obj.transform.SetParent(trans);
-                    break;
-                }
-            }
-        }
     }
 
     void Start()
@@ -58,4 +47,32 @@ public class RoomManager : MonoBehaviour
     {
         
     }
+
+
+    private void SpawnPlayer(PlayerRef playerRef)
+    {
+        if (PlayerData.TryGet(playerRef, out var playerData) == false)
+        {
+            playerData = new RoomPlayerData();
+            playerData.Nickname = playerRef.ToString();
+            playerData.IsConnected = false;
+        }
+    }
+
+    private void DespawnPlayer(PlayerRef playerRef, Player player)
+    {
+        if (PlayerData.TryGet(playerRef, out var playerData) == true)
+        {
+            if (playerData.IsConnected == true)
+            {
+                Debug.LogWarning($"{playerRef} disconnected.");
+            }
+
+            playerData.IsConnected = false;
+            PlayerData.Set(playerRef, playerData);
+        }
+
+        Runner.Despawn(player.Object);
+    }
+
 }

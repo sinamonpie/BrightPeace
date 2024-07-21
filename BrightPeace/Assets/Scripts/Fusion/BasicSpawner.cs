@@ -29,31 +29,6 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     private void OnGUI()
     {
-        //if (_runner == null)
-        //{
-        //    if (GUI.Button(new Rect(0, 0, 200, 40), "JoinLobby"))
-        //    {
-        //        JoinLobby();
-        //    }
-        //}
-        //else if(_runner.IsCloudReady)
-        //{
-        //    if (GUI.Button(new Rect(0, 40, 200, 40), "Host"))
-        //    {
-        //        StartGame(GameMode.Host);
-        //    }
-        //    if (GUI.Button(new Rect(0, 80, 200, 40), "Join"))
-        //    {
-        //        isMatch = true;
-        //        StartCoroutine(JoinRandomRoom());
-        //    }
-        //    if (GUI.Button(new Rect(0, 120, 200, 40), "JoinCancle"))
-        //    {
-        //        isMatch = false;
-        //        StopCoroutine(JoinRandomRoom());
-        //    }
-        //}
-
         if (_runner == null)
         {
             if (GUI.Button(new Rect(0, 40, 200, 40), "Host"))
@@ -74,21 +49,6 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             }
         }
     }
-
-    //async void JoinLobby()
-    //{
-    //    _runner = gameObject.AddComponent<NetworkRunner>();
-    //    var result = await _runner.JoinSessionLobby(SessionLobby.ClientServer);
-
-    //    if (result.Ok)
-    //    {
-    //        Debug.Log("JoinLobby");
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError($"Failed to Start: {result.ShutdownReason}");
-    //    }
-    //}
 
     async void StartGame(GameMode mode)
     {
