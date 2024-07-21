@@ -94,7 +94,7 @@ public class RoomManager : NetworkBehaviour
 
                 var player2 = Runner.Spawn(gameObjects[1], spawnPoint.position, spawnPoint.rotation, playerRef);
                 player2.gameObject.transform.SetParent(spawnPoint);
-                Runner.SetPlayerObject(playerRef, player2.Object);
+                //Runner.SetPlayerObject(playerRef, player2.Object);
                 break;
             }
         }

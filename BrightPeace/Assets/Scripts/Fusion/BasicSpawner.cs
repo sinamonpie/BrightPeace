@@ -19,14 +19,6 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     private NetworkRunner _runner;
 
-    [SerializeField]
-    public List<SessionInfo> sessionList = new List<SessionInfo>();
-    public int listCount = 0;
-
-    public bool isMatch = false;
-
-    public string nickname = "";
-
     private void OnGUI()
     {
         if (_runner == null)
@@ -37,9 +29,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             }
             if (GUI.Button(new Rect(0, 80, 200, 40), "Join"))
             {
-                isMatch = true;
                 StartGame(GameMode.Client);
-                //StartCoroutine(JoinRandomRoom());
             }
         }
         else if (!_runner.IsServer)
@@ -86,8 +76,6 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         }
         else if (mode == GameMode.Client)
         {
-            isMatch = false;
-
             var result = await _runner.JoinSessionLobby(SessionLobby.Custom, "MyCustomLobby");
 
             if (result.Ok)
@@ -98,18 +86,6 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             {
                 Debug.LogError($"Failed to Start: {result.ShutdownReason}");
             }
-        }
-    }
-
-    IEnumerator JoinRandomRoom()
-    {
-        while(true)
-        {
-            if (sessionList.Count > 0)
-            {
-                StartGame(GameMode.Client);
-            }
-            yield return null;
         }
     }
 
@@ -153,19 +129,13 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         input.Set(data);
     }
 
-    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> _sessionList) {
-        sessionList = _sessionList;
-        listCount = sessionList.Count;
-
+    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) {
         if (sessionList.Count > 0)
         {
-
-            // Get first Session from the list
             var session = sessionList[0];
 
             Debug.Log($"Joining {session.Name}");
 
-            // Join
             runner.StartGame(new StartGameArgs()
             {
                 GameMode = GameMode.Client, // Client GameMode, could be Shared as well
@@ -174,7 +144,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             });
         }
 
-        Debug.Log($"Session List Updated with {_sessionList.Count} session(s)");
+        Debug.Log($"Session List Updated with {sessionList.Count} session(s)");
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
