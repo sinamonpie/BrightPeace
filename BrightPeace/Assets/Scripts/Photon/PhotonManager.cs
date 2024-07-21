@@ -107,7 +107,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, INetworkRunnerCallbacks
         var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
         if (scene.IsValid)
         {
-            sceneInfo.AddSceneRef(scene, LoadSceneMode.Additive);
+            sceneInfo.AddSceneRef(scene, LoadSceneMode.Single);
         }    
 
         if (mode == GameMode.Host)
@@ -124,7 +124,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, INetworkRunnerCallbacks
                 string sceneName = GameManager.Instance.sceneName[2];
                 if(_runner.IsSceneAuthority)
                 {
-                    await _runner.LoadScene(sceneName, LoadSceneMode.Additive, LocalPhysicsMode.None, true);
+                    await _runner.LoadScene(sceneName, LoadSceneMode.Single, LocalPhysicsMode.None, true);
                 }
             }
             else
