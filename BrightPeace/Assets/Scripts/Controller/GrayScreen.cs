@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.PostProcessing;
 
 public class GrayScreen : MonoBehaviour
 {
-    public Volume volume;
-    ColorAdjustments colorAdjustments;
+    public PostProcessVolume postProcessVolume;
+    ColorGrading colorGrading;
     bool isEffectActive = false;
 
     void Start()
     {
-        volume.profile.TryGet<ColorAdjustments>(out colorAdjustments);
+        postProcessVolume.profile.TryGetSettings<ColorGrading>(out colorGrading);
     }
 
     public void ApplyGrayScreen(float applyTime)
@@ -27,10 +27,10 @@ public class GrayScreen : MonoBehaviour
     {
         Debug.Log("필터 적용");
         isEffectActive = true;
-        colorAdjustments.saturation.value = -100f;
+        colorGrading.saturation.value = -100f;
         yield return new WaitForSeconds(time);
 
         isEffectActive = false;
-        colorAdjustments.saturation.value = 0f;
+        colorGrading.saturation.value = 0f;
     }
 }
