@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Rendering;
-//using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Universal;
 
 public class GrayScreen : MonoBehaviour
 {
-    /*
     public Volume volume;
     ColorAdjustments colorAdjustments;
     bool isEffectActive = false;
@@ -35,5 +33,4 @@ public class GrayScreen : MonoBehaviour
         isEffectActive = false;
         colorAdjustments.saturation.value = 0f;
     }
-    */
 }

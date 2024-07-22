@@ -8,7 +8,7 @@ public class NVD : Item
 
     public override bool UseItem()
     {
-        //GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GrayScreen>().ApplyGrayScreen(wallHackTime);
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GrayScreen>().ApplyGrayScreen(wallHackTime);
         GameObject.Find("WallHacker").GetComponent<WallHacker>().ApplyWallHack(wallHackTime);
         return true;
     }
