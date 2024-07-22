@@ -742,8 +742,8 @@ MonoBehaviour:
   - {fileID: 898151852}
   securitySpawn: {fileID: 763803131}
   gameObjects:
-  - {fileID: 5103330439102501362, guid: 5b3ce1062b900b64fba60d7677045bb9, type: 3}
-  - {fileID: 5103330439102501362, guid: 6fc4bf877192c354ca6ada04fd98a054, type: 3}
+  - {fileID: 3652535622175675062, guid: 5b3ce1062b900b64fba60d7677045bb9, type: 3}
+  - {fileID: 7634419415184209487, guid: 6fc4bf877192c354ca6ada04fd98a054, type: 3}
   _PlayerData:
     _items: []
 --- !u!114 &459860972
@@ -1069,7 +1069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &772326525
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2016,7 +2016,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1861953753
 AudioListener:
   m_ObjectHideFlags: 0

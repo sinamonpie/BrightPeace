@@ -140,7 +140,7 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
         //    }
         //}
 
-        if (RoomGameManager.Instance != null)
+        if (RoomManager.Instance != null)
         {
             bool isUse = false;
 
