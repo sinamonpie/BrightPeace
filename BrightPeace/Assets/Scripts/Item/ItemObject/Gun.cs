@@ -6,7 +6,21 @@ public class Gun : Item
 {
     public override bool UseItem()
     {
-        Debug.Log("Use Gun");
         return true;
+    }
+    public override void Equip()
+    {
+        GameObject parentObject = GameObject.FindWithTag("MainCamera");
+        Transform childObject = parentObject.transform.GetChild(0);
+        GameObject AimManger = childObject.gameObject;
+        AimManger.SetActive(true);
+    }
+
+    public override void UnEquip()
+    {
+        GameObject parentObject = GameObject.FindWithTag("MainCamera");
+        Transform childObject = parentObject.transform.GetChild(0);
+        GameObject AimManger = childObject.gameObject;
+        AimManger.SetActive(false);
     }
 }
