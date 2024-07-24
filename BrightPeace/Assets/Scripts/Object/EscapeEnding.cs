@@ -8,11 +8,15 @@ public class EscapeEnding : MonoBehaviour
     public GameObject triggerItem2;
     public GameObject triggerItem3;
 
+    public ItemData test;
+
     private bool trigger1 = false;
     private bool trigger2 = false;
     private bool trigger3 = false;
 
-    public bool EndigTriggerCheck(GameObject trigger)
+    private bool endingTrigger = false;
+
+    public void EndigTriggerCheck(GameObject trigger)
     {
         if(trigger == triggerItem1)
         {
@@ -29,8 +33,30 @@ public class EscapeEnding : MonoBehaviour
 
         if(trigger1 && trigger2 && trigger3)
         {
-            return true;
+            endingTrigger = true;
         }
-        return false;
     }
+
+    public void UseEndingDoor()
+    {
+        if (trigger1)
+        {
+            Debug.Log("엔딩 조건 1개 추가 충족");
+        }
+        else
+        {
+            Debug.Log("엔딩 조건 불충족");
+        }
+    }
+
+    public void SolveTrigger()
+    {
+        trigger1 = true;
+    }
+
+    public bool EndigTriiger()
+    {
+        return endingTrigger;
+    }
+
 }
