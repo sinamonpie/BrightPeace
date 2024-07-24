@@ -9,4 +9,12 @@ public class Knife : Item
         Debug.Log("Use Knife");
         return true;
     }
+
+    public override void Equip()
+    {
+        GameObject parentObject = GameObject.FindWithTag("MainCamera");
+        Transform childObject = parentObject.transform.GetChild(1);
+        GameObject AimManger = childObject.gameObject;
+        AimManger.SetActive(true);
+    }
 }

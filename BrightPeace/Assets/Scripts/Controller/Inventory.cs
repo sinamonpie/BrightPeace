@@ -15,8 +15,7 @@ public class Inventory : MonoBehaviour
     float wheelInput;
     int currentSlotNum;
 
-    [SerializeField]
-    private Slot currentSlot;       //  현재 슬롯
+    public Slot currentSlot;       //  현재 슬롯
     void Start()
     {
         slots = SlotsParent.GetComponentsInChildren<Slot>();
@@ -77,15 +76,6 @@ public class Inventory : MonoBehaviour
             else if (currentSlot.item.itemType == ItemData.ItemType.Equip)
             {
                 currentSlot.EquipItem();                                //  장비 
-                if (currentSlot.item.itemName == "총")
-                {
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        currentSlot.ClearSlot();
-                    }
-                }
-
-                //  다른 장비 추가
             }
             
             else if (currentSlot.item.itemType == ItemData.ItemType.Escape)
