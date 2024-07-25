@@ -4754,9 +4754,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9bd76e97d9fc4b49a682e8425a7e02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerItem1: {fileID: 0}
-  triggerItem2: {fileID: 0}
-  triggerItem3: {fileID: 0}
 --- !u!1 &8604409324610155446
 GameObject:
   m_ObjectHideFlags: 0
@@ -37672,7 +37669,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8610567295833909456
 Transform:
@@ -47168,7 +47165,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 1
+  unlockDoor: 0
 --- !u!1 &8604688255571818294
 GameObject:
   m_ObjectHideFlags: 0
@@ -52779,7 +52776,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 1
+  unlockDoor: 0
 --- !u!1 &8604726368319016038
 GameObject:
   m_ObjectHideFlags: 0
@@ -55158,7 +55155,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 1
+  unlockDoor: 0
 --- !u!1 &8604740991278443496
 GameObject:
   m_ObjectHideFlags: 0
@@ -60357,7 +60354,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8610672302022933124
 Transform:
@@ -66691,7 +66688,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 1
+  unlockDoor: 0
 --- !u!1 &8604819229379216578
 GameObject:
   m_ObjectHideFlags: 0
@@ -111337,7 +111334,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 1
+  unlockDoor: 0
 --- !u!1 &8605115023736131678
 GameObject:
   m_ObjectHideFlags: 0
@@ -116087,7 +116084,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 1
+  unlockDoor: 0
 --- !u!1 &8605139909519287748
 GameObject:
   m_ObjectHideFlags: 0
