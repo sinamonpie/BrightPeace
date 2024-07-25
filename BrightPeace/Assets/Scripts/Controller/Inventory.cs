@@ -89,8 +89,18 @@ public class Inventory : MonoBehaviour
             }
             
             else if (currentSlot.item.itemType == ItemData.ItemType.Escape)
-            {   
-                                                                        // 탈출 장비
+            {
+                // 탈출 장비
+                if (Input.GetKeyUp(KeyCode.F))
+                {
+                    currentSlot.UseItemSlot(); 
+                    if (currentSlot.transform.GetComponent<Slot>().UsedItem())
+                    {
+                        StartCoroutine(TextAlert());
+                        alertText.text = currentSlot.item.itemName + " 을(를) 사용했습니다.";
+                        currentSlot.ClearSlot();
+                    }
+                }
             }
 
             if (Input.GetKeyUp(KeyCode.G)) 

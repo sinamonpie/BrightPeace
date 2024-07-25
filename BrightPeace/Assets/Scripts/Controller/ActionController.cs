@@ -149,7 +149,7 @@ public class ActionController : MonoBehaviour
             {
                 if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
                 {
-                    Debug.Log("엔딩조건 충족");
+                    Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                 }
                 else
                 {
@@ -159,11 +159,6 @@ public class ActionController : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void EndingChecking()
-    {
-        //hitInfo.transform.GetComponent<EscapeEnding>().EndigTriggerCheck();
     }
 
     public void EndigInfoAppear()

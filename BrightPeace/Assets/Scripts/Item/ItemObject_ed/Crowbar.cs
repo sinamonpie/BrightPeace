@@ -8,7 +8,10 @@ public class Crowbar : Item
     {
         if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().CanDoorAction())
         {
-
+            GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().CrowBar_Trigger();
+            GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().EndigTriggerCheck();
+            Debug.Log("Use CrowBar");
+            return true;
         }
         return base.UseItem();
     }

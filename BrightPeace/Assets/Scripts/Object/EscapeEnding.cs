@@ -4,54 +4,27 @@ using UnityEngine;
 
 public class EscapeEnding : MonoBehaviour
 {
-    public GameObject triggerItem1;
-    public GameObject triggerItem2;
-    public GameObject triggerItem3;
-
-    public ItemData test;
-
-    private bool trigger1 = false;
-    private bool trigger2 = false;
-    private bool trigger3 = false;
+    private bool crowBar_Trigger = false;
+    private bool driver_Trigger = false;
 
     private bool endingTrigger = false;
 
-    public void EndigTriggerCheck(GameObject trigger)
+    public void EndigTriggerCheck()
     {
-        if(trigger == triggerItem1)
-        {
-            trigger1 = true;
-        }
-        else if(trigger == triggerItem2)
-        {
-            trigger2 = true;
-        }
-        else if(trigger == triggerItem3)
-        {
-            trigger3 = true;
-        }
-
-        if(trigger1 && trigger2 && trigger3)
+        if(crowBar_Trigger && driver_Trigger)
         {
             endingTrigger = true;
         }
     }
 
-    public void UseEndingDoor()
+    public void CrowBar_Trigger()
     {
-        if (trigger1)
-        {
-            Debug.Log("엔딩 조건 1개 추가 충족");
-        }
-        else
-        {
-            Debug.Log("엔딩 조건 불충족");
-        }
+        crowBar_Trigger = true;
     }
 
-    public void SolveTrigger()
+    public void Driver_Trigger()
     {
-        trigger1 = true;
+        driver_Trigger = true;
     }
 
     public bool EndigTriiger()
