@@ -43,8 +43,9 @@ public class ActionController : MonoBehaviour
                 DoorInfoAppear();
             }
 
-            if(hitInfo.transform.tag == "Endig")
+            if(hitInfo.transform.tag == "Ending")
             {
+                canDoor = true;
                 EndigInfoAppear();
             }
 
@@ -140,10 +141,31 @@ public class ActionController : MonoBehaviour
         alertText.gameObject.SetActive(false);
     }
 
-    void EndigInfoAppear()
+    public void EndingAction()
+    {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            if (hitInfo.transform != null)
+            {
+                if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
+                {
+                    Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                }
+                else
+                {
+                    alertText.gameObject.SetActive(true);
+                    alertText.text = "문이 잠겼습니다.";
+                    Invoke("DisAlert", 1f);
+                }
+            }
+        }
+    }
+
+    public void EndigInfoAppear()
     {
         actionText.gameObject.SetActive(true);
         actionText.text = "<color=yellow>" + " 탈출하기 " + "E Key" + "</color>";
+        EndingAction();
     }
 
 }

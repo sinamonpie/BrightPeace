@@ -42,7 +42,7 @@ public class DoorController : MonoBehaviour
         {
             y = -y;
         }
-        pivot.transform.Rotate(0, y, 0);
+        pivot.transform.Rotate(0, this.transform.rotation.y + y, 0);
         isClose = !isClose;
     }
 

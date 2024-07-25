@@ -15,6 +15,7 @@ public class ItemData : ScriptableObject
     {
         Equip,
         Used,
-        Escape
+        Escape,
+        None
     }
 }

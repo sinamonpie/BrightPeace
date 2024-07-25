@@ -7,6 +7,7 @@ TagManager:
   - Door
   - CinemachineTarget
   - Item
+  - Ending
   layers:
   - Default
   - TransparentFX

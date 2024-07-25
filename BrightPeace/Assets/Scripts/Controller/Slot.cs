@@ -26,6 +26,14 @@ public class Slot : MonoBehaviour
         SetColor(255f, 255f, 255f);
     }
 
+    public void EquipItem()
+    {
+        item.itemPrefab.transform.GetComponentInChildren<Item>().Equip();
+    }
+    public void UnEquipItem()
+    {
+        item.itemPrefab.transform.GetComponentInChildren<Item>().UnEquip();
+    }
     public void UseItemSlot()
     {
         if(item != null) 

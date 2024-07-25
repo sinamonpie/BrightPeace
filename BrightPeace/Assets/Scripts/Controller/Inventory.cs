@@ -58,7 +58,7 @@ public class Inventory : MonoBehaviour
 
         CurrentSlot(currentSlotNum);
 
-        if (currentSlot.item != null)     
+        if (currentSlot.item != null)
         {
             if (currentSlot.item.itemType == ItemData.ItemType.Used)    //  소모품
             {
@@ -73,17 +73,37 @@ public class Inventory : MonoBehaviour
                     }
                 }
             }
+
             else if (currentSlot.item.itemType == ItemData.ItemType.Equip)
             {
-                                                                        //  장비 
+                currentSlot.EquipItem();                                //  장비 
+                if (currentSlot.item.itemName == "총")
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        currentSlot.ClearSlot();
+                    }
+                }
+
+                //  다른 장비 추가
             }
+            
             else if (currentSlot.item.itemType == ItemData.ItemType.Escape)
-            {   
-                                                                        // 탈출 장비
+            {
+                // 탈출 장비
+                if (Input.GetKeyUp(KeyCode.F))
+                {
+                    currentSlot.UseItemSlot(); 
+                    if (currentSlot.transform.GetComponent<Slot>().UsedItem())
+                    {
+                        StartCoroutine(TextAlert());
+                        alertText.text = currentSlot.item.itemName + " 을(를) 사용했습니다.";
+                        currentSlot.ClearSlot();
+                    }
+                }
             }
 
-
-                if (Input.GetKeyUp(KeyCode.G)) 
+            if (Input.GetKeyUp(KeyCode.G)) 
             {
                 Vector3 PlayerPos = transform.parent.position;
                 Vector3 PlayerFwd = transform.parent.forward;
