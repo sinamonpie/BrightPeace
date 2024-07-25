@@ -30,10 +30,6 @@ public class Slot : MonoBehaviour
     {
         item.itemPrefab.transform.GetComponentInChildren<Item>().Equip();
     }
-    public void UnEquipItem()
-    {
-        item.itemPrefab.transform.GetComponentInChildren<Item>().UnEquip();
-    }
     public void UseItemSlot()
     {
         if(item != null) 

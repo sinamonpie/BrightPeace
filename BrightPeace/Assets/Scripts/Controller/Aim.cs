@@ -25,6 +25,8 @@ public class Aim : MonoBehaviour
 
     private bool isZoomed = false;
     private bool isAimPlayer;
+
+    public Inventory inventory;
     void Start()
     {
         normalFOV = virtualCamera.m_Lens.FieldOfView;
@@ -33,18 +35,39 @@ public class Aim : MonoBehaviour
 
     void Update()
     {
-        Aimming();
+        if (inventory.currentSlot.item != null)
+        {
+            if (inventory.currentSlot.item.itemName == "รั")
+            {
+                Aimming();
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            Shoting();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Shoting();
+                }
+                else if (Input.GetMouseButtonDown(1))
+                {
+                    Zooming();
+                }
+            }
+            else
+            {
+                if (isZoomed)
+                {
+                    isZoomed = !isZoomed;
+                    virtualCamera.m_Lens.FieldOfView = normalFOV;
+                    _3rdPersonFollow.ShoulderOffset.x -= panDistance;
+                    image.gameObject.SetActive(false);
+                }
+                this.gameObject.SetActive(false);
+            }
+
         }
-        else if (Input.GetMouseButtonDown(1))
+        else
         {
-            Zooming();
+            this.gameObject.SetActive(false);
         }
     }
-
 
     void Shoting()
     {
@@ -66,6 +89,7 @@ public class Aim : MonoBehaviour
             image.gameObject.SetActive(false);
         }
 
+        inventory.currentSlot.ClearSlot();
         this.gameObject.SetActive(false);
     }
 

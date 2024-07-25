@@ -18,9 +18,5 @@ public class Gun : Item
 
     public override void UnEquip()
     {
-        GameObject parentObject = GameObject.FindWithTag("MainCamera");
-        Transform childObject = parentObject.transform.GetChild(0);
-        GameObject AimManger = childObject.gameObject;
-        AimManger.SetActive(false);
     }
 }
