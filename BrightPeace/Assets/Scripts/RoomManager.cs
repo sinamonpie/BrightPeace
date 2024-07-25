@@ -1,6 +1,8 @@
 using Fusion;
+using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public struct RoomPlayerData : INetworkStruct
@@ -11,16 +13,9 @@ public struct RoomPlayerData : INetworkStruct
     public bool IsConnected;
 }
 
-public enum EGameplayState
+public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined, IPlayerLeft
 {
-    Skirmish = 0,
-    Running = 1,
-    Finished = 2,
-}
-
-public class RoomManager : NetworkBehaviour
-{
-    private static RoomManager instance = null;
+    public static RoomManager Instance { get; private set; }
 
     public Camera[] camears;
     public List<Transform> patientSpawn;
@@ -28,101 +23,77 @@ public class RoomManager : NetworkBehaviour
 
     public RoomPlayer[] gameObjects;
 
+    public NetworkObject playerObject;
+
     [Networked]
     [Capacity(32)]
     [HideInInspector]
     public NetworkDictionary<PlayerRef, RoomPlayerData> PlayerData { get; }
 
-    private bool _isNicknameSent;
-    private static List<PlayerRef> _tempSpawnPlayers = new List<PlayerRef>();
-    private static List<RoomPlayer> _tempSpawnedPlayers = new List<RoomPlayer>();
+    [Networked, Capacity(5)]
+    NetworkDictionary<PlayerRef, RoomPlayer> ObjectByRef { get; }
 
-    [Networked]
-    [HideInInspector]
-    public EGameplayState State { get; set; }
-
-    private List<RoomPlayerData> _tempPlayerData = new(16);
-
-    public static RoomManager Instance
+    public override void Spawned()
     {
-        get
-        {
-            if (instance == null)
-                return null;
-
-            return instance;
-        }
+        base.Spawned();
+        Instance = this;
+        Runner.AddCallbacks(PhotonManager.Instance);
     }
 
-    private void Awake()
+    public override void Despawned(NetworkRunner runner, bool hasState)
     {
+        base.Despawned(runner, hasState);
+        Instance = null;
+        runner.RemoveCallbacks(PhotonManager.Instance);
     }
 
-    void Start()
+    public void SetSecurityCamera()
     {
+        camears[0].gameObject.SetActive(true);
+        camears[1].gameObject.SetActive(false);
     }
 
-    void Update()
+    public void PlayerJoined(PlayerRef player)
     {
-        
+        SpawnPlayer(player);
     }
 
-    public override void Render()
+    public void PlayerLeft(PlayerRef player)
     {
-        if (Runner.Mode == SimulationModes.Server)
-            return;
-
-        // Every client must send its nickname to the server when the game is started.
-        if (_isNicknameSent == false)
-        {
-            RPC_SetPlayerNickname(Runner.LocalPlayer, PlayerPrefs.GetString("Photon.Menu.Username"));
-            _isNicknameSent = true;
-        }
+            RoomPlayer leftPlayer = RoomManager.GetPlayer(player);
+            if (leftPlayer != null)
+            {
+                DespawnPlayer(player, leftPlayer);
+            }
     }
 
-    private void SpawnPlayer(PlayerRef playerRef)
+    public void SpawnPlayer(PlayerRef playerRef)
     {
         if (PlayerData.TryGet(playerRef, out var playerData) == false)
         {
             playerData = new RoomPlayerData();
-            playerData.Nickname = playerRef.ToString();
+            playerData.Nickname = PhotonManager.Instance.nick;
             playerData.IsConnected = false;
         }
 
         if (playerData.IsConnected == true)
             return;
 
-        Debug.LogWarning($"{playerRef} connected.");
-
         playerData.IsConnected = true;
         PlayerData.Set(playerRef, playerData);
 
-        //if(Runner.IsClient)
-        //{
-        //    SpawnSecurity(playerRef);
-        //}
-        //else
-        //{
-        //    SpawnPatient(playerRef);
-        //}
-        SpawnPatient(playerRef);
-        //if (playerRef.PlayerId == 1)
-        //{
-        //    SpawnSecurity(playerRef);
-        //}
-        //else
-        //{
-        //    SpawnPatient(playerRef);
-        //}
-
-        RecalculateStatisticPositions();
+        if (playerRef.PlayerId == 1)
+        {
+            SpawnSecurity(playerRef);
+        }
+        else
+        {
+            SpawnPatient(playerRef);
+        }
     }
 
     private void SpawnSecurity(PlayerRef playerRef)
     {
-        camears[0].gameObject.SetActive(true);
-        camears[1].gameObject.SetActive(false);
-
         var spawnPoint = securitySpawn;
         var player1 = Runner.Spawn(gameObjects[0], spawnPoint.position, spawnPoint.rotation, playerRef);
 
@@ -133,9 +104,6 @@ public class RoomManager : NetworkBehaviour
 
     private void SpawnPatient(PlayerRef playerRef)
     {
-        camears[0].gameObject.SetActive(false);
-        camears[1].gameObject.SetActive(true);
-
         foreach (var trans in patientSpawn)
         {
             if (trans.childCount == 0)
@@ -149,7 +117,7 @@ public class RoomManager : NetworkBehaviour
         }
     }
 
-    private void DespawnPlayer(PlayerRef playerRef, RoomPlayer player)
+    public void DespawnPlayer(PlayerRef playerRef, RoomPlayer player)
     {
         if (PlayerData.TryGet(playerRef, out var playerData) == true)
         {
@@ -165,89 +133,69 @@ public class RoomManager : NetworkBehaviour
         Runner.Despawn(player.Object);
     }
 
-
-    private void RecalculateStatisticPositions()
+    public static void Server_Add(NetworkRunner runner, PlayerRef pRef, RoomPlayer pObj)
     {
-        if (State == EGameplayState.Finished)
-            return;
+        Debug.Assert(runner.IsServer);
 
-        _tempPlayerData.Clear();
-
-        foreach (var pair in PlayerData)
+        if (Instance.GetAvailable(out byte index))
         {
-            _tempPlayerData.Add(pair.Value);
+            Instance.ObjectByRef.Add(pRef, pObj);
+            pObj.Server_Init(pRef, index);
         }
-
-        for (int i = 0; i < _tempPlayerData.Count; i++)
+        else
         {
-            var playerData = _tempPlayerData[i];
-
-            PlayerData.Set(playerData.PlayerRef, playerData);
+            Debug.LogWarning($"Unable to register player {pRef}", pObj);
         }
     }
 
-
-    public override void FixedUpdateNetwork()
+    public static void Server_Remove(NetworkRunner runner, PlayerRef pRef)
     {
-        UpdatePlayerConnections(Runner, SpawnPlayer, DespawnPlayer);
+        Debug.Assert(runner.IsServer);
+        Debug.Assert(pRef.IsRealPlayer);
 
-
-        if (State == EGameplayState.Skirmish && PlayerData.Count > 1)
+        if (Instance.ObjectByRef.Remove(pRef) == false)
         {
-            State = EGameplayState.Running;
+            Debug.LogWarning("Could not remove player from registry");
         }
     }
 
-    public static void UpdatePlayerConnections(NetworkRunner runner, Action<PlayerRef> spawnPlayer, Action<PlayerRef, RoomPlayer> despawnPlayer)
+    bool GetAvailable(out byte index)
     {
-        _tempSpawnPlayers.Clear();
-        _tempSpawnedPlayers.Clear();
-
-        _tempSpawnPlayers.AddRange(runner.ActivePlayers);
-
-        runner.GetAllBehaviours(_tempSpawnedPlayers);
-
-        for (int i = 0; i < _tempSpawnedPlayers.Count; ++i)
+        if (ObjectByRef.Count == 0)
         {
-            RoomPlayer player = _tempSpawnedPlayers[i];
-            PlayerRef playerRef = player.Object.InputAuthority;
+            index = 0;
+            return true;
+        }
+        else if (ObjectByRef.Count == 5)
+        {
+            index = default;
+            return false;
+        }
 
-            _tempSpawnPlayers.Remove(playerRef);
+        byte[] indices = ObjectByRef.OrderBy(kvp => kvp.Value.Index).Select(kvp => kvp.Value.Index).ToArray();
 
-            if (runner.IsPlayerValid(playerRef) == false)
+        for (int i = 0; i < indices.Length - 1; i++)
+        {
+            if (indices[i + 1] > indices[i] + 1)
             {
-                try
-                {
-                    despawnPlayer(playerRef, player);
-                }
-                catch (Exception exception)
-                {
-                    Debug.LogException(exception);
-                }
+                index = (byte)(indices[i] + 1);
+                return true;
             }
         }
 
-        for (int i = 0; i < _tempSpawnPlayers.Count; ++i)
-        {
-            try
-            {
-                spawnPlayer(_tempSpawnPlayers[i]);
-            }
-            catch (Exception exception)
-            {
-                Debug.LogException(exception);
-            }
-        }
-
-        _tempSpawnPlayers.Clear();
-        _tempSpawnedPlayers.Clear();
+        index = (byte)(indices[indices.Length - 1] + 1);
+        return true;
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority, Channel = RpcChannel.Reliable)]
-    private void RPC_SetPlayerNickname(PlayerRef playerRef, string nickname)
+    public static RoomPlayer GetPlayer(PlayerRef pRef)
     {
-        var playerData = PlayerData.Get(playerRef);
-        playerData.Nickname = nickname;
-        PlayerData.Set(playerRef, playerData);
+        if (HasPlayer(pRef))
+            return Instance.ObjectByRef.Get(pRef);
+        return null;
+    }
+
+    public static bool HasPlayer(PlayerRef pRef)
+    {
+        return Instance.ObjectByRef.ContainsKey(pRef);
     }
 }

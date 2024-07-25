@@ -1,7 +1,6 @@
 using ExitGames.Client.Photon;
 using Photon.Chat;
 using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +8,6 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
 {
     private ChatClient chatClient;
     private string userName;
-    private string currentChannelName;
 
     private static PhotonChatManager instance = null;
 
