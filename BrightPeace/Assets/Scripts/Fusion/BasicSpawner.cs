@@ -6,6 +6,7 @@ using System;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public struct NetworkInputData : INetworkInput
 {
