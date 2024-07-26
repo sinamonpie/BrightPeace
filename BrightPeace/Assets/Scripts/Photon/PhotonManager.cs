@@ -144,7 +144,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, INetworkRunnerCallbacks
                 string sceneName = GameManager.Instance.sceneName[2];
                 if (_runner.IsSceneAuthority)
                 {
-                    await _runner.LoadScene(sceneName, LoadSceneMode.Additive, LocalPhysicsMode.None, true);
+                    await _runner.LoadScene(sceneName, LoadSceneMode.Single, LocalPhysicsMode.None, true);
                 }
             }
             else
@@ -166,16 +166,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks, INetworkRunnerCallbacks
     {
         if (runner.IsServer)
         {
-            //Vector3 spawnPosition = new Vector3((player.RawEncoded % runner.Config.Simulation.PlayerCount) * 3, 1, 0);
-            //NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
-            //_spawnedCharacters.Add(player, networkPlayerObject);
-
             Debug.Log("Join Player : " + runner.LocalPlayer.ToString());
         }
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
+        if (runner.IsServer)
+            RoomManager.Server_Remove(runner, player);
     }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
