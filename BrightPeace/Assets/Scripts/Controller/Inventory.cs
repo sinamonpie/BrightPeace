@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class Inventory : MonoBehaviour
 {
-
+    public GameObject player;
     [SerializeField] private GameObject SlotsParent;
     [SerializeField] private TMP_Text alertText;
     private SlotBackGround[] slotsBg;
@@ -54,46 +54,7 @@ public class Inventory : MonoBehaviour
                 currentSlotNum = slots.Length - 1;
             }
         }
-
         CurrentSlot(currentSlotNum);
-
-        if (currentSlot.item != null)
-        {
-            if (currentSlot.item.itemType == ItemData.ItemType.Used)    //  소모품
-            {
-                if (Input.GetKeyUp(KeyCode.F))
-                {
-                    currentSlot.UseItemSlot();                          //   아이템 사용
-                    if (currentSlot.transform.GetComponent<Slot>().UsedItem())
-                    {
-                        StartCoroutine(TextAlert());
-                        alertText.text = currentSlot.item.itemName + " 을(를) 사용했습니다.";
-                        currentSlot.ClearSlot();
-                    }
-                }
-            }
-
-            else if (currentSlot.item.itemType == ItemData.ItemType.Equip)
-            {
-                currentSlot.EquipItem();                                //  장비 
-            }
-            
-            else if (currentSlot.item.itemType == ItemData.ItemType.Escape)
-            {   
-                                                                        // 탈출 장비
-            }
-
-            if (Input.GetKeyUp(KeyCode.G)) 
-            {
-                Vector3 PlayerPos = transform.parent.position;
-                Vector3 PlayerFwd = transform.parent.forward;
-                GameObject itemGo = Instantiate<GameObject>(currentSlot.item.itemPrefab);
-                itemGo.transform.position = PlayerPos + PlayerFwd;
-                Debug.Log("Drop " + currentSlot.item.itemName);
-                currentSlot.ClearSlot();
-            }
-        }
-
     }
 
     void CurrentSlot(int index)
@@ -122,14 +83,6 @@ public class Inventory : MonoBehaviour
             }
         }
         return false;
-    }
-
-    IEnumerator TextAlert()
-    {
-        alertText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2f);
-
-        alertText.gameObject.SetActive(false);
     }
 
 }
