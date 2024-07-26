@@ -7,7 +7,7 @@ using Cinemachine;
 public class Aim : MonoBehaviour
 {
     public GameObject gunItem;
-    public Image image;
+    public Image zoomCrosshair;
     public Camera camera;
     public CinemachineVirtualCamera virtualCamera;
     private Cinemachine3rdPersonFollow _3rdPersonFollow;
@@ -26,9 +26,10 @@ public class Aim : MonoBehaviour
     private bool isZoomed = false;
     private bool isAimPlayer;
 
-    public Inventory inventory;
+    Inventory inventory;
     void Start()
     {
+        inventory = FindObjectOfType<Inventory>();
         normalFOV = virtualCamera.m_Lens.FieldOfView;
         _3rdPersonFollow = virtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
     }
@@ -57,7 +58,7 @@ public class Aim : MonoBehaviour
                     isZoomed = !isZoomed;
                     virtualCamera.m_Lens.FieldOfView = normalFOV;
                     _3rdPersonFollow.ShoulderOffset.x -= panDistance;
-                    image.gameObject.SetActive(false);
+                    zoomCrosshair.gameObject.SetActive(false);
                 }
                 this.gameObject.SetActive(false);
             }
@@ -86,7 +87,7 @@ public class Aim : MonoBehaviour
             isZoomed = !isZoomed;
             virtualCamera.m_Lens.FieldOfView = normalFOV;
             _3rdPersonFollow.ShoulderOffset.x -= panDistance;
-            image.gameObject.SetActive(false);
+            zoomCrosshair.gameObject.SetActive(false);
         }
 
         inventory.currentSlot.ClearSlot();
@@ -96,7 +97,7 @@ public class Aim : MonoBehaviour
     void Zooming()
     {
         isZoomed = !isZoomed;
-        image.gameObject.SetActive(isZoomed);
+        zoomCrosshair.gameObject.SetActive(isZoomed);
 
         if (isZoomed)
         {
@@ -116,15 +117,15 @@ public class Aim : MonoBehaviour
 
         if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, layerMask))
         {
-            if (hitInfo.transform.tag == "Player")
+            if (hitInfo.transform.tag == "Player" && hitInfo.transform != null)
             {
                 isAimPlayer = true;
-                image.color = Color.red;
+                zoomCrosshair.color = Color.red;
             }
             else
             {
                 isAimPlayer = false;
-                image.color = Color.white;
+                zoomCrosshair.color = Color.white;
             }
         }
     }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class ActionController : MonoBehaviour
 {
     [SerializeField]
@@ -59,7 +58,7 @@ public class ActionController : MonoBehaviour
     void ItemInfoAppear()
     {
         actionText.gameObject.SetActive(true);
-        actionText.text = hitInfo.transform.GetComponent<Item>().itemData.itemName + " 획득하기 " + "<color=yellow>" + "E Key" + "</color>";
+        actionText.text = hitInfo.transform.GetComponent<ItemPickUp>().Item.itemName + " 획득하기 " + "<color=yellow>" + "E Key" + "</color>";
         PickupAction();
     }
 
@@ -89,10 +88,10 @@ public class ActionController : MonoBehaviour
         {
             if (hitInfo.transform != null)
             {
-                isInvenFull = inventory.AddItem(hitInfo.transform.GetComponent<Item>().itemData);
+                isInvenFull = inventory.AddItem(hitInfo.transform.GetComponent<ItemPickUp>().Item);
                 if (isInvenFull)
                 {
-                    Debug.Log("획득하기 " + hitInfo.transform.GetComponent<Item>().itemData.itemName);
+                    Debug.Log("획득하기 " + hitInfo.transform.GetComponent<ItemPickUp>().Item.itemName);
                     Destroy(hitInfo.transform.gameObject);
                 }
                 else

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d15f3285e0c9d1468f5d3f2a8e67451, type: 3}
   m_Name: LobbyKey
   m_EditorClassIdentifier: 
-  itemName: "\uC1E0\uC9C0\uB81B\uB300"
+  itemName: LobbyKey
   itemType: 0
   itemImage: {fileID: 21300000, guid: 25228f20b9d9c5e4eb4159f65f0c19e5, type: 3}
   itemPrefab: {fileID: 2572372524444635814, guid: 312975a718437594c86dffa5eff86cc2, type: 3}
