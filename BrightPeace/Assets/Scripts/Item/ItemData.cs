@@ -11,11 +11,13 @@ public class ItemData : ScriptableObject
     public Sprite itemImage;
     public GameObject itemPrefab;
 
-    public enum ItemType
-    {
-        Equip,
-        Used,
-        Escape,
-        None
-    }
+}
+
+public enum ItemType
+{
+    None = 0b0,
+    Equip = 0b1,
+    Used = 0b10,
+    Escape = 0b100,
+    Skill = 0b1000,
 }

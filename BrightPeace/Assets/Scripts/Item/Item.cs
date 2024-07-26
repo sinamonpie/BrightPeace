@@ -1,24 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.Build;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+namespace Older
 {
-    public ItemData itemData;
-
-    public virtual bool UseItem()
+    public class Item : MonoBehaviour
     {
-        return true;
+        public ItemData itemData;
+        public GameObject player;
+        public virtual bool UseItem()
+        {
+            return true;
+        }
+
+        public virtual void Equip()
+        {
+
+        }
+
+        public virtual void UnEquip()
+        {
+
+        }
     }
 
-    public virtual void Equip()
-    {
-
-    }
-
-    public virtual void UnEquip()
-    {
-
-    }
 }
