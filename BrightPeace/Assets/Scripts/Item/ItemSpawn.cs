@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class ItemSpawn : MonoBehaviour
+public class ItemSpawn : MonoBehaviourPunCallbacks
 {
     public GameObject item1;
     public int item1Count = 1;
 
     void Start()
     {
-        SpawnItems();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SpawnItems();
+        }
     }
 
     private void SpawnItems()
@@ -19,7 +23,7 @@ public class ItemSpawn : MonoBehaviour
         for (int i = 0; i < item1Count; i++)
         {
             Transform spawnPoint = transform.GetChild(spawnIndexes[i]);
-            GameObject newItem = Instantiate(item1, spawnPoint.position, Quaternion.identity);
+            PhotonNetwork.Instantiate(item1.name, spawnPoint.position, Quaternion.identity);
         }
     }
 
