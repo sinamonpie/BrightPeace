@@ -39,6 +39,15 @@ MonoBehaviour:
   - ClickRpc
   - DestroyRpc
   - HeresWhy
+  - AllowUseWalkieTalkie
+  - ReleaseWalkieTalkie
+  - RequestToUseWalkieTalkie
+  - StopUsingWalkieTalkie
+  - RequestToUseRadio
+  - AllowUseRadio
+  - StopUsingRadio
+  - ReleaseRadio
+  - RequestToUserRadio
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
