@@ -2300,6 +2300,7 @@ GameObject:
   - component: {fileID: 806601211}
   - component: {fileID: 806601210}
   - component: {fileID: 806601209}
+  - component: {fileID: 806601215}
   m_Layer: 0
   m_Name: VoiceManager
   m_TagString: Untagged
@@ -2403,7 +2404,7 @@ MonoBehaviour:
   statsResetInterval: 1000
   speakerPrefab: {fileID: 0}
   primaryRecorder: {fileID: 806601209}
-  usePrimaryRecorder: 1
+  usePrimaryRecorder: 0
   cppCompatibilityMode: 0
   Settings:
     AppIdRealtime: 
@@ -2444,6 +2445,62 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 806601208}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &806601215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806601208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9f213f32ce15ee449e91da87b89d41f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &841552003
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 841552005}
+  - component: {fileID: 841552004}
+  m_Layer: 0
+  m_Name: RadioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &841552004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841552003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0f4aa2e7cbc399428330a1e9bcfc909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &841552005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841552003}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -2547,11 +2604,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4215541010258125991, guid: a2ac944d9f7481f4ba7206a01b89db69, type: 3}
   m_PrefabInstance: {fileID: 1767878652}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1007072070 stripped
+--- !u!4 &1007072070
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 2625176814951157784, guid: b811f8c9fc30b544fb4ff5c36a15aa71, type: 3}
   m_PrefabInstance: {fileID: 3755076014540691642}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465205311}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 376745133}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1035845684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3993,6 +4060,42 @@ LightProbeGroup:
   - {x: 7.1518564, y: 2.7763042, z: -11.2319765}
   - {x: 8.993203, y: 2.3566551, z: -8.796325}
   m_Dering: 1
+--- !u!1 &1465205311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 6598684304816894518, guid: b811f8c9fc30b544fb4ff5c36a15aa71, type: 3}
+  m_PrefabInstance: {fileID: 3755076014540691642}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1007072070}
+  - component: {fileID: 1465205312}
+  m_Layer: 0
+  m_Name: KnifeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1465205312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 5004419467643097511, guid: b811f8c9fc30b544fb4ff5c36a15aa71, type: 3}
+  m_PrefabInstance: {fileID: 3755076014540691642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465205311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a17b5060e2386346bf2b7f100ec7fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  actionText: {fileID: 1351222693}
+  camera: {fileID: 376745138}
+  inventory: {fileID: 1066386125}
 --- !u!1001 &1484509336
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5407,3 +5510,4 @@ SceneRoots:
   - {fileID: 4918193467818955828}
   - {fileID: 806601214}
   - {fileID: 2102724105}
+  - {fileID: 841552005}
