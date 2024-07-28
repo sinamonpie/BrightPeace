@@ -24,9 +24,6 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
     [Networked, Capacity(5)]
     NetworkDictionary<PlayerRef, RoomPlayer> ObjectByRef { get; }
 
-    [Networked]
-    public Network
-
     public Button readyBtn;
     public TMP_Text readyTxt;
 
