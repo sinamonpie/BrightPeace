@@ -52,9 +52,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks, INetworkRunnerCallbacks
     {
     }
 
-    public void JoinLobby(string _nick)
+    public void JoinLobby()
     {
-        nick = _nick;
         GameManager.Instance.LoadLobbyScene();
     }
 
@@ -89,26 +88,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks, INetworkRunnerCallbacks
         _runner.ProvideInput = true;
 
         //var sceneInfo = new NetworkSceneInfo();
-        //for (int i = 0; i<GameManager.Instance.sceneName.Count; i++)
+        //var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
+        //if (scene.IsValid)
         //{
-        //    var scene = SceneRef.FromIndex(i);
-        //    if (scene.IsValid)
-        //    {
-        //        sceneInfo.AddSceneRef(scene, LoadSceneMode.Additive);
-        //    }
-        //}
-
-        //if(_runner.IsSceneAuthority)
-        //{
-        //    _runner.LoadScene(SceneRef.FromIndex(1), LoadSceneMode.Additive);
-        //}
-
-        var sceneInfo = new NetworkSceneInfo();
-        var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
-        if (scene.IsValid)
-        {
-            sceneInfo.AddSceneRef(scene, LoadSceneMode.Single);
-        }    
+        //    sceneInfo.AddSceneRef(scene, LoadSceneMode.Single);
+        //}    
 
         if (mode == GameMode.Host)
         {
@@ -172,6 +156,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
+        Debug.Log("PlayerLeft : " + runner.LocalPlayer.ToString());
         if (runner.IsServer)
             RoomManager.Server_Remove(runner, player);
     }
@@ -186,6 +171,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, INetworkRunnerCallbacks
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
+        Debug.Log("ShutDown : " + runner.LocalPlayer.ToString());
         if (shutdownReason == ShutdownReason.DisconnectedByPluginLogic)
         {
             if (runner.SceneManager != null)

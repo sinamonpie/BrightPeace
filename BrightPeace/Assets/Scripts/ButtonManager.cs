@@ -12,16 +12,48 @@ public class ButtonManager : MonoBehaviour
     public GameObject selectSecurity;
     public GameObject selectMental;
 
+    private void OnEnable()
+    {
+        
+    }
+
+    public void GetNickname()
+    {
+        if(PlayerPrefs.HasKey("nick"))
+        {
+            string nickname = PlayerPrefs.GetString("nick");
+            nickInput.SetTextWithoutNotify(nickname);
+        }
+        else
+        {
+            SetNickname("Player");
+        }
+    }
+
+    public void SetNickname(string nick)
+    {
+        if(string.IsNullOrEmpty(nick))
+        {
+            PlayerPrefs.DeleteKey("nick");
+        }
+        else
+        {
+            PlayerPrefs.SetString("nick", nick);
+        }
+    }
+
     public void JoinLobby()
     {
         string nick = nickInput.text;
         if (nick.Trim().Equals(""))
         {
+            PlayerPrefs.DeleteKey("nick");
             alertManager.SetMessage("닉네임을 입력해주세요.");
             return;
         }
 
-        PhotonManager.Instance.JoinLobby(nick.Trim());
+        PlayerPrefs.SetString("nick", nick);
+        PhotonManager.Instance.JoinLobby();
     }
 
     public void CreateRoomBtn()

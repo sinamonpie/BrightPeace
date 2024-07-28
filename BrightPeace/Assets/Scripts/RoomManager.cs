@@ -5,14 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public struct RoomPlayerData : INetworkStruct
-{
-    [Networked, Capacity(24)]
-    public string Nickname { get => default; set { } }
-    public PlayerRef PlayerRef;
-    public bool IsConnected;
-}
-
 public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined, IPlayerLeft
 {
     public static RoomManager Instance { get; private set; }
@@ -25,10 +17,7 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
 
     public NetworkObject playerObject;
 
-    [Networked]
-    [Capacity(32)]
-    [HideInInspector]
-    public NetworkDictionary<PlayerRef, RoomPlayerData> PlayerData { get; }
+    private bool isStart = false;
 
     [Networked, Capacity(5)]
     NetworkDictionary<PlayerRef, RoomPlayer> ObjectByRef { get; }
@@ -69,19 +58,6 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
 
     public void SpawnPlayer(PlayerRef playerRef)
     {
-        if (PlayerData.TryGet(playerRef, out var playerData) == false)
-        {
-            playerData = new RoomPlayerData();
-            playerData.Nickname = PhotonManager.Instance.nick;
-            playerData.IsConnected = false;
-        }
-
-        if (playerData.IsConnected == true)
-            return;
-
-        playerData.IsConnected = true;
-        PlayerData.Set(playerRef, playerData);
-
         if (playerRef.PlayerId == 1)
         {
             SpawnSecurity(playerRef);
@@ -119,17 +95,6 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
 
     public void DespawnPlayer(PlayerRef playerRef, RoomPlayer player)
     {
-        if (PlayerData.TryGet(playerRef, out var playerData) == true)
-        {
-            if (playerData.IsConnected == true)
-            {
-                Debug.LogWarning($"{playerRef} disconnected.");
-            }
-
-            playerData.IsConnected = false;
-            PlayerData.Set(playerRef, playerData);
-        }
-
         Runner.Despawn(player.Object);
     }
 
@@ -197,5 +162,16 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
     public static bool HasPlayer(PlayerRef pRef)
     {
         return Instance.ObjectByRef.ContainsKey(pRef);
+    }
+
+    public void SetReady()
+    {
+        RoomPlayer.Local.ReadyChanged();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
+    void Rpc_StartGame()
+    {
+        isStart = true;
     }
 }

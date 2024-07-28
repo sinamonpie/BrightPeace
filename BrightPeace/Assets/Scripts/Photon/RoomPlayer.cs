@@ -1,7 +1,4 @@
 using Fusion;
-using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -12,7 +9,12 @@ public class RoomPlayer : NetworkBehaviour
     [Networked, OnChangedRender(nameof(NicknameChanged))]
     public NetworkString<_16> Nickname { get; set; }
 
+    [Networked]
+    public NetworkBool Ready { get; set; }
+
     public TMP_Text nickTxt;
+
+    public bool isReady = false;
 
     [Networked]
     public PlayerRef Ref { get; set; }
@@ -23,6 +25,7 @@ public class RoomPlayer : NetworkBehaviour
     {
         Ref = pRef;
         Index = index;
+        Ready = false;
         if(pRef.PlayerId == 1)
         {
             RoomManager.Instance.SetSecurityCamera();
@@ -42,10 +45,7 @@ public class RoomPlayer : NetworkBehaviour
         if (Object.HasInputAuthority)
         {
             Local = this;
-            if(RoomManager.Instance.PlayerData.TryGet(Object.Runner.LocalPlayer, out RoomPlayerData value))
-            {
-                Rpc_SetNickname(value.Nickname);
-            }
+            Rpc_SetNickname(PlayerPrefs.GetString("nick"));
         }
 
         NicknameChanged();
@@ -56,9 +56,27 @@ public class RoomPlayer : NetworkBehaviour
         nickTxt.text = Nickname.Value;
     }
 
+    public void ReadyChanged()
+    {
+        Ready = !Ready;
+        Rpc_SetReady(Ready);
+    }
+
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     void Rpc_SetNickname(string nick)
     {
         Nickname = nick;
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void Rpc_SetReady(bool ready, RpcInfo info = default)
+    {
+        Rpc_RelayReady(ready, info.Source);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
+    public void Rpc_RelayReady(bool ready, PlayerRef playerRef)
+    {
+        Ready = ready;
     }
 }
