@@ -97,11 +97,11 @@ public class ButtonManager : MonoBehaviour
     {
         if(PhotonNetwork.InLobby && SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[1]))
         {
-            if (PhotonManager.Instance.isKicked)
-            {
-                alertManager.SetMessage("방장이 나갔습니다.\n다시 매칭해주세요.");
-                PhotonManager.Instance.isKicked = false;
-            }
+            //if (PhotonManager.Instance.isKicked)
+            //{
+            //    alertManager.SetMessage("방장이 나갔습니다.\n다시 매칭해주세요.");
+            //    PhotonManager.Instance.isKicked = false;
+            //}
         }
     }
 }

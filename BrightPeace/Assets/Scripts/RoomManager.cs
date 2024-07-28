@@ -3,7 +3,9 @@ using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined, IPlayerLeft
 {
@@ -21,6 +23,12 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
 
     [Networked, Capacity(5)]
     NetworkDictionary<PlayerRef, RoomPlayer> ObjectByRef { get; }
+
+    [Networked]
+    public Network
+
+    public Button readyBtn;
+    public TMP_Text readyTxt;
 
     public override void Spawned()
     {
@@ -40,6 +48,9 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
     {
         camears[0].gameObject.SetActive(true);
         camears[1].gameObject.SetActive(false);
+
+        readyBtn.interactable = false;
+        readyTxt.text = "게임시작";
     }
 
     public void PlayerJoined(PlayerRef player)
@@ -115,9 +126,6 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
 
     public static void Server_Remove(NetworkRunner runner, PlayerRef pRef)
     {
-        Debug.Assert(runner.IsServer);
-        Debug.Assert(pRef.IsRealPlayer);
-
         if (Instance.ObjectByRef.Remove(pRef) == false)
         {
             Debug.LogWarning("Could not remove player from registry");
@@ -174,4 +182,5 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
     {
         isStart = true;
     }
+
 }
