@@ -203,7 +203,7 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
         readyAnim.Play("Start");
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void Rpc_GetPlayerCnt(RpcInfo info = default)
     {
         Rpc_GetReady(readyCount, info.Source);
