@@ -8,6 +8,7 @@ TagManager:
   - CinemachineTarget
   - Item
   - Ending
+  - Spawn
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Charactor
   - Ground
   - FollowCamera
-  - 
+  - Particle
   - 
   - 
   - 
