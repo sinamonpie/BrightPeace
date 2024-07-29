@@ -1,16 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
+using Fusion;
 
-public class ItemSpawn : MonoBehaviourPunCallbacks
+public class ItemSpawn : NetworkBehaviour
 {
-    public GameObject item1;
+    public NetworkPrefabRef item1Prefab;
     public int item1Count = 1;
+
+    private NetworkRunner _runner;
 
     void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
+        _runner = FindObjectOfType<NetworkRunner>();
+
+        if (_runner.IsServer)
         {
             SpawnItems();
         }
@@ -23,7 +26,7 @@ public class ItemSpawn : MonoBehaviourPunCallbacks
         for (int i = 0; i < item1Count; i++)
         {
             Transform spawnPoint = transform.GetChild(spawnIndexes[i]);
-            PhotonNetwork.Instantiate(item1.name, spawnPoint.position, Quaternion.identity);
+            _runner.Spawn(item1Prefab, spawnPoint.position, Quaternion.identity);
         }
     }
 
