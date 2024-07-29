@@ -11,7 +11,6 @@ public class RoomPlayer : NetworkBehaviour
     public NetworkString<_16> Nickname { get; set; }
 
     public bool Ready;
-    private ChangeDetector _changeDetector;
 
     public TMP_Text nickTxt;
 
@@ -26,18 +25,15 @@ public class RoomPlayer : NetworkBehaviour
         Ref = pRef;
         Index = index;
         Ready = false;
-        if(pRef.PlayerId == 1)
+        if (pRef.PlayerId == 1)
         {
             RoomManager.Instance.SetSecurityCamera();
         }
-        RoomManager.Instance.Rpc_GetPlayerCnt();
     }
     
     public override void Spawned()
     {
         base.Spawned();
-        Debug.Log("State : " + Object.HasStateAuthority);
-        Debug.Log("Input : " + Object.HasInputAuthority);
         if (Object.HasStateAuthority)
         {
             RoomManager.Server_Add(Runner, Object.InputAuthority, this);
@@ -48,8 +44,6 @@ public class RoomPlayer : NetworkBehaviour
             Local = this;
             Rpc_SetNickname(PlayerPrefs.GetString("nick"));
         }
-
-        _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
 
         NicknameChanged();
     }
@@ -92,10 +86,4 @@ public class RoomPlayer : NetworkBehaviour
             RoomManager.Instance.Rpc_RelayReady(RoomManager.Instance.readyCount);
         }
     }
-
-    //[Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
-    //public void Rpc_RelayReady(bool ready, PlayerRef playerRef)
-    //{
-    //    Ready = ready;
-    //}
 }

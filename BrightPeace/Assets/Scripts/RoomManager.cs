@@ -58,6 +58,7 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
     public void PlayerJoined(PlayerRef player)
     {
         SpawnPlayer(player);
+        Rpc_GetReady(readyCount);
     }
 
     public void PlayerLeft(PlayerRef player)
@@ -66,7 +67,10 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
         if (leftPlayer != null)
         {
             if (leftPlayer.Ready)
+            {
                 readyCount--;
+                Rpc_GetReady(readyCount);
+            }
             DespawnPlayer(player, leftPlayer);
         }
     }
@@ -121,6 +125,7 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
         {
             Instance.ObjectByRef.Add(pRef, pObj);
             pObj.Server_Init(pRef, index);
+            Instance.Rpc_GetPlayerCnt();
         }
         else
         {
@@ -203,22 +208,19 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
         readyAnim.Play("Start");
     }
 
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void Rpc_GetPlayerCnt(RpcInfo info = default)
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
+    public void Rpc_GetPlayerCnt()
     {
-        Rpc_GetReady(readyCount, info.Source);
+        Rpc_GetReady(readyCount);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
-    public void Rpc_GetReady(int readyCnt, PlayerRef playerRef)
+    public void Rpc_GetReady(int readyCnt)
     {
-        if (playerRef == Runner.LocalPlayer)
-        {
-            readyCount = readyCnt;
+        readyCount = readyCnt;
 
-            StopAllCoroutines();
-            StartCoroutine(SetReadyTimeTicker(readyCount));
-        }
+        StopAllCoroutines();
+        StartCoroutine(SetReadyTimeTicker(readyCount));
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
