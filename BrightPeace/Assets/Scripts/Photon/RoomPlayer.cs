@@ -1,6 +1,7 @@
 using Fusion;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoomPlayer : NetworkBehaviour
 {
@@ -9,15 +10,14 @@ public class RoomPlayer : NetworkBehaviour
     [Networked, OnChangedRender(nameof(NicknameChanged))]
     public NetworkString<_16> Nickname { get; set; }
 
-    [Networked]
-    public NetworkBool Ready { get; set; }
+    public bool Ready;
+    private ChangeDetector _changeDetector;
 
     public TMP_Text nickTxt;
 
-    public bool isReady = false;
-
     [Networked]
     public PlayerRef Ref { get; set; }
+
     [Networked]
     public byte Index { get; set; }
 
@@ -31,6 +31,7 @@ public class RoomPlayer : NetworkBehaviour
             RoomManager.Instance.SetSecurityCamera();
         }
     }
+
 
     public override void Spawned()
     {
@@ -48,6 +49,8 @@ public class RoomPlayer : NetworkBehaviour
             Rpc_SetNickname(PlayerPrefs.GetString("nick"));
         }
 
+        _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
+
         NicknameChanged();
     }
 
@@ -58,8 +61,15 @@ public class RoomPlayer : NetworkBehaviour
 
     public void ReadyChanged()
     {
-        Ready = !Ready;
-        Rpc_SetReady(Ready);
+        if(!Ready)
+        {
+            RoomManager.Instance.readyTxt.text = "준비완료";
+        }
+        else
+        {
+            RoomManager.Instance.readyTxt.text = "준비";
+        }
+        Rpc_SetReady(!Ready);
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
@@ -68,15 +78,15 @@ public class RoomPlayer : NetworkBehaviour
         Nickname = nick;
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
-    public void Rpc_SetReady(bool ready, RpcInfo info = default)
-    {
-        Rpc_RelayReady(ready, info.Source);
-    }
-
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
-    public void Rpc_RelayReady(bool ready, PlayerRef playerRef)
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
+    public void Rpc_SetReady(bool ready)
     {
         Ready = ready;
     }
+
+    //[Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
+    //public void Rpc_RelayReady(bool ready, PlayerRef playerRef)
+    //{
+    //    Ready = ready;
+    //}
 }

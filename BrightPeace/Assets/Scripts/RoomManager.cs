@@ -46,7 +46,7 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
         camears[0].gameObject.SetActive(true);
         camears[1].gameObject.SetActive(false);
 
-        readyBtn.interactable = false;
+        //readyBtn.interactable = false;
         readyTxt.text = "게임시작";
     }
 
@@ -169,9 +169,22 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
         return Instance.ObjectByRef.ContainsKey(pRef);
     }
 
-    public void SetReady()
+    public void OnReady()
     {
-        RoomPlayer.Local.ReadyChanged();
+        if (Runner.IsServer)
+        {
+            StartGame();
+        }
+        else
+        {
+            RoomPlayer.Local.ReadyChanged();
+        }
+    }
+
+    public void StartGame()
+    {
+        Runner.SessionInfo.IsOpen = false;
+        Runner.LoadScene(SceneRef.FromIndex(3), UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
