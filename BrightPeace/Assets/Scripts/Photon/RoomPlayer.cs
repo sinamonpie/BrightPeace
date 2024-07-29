@@ -30,9 +30,9 @@ public class RoomPlayer : NetworkBehaviour
         {
             RoomManager.Instance.SetSecurityCamera();
         }
+        RoomManager.Instance.Rpc_GetPlayerCnt();
     }
-
-
+    
     public override void Spawned()
     {
         base.Spawned();
@@ -82,6 +82,15 @@ public class RoomPlayer : NetworkBehaviour
     public void Rpc_SetReady(bool ready)
     {
         Ready = ready;
+        if(Runner.IsServer)
+        {
+            if (Ready)
+                RoomManager.Instance.readyCount++;
+            else
+                RoomManager.Instance.readyCount--;
+
+            RoomManager.Instance.Rpc_RelayReady(RoomManager.Instance.readyCount);
+        }
     }
 
     //[Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]

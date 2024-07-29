@@ -1,6 +1,7 @@
 using Fusion;
 using Fusion.Sockets;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -19,13 +20,16 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
 
     public NetworkObject playerObject;
 
-    private bool isStart = false;
+    public bool isReadySlider = false;
+    public int readyCount = 0;
 
     [Networked, Capacity(5)]
     NetworkDictionary<PlayerRef, RoomPlayer> ObjectByRef { get; }
 
     public Button readyBtn;
     public TMP_Text readyTxt;
+    public ReadySlider readySlider;
+    public Animation readyAnim;
 
     public override void Spawned()
     {
@@ -47,6 +51,7 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
         camears[1].gameObject.SetActive(false);
 
         //readyBtn.interactable = false;
+        readySlider.SetMaxReadyCnt();
         readyTxt.text = "게임시작";
     }
 
@@ -57,11 +62,13 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
 
     public void PlayerLeft(PlayerRef player)
     {
-            RoomPlayer leftPlayer = RoomManager.GetPlayer(player);
-            if (leftPlayer != null)
-            {
-                DespawnPlayer(player, leftPlayer);
-            }
+        RoomPlayer leftPlayer = RoomManager.GetPlayer(player);
+        if (leftPlayer != null)
+        {
+            if (leftPlayer.Ready)
+                readyCount--;
+            DespawnPlayer(player, leftPlayer);
+        }
     }
 
     public void SpawnPlayer(PlayerRef playerRef)
@@ -171,7 +178,8 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
 
     public void OnReady()
     {
-        if (Runner.IsServer)
+        // readyCount == 4 && 
+        if (Runner.IsServer &&!isReadySlider)
         {
             StartGame();
         }
@@ -185,12 +193,72 @@ public class RoomManager : NetworkBehaviour, ISpawned, IDespawned, IPlayerJoined
     {
         Runner.SessionInfo.IsOpen = false;
         Runner.LoadScene(SceneRef.FromIndex(3), UnityEngine.SceneManagement.LoadSceneMode.Single);
+        Rpc_RelayStart();
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
-    void Rpc_StartGame()
+    public void Rpc_RelayStart()
     {
-        isStart = true;
+        StopAllCoroutines();
+        readyAnim.Play("Start");
     }
 
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void Rpc_GetPlayerCnt(RpcInfo info = default)
+    {
+        Rpc_GetReady(readyCount, info.Source);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
+    public void Rpc_GetReady(int readyCnt, PlayerRef playerRef)
+    {
+        if (playerRef == Runner.LocalPlayer)
+        {
+            readyCount = readyCnt;
+
+            StopAllCoroutines();
+            StartCoroutine(SetReadyTimeTicker(readyCount));
+        }
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
+    public void Rpc_RelayReady(int readyCnt)
+    {
+        readyCount = readyCnt;
+
+        StopAllCoroutines();
+        StartCoroutine(SetReadyTimeTicker(readyCount));
+    }
+
+    IEnumerator SetReadyTimeTicker(int readyCnt)
+    {
+        isReadySlider = true;
+        float startCnt = readySlider.GetReadyCnt();
+        float endCnt = (float)readyCnt;
+        float current = startCnt;
+        if (startCnt < endCnt)
+        {
+            while(current <= endCnt)
+            {
+                current += Time.deltaTime;
+
+                readySlider.SetReadyCnt(current);
+
+                yield return null;
+            }
+        }
+        else
+        {
+            while (current >= endCnt)
+            {
+                current -= Time.deltaTime; 
+                
+                readySlider.SetReadyCnt(current);
+
+                yield return null;
+            }
+        }
+        readySlider.SetReadyCnt(endCnt);
+        isReadySlider = false;
+    }
 }
