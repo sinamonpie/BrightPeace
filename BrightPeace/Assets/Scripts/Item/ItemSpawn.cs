@@ -11,7 +11,6 @@ public class ItemSpawn : NetworkBehaviour
 
     void Start()
     {
-        // Get NetworkRunner instance
         _runner = FindObjectOfType<NetworkRunner>();
 
         if (_runner.IsServer)
