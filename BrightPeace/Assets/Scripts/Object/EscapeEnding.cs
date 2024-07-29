@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class EscapeEnding : MonoBehaviour
 {
-    private bool crowBar_Trigger = false;
-    private bool driver_Trigger = false;
+    public bool crowBar_Trigger = false;
+    public bool driver_Trigger = false;
+    public bool TEST_Trigger = false;
 
     private bool endingTrigger = false;
 
