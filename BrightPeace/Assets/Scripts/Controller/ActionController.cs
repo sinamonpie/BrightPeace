@@ -11,6 +11,7 @@ public class ActionController : MonoBehaviour
     private RaycastHit hitInfo;
     private Ray ray;
     private bool isInvenFull;
+    private GameObject currentLockDoor;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private TMP_Text actionText;
     [SerializeField] private TMP_Text alertText;
@@ -124,15 +125,30 @@ public class ActionController : MonoBehaviour
             }
         }
     }
+    public bool IsLockDoor()
+    {
+        if (hitInfo.transform.GetComponent<DoorController>().UseableDoor())
+        {
+            return true;        // 열린문
+        }
+        return false;           // 잠긴문
+    }
 
     public bool CanDoorAction()
     {
         return canDoor;
     }
+    public bool CanDoorAction(float time)
+    {
+        hitInfo.transform.GetComponentInChildren<DoorUseKeyUI>().DoorUI(time);
+        currentLockDoor = hitInfo.transform.gameObject;
+        return canDoor;
+    }
 
     public void UnlockDoor()
     {
-        hitInfo.transform.GetComponent<DoorController>().UnlockDoor();
+        currentLockDoor.GetComponent<DoorController>().UnlockDoor();
+        currentLockDoor = null;
     }
 
     public void DisAlert()

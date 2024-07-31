@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
+/// <summary>
+/// 아이템 사용/버리기와 관련된 기능 텍스트출력 등을 기재
+/// </summary>
 public class UseItemManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text alertText;
@@ -28,10 +32,25 @@ public class UseItemManager : MonoBehaviour
                 {
                     if (Input.GetKeyUp(KeyCode.F))
                     {
-                        actionManager.UseItem(inventory.currentSlot.item);      // 아이템 사용
-                        StartCoroutine(TextAlert());
-                        alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
-                        inventory.currentSlot.ClearSlot();
+                        if (actionManager.UseItem(inventory.currentSlot.item))  // 아이템 사용이 성공적이면 로그출력
+                        {
+                            StartCoroutine(TextAlert());
+                            alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
+                            inventory.currentSlot.ClearSlot();
+
+                            switch (inventory.currentSlot.item.itemName)
+                            {
+                                case "열쇠":
+                                {
+                                    
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // 아이템 사용 실패;
+                        }
                     }
                 }
 
@@ -40,7 +59,7 @@ public class UseItemManager : MonoBehaviour
                     actionManager.UseItem(inventory.currentSlot.item);
                 }
 
-                if (Input.GetKeyUp(KeyCode.G))
+                if (Input.GetKeyUp(KeyCode.G))  // 아이템 버리기
                 {
                     Vector3 PlayerPos = transform.position;
                     Vector3 PlayerFwd = transform.forward;
@@ -57,7 +76,7 @@ public class UseItemManager : MonoBehaviour
     IEnumerator TextAlert()
     {
         alertText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         alertText.gameObject.SetActive(false);
     }

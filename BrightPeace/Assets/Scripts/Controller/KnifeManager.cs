@@ -21,6 +21,7 @@ public class KnifeManager : MonoBehaviour
     void CheckingPlayer()
     {
         ray = camera.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(ray.origin, ray.direction * range, Color.red);
         if (inventory.currentSlot.item != null)
         {
             if (inventory.currentSlot.item.itemName == "Į")
