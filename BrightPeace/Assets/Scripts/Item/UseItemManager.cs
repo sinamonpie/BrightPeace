@@ -13,7 +13,6 @@ public class UseItemManager : MonoBehaviour
 
     Inventory inventory;
     ItemActionManager actionManager;
-    [SerializeField]
     ActionController actionController;
     [Header("ÀåÂøÇÏ°í ÀÖ´Â Ä®")]
     public GameObject setKnife;
