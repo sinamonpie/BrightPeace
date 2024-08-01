@@ -11,11 +11,8 @@ public class Slot : MonoBehaviour
     public Image itemImage;         // »πµÊ«— æ∆¿Ã≈€ ¿ÃπÃ¡ˆ
 
     private Color color;
-    private bool itemUseSuccess;
-    private ItemActionManager itemActionManager;
     void Start()
     {
-        itemActionManager = FindObjectOfType<ItemActionManager>();
         itemImage = transform.GetComponent<Image>();
         color = itemImage.color;
     }
@@ -36,6 +33,5 @@ public class Slot : MonoBehaviour
         item = null;
         itemImage.sprite = null;
         itemImage.color = color;
-        itemUseSuccess = false;
     }
 }

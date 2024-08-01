@@ -17,8 +17,8 @@ public class ActionController : MonoBehaviour
     [SerializeField] private TMP_Text alertText;
 
     public Inventory inventory;
-
-    private bool canDoor = false;
+    public bool isRayItem;
+    public bool canDoor = false;
 
     void Update()
     {
@@ -28,6 +28,7 @@ public class ActionController : MonoBehaviour
     void CheckInteraction()
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.cyan);
 
         if (Physics.Raycast(ray, out hitInfo, range, layerMask))
         {
@@ -35,6 +36,7 @@ public class ActionController : MonoBehaviour
             if (hitInfo.transform.tag == "Item")
             {
                 ItemInfoAppear();
+                isRayItem = true;
             }
             
             if(hitInfo.transform.tag == "Door")
@@ -81,6 +83,7 @@ public class ActionController : MonoBehaviour
     {
         actionText.gameObject.SetActive(false);
         canDoor = false;
+        isRayItem = false;
     }
 
     void PickupAction()

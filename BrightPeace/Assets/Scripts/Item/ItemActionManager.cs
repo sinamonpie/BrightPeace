@@ -85,6 +85,7 @@ public class ItemActionManager : MonoBehaviour
                     case "열쇠":
                     {
                         // 창문 방을 제외한 잠긴 문을 2초를 소모하여 열 수 있다.
+                        // 창문 방 제외 조건 추가해야됨
                         float unlockTime = 2f;
                         if (!GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().IsLockDoor())
                         {
@@ -94,11 +95,9 @@ public class ItemActionManager : MonoBehaviour
                             }
                             return true;
                         }
-                        else
-                        {
-                            // 문을 바라보고 쓰시오 라는 메세지 띄우기
-                            return false;
-                        }
+
+                         return false;
+ 
                     }
 
                     case "투시경":

@@ -41,11 +41,12 @@ public class DoorUseKeyUI : MonoBehaviour
 
     IEnumerator DoorUseKeyText(float time)
     {
+        float textTime = time / 3.0f;
         while(time > 0.0f)
         {
             time -= Time.deltaTime;
             text.text += ".";
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(textTime);
         }
     }
 }

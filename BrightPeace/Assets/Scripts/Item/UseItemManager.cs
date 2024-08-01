@@ -13,61 +13,61 @@ public class UseItemManager : MonoBehaviour
 
     Inventory inventory;
     ItemActionManager actionManager;
+    [SerializeField]
     ActionController actionController;
-
+    [Header("장착하고 있는 칼")]
+    public GameObject setKnife;
     void Start()
     {
         inventory = FindObjectOfType<Inventory>();
         actionManager = FindObjectOfType<ItemActionManager>();
         actionController = FindObjectOfType<ActionController>();
+        setKnife.gameObject.SetActive(false);
     }
     void Update()
     {
 
-        if (inventory != null && inventory.currentSlot != null)
+        if (inventory.currentSlot != null && inventory.currentSlot.item != null)
         {
-            if (inventory.currentSlot.item != null)
+            if (inventory.currentSlot.item.itemType == ItemType.Used)    //  소모품
             {
-                if (inventory.currentSlot.item.itemType == ItemType.Used)    //  소모품
+                if (Input.GetKeyDown(KeyCode.E) && !actionController.isRayItem) // 아이템 줍기랑 사용 중복 제한
                 {
-                    if (Input.GetKeyUp(KeyCode.F))
+                    switch (inventory.currentSlot.item.itemName)            // 아이템 사용 조건
                     {
-                        if (actionManager.UseItem(inventory.currentSlot.item))  // 아이템 사용이 성공적이면 로그출력
+                        case "열쇠":
                         {
-                            StartCoroutine(TextAlert());
-                            alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
-                            inventory.currentSlot.ClearSlot();
-
-                            switch (inventory.currentSlot.item.itemName)
-                            {
-                                case "열쇠":
-                                {
-                                    
-                                    break;
-                                }
-                            }
+                            if (!actionController.canDoor)                                  // 키 사용 불가능
+                            goto exit;
                         }
-                        else
-                        {
-                            // 아이템 사용 실패;
-                        }
+                        break;
                     }
-                }
-
-                else if (inventory.currentSlot.item.itemType == ItemType.Equip)
-                {
                     actionManager.UseItem(inventory.currentSlot.item);
-                }
-
-                if (Input.GetKeyUp(KeyCode.G))  // 아이템 버리기
-                {
-                    Vector3 PlayerPos = transform.position;
-                    Vector3 PlayerFwd = transform.forward;
-                    GameObject itemGo = Instantiate<GameObject>(inventory.currentSlot.item.itemPrefab);
-                    itemGo.transform.position = PlayerPos + PlayerFwd;
-                    Debug.Log("Drop " + inventory.currentSlot.item.itemName);
+                    StartCoroutine(TextAlert());
+                    alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
                     inventory.currentSlot.ClearSlot();
                 }
+            exit:;
+               
+            }
+
+            else if (inventory.currentSlot.item.itemType == ItemType.Equip)
+            {
+                if(inventory.currentSlot.item.itemName == "칼")
+                {
+                    setKnife.gameObject.SetActive(true);
+                }
+                actionManager.UseItem(inventory.currentSlot.item);
+            }
+
+            if (Input.GetKeyUp(KeyCode.G))  // 아이템 버리기
+            {
+                Vector3 PlayerPos = transform.position;
+                Vector3 PlayerFwd = transform.forward;
+                GameObject itemGo = Instantiate<GameObject>(inventory.currentSlot.item.itemPrefab);
+                itemGo.transform.position = PlayerPos + PlayerFwd;
+                Debug.Log("Drop " + inventory.currentSlot.item.itemName);
+                inventory.currentSlot.ClearSlot();
             }
         }
 
