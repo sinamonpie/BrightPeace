@@ -43,10 +43,7 @@ public class ItemActionManager : MonoBehaviour
                         // 실험체를 성공적으로 타격 시 다시 타격하기 까지 2.5초의 대기 시간이 있다.
                         // 실험체를 성공적으로 타격하면 이동 속도가 2.5초간 0.125배가 된다.
                         // 실험체 타격에 실패시 이동 속도가 1.5초간 0.25배가 된다.
-                        GameObject parentObject = GameObject.FindWithTag("MainCamera");
-                        Transform childObject = parentObject.transform.GetChild(1);
-                        GameObject AimManger = childObject.gameObject;
-                        AimManger.SetActive(true);
+                        this.gameObject.GetComponent<KnifeManager>().enabled = true;
                         break;
                     }
 

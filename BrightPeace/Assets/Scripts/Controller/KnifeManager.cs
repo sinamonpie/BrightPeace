@@ -1,77 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-
+using UnityEngine.Animations;
+/// <summary>
+/// 활성화되면 칼관련된 기능 수행
+/// 활성화는 아이템 매니저에서 동작함
+/// </summary>
 public class KnifeManager : MonoBehaviour
 {
-    [SerializeField] private float range = 5f;
-    [SerializeField] private LayerMask layerMask;
-    [SerializeField] private TMP_Text actionText;
-    RaycastHit hitInfo;
-    Ray ray;
-    public Camera camera;
-    public Inventory inventory;
+    UseItemManager UseItemManager;
+    GameObject knife;
+    BoxCollider knifeCollider;
+    Animator animator;
+
+    [Header("공격 딜레이 시간")]
+    [SerializeField]
+    float SwingDelay = 2.5f;
+    float rate;
+    bool isSwingReady;
+    void Start()
+    {
+        animator = transform.GetComponent<Animator>();
+        UseItemManager = FindObjectOfType<UseItemManager>();
+        knife = UseItemManager.setKnife;
+        knifeCollider = knife.GetComponent<BoxCollider>();
+        knifeCollider.enabled = false;
+        rate = 0f;
+    }
 
     void Update()
     {
-        CheckingPlayer();
-    }   
+        rate += Time.deltaTime;
+        isSwingReady = rate > SwingDelay;
 
-    void CheckingPlayer()
-    {
-        ray = camera.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(ray.origin, ray.direction * range, Color.red);
-        if (inventory.currentSlot.item != null)
+        if (Input.GetButtonDown("Fire1") && isSwingReady) 
         {
-            if (inventory.currentSlot.item.itemName == "칼")
-            {
-                if (Physics.Raycast(ray, out hitInfo, range, layerMask))
-                {
-                    if (hitInfo.transform.tag == "Player")
-                    {
-                        actionText.gameObject.SetActive(true);
-                        actionText.text = "칼 휘두르기 " + "<color=yellow>" + "Click!" + "</color>";
-
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            Swing();
-                        }
-                    }
-                    else
-                    {
-                        actionText.gameObject.SetActive(false);
-                    }
-                }
-            }
-            else
-            {
-                this.gameObject.SetActive(false);
-            }
-
+            animator.SetTrigger("isSwing");
+            StopCoroutine("Swing");
+            StartCoroutine("Swing");
+            rate = 0;
         }
-        else
-        {
-            this.gameObject.SetActive(false);
-        }
-
     }
-    void Swing()
+
+    IEnumerator Swing() // 나이프 피격 시간 설정
     {
-        if (hitInfo.transform.tag == "Player")
-        {
-            if (hitInfo.transform.GetComponent<PlayerHp>() != null)
-            {
-                hitInfo.transform.GetComponent<PlayerHp>().currentHp -= 1;
-                Debug.Log("대상 남은 체력 : " + hitInfo.transform.GetComponent<PlayerHp>().currentHp.ToString());
-            }
-        }
-        else
-        {
+        yield return new WaitForSeconds(0.1f);
+        knifeCollider.enabled = true;
 
-        }
+        yield return new WaitForSeconds(0.5f);
+        knifeCollider.enabled = false;
+    }
 
-        inventory.currentSlot.ClearSlot();
-        this.gameObject.SetActive(false);
+    void HitPlayer()
+    {
+
     }
 }
