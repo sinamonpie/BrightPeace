@@ -11,13 +11,14 @@ public class ActionController : MonoBehaviour
     private RaycastHit hitInfo;
     private Ray ray;
     private bool isInvenFull;
+    private GameObject currentLockDoor;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private TMP_Text actionText;
     [SerializeField] private TMP_Text alertText;
 
     public Inventory inventory;
-
-    private bool canDoor = false;
+    public bool isRayItem;
+    public bool canDoor = false;
     public GameObject player;
 
     void Update()
@@ -28,6 +29,7 @@ public class ActionController : MonoBehaviour
     void CheckInteraction()
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.cyan);
 
         if (Physics.Raycast(ray, out hitInfo, range, layerMask))
         {
@@ -35,6 +37,7 @@ public class ActionController : MonoBehaviour
             if (hitInfo.transform.tag == "Item")
             {
                 ItemInfoAppear();
+                isRayItem = true;
             }
             
             if(hitInfo.transform.tag == "Door")
@@ -87,6 +90,7 @@ public class ActionController : MonoBehaviour
     {
         actionText.gameObject.SetActive(false);
         canDoor = false;
+        isRayItem = false;
     }
 
     void PickupAction()
@@ -131,15 +135,30 @@ public class ActionController : MonoBehaviour
             }
         }
     }
+    public bool IsLockDoor()
+    {
+        if (hitInfo.transform.GetComponent<DoorController>().UseableDoor())
+        {
+            return true;        // 열린문
+        }
+        return false;           // 잠긴문
+    }
 
     public bool CanDoorAction()
     {
         return canDoor;
     }
+    public bool CanDoorAction(float time)
+    {
+        hitInfo.transform.GetComponentInChildren<DoorUseKeyUI>().DoorUI(time);
+        currentLockDoor = hitInfo.transform.gameObject;
+        return canDoor;
+    }
 
     public void UnlockDoor()
     {
-        hitInfo.transform.GetComponent<DoorController>().UnlockDoor();
+        currentLockDoor.GetComponent<DoorController>().UnlockDoor();
+        currentLockDoor = null;
     }
 
     public void DisAlert()

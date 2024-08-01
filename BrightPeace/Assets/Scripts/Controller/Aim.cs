@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class Aim : MonoBehaviour
 {
-    public GameObject gunItem;
     public Image zoomCrosshair;
     public Camera camera;
     public CinemachineVirtualCamera virtualCamera;
@@ -114,7 +115,7 @@ public class Aim : MonoBehaviour
     void Aimming()
     {
         ray = camera.ScreenPointToRay(Input.mousePosition);
-
+        Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
         if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, layerMask))
         {
             if (hitInfo.transform.tag == "Player" && hitInfo.transform != null)
