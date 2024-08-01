@@ -9,6 +9,7 @@ TagManager:
   - Item
   - Ending
   - Spawn
+  - Cabinet
   layers:
   - Default
   - TransparentFX
