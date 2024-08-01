@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6458096514486181559}
   - component: {fileID: 300323149852923305}
   - component: {fileID: 8021935012387675807}
-  - component: {fileID: 1975173327462417780}
+  - component: {fileID: 1503081888504229202}
   m_Layer: 6
   m_Name: crowbar
   m_TagString: Item
@@ -128,7 +128,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6068233, y: 0.020929359, z: 0.11229888}
   m_Center: {x: -0.000000014901161, y: 0.00000001071021, z: 0}
---- !u!114 &1975173327462417780
+--- !u!114 &1503081888504229202
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7655034956790216970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f79153316c62f14fb2a5c0d1d729f28, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cb0692b2e0b4fe42946dce1b8e06ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 0925943e4c5adb14bba49e1b46b71c47, type: 2}
+  _Item: {fileID: 11400000, guid: 0925943e4c5adb14bba49e1b46b71c47, type: 2}

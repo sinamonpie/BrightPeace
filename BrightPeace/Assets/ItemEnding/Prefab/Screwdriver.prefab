@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3938836530243894412}
   - component: {fileID: 5977034648607158558}
   - component: {fileID: 1894482488371733136}
-  - component: {fileID: 8045520937829926081}
+  - component: {fileID: 4001178386145031982}
   m_Layer: 6
   m_Name: Screwdriver
   m_TagString: Item
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5455086, y: 2.7324967, z: 0.5455086}
   m_Center: {x: -0.000000044703484, y: 0.49722758, z: 0.00000016391277}
---- !u!114 &8045520937829926081
+--- !u!114 &4001178386145031982
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,8 +115,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7063136961155322567}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a551fface6b7b24e987e1daa99cd8b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cb0692b2e0b4fe42946dce1b8e06ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 1860d364f61fc7044a66330a7557f714, type: 2}
-  player: {fileID: 100000, guid: e73d18d15c38bb34489906d9df3f0d9a, type: 3}
+  _Item: {fileID: 11400000, guid: 1860d364f61fc7044a66330a7557f714, type: 2}

@@ -19,6 +19,7 @@ public class ActionController : MonoBehaviour
     public Inventory inventory;
     public bool isRayItem;
     public bool canDoor = false;
+    public GameObject player;
 
     void Update()
     {
@@ -49,6 +50,12 @@ public class ActionController : MonoBehaviour
             {
                 canDoor = true;
                 EndigInfoAppear();
+            }
+
+            if (hitInfo.transform.tag == "Cabinet")
+            {
+                canDoor = true;
+                HideCabinetInfoAppear();
             }
 
         }
@@ -184,6 +191,24 @@ public class ActionController : MonoBehaviour
         actionText.gameObject.SetActive(true);
         actionText.text = "<color=yellow>" + " 탈출하기 " + "E Key" + "</color>";
         EndingAction();
+    }
+
+    public void HideCabinetAction()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (hitInfo.transform != null)
+            {
+                hitInfo.transform.GetComponent<CabinetController>().CabinetControl(player);
+            }
+        }
+    }
+
+    public void HideCabinetInfoAppear()
+    {
+        actionText.gameObject.SetActive(true);
+        actionText.text = "캐비넷에 숨기 " + "<color=yellow>" + "E키" + "</color>";
+        HideCabinetAction();
     }
 
 }

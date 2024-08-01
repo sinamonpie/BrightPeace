@@ -26081,7 +26081,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 1
+  unlockDoor: 0
 --- !u!1 &8604546236023637154
 GameObject:
   m_ObjectHideFlags: 0
@@ -33173,7 +33173,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 1
+  unlockDoor: 0
 --- !u!1 &8604588007408515288
 GameObject:
   m_ObjectHideFlags: 0
@@ -47366,7 +47366,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 0
+  unlockDoor: 1
 --- !u!1 &8604688255571818294
 GameObject:
   m_ObjectHideFlags: 0
@@ -55373,7 +55373,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 0
+  unlockDoor: 1
 --- !u!1 &8604740991278443496
 GameObject:
   m_ObjectHideFlags: 0
@@ -66906,7 +66906,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 0
+  unlockDoor: 1
 --- !u!1 &8604819229379216578
 GameObject:
   m_ObjectHideFlags: 0
@@ -106759,7 +106759,6 @@ GameObject:
   - component: {fileID: 8592027664523699602}
   - component: {fileID: 8613610583226122652}
   - component: {fileID: 8822672065820544060}
-  - component: {fileID: 7419819227657417554}
   m_Layer: 6
   m_Name: DoorD_Left
   m_TagString: Door
@@ -106869,23 +106868,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 1
---- !u!114 &7419819227657417554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8605086538084875422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5cb9681f5a6fe748800c5fc826abcb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isClose: 1
-  DoorRotation: 1
-  pivot: {fileID: 0}
-  unlockDoor: 1
+  unlockDoor: 0
 --- !u!1 &8605087876100774244
 GameObject:
   m_ObjectHideFlags: 0
@@ -116366,7 +116349,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 0
+  unlockDoor: 1
 --- !u!1 &8605139909519287748
 GameObject:
   m_ObjectHideFlags: 0
@@ -145697,7 +145680,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 1
   pivot: {fileID: 0}
-  unlockDoor: 1
+  unlockDoor: 0
 --- !u!1 &8605318181631483148
 GameObject:
   m_ObjectHideFlags: 0
