@@ -202,12 +202,12 @@ public class ActionController : MonoBehaviour
                 hitInfo.transform.GetComponent<CabinetController>().CabinetControl(player);
                 if (hitInfo.transform.GetComponent<CabinetController>().HideInCabinet())
                 {
-                    //player.SetActive(false);
+                    player.SetActive(false);
                     // 플레이어 투시경에 안보이게 하는거 임시용
                 }
                 else
                 {
-                    //player.SetActive(true);
+                    player.SetActive(true);
                 }
             }
         }
