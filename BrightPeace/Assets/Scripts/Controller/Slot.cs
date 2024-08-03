@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
-
-    public ItemData item;           // »πµÊ«— æ∆¿Ã≈€
-    public Image itemImage;         // »πµÊ«— æ∆¿Ã≈€ ¿ÃπÃ¡ˆ
+    // »πµÊ«— æ∆¿Ã≈€
+    public ItemData item;
+    // »πµÊ«— æ∆¿Ã≈€ ¿ÃπÃ¡ˆ
+    public Image itemImage;        
 
     private Color color;
     void Start()

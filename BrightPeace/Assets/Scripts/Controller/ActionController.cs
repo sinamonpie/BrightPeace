@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
+
 public class ActionController : MonoBehaviour
 {
+    [Header("상호작용 거리")]
     [SerializeField]
     private float range;
     private RaycastHit hitInfo;
@@ -16,10 +20,15 @@ public class ActionController : MonoBehaviour
     [SerializeField] private TMP_Text actionText;
     [SerializeField] private TMP_Text alertText;
 
-    public Inventory inventory;
+    Inventory inventory;
     public bool isRayItem;
     public bool canDoor = false;
     public GameObject player;
+
+    void Start()
+    {
+        inventory = FindObjectOfType<Inventory>();
+    }
 
     void Update()
     {
@@ -172,7 +181,7 @@ public class ActionController : MonoBehaviour
         {
             if (hitInfo.transform != null)
             {
-/*                if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
+                if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
                 {
                     Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                 }
@@ -181,7 +190,7 @@ public class ActionController : MonoBehaviour
                     alertText.gameObject.SetActive(true);
                     alertText.text = "문이 잠겼습니다.";
                     Invoke("DisAlert", 1f);
-                }*/
+                }
             }
         }
     }
@@ -201,13 +210,21 @@ public class ActionController : MonoBehaviour
             {
                 hitInfo.transform.GetComponent<CabinetController>().CabinetControl(player);
                 if (hitInfo.transform.GetComponent<CabinetController>().HideInCabinet())
-                {
-                    player.SetActive(false);
+                {   
                     // 플레이어 투시경에 안보이게 하는거 임시용
+                    player.SetActive(false);
+                    player.GetComponent<PlayerState>().PlayerInCabinet();
+
+                    // 7 = hiddenCharactor Layer
+                    ChangePlayerLayer(player, 7);
                 }
                 else
                 {
                     player.SetActive(true);
+                    player.GetComponent<PlayerState>().PlayerInCabinet();
+
+                    // 8 = Charactor Layer
+                    ChangePlayerLayer(player, 8);
                 }
             }
         }
@@ -227,4 +244,17 @@ public class ActionController : MonoBehaviour
         HideCabinetAction();
     }
 
+    void ChangePlayerLayer(GameObject player, int toLayer)
+    {
+            player.layer = toLayer;
+
+        // 자식 오브젝트들에 대해서 재귀적으로 레이어를 변경
+        foreach (Transform child in player.transform)
+        {
+            if (child != null)
+            {
+                ChangePlayerLayer(child.gameObject, toLayer);
+            }
+        }
+    }
 }

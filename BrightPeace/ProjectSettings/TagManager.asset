@@ -4,10 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Bullet
   - CinemachineTarget
-  - Spawn
-  - RoomPlayer
+  - Door
+  - Item
+  - Ending
+  - ItemHasPoint
   layers:
   - Default
   - TransparentFX
@@ -15,12 +16,12 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Object
+  - HiddenCharactor
+  - Charactor
+  - Ground
+  - FollowCamera
+  - Particle
   - 
   - 
   - 

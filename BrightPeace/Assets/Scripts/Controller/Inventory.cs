@@ -7,7 +7,6 @@ using UnityEngine.UIElements;
 
 public class Inventory : MonoBehaviour
 {
-    public GameObject player;
     [SerializeField] private GameObject SlotsParent;
     [SerializeField] private TMP_Text alertText;
     private SlotBackGround[] slotsBg;
@@ -17,7 +16,8 @@ public class Inventory : MonoBehaviour
     int knifeSlotNum;
     public bool getKnife;
 
-    public Slot currentSlot;       //  ÇöÀç ½½·Ô
+    //  ÇöÀç ½½·Ô
+    public Slot currentSlot;      
     void Start()
     {
         slots = SlotsParent.GetComponentsInChildren<Slot>();
