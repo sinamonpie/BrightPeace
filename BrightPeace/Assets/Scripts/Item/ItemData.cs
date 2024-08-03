@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "New Item", menuName = "New Item/ItemData")]
+public class ItemData : ScriptableObject
+{
+    public string itemName;
+    public ItemType itemType;
+    public Sprite itemImage;
+    public GameObject itemPrefab;
+
+}
+
+public enum ItemType
+{
+    None = 0b0,
+    Equip = 0b1,
+    Used = 0b10,
+    Escape = 0b100,
+    Skill = 0b1000,
+}
