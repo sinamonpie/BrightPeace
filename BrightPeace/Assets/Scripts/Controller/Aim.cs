@@ -75,10 +75,10 @@ public class Aim : MonoBehaviour
     {
         if (isAimPlayer)
         {
-            if (hitInfo.transform.GetComponent<PlayerHp>() != null)
+            if (hitInfo.transform.GetComponent<PlayerState>() != null)
             {
-                hitInfo.transform.GetComponent<PlayerHp>().TakeDamage(1);
-                Debug.Log("대상 남은 체력 : " + hitInfo.transform.GetComponent<PlayerHp>().GetPlayerHp().ToString());
+                hitInfo.transform.GetComponent<PlayerState>().TakeDamage(1);
+                Debug.Log("대상 남은 체력 : " + hitInfo.transform.GetComponent<PlayerState>().GetPlayerHp().ToString());
             }
         }
         else { Debug.Log("감나빗"); }

@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 public class WallHacker : MonoBehaviour
 {
     Camera sensorCamera;
-
     void Start()
     {
         sensorCamera = FindObjectOfType<SensorCamera>().GetComponent<Camera>();
@@ -24,7 +23,11 @@ public class WallHacker : MonoBehaviour
         {
             if (otherPlayer != player)
             {
-                otherPlayer.GetComponentInChildren<PlayerRenderer>().ApplyHighlight(wallHackTime);
+                PlayerState state = otherPlayer.GetComponent<PlayerState>();
+                if(state != null && !state.IsInCabinet())
+                {
+                    otherPlayer.GetComponentInChildren<PlayerRenderer>().ApplyHighlight(wallHackTime);
+                }
             }
         }
 

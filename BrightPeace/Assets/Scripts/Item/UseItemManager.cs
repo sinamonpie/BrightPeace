@@ -83,13 +83,13 @@ public class UseItemManager : MonoBehaviour
                         case "구급약":
                         {
                             // 체력이 2면 사용 불가
-                            int currnetPlayerHp = transform.GetComponent<PlayerHp>().GetPlayerHp();
+                            int currnetPlayerHp = transform.GetComponent<PlayerState>().GetPlayerHp();
                             if (currnetPlayerHp > 1)
                             {
                                 goto exit;
                             }
                             // 자신 회복
-                            transform.GetComponent<PlayerHp>().Heal(1);
+                            transform.GetComponent<PlayerState>().Heal(1);
                             break;
                         }
 
@@ -98,28 +98,6 @@ public class UseItemManager : MonoBehaviour
                             // 단, 캐비넷에 들어가있는 플레이어는 감지되지 않는다.
                             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GrayScreen>().ApplyGrayScreen(wallHackTime);
                             GameObject.FindAnyObjectByType<WallHacker>().ApplyWallHack(wallHackTime);
-                            break;
-                        }
-
-                        case "드라이버":
-                        {
-                            if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().CanDoorAction())
-                            {
-                                GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().Driver_Trigger();
-                                GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().EndigTriggerCheck();
-                                Debug.Log("Use Dirver");
-                            }
-                            break;
-                        }
-
-                        case "쇠지렛대":
-                        {
-                            if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().CanDoorAction())
-                            {
-                                GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().CrowBar_Trigger();
-                                GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().EndigTriggerCheck();
-                                Debug.Log("Use CrowBar");
-                            }
                             break;
                         }
                     }
@@ -152,11 +130,12 @@ public class UseItemManager : MonoBehaviour
                         {
                             if (hit.transform.CompareTag("Player"))
                             {
-                                PlayerHp playerHp = hit.transform.GetComponent<PlayerHp>();
+                                PlayerState playerHp = hit.transform.GetComponent<PlayerState>();
                                 if(playerHp != null)
                                 {
+                                    // 경비원이면 2초간 스턴
                                     playerHp.TakeDamage(1);
-                                    Debug.Log("대상 남은 체력" + hit.transform.GetComponent<PlayerHp>().GetPlayerHp().ToString());
+                                    Debug.Log("대상 남은 체력" + hit.transform.GetComponent<PlayerState>().GetPlayerHp().ToString());
                                     inventory.currentSlot.ClearSlot();
                                     inventory.getKnife = false;
                                     knife.gameObject.SetActive(false);
