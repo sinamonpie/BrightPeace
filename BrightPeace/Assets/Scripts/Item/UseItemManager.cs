@@ -100,6 +100,28 @@ public class UseItemManager : MonoBehaviour
                             GameObject.FindAnyObjectByType<WallHacker>().ApplyWallHack(wallHackTime);
                             break;
                         }
+
+                        case "드라이버":
+                        {
+                            if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().CanDoorAction())
+                            {
+                                GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().Driver_Trigger();
+                                GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().EndigTriggerCheck();
+                                Debug.Log("Use Dirver");
+                            }
+                            break;
+                        }
+
+                        case "쇠지렛대":
+                        {
+                            if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().CanDoorAction())
+                            {
+                                GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().CrowBar_Trigger();
+                                GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().EndigTriggerCheck();
+                                Debug.Log("Use CrowBar");
+                            }
+                            break;
+                        }
                     }
                     StartCoroutine(TextAlert());
                     alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
