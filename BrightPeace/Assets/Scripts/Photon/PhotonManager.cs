@@ -30,7 +30,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -48,7 +48,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     private void Connect()
     {
-        if(PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected)
         {
             nick = "";
             Debug.Log("Photon Connected");
@@ -86,9 +86,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void JoinLobby(string _nick = null)
     {
-        if(PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InLobby)
+        if (PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InLobby)
         {
-            if(_nick == null || _nick.Equals(""))
+            if (_nick == null || _nick.Equals(""))
             {
                 nick = "Player" + Random.Range(0, 1000).ToString();
             }
@@ -120,11 +120,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
-            foreach(var player in PhotonNetwork.CurrentRoom.Players)
+            foreach (var player in PhotonNetwork.CurrentRoom.Players)
             {
-                if(player.Value != PhotonNetwork.LocalPlayer)
+                if (player.Value != PhotonNetwork.LocalPlayer)
                 {
                     ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
                     hashtable.Add("kicked", true);
@@ -139,7 +139,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void JoinRoom(string _room)
     {
-        if(PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InRoom)
+        if (PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InRoom)
         {
             roomName = _room;
             PhotonNetwork.JoinRoom(_room);
@@ -162,9 +162,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     IEnumerator JoinRandomRoom()
     {
-        while(true)
+        while (true)
         {
-            if(roomCount > 0)
+            if (roomCount > 0)
             {
                 PhotonNetwork.JoinRandomRoom();
                 break;
@@ -179,7 +179,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         roomName = PhotonNetwork.LocalPlayer.UserId + "_" + Random.Range(0, 1000).ToString();
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 5 });
     }
-
 
     /// <summary>
     /// //////////////////////////////////////////////////////////////////////
@@ -217,7 +216,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Debug.Log("Join Room Failed : " + message);
-        if (PhotonNetwork.IsConnected&&!PhotonNetwork.InLobby)
+        if (PhotonNetwork.IsConnected && !PhotonNetwork.InLobby)
             JoinLobby(nick);
     }
 
@@ -226,10 +225,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log("Join Random Room Failed : " + message);
         if (PhotonNetwork.IsConnected)
         {
-            if(PhotonNetwork.InLobby)
+            if (PhotonNetwork.InLobby)
             {
                 AlertManager alert = FindObjectOfType<AlertManager>();
-                if(alert != null)
+                if (alert != null)
                 {
                     alert.SetMessage("매칭이 오래 걸립니다.\n잠시 후 다시 시도해주세요.");
                 }
@@ -273,9 +272,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         roomCount = roomList.Count;
-        foreach(var room in roomList)
+        foreach (var room in roomList)
         {
-            if(room.RemovedFromList)
+            if (room.RemovedFromList)
             {
                 roomCount--;
             }
@@ -284,11 +283,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        if(targetPlayer == PhotonNetwork.LocalPlayer)
+        if (targetPlayer == PhotonNetwork.LocalPlayer)
         {
-            if(changedProps["kicked"] != null)
+            if (changedProps["kicked"] != null)
             {
-                if((bool)changedProps["kicked"])
+                if ((bool)changedProps["kicked"])
                 {
                     string[] _removeProperties = new string[1];
                     _removeProperties[0] = "kicked";
