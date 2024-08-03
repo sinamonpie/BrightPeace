@@ -28,6 +28,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public bool isReadySlider = false;
 
     public bool Ready = false;
+    public GameObject loadding;
 
     private void Awake()
     {
@@ -136,8 +137,16 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        if(PhotonNetwork.IsMasterClient)
+        {
+            readyCount--;
+            pv.RPC("SetReadyCount", RpcTarget.AllBuffered, readyCount);
+        }
+
         if (otherPlayer.IsMasterClient)
+        {
             return;
+        }
 
         foreach (GameObject _player in GameObject.FindGameObjectsWithTag("RoomPlayer"))
         {
@@ -198,10 +207,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
             else
                 readyCount--;
 
-            pv.RPC("SetReadyCount", RpcTarget.OthersBuffered, readyCount);
+            if (PhotonNetwork.CurrentRoom.PlayerCount <= readyCount)
+                readyCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
-            StopAllCoroutines();
-            StartCoroutine(SetReadyTimeTicker(readyCount));
+            pv.RPC("SetReadyCount", RpcTarget.AllBuffered, readyCount);
         }
     }
 
@@ -228,6 +237,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     IEnumerator SetStart()
     {
         yield return new WaitForSeconds(2.0f);
+        loadding.SetActive(true);
         GameManager.Instance.LoadGamescene();
     }
 

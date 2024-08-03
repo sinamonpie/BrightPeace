@@ -1,12 +1,16 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class InGameManager : MonoBehaviourPunCallbacks
 {
     public static InGameManager Instance { get; private set; }
+
+    private bool isStart = false;
+    public GameObject loadding;
 
     [Header("½ºÆùÇÒ ¿­¼è °¹¼ö")]
     public CountRange KeyCount;
@@ -218,7 +222,31 @@ public class InGameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        
+        if(!isStart)
+        {
+            if(PhotonNetwork.IsMasterClient)
+            {
+                GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
+                if(_players.Length == PhotonNetwork.CurrentRoom.PlayerCount)
+                {
+                    pv.RPC("GameStart", RpcTarget.All);
+                }    
+            }
+        }
+    }
+
+    [PunRPC]
+    void GameStart()
+    {
+        isStart = true;
+        StartCoroutine(UnEnableLodding());
+    }
+
+    IEnumerator UnEnableLodding()
+    {
+        yield return new WaitForSeconds(3.0f);
+
+        loadding.SetActive(false);
     }
 }
 
