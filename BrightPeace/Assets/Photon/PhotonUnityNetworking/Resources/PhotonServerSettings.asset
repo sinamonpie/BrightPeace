@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 1e7df913-90bb-4547-ad2a-2fdf978d0f70
+    AppIdRealtime: 58ab2259-5e53-4301-993b-55d3c97a5b2d
     AppIdFusion: 
     AppIdChat: a400f78e-323e-4ad8-8d0d-31780076d4ed
     AppIdVoice: e04f89b8-5a9c-427e-84bb-c1b6a07379ce
@@ -39,16 +39,9 @@ MonoBehaviour:
   - ClickRpc
   - DestroyRpc
   - HeresWhy
-  - AllowUseWalkieTalkie
-  - ReleaseWalkieTalkie
-  - RequestToUseWalkieTalkie
-  - StopUsingWalkieTalkie
-  - RequestToUseRadio
-  - AllowUseRadio
-  - StopUsingRadio
-  - ReleaseRadio
-  - RequestToUserRadio
-  - HitPlayer
+  - DestroySpaceship
+  - Fire
+  - RespawnSpaceship
   DisableAutoOpenWizard: 1
-  ShowSettings: 1
+  ShowSettings: 0
   DevRegionSetOnce: 0
