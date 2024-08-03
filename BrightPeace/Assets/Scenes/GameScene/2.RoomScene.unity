@@ -939,8 +939,8 @@ MonoBehaviour:
   - {fileID: 898151852}
   securitySpawn: {fileID: 763803131}
   gameObjects:
-  - {fileID: 3652535622175675062, guid: 5b3ce1062b900b64fba60d7677045bb9, type: 3}
-  - {fileID: 7634419415184209487, guid: 6fc4bf877192c354ca6ada04fd98a054, type: 3}
+  - {fileID: 3523142487569265986, guid: bc2cab86ebde35348bfd0afe74653df6, type: 3}
+  - {fileID: -9085300943141763384, guid: cf9a2ae4cb28cdc4489618d95dc2ad79, type: 3}
   playerObject: {fileID: 0}
   isReadySlider: 0
   readyCount: 0
@@ -2708,7 +2708,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0039371205, y: -0.000052574505}
+  m_AnchoredPosition: {x: 0.005160077, y: -0.000052574505}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1722653606

@@ -1731,6 +1731,9 @@ MonoBehaviour:
   actionText: {fileID: 801383651}
   alertText: {fileID: 1310379767}
   inventory: {fileID: 0}
+  isRayItem: 0
+  canDoor: 0
+  player: {fileID: 0}
 --- !u!114 &1819415173
 MonoBehaviour:
   m_ObjectHideFlags: 0

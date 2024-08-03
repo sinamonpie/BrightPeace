@@ -200,6 +200,15 @@ public class ActionController : MonoBehaviour
             if (hitInfo.transform != null)
             {
                 hitInfo.transform.GetComponent<CabinetController>().CabinetControl(player);
+                if (hitInfo.transform.GetComponent<CabinetController>().HideInCabinet())
+                {
+                    player.SetActive(false);
+                    // 플레이어 투시경에 안보이게 하는거 임시용
+                }
+                else
+                {
+                    player.SetActive(true);
+                }
             }
         }
     }
@@ -207,7 +216,14 @@ public class ActionController : MonoBehaviour
     public void HideCabinetInfoAppear()
     {
         actionText.gameObject.SetActive(true);
-        actionText.text = "캐비넷에 숨기 " + "<color=yellow>" + "E키" + "</color>";
+        if (hitInfo.transform.GetComponent<CabinetController>().HideInCabinet())
+        {
+            actionText.text = "캐비넷에서 나오기 " + "<color=yellow>" + "E키" + "</color>";
+        }
+        else
+        {
+            actionText.text = "캐비넷에 숨기 " + "<color=yellow>" + "E키" + "</color>";
+        }
         HideCabinetAction();
     }
 
