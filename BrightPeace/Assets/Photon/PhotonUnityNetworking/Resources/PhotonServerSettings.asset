@@ -42,6 +42,10 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - AllowUseRadio
+  - ReleaseRadio
+  - RequestToUserRadio
+  - StopUsingRadio
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0
