@@ -5,14 +5,19 @@ using UnityEngine.UIElements;
 
 public class WallHacker : MonoBehaviour
 {
-    public Camera sensorCamera;
+    Camera sensorCamera;
+
+    void Start()
+    {
+        sensorCamera = FindObjectOfType<SensorCamera>().GetComponent<Camera>();
+    }
     public void ApplyWallHack(float wallHackTime)
     {
         StartCoroutine(WallHack(wallHackTime));
     }
     IEnumerator WallHack(float wallHackTime)
     {
-        sensorCamera.transform.gameObject.SetActive(true);
+        sensorCamera.enabled = true;
         GameObject player = transform.parent.gameObject;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject otherPlayer in players)
@@ -20,13 +25,12 @@ public class WallHacker : MonoBehaviour
             if (otherPlayer != player)
             {
                 otherPlayer.GetComponentInChildren<PlayerRenderer>().ApplyHighlight(wallHackTime);
-
             }
         }
 
         yield return new WaitForSeconds(wallHackTime);
 
-        sensorCamera.transform.gameObject.SetActive(false);
+        sensorCamera.enabled = false;
 
     }
 }

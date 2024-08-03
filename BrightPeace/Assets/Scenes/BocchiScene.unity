@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 33380434}
   m_Layer: 0
   m_Name: ItemHasPoint
-  m_TagString: Untagged
+  m_TagString: ItemHasPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -553,10 +553,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3685321578577622590, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1800140562}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
 --- !u!224 &116696608 stripped
 RectTransform:
@@ -1294,7 +1291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f957f30edad02604d88323faeaf09661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  postProcessVolume: {fileID: 376745135}
 --- !u!114 &376745128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1313,7 +1309,6 @@ MonoBehaviour:
     m_Bits: 64
   actionText: {fileID: 1351222693}
   alertText: {fileID: 2087370095}
-  inventory: {fileID: 1066386125}
   isRayItem: 0
   canDoor: 0
   player: {fileID: 0}
@@ -2769,7 +2764,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_ClearFlags
@@ -2821,7 +2816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409498, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409498, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_TagString
@@ -2954,17 +2949,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 512093298509270216, guid: b4ac5bc24b6414d46b1069e7b0b23fa0, type: 3}
   m_PrefabInstance: {fileID: 4918193467818955828}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1066386125 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1519136005209378567, guid: b4ac5bc24b6414d46b1069e7b0b23fa0, type: 3}
-  m_PrefabInstance: {fileID: 4918193467818955828}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0072dbc56515262479a02973f642cd68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1073555015
 GameObject:
   m_ObjectHideFlags: 0
@@ -3978,10 +3962,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alertText: {fileID: 2087370095}
-  inventory: {fileID: 0}
-  knife: {fileID: 1800140560}
   swingRange: 3
   swingDelay: 2.5
+  unlockTime: 2
+  wallHackTime: 3
 --- !u!1 &1422872170
 GameObject:
   m_ObjectHideFlags: 0
@@ -4764,37 +4748,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2ac944d9f7481f4ba7206a01b89db69, type: 3}
---- !u!1 &1800140560 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3685321578577622590, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
-  m_PrefabInstance: {fileID: 115669944}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1800140561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3685321578577622591, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
   m_PrefabInstance: {fileID: 115669944}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1800140562
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1800140560}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.7, y: 0.7, z: 0.7}
-  m_Center: {x: -0.5, y: 0, z: 0}
 --- !u!1 &1806245117
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ActionController : MonoBehaviour
 {
+    [Header("상호작용 거리")]
     [SerializeField]
     private float range;
     private RaycastHit hitInfo;
@@ -16,10 +17,15 @@ public class ActionController : MonoBehaviour
     [SerializeField] private TMP_Text actionText;
     [SerializeField] private TMP_Text alertText;
 
-    public Inventory inventory;
+    Inventory inventory;
     public bool isRayItem;
     public bool canDoor = false;
     public GameObject player;
+
+    void Start()
+    {
+        inventory = FindObjectOfType<Inventory>();
+    }
 
     void Update()
     {

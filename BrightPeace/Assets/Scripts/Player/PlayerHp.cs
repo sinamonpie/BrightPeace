@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerHp : MonoBehaviour
 {
-    [SerializeField]
-    int maxHp = 2;
-    [SerializeField]
-    int currentHp;
+    [SerializeField] int maxHp = 2;
+    [SerializeField] int currentHp;
     void Start()
     {
         InitHp();

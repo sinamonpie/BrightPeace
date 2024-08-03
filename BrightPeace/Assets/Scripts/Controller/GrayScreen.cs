@@ -6,12 +6,13 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class GrayScreen : MonoBehaviour
 {
-    public PostProcessVolume postProcessVolume;
+    PostProcessVolume postProcessVolume;
     ColorGrading colorGrading;
     bool isEffectActive = false;
 
     void Start()
     {
+        postProcessVolume = FindObjectOfType<PostProcessVolume>();
         postProcessVolume.profile.TryGetSettings<ColorGrading>(out colorGrading);
     }
 
