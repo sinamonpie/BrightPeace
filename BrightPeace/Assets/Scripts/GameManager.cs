@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject player = null;
     public List<string> sceneName = new List<string>();
 
+
     private static GameManager instance;
 
     public static GameManager Instance

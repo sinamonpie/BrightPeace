@@ -1,14 +1,11 @@
-using Fusion;
-using Fusion.Sockets;
 using Photon.Pun;
 using Photon.Realtime;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PhotonManager : MonoBehaviourPunCallbacks, INetworkRunnerCallbacks
+public class PhotonManager : MonoBehaviourPunCallbacks
 {
     public string gameVersion = "0.1";
     public string nick = "";
@@ -19,10 +16,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks, INetworkRunnerCallbacks
     public bool isKicked = false;
 
     private static PhotonManager instance;
-    
-
-    public NetworkRunner _runner;
-    private Dictionary<PlayerRef, NetworkObject> _spwanedRoomPlayers = new Dictionary<PlayerRef, NetworkObject>();
 
     public static PhotonManager Instance
     {
@@ -50,202 +43,260 @@ public class PhotonManager : MonoBehaviourPunCallbacks, INetworkRunnerCallbacks
 
     void Start()
     {
+        Connect();
     }
 
-    public void JoinLobby()
+    private void Connect()
     {
-        GameManager.Instance.LoadLobbyScene();
+        if(PhotonNetwork.IsConnected)
+        {
+            nick = "";
+            Debug.Log("Photon Connected");
+        }
+        else
+        {
+            PhotonNetwork.GameVersion = gameVersion;
+            PhotonNetwork.ConnectUsingSettings();
+        }
     }
 
-    public void CreateRoom()
+    public void Disconnect()
     {
-        StartGame(GameMode.Host);
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                foreach (var player in PhotonNetwork.CurrentRoom.Players)
+                {
+                    if (player.Value != PhotonNetwork.LocalPlayer)
+                    {
+                        ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
+                        hashtable.Add("kicked", true);
+
+                        player.Value.SetCustomProperties(hashtable);
+                    }
+                }
+
+            }
+            PhotonNetwork.Disconnect();
+        }
+        else
+            Debug.Log("Not Connect");
     }
 
-    public void JoinMatching()
+    public void JoinLobby(string _nick = null)
     {
-        StartGame(GameMode.Client);
-    }
+        if(PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InLobby)
+        {
+            if(_nick == null || _nick.Equals(""))
+            {
+                nick = "Player" + Random.Range(0, 1000).ToString();
+            }
+            else
+            {
+                nick = _nick;
+            }
 
-    public void LeaveMatching()
-    {
-
-    }
-
-    public void LeaveRoom()
-    {
-
+            PhotonNetwork.LocalPlayer.NickName = nick.Trim();
+            PhotonNetwork.JoinLobby();
+        }
+        else
+        {
+            Debug.Log("Not Connected Or In Lobby");
+        }
     }
 
     public void LeaveLobby()
     {
-
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InLobby)
+        {
+            PhotonNetwork.LeaveLobby();
+        }
+        else
+        {
+            Debug.Log("Not Lobby");
+        }
     }
 
-    async void StartGame(GameMode mode)
+    public void LeaveRoom()
     {
-        _runner = gameObject.AddComponent<NetworkRunner>();
-        _runner.ProvideInput = true;
-
-        //var sceneInfo = new NetworkSceneInfo();
-        //var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
-        //if (scene.IsValid)
-        //{
-        //    sceneInfo.AddSceneRef(scene, LoadSceneMode.Single);
-        //}    
-
-        if (mode == GameMode.Host)
+        if(PhotonNetwork.IsMasterClient)
         {
-            var result = await _runner.StartGame(new StartGameArgs()
+            foreach(var player in PhotonNetwork.CurrentRoom.Players)
             {
-                GameMode = mode,
-                CustomLobbyName = "CustomLobby"
-            });
-
-            if (result.Ok)
-            {
-                // all good
-                string sceneName = GameManager.Instance.sceneName[2];
-                if(_runner.IsSceneAuthority)
+                if(player.Value != PhotonNetwork.LocalPlayer)
                 {
-                    await _runner.LoadScene(sceneName, LoadSceneMode.Single, LocalPhysicsMode.None, true);
+                    ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
+                    hashtable.Add("kicked", true);
+
+                    player.Value.SetCustomProperties(hashtable);
+                }
+            }
+
+        }
+        PhotonNetwork.LeaveRoom();
+    }
+
+    public void JoinRoom(string _room)
+    {
+        if(PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InRoom)
+        {
+            roomName = _room;
+            PhotonNetwork.JoinRoom(_room);
+        }
+    }
+
+    //매칭하기
+    public void JoinMatching()
+    {
+        isMatch = true;
+        StartCoroutine(JoinRandomRoom());
+    }
+
+    //매칭취소
+    public void LeaveMatching()
+    {
+        isMatch = false;
+        StopCoroutine(JoinRandomRoom());
+    }
+
+    IEnumerator JoinRandomRoom()
+    {
+        while(true)
+        {
+            if(roomCount > 0)
+            {
+                PhotonNetwork.JoinRandomRoom();
+                break;
+            }
+
+            yield return null;
+        }
+    }
+
+    public void CreateRoom()
+    {
+        roomName = PhotonNetwork.LocalPlayer.UserId + "_" + Random.Range(0, 1000).ToString();
+        PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 5 });
+    }
+
+
+    /// <summary>
+    /// //////////////////////////////////////////////////////////////////////
+    /// </summary>
+    public override void OnConnectedToMaster()
+    {
+        Debug.Log("서버 접속");
+        if (nick != null && !nick.Equals(""))
+            JoinLobby(nick);
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.LogWarningFormat("연결 끊김 : {0}", cause);
+    }
+
+    public override void OnJoinedLobby()
+    {
+        Debug.Log("Player : " + nick + " Join Lobby");
+        if (!SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[1]))
+            GameManager.Instance.LoadLobbyScene();
+        if (isMatch)
+            JoinMatching();
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("Player : " + nick + " Join Room : " + PhotonNetwork.CurrentRoom.Name);
+        isMatch = false;
+
+        if (!SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[2]))
+            GameManager.Instance.LoadRoomScene();
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("Join Room Failed : " + message);
+        if (PhotonNetwork.IsConnected&&!PhotonNetwork.InLobby)
+            JoinLobby(nick);
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        Debug.Log("Join Random Room Failed : " + message);
+        if (PhotonNetwork.IsConnected)
+        {
+            if(PhotonNetwork.InLobby)
+            {
+                AlertManager alert = FindObjectOfType<AlertManager>();
+                if(alert != null)
+                {
+                    alert.SetMessage("매칭이 오래 걸립니다.\n잠시 후 다시 시도해주세요.");
                 }
             }
             else
             {
-                Debug.LogError($"Failed to Start: {result.ShutdownReason}");
+                JoinLobby(nick);
             }
         }
-        else if (mode == GameMode.Client)
+    }
+
+    public override void OnLeftLobby()
+    {
+        Debug.Log("Player " + nick + " Leave Lobby");
+        nick = "";
+        if (!SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[0]))
+            GameManager.Instance.LoadLoginScene();
+    }
+
+    public override void OnLeftRoom()
+    {
+        Debug.Log("Player : " + nick + "LeaveRoom");
+        if (PhotonNetwork.IsConnected && !PhotonNetwork.InLobby)
+            JoinLobby(nick);
+    }
+
+    public override void OnCreatedRoom()
+    {
+        Debug.Log("Create Complete Player : " + nick);
+        if (!SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[2]))
+            GameManager.Instance.LoadRoomScene();
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("Create Room Failed : " + message);
+        if (PhotonNetwork.IsConnected && !PhotonNetwork.InLobby)
+            JoinLobby(nick);
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        roomCount = roomList.Count;
+        foreach(var room in roomList)
         {
-            isMatch = false;
-
-            var result = await _runner.JoinSessionLobby(SessionLobby.Custom, "CustomLobby");
-
-            if (result.Ok)
+            if(room.RemovedFromList)
             {
-                // all good
-                string sceneName = GameManager.Instance.sceneName[2];
-                if (_runner.IsSceneAuthority)
+                roomCount--;
+            }
+        }
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        if(targetPlayer == PhotonNetwork.LocalPlayer)
+        {
+            if(changedProps["kicked"] != null)
+            {
+                if((bool)changedProps["kicked"])
                 {
-                    await _runner.LoadScene(sceneName, LoadSceneMode.Single, LocalPhysicsMode.None, true);
-                }
-            }
-            else
-            {
-                Debug.LogError($"Failed to Start: {result.ShutdownReason}");
-            }
-        }
-    }
-
-    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
-    {
-    }
-
-    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
-    {
-    }
-
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
-    {
-        if (runner.IsServer)
-        {
-            Debug.Log("Join Player : " + runner.LocalPlayer.ToString());
-        }
-    }
-
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
-    {
-        Debug.Log("PlayerLeft : " + runner.LocalPlayer.ToString());
-        if (runner.IsServer)
-            RoomManager.Server_Remove(runner, player);
-    }
-
-    public void OnInput(NetworkRunner runner, NetworkInput input)
-    {
-    }
-
-    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
-    {
-    }
-
-    public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
-    {
-        Debug.Log("ShutDown : " + runner.LocalPlayer.ToString());
-        if (shutdownReason == ShutdownReason.DisconnectedByPluginLogic)
-        {
-            if (runner.SceneManager != null)
-            {
-                if (runner.SceneManager.MainRunnerScene.IsValid() == true)
-                {
-                    SceneRef sceneRef = runner.SceneManager.GetSceneRef(runner.SceneManager.MainRunnerScene.name);
-                    runner.SceneManager.UnloadScene(sceneRef);
+                    string[] _removeProperties = new string[1];
+                    _removeProperties[0] = "kicked";
+                    isKicked = true;
+                    PhotonNetwork.RemovePlayerCustomProperties(_removeProperties);
+                    PhotonNetwork.LeaveRoom();
                 }
             }
         }
-    }
-
-    public void OnConnectedToServer(NetworkRunner runner)
-    {
-    }
-
-    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
-    {
-    }
-
-    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
-    {
-    }
-
-    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
-    {
-    }
-
-    public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
-    {
-    }
-
-    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
-    {
-        if (sessionList.Count > 0)
-        {
-            // Get first Session from the list
-            var session = sessionList[0];
-
-            Debug.Log($"Joining {session.Name}");
-
-            // Join
-            runner.StartGame(new StartGameArgs()
-            {
-                GameMode = GameMode.Client,
-                SessionName = session.Name 
-            });
-        }
-
-        Debug.Log($"Session List Updated with {sessionList.Count} session(s)");
-    }
-
-    public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
-    {
-    }
-
-    public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
-    {
-    }
-
-    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
-    {
-    }
-
-    public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
-    {
-    }
-
-    public void OnSceneLoadDone(NetworkRunner runner)
-    {
-    }
-
-    public void OnSceneLoadStart(NetworkRunner runner)
-    {
     }
 }
