@@ -39,7 +39,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
 
         if (PhotonNetwork.IsMasterClient)
@@ -156,7 +156,19 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            pv.RPC("ReceiveStart", RpcTarget.All);
+
+            bool isStart = true;
+            foreach (GameObject _player in GameObject.FindGameObjectsWithTag("RoomPlayer"))
+            {
+                if (!_player.GetComponent<RoomPlayer>().Ready)
+                {
+                    isStart = false;
+                }
+            }
+            if (isStart)
+            {
+                pv.RPC("ReceiveStart", RpcTarget.All);
+            }
         }
     }
 
@@ -205,18 +217,18 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void ReceiveStart()
     {
-        bool isStart = true;
-        foreach (GameObject _player in GameObject.FindGameObjectsWithTag("RoomPlayer"))
+        StopAllCoroutines();
+        readyAnim.Play("Start");
+        if(PhotonNetwork.IsMasterClient)
         {
-            if (!_player.GetComponent<RoomPlayer>().Ready)
-            {
-                isStart = false;
-            }
+            StartCoroutine(SetStart());
         }
-        if (isStart)
-        {
-            GameManager.Instance.LoadGamescene();
-        }
+    }
+
+    IEnumerator SetStart()
+    {
+        yield return new WaitForSeconds(2.0f);
+        GameManager.Instance.LoadGamescene();
     }
 
     IEnumerator SetReadyTimeTicker(int readyCnt)

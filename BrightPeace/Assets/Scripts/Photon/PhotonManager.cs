@@ -202,8 +202,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log("Player : " + nick + " Join Room : " + PhotonNetwork.CurrentRoom.Name);
         isMatch = false;
 
-        if (!SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[2]))
-            GameManager.Instance.LoadRoomScene();
+        GameManager.Instance.LoadRoomScene();
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -251,8 +250,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         Debug.Log("Create Complete Player : " + nick);
-        if (!SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[2]))
-            GameManager.Instance.LoadRoomScene();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)

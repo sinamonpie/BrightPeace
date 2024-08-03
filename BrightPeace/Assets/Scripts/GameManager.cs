@@ -42,18 +42,19 @@ public class GameManager : MonoBehaviour
 
     public void LoadLobbyScene()
     {
+        PhotonNetwork.AutomaticallySyncScene = false;
         SceneManager.LoadSceneAsync(1);
     }
 
     public void LoadRoomScene()
     {
-        SceneManager.LoadScene(2);
+        PhotonNetwork.LoadLevel(sceneName[2]);
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public void LoadGamescene()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.LoadLevel(sceneName[3]);
         PhotonNetwork.CurrentRoom.IsOpen = false;
+        PhotonNetwork.LoadLevel(sceneName[3]);
     }
 }
