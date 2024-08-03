@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - CinemachineTarget
+  - Door
+  - Item
+  - Ending
   layers:
   - Default
   - TransparentFX
@@ -11,12 +15,12 @@ TagManager:
   - 
   - Water
   - UI
+  - Object
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Charactor
+  - Ground
+  - FollowCamera
+  - Particle
   - 
   - 
   - 

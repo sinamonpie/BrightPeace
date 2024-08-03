@@ -13,8 +13,7 @@ public class UseItemManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text alertText;
 
-    public Inventory inventory;
-    ItemActionManager actionManager;
+    Inventory inventory;
     ActionController actionController;
 
     [Header("장착하고 있는 칼")]
@@ -40,7 +39,6 @@ public class UseItemManager : MonoBehaviour
     void Start()
     {
         inventory = FindObjectOfType<Inventory>();
-        actionManager = FindObjectOfType<ItemActionManager>();
         actionController = FindObjectOfType<ActionController>();
         knife.gameObject.SetActive(false);
 
@@ -64,10 +62,40 @@ public class UseItemManager : MonoBehaviour
                         {
                             if (!actionController.canDoor)                                  // 키 사용 불가능
                             goto exit;
+
+                            float unlockTime = 2f;         // 문 열리는 시간
+                            if (!GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().IsLockDoor())
+                            {
+                                if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().CanDoorAction(unlockTime))
+                                {
+                                    StartCoroutine(UseKey(unlockTime));
+                                }
+                            }
+                            break;
                         }
-                        break;
+
+                        case "구급약":
+                        {
+                            int currnetPlayerHp = transform.GetComponent<PlayerHp>().GetPlayerHp();
+                            if (currnetPlayerHp > 1)
+                            {
+                                goto exit;
+                            }
+                            // 자신 회복
+                            transform.GetComponent<PlayerHp>().Heal(1);
+                            break;
+                        }
+
+                        case "투시경":
+                        {                   
+                            // 다른 모든 플레이어의 실루엣을 3초간 감지한다.
+                            // 단, 캐비넷에 들어가있는 플레이어는 감지되지 않는다.
+                            float wallHackTime = 3f;
+                            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GrayScreen>().ApplyGrayScreen(wallHackTime);
+                            GameObject.FindAnyObjectByType<WallHacker>().ApplyWallHack(wallHackTime);
+                            break;
+                        }
                     }
-                    actionManager.UseItem(inventory.currentSlot.item);
                     StartCoroutine(TextAlert());
                     alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
                     inventory.currentSlot.ClearSlot();
@@ -111,6 +139,9 @@ public class UseItemManager : MonoBehaviour
                         }
                     }
                 }
+
+
+
             }
 
             if (Input.GetKeyUp(KeyCode.G))  // 아이템 버리기
@@ -132,6 +163,12 @@ public class UseItemManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         alertText.gameObject.SetActive(false);
+    }
+
+    IEnumerator UseKey(float time)               // 2초후 문 열림
+    {
+        yield return new WaitForSeconds(time);
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().UnlockDoor();
     }
 
 }
