@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using Photon.Pun;
+
 /// <summary>
 /// 활성화되면 칼관련된 기능 수행
 /// 활성화는 아이템 매니저에서 동작함
@@ -22,7 +24,6 @@ public class KnifeManager : MonoBehaviour
     {
         animator = transform.GetComponent<Animator>();
         UseItemManager = FindObjectOfType<UseItemManager>();
-        knife = UseItemManager.setKnife;
         knifeCollider = knife.GetComponent<BoxCollider>();
         knifeCollider.enabled = false;
         rate = 0f;
@@ -51,8 +52,27 @@ public class KnifeManager : MonoBehaviour
         knifeCollider.enabled = false;
     }
 
-    void HitPlayer()
+    void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player") && other.gameObject != this.gameObject)
+        {
 
+/*          PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("HitPlayer", RpcTarget.All, other.GetComponent<PhotonView>().ViewID);*/
+        }
     }
+
+/*    [PunRPC]
+    void HitPlayer(int playerViewID)
+    {
+        PhotonView targetView = PhotonView.Find(playerViewID);
+        if (targetView != null)
+        {
+            PlayerHp playerHealth = targetView.GetComponent<PlayerHp>();
+            if (playerHealth != null)
+            {
+                playerHealth.currentHp -= 1;
+            }
+        }
+    }*/
 }

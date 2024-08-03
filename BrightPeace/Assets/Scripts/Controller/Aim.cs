@@ -77,8 +77,8 @@ public class Aim : MonoBehaviour
         {
             if (hitInfo.transform.GetComponent<PlayerHp>() != null)
             {
-                hitInfo.transform.GetComponent<PlayerHp>().currentHp -= 1;
-                Debug.Log("대상 남은 체력 : " + hitInfo.transform.GetComponent<PlayerHp>().currentHp.ToString());
+/*                hitInfo.transform.GetComponent<PlayerHp>().currentHp -= 1;
+                Debug.Log("대상 남은 체력 : " + hitInfo.transform.GetComponent<PlayerHp>().currentHp.ToString());*/
             }
         }
         else { Debug.Log("감나빗"); }
