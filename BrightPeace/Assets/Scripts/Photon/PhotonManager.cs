@@ -84,18 +84,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             Debug.Log("Not Connect");
     }
 
-    public void JoinLobby(string _nick = null)
+    public void JoinLobby(string _nick)
     {
         if (PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InLobby)
         {
-            if (_nick == null || _nick.Equals(""))
-            {
-                nick = "Player" + Random.Range(0, 1000).ToString();
-            }
-            else
-            {
-                nick = _nick;
-            }
+            nick = _nick;
 
             PhotonNetwork.LocalPlayer.NickName = nick.Trim();
             PhotonNetwork.JoinLobby();

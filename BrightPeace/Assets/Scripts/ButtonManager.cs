@@ -12,36 +12,6 @@ public class ButtonManager : MonoBehaviour
     public GameObject selectSecurity;
     public GameObject selectMental;
 
-    private void OnEnable()
-    {
-        
-    }
-
-    public void GetNickname()
-    {
-        if(PlayerPrefs.HasKey("nick"))
-        {
-            string nickname = PlayerPrefs.GetString("nick");
-            nickInput.SetTextWithoutNotify(nickname);
-        }
-        else
-        {
-            SetNickname("Player");
-        }
-    }
-
-    public void SetNickname(string nick)
-    {
-        if(string.IsNullOrEmpty(nick))
-        {
-            PlayerPrefs.DeleteKey("nick");
-        }
-        else
-        {
-            PlayerPrefs.SetString("nick", nick);
-        }
-    }
-
     public void JoinLobby()
     {
         string nick = nickInput.text;
@@ -53,7 +23,7 @@ public class ButtonManager : MonoBehaviour
         }
 
         PlayerPrefs.SetString("nick", nick);
-        PhotonManager.Instance.JoinLobby();
+        PhotonManager.Instance.JoinLobby(nick);
     }
 
     public void CreateRoomBtn()
@@ -97,11 +67,11 @@ public class ButtonManager : MonoBehaviour
     {
         if(PhotonNetwork.InLobby && SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[1]))
         {
-            //if (PhotonManager.Instance.isKicked)
-            //{
-            //    alertManager.SetMessage("방장이 나갔습니다.\n다시 매칭해주세요.");
-            //    PhotonManager.Instance.isKicked = false;
-            //}
+            if (PhotonManager.Instance.isKicked)
+            {
+                alertManager.SetMessage("방장이 나갔습니다.\n다시 매칭해주세요.");
+                PhotonManager.Instance.isKicked = false;
+            }
         }
     }
 }

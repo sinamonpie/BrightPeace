@@ -47,6 +47,10 @@ MonoBehaviour:
   - SetStartGame
   - ReceiveReady
   - ReceiveStart
+  - AllowUseRadio
+  - ReleaseRadio
+  - RequestToUserRadio
+  - StopUsingRadio
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

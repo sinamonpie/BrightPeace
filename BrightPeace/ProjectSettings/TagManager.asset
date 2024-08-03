@@ -9,6 +9,7 @@ TagManager:
   - Item
   - Ending
   - ItemHasPoint
+  - RoomPlayer
   layers:
   - Default
   - TransparentFX
