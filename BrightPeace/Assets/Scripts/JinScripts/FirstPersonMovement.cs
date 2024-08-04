@@ -6,6 +6,8 @@ public class FirstPersonMovement : PlayerController
 {
     public float rataionSpeed = 100;
     private Vector3 rotaion;
+
+    private float currentSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,16 @@ public class FirstPersonMovement : PlayerController
 
         rotaion = new Vector3(0, mouseX * rataionSpeed * Time.deltaTime, 0);
         transform.Rotate(rotaion);
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            currentSpeed = moveSpeed;
+        }
+        else
+        {
+            currentSpeed = 0;
+        }
+        Debug.Log(currentSpeed);
     }
 
     public void MoveTo(Vector3 direction)
