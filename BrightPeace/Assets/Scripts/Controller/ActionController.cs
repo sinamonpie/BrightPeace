@@ -110,6 +110,7 @@ public class ActionController : MonoBehaviour
                 isInvenFull = inventory.AddItem(hitInfo.transform.GetComponent<ItemPickUp>().Item);
                 if (isInvenFull)
                 {
+                    // 아이템 주울때 사운드 추가
                     Debug.Log("획득하기 " + hitInfo.transform.GetComponent<ItemPickUp>().Item.itemName);
                     Destroy(hitInfo.transform.gameObject);
                 }
@@ -130,12 +131,14 @@ public class ActionController : MonoBehaviour
             {
                 if (hitInfo.transform.GetComponent<DoorController>().UseableDoor())
                 {
+                    // 문 열리는 사운드 추가
                     hitInfo.transform.GetComponent<DoorController>().DoorControl();
                     Debug.Log(hitInfo);
                     InfoDisapper();
                 }
                 else
                 {
+                    // 문 잠긴 사운드 추가
                     alertText.gameObject.SetActive(true);
                     alertText.text = "문이 잠겼습니다.";
                     Invoke("DisAlert", 1f);
@@ -210,6 +213,7 @@ public class ActionController : MonoBehaviour
                 hitInfo.transform.GetComponent<CabinetController>().CabinetControl(player);
                 if (hitInfo.transform.GetComponent<CabinetController>().HideInCabinet())
                 {   
+                    // 캐비넷 들어가는 사운드 추가
                     // 플레이어 투시경에 안보이게 하는거 임시용
                     player.SetActive(false);
                     player.GetComponent<PlayerState>().PlayerInCabinet();
@@ -245,9 +249,8 @@ public class ActionController : MonoBehaviour
 
     void ChangePlayerLayer(GameObject player, int toLayer)
     {
-            player.layer = toLayer;
+        player.layer = toLayer;
 
-        // 자식 오브젝트들에 대해서 재귀적으로 레이어를 변경
         foreach (Transform child in player.transform)
         {
             if (child != null)

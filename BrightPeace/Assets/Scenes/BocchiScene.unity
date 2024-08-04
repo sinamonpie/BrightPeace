@@ -1022,6 +1022,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332148011}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &333142258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2668223219637648691, guid: 14fa74b1331dd184d8c7b727402657fb, type: 3}
+  m_PrefabInstance: {fileID: 5418454347019252888}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &336613607
 GameObject:
   m_ObjectHideFlags: 0
@@ -3124,6 +3129,10 @@ PrefabInstance:
       propertyPath: aimManager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6280986568946046889, guid: fd09b5b4df6af4f4089ce77bfd665bea, type: 3}
+      propertyPath: sceneViewId
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 8493975917277090756, guid: fd09b5b4df6af4f4089ce77bfd665bea, type: 3}
       propertyPath: m_Name
       value: Gun
@@ -3713,6 +3722,10 @@ PrefabInstance:
     - target: {fileID: 2133989477842275419, guid: fd09b5b4df6af4f4089ce77bfd665bea, type: 3}
       propertyPath: aimManager
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6280986568946046889, guid: fd09b5b4df6af4f4089ce77bfd665bea, type: 3}
+      propertyPath: sceneViewId
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8493975917277090756, guid: fd09b5b4df6af4f4089ce77bfd665bea, type: 3}
       propertyPath: m_Name
@@ -4700,6 +4713,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3948789623590200689, guid: 666266f4e728ac448b25ac87a4bd6e82, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4805,7 +4822,7 @@ PrefabInstance:
     - target: {fileID: 1519136005209378567, guid: b4ac5bc24b6414d46b1069e7b0b23fa0, type: 3}
       propertyPath: SlotsParent
       value: 
-      objectReference: {fileID: 3017246216895112262, guid: 3e5a3e65108960346a92c672689b5831, type: 3}
+      objectReference: {fileID: 333142258}
     - target: {fileID: 2832028969641621612, guid: b4ac5bc24b6414d46b1069e7b0b23fa0, type: 3}
       propertyPath: sceneViewId
       value: 1

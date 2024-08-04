@@ -9,7 +9,7 @@ using Photon.Pun;
 /// <summary>
 /// 아이템 사용/버리기와 관련된 기능 텍스트출력 등을 기재
 /// </summary>
-public class UseItemManager : MonoBehaviour
+public class UseItemManager : MonoBehaviourPun
 {
     [Header("UI 텍스트")]
     [SerializeField] private TMP_Text alertText;
@@ -134,7 +134,7 @@ public class UseItemManager : MonoBehaviour
 
             else if (inventory.currentSlot.item.itemType == ItemType.Equip)
             {
-                if(inventory.currentSlot.item.itemName == "칼")
+                if (inventory.currentSlot.item.itemName == "칼")
                 {
                     ray = new Ray(transform.position + Vector3.up * 1f, transform.forward);
                     Debug.DrawRay(ray.origin, ray.direction * swingRange, Color.red);
@@ -146,6 +146,7 @@ public class UseItemManager : MonoBehaviour
 
                     if (Input.GetButtonDown("Fire1") && isSwingReady)
                     {
+                        // 나이프 휘두르는 사운드 추가
                         animator.SetTrigger("isSwing");
                         rate = 0;
 
@@ -156,9 +157,7 @@ public class UseItemManager : MonoBehaviour
                                 PlayerState playerHp = hit.transform.GetComponent<PlayerState>();
                                 if(playerHp != null)
                                 {
-                                    // 경비원이면 2초간 스턴
-                                    playerHp.TakeDamage(1);
-                                    Debug.Log("대상 남은 체력" + hit.transform.GetComponent<PlayerState>().GetPlayerHp().ToString());
+                                    photonView.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
                                     inventory.currentSlot.ClearSlot();
                                     inventory.getKnife = false;
                                     knife.gameObject.SetActive(false);
@@ -197,10 +196,33 @@ public class UseItemManager : MonoBehaviour
         alertText.gameObject.SetActive(false);
     }
 
-    IEnumerator UseKey(float time)               // 2초후 문 열림
+    IEnumerator UseKey(float time)
     {
         yield return new WaitForSeconds(time);
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().UnlockDoor();
     }
 
+    [PunRPC]
+    void AttackPlayer(int targetViewID)
+    {
+        PhotonView targetView = PhotonView.Find(targetViewID);
+        if(targetView != null)
+        {
+            PlayerState playerHp = targetView.GetComponent<PlayerState>();
+            if(playerHp != null)
+            {
+                // 조건 추가 경비원일때는 스턴 2초
+                if (PhotonNetwork.IsMasterClient)
+                {
+
+                }
+                else
+                {
+                }
+
+                playerHp.TakeDamage(1);
+                Debug.Log("대상 남은 체력 : " + playerHp.GetPlayerHp().ToString());
+            }
+        }
+    }
 }

@@ -11,4 +11,6 @@ public class SensorCamera : MonoBehaviour
         camera = GetComponent<Camera>();
         camera.enabled = false;
     }
+
+
 }

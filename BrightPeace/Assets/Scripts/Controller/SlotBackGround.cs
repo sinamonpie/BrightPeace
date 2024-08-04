@@ -9,7 +9,7 @@ public class SlotBackGround : MonoBehaviour
     private Color color;
     void Start()
     {
-        image = transform.GetComponent<Image>();
+        image = GetComponent<Image>();
         color = image.color;
     }
 
