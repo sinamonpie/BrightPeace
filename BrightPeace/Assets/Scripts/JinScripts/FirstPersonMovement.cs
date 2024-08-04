@@ -12,12 +12,17 @@ public class FirstPersonMovement : PlayerController
 
     Animator animator;
 
-    public float rataionSpeed = 100;
+    public float rotaionSpeed = 3;
     private Vector3 rotaion;
 
     private float currentSpeed;
+
+    private float verticalRotation = 0;
+    
     private Transform avatarup;
 
+    public AudioClip[] FootstepAudioClips;
+    [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -33,10 +38,45 @@ public class FirstPersonMovement : PlayerController
     {
         Cursor.visible = false;
 
+        Look();
+        MoveTo();
+    }
+
+    private void LateUpdate()
+    {
+        avatarup.localRotation = Quaternion.Euler(-verticalRotation, 0, 0);
+    }
+
+    void Look()
+    {
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        transform.Rotate(Vector3.up * mouseX * rotaionSpeed);
+
+        verticalRotation += mouseY * rotaionSpeed;
+        verticalRotation = Mathf.Clamp(verticalRotation, -10f, 30f);
+
+        cameraTransform.transform.localEulerAngles = Vector3.left * verticalRotation;
+    }
+
+    public void MoveTo()
+    {
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3(x, 0, z);
 
-        if(x > 0 || z > 0)
+        Vector3 movedis = transform.rotation * direction;
+        moveDirection = new Vector3(movedis.x, moveDirection.y, movedis.z);
+
+        if (characterController.isGrounded == false)
+        {
+            moveDirection.y += gravity * Time.deltaTime;
+        }
+
+        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+
+        if (x > 0 || z > 0)
         {
             currentSpeed = moveSpeed;
         }
@@ -47,26 +87,17 @@ public class FirstPersonMovement : PlayerController
 
         animator.SetFloat("Speed", currentSpeed);
         animator.SetFloat("MotionSpeed", 1);
-
-        MoveTo(new Vector3(x, 0, z));
-
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-      
-        rotaion = new Vector3(0, mouseX * rataionSpeed * Time.deltaTime, 0);
-        transform.Rotate(rotaion);
     }
 
-    public void MoveTo(Vector3 direction)
+    private void OnFootstep(AnimationEvent animationEvent)
     {
-        Vector3 movedis = transform.rotation * direction;
-        moveDirection = new Vector3(movedis.x, moveDirection.y, movedis.z);
-
-        if (characterController.isGrounded == false)
+        if (animationEvent.animatorClipInfo.weight > 0.5f)
         {
-            moveDirection.y += gravity * Time.deltaTime;
+            if (FootstepAudioClips.Length > 0)
+            {
+                var index = Random.Range(0, FootstepAudioClips.Length);
+                AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(characterController.center), FootstepAudioVolume);
+            }
         }
-
-        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
     }
 }
