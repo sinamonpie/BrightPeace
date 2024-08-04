@@ -114,6 +114,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             GameObject player = PhotonNetwork.Instantiate(securityObject.name, securitySpawn.position, Quaternion.identity, 0);
+            player.GetComponent<PlayerState>().isClient = true;
 
             Transform caemraTrans = player.GetComponent<PlayerController>().GetCameraTransform();
 
@@ -127,6 +128,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
             Vector3 spawnPosition = patientSpawn[idx].position;
 
             GameObject player = PhotonNetwork.Instantiate(patientObject.name, spawnPosition, Quaternion.identity, 0);
+            player.GetComponent<PlayerState>().isClient = false;
 
             Transform caemraTrans = player.GetComponent<PlayerController>().GetCameraTransform();
 

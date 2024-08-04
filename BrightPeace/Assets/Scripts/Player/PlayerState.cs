@@ -5,13 +5,17 @@ using Photon.Pun;
 
 public class PlayerState : MonoBehaviourPun
 {
+    FirstPersonMovement firstPersonMovement;
     [SerializeField] int maxHp = 2;
     [SerializeField] int currentHp;
     public UserRole role = UserRole.Patient;
+
+    public bool isClient;
     public bool isInCabinet;
 
     void Start()
     {
+        firstPersonMovement = GetComponent<FirstPersonMovement>();
         InitHp();
     }
 
@@ -51,6 +55,12 @@ public class PlayerState : MonoBehaviourPun
         }
     }
 
+    [PunRPC]
+    public void RPC_Stun(float duration)
+    {
+        StartCoroutine(ClientPlayerStun(duration));
+    }
+
     public bool IsInCabinet()
     {
         return isInCabinet;
@@ -59,5 +69,21 @@ public class PlayerState : MonoBehaviourPun
     public void PlayerInCabinet()
     {
         isInCabinet = !isInCabinet;
+    }
+
+    IEnumerator ClientPlayerStun(float duration)
+    {
+
+        if (firstPersonMovement != null)
+        {
+            firstPersonMovement.enabled = false;
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        if (firstPersonMovement != null)
+        {
+            firstPersonMovement.enabled = true;
+        }
     }
 }
