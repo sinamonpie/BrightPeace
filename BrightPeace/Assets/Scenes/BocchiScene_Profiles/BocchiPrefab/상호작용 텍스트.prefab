@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBB38 \uC5F4\uAE30 <color=yellow>E\uD0A4</color>"
+  m_text: "\uD22C\uC2DC\uACBD \uD68D\uB4DD\uD558\uAE30 <color=yellow>E Key</color>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d2791a96b1dcf1c4396e9660dd5a3b92, type: 2}
   m_sharedMaterial: {fileID: -56991619569412296, guid: d2791a96b1dcf1c4396e9660dd5a3b92, type: 2}

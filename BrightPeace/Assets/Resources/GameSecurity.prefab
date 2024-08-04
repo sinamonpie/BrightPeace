@@ -2447,7 +2447,6 @@ GameObject:
   - component: {fileID: 7424865524342293120}
   - component: {fileID: -4600117374812893602}
   - component: {fileID: 5811929924628696971}
-  - component: {fileID: 3071898796275737663}
   - component: {fileID: -8515944360822166619}
   m_Layer: 0
   m_Name: GameSecurity
@@ -2593,6 +2592,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SlotsParent: {fileID: 3017246216895112262, guid: 3e5a3e65108960346a92c672689b5831, type: 3}
   alertText: {fileID: 3258158006961241010, guid: d391afc714dcc5548908bdd3ec29b48b, type: 3}
+  slotsBg: []
+  slots: []
   getKnife: 0
   currentSlot: {fileID: 0}
 --- !u!114 &5811929924628696971
@@ -2612,18 +2613,6 @@ MonoBehaviour:
   swingDelay: 2.5
   unlockTime: 2
   wallHackTime: 3
---- !u!114 &3071898796275737663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7149675440221305535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7272d53463949e241ac0857a2f3550a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-8515944360822166619
 MonoBehaviour:
   m_ObjectHideFlags: 0
