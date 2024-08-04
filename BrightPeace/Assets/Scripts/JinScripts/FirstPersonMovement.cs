@@ -16,7 +16,7 @@ public class FirstPersonMovement : PlayerController
     private Vector3 rotaion;
 
     private float currentSpeed;
-    private float motionSpeed;
+    private Transform avatarup;
 
 
     // Start is called before the first frame update
@@ -24,6 +24,8 @@ public class FirstPersonMovement : PlayerController
     {
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+
+        avatarup = animator.GetBoneTransform(HumanBodyBones.Spine);
     }
 
     // Update is called once per frame
@@ -34,27 +36,23 @@ public class FirstPersonMovement : PlayerController
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
-        float speed = Mathf.Clamp01(Mathf.Abs(x) + Mathf.Abs(z));
-
         if(x > 0 || z > 0)
         {
             currentSpeed = moveSpeed;
-            motionSpeed = 1f;
         }
         else
         {
             currentSpeed = 0;
-            motionSpeed = 1f;
         }
 
         animator.SetFloat("Speed", currentSpeed);
-        animator.SetFloat("MotionSpeed", motionSpeed);
+        animator.SetFloat("MotionSpeed", 1);
 
         MoveTo(new Vector3(x, 0, z));
 
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
-
+      
         rotaion = new Vector3(0, mouseX * rataionSpeed * Time.deltaTime, 0);
         transform.Rotate(rotaion);
     }
