@@ -113,14 +113,12 @@ public class InGameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             GameObject player = PhotonNetwork.Instantiate(securityObject.name, securitySpawn.position, Quaternion.identity, 0);
-            if (pv.IsMine)
-            {
-                Transform caemraTrans = player.GetComponent<PlayerController>().GetCameraTransform();
 
-                Camera.main.transform.position = caemraTrans.position;
-                Camera.main.transform.rotation = caemraTrans.rotation;
-                Camera.main.transform.SetParent(caemraTrans);
-            }
+            Transform caemraTrans = player.GetComponent<PlayerController>().GetCameraTransform();
+
+            Camera.main.transform.position = caemraTrans.position;
+            Camera.main.transform.rotation = caemraTrans.rotation;
+            Camera.main.transform.SetParent(caemraTrans);
         }
         else
         {
@@ -129,14 +127,11 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
             GameObject player = PhotonNetwork.Instantiate(patientObject.name, spawnPosition, Quaternion.identity, 0);
 
-            if (pv.IsMine)
-            {
-                Transform caemraTrans = player.GetComponent<PlayerController>().GetCameraTransform();
+            Transform caemraTrans = player.GetComponent<PlayerController>().GetCameraTransform();
 
-                Camera.main.transform.position = caemraTrans.position;
-                Camera.main.transform.rotation = caemraTrans.rotation;
-                Camera.main.transform.SetParent(caemraTrans);
-            }
+            Camera.main.transform.position = caemraTrans.position;
+            Camera.main.transform.rotation = caemraTrans.rotation;
+            Camera.main.transform.SetParent(caemraTrans);
 
             pv.RPC("RemoveSpawnPlayerList", RpcTarget.AllBuffered, idx);
         }
