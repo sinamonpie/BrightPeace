@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ThirdPersonMovement : PlayerController
 {
+    [SerializeField]
+    public float moveSpeed = 2.0f;
+
     public float rotationSpeed = 100;
     private Vector3 rotation;
     public Vector3 cameraOffset = new Vector3(0, 2, -3);
