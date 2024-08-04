@@ -37,7 +37,7 @@ public class PlayerState : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            photonView.RPC("RPC_TakeDamage", RpcTarget.AllBuffered, damage);
+            photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage);
         }
     }
 
@@ -47,7 +47,7 @@ public class PlayerState : MonoBehaviourPun
         currentHp -= damage;
         if (currentHp <= 0)
         {
-            // 플레이어가 죽었을 때 처리
+            this.gameObject.SetActive(false);
         }
     }
 
