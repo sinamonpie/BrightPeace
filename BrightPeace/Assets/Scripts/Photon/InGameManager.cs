@@ -130,18 +130,18 @@ public class InGameManager : MonoBehaviourPunCallbacks
         spawnedGunCount = UnityEngine.Random.Range(GunCount.minCount, GunCount.maxCount);
         spawnedItemCount = UnityEngine.Random.Range(ItemCount.minCount, ItemCount.maxCount);
 
-        ////ÃÑ ½ºÆù
-        //for(int i = 0; i < spawnedGunCount; i++)
-        //{
-        //    int idx = UnityEngine.Random.Range(0, itemGunSpawn.Length);
-        //    Vector3 spawnPosition = itemGunSpawn[idx].position;
+        //ÃÑ ½ºÆù
+        for (int i = 0; i < spawnedGunCount; i++)
+        {
+            int idx = UnityEngine.Random.Range(0, itemGunSpawn.Length);
+            Vector3 spawnPosition = itemGunSpawn[idx].position;
 
-        //    PhotonNetwork.Instantiate(gunObject.name, spawnPosition, Quaternion.identity);
+            PhotonNetwork.Instantiate(gunObject.name, spawnPosition, Quaternion.identity);
 
-        //    itemGunSpawn = RemoveTransformAt(itemGunSpawn, idx);
-        //    if (itemGunSpawn == null)
-        //        break;
-        //}
+            itemGunSpawn = RemoveTransformAt(itemGunSpawn, idx);
+            if (itemGunSpawn == null)
+                break;
+        }
 
         //Å° ½ºÆù
         for (int i = 0; i < spawnedKeyCount; i++)
