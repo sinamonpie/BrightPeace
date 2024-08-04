@@ -11,9 +11,7 @@ using Photon.Pun;
 /// </summary>
 public class UseItemManager : MonoBehaviourPun
 {
-    [Header("UI ≈ÿΩ∫∆Æ")]
-    [SerializeField] private TMP_Text alertText;
-
+    TMP_Text alertText;
     Inventory inventory;
     ActionController actionController;
     SensorCamera sensorCamera;
@@ -46,6 +44,7 @@ public class UseItemManager : MonoBehaviourPun
     void Start()
     {
         inventory = FindObjectOfType<Inventory>();
+        alertText = inventory.alertText;
         actionController = FindObjectOfType<ActionController>();
         knife = GameObject.FindWithTag("ItemHasPoint").gameObject;
         knife.gameObject.SetActive(false);

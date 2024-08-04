@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class InGameManager : MonoBehaviourPunCallbacks
 {
     public static InGameManager Instance { get; private set; }
@@ -68,7 +68,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
     [SerializeField]
     [Header("잠긴 방 스폰 위치")]
     private Transform[] itemLockSpawn;
-
+    public GameObject SlotParents;
+    public TMP_Text alertText;
     public PhotonView pv;
 
     private Player masterClient;

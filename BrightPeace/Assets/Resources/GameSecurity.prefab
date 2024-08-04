@@ -2445,9 +2445,6 @@ GameObject:
   - component: {fileID: 4741775426260520134}
   - component: {fileID: 1520155454144629157}
   - component: {fileID: 7424865524342293120}
-  - component: {fileID: -4600117374812893602}
-  - component: {fileID: 5811929924628696971}
-  - component: {fileID: -8515944360822166619}
   m_Layer: 0
   m_Name: GameSecurity
   m_TagString: Player
@@ -2578,54 +2575,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &-4600117374812893602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7149675440221305535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0072dbc56515262479a02973f642cd68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SlotsParent: {fileID: 3017246216895112262, guid: 3e5a3e65108960346a92c672689b5831, type: 3}
-  alertText: {fileID: 3258158006961241010, guid: d391afc714dcc5548908bdd3ec29b48b, type: 3}
-  slotsBg: []
-  slots: []
-  getKnife: 0
-  currentSlot: {fileID: 0}
---- !u!114 &5811929924628696971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7149675440221305535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 984713666055ce74e8a4e0fdc357ad19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertText: {fileID: 3258158006961241010, guid: d391afc714dcc5548908bdd3ec29b48b, type: 3}
-  swingRange: 1.5
-  swingDelay: 2.5
-  unlockTime: 2
-  wallHackTime: 3
---- !u!114 &-8515944360822166619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7149675440221305535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d74b3cb103d0afc46813ad78a8e95542, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMaterial: {fileID: 2100000, guid: 54c66f913f7fc9e4f8f9dc48f3484397, type: 2}
 --- !u!1 &7362582953946235174
 GameObject:
   m_ObjectHideFlags: 0
