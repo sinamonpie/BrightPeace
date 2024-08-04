@@ -11,11 +11,10 @@ using Photon.Pun;
 /// </summary>
 public class UseItemManager : MonoBehaviourPun
 {
-    [Header("UI 텍스트")]
-    [SerializeField] private TMP_Text alertText;
-
+    TMP_Text alertText;
     Inventory inventory;
     ActionController actionController;
+    SensorCamera sensorCamera;
 
     GameObject knife;
     Animator animator;
@@ -45,9 +44,11 @@ public class UseItemManager : MonoBehaviourPun
     void Start()
     {
         inventory = FindObjectOfType<Inventory>();
+        alertText = inventory.alertText;
         actionController = FindObjectOfType<ActionController>();
         knife = GameObject.FindWithTag("ItemHasPoint").gameObject;
         knife.gameObject.SetActive(false);
+        sensorCamera = Camera.main.GetComponentInChildren<SensorCamera>();
 
         animator = transform.GetComponent<Animator>();
         rate = swingDelay;
@@ -97,7 +98,7 @@ public class UseItemManager : MonoBehaviourPun
                         {                   
                             // 단, 캐비넷에 들어가있는 플레이어는 감지되지 않는다.
                             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GrayScreen>().ApplyGrayScreen(wallHackTime);
-                            GameObject.FindAnyObjectByType<WallHacker>().ApplyWallHack(wallHackTime);
+                            StartCoroutine(WallHack(wallHackTime));
                             break;
                         }
 
@@ -187,6 +188,35 @@ public class UseItemManager : MonoBehaviourPun
         }
 
     }
+
+    public Inventory GetInventory()
+    {
+        return inventory;
+    }
+
+    IEnumerator WallHack(float wallHackTime)
+    {
+        sensorCamera.SetCamera(true);
+        GameObject player = transform.gameObject;
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject otherPlayer in players)
+        {
+            if (otherPlayer != player)
+            {
+                PlayerState state = otherPlayer.GetComponent<PlayerState>();
+                if (state != null && !state.IsInCabinet())
+                {
+                    otherPlayer.GetComponentInChildren<PlayerRenderer>().ApplyHighlight(wallHackTime);
+                }
+            }
+        }
+
+        yield return new WaitForSeconds(wallHackTime);
+
+        sensorCamera.SetCamera(false);
+
+    }
+
 
     IEnumerator TextAlert()
     {

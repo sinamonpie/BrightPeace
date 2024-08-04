@@ -12,5 +12,8 @@ public class SensorCamera : MonoBehaviour
         camera.enabled = false;
     }
 
-
+    public void SetCamera(bool enabled)
+    {
+        camera.enabled = enabled;
+    }
 }
