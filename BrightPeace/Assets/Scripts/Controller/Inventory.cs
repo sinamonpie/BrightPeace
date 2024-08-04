@@ -9,8 +9,8 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private GameObject SlotsParent;
     [SerializeField] private TMP_Text alertText;
-    private SlotBackGround[] slotsBg;
-    private Slot[] slots;
+    [SerializeField] private SlotBackGround[] slotsBg;
+    [SerializeField] private Slot[] slots;
     float wheelInput;
     int currentSlotNum;
     int knifeSlotNum;
