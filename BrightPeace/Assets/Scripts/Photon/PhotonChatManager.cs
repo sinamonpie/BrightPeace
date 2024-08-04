@@ -1,7 +1,6 @@
 using ExitGames.Client.Photon;
 using Photon.Chat;
 using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,11 +36,11 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
         }
     }
 
-    public void ChatConnect(string nick)
+    public void ChatConnect()
     {
         Application.runInBackground = true;
 
-        userName = nick;
+        userName = PhotonNetwork.LocalPlayer.NickName;
 
         chatClient = new ChatClient(this);
         chatClient.ChatRegion = "kr";

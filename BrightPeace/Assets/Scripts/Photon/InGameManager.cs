@@ -71,9 +71,20 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     public PhotonView pv;
 
+    private Player masterClient;
     // Start is called before the first frame update
     void Awake()
     {
+        if(patientSpawn.Length == 0)
+            patientSpawn = GetChild(patientTransform);
+
+        if(PhotonNetwork.IsMasterClient)
+        {
+            itemGunSpawn = GetChild(itemTransform[0]);
+            itemUnLockSpawn = GetChild(itemTransform[1]);
+            itemLockSpawn = GetChild(itemTransform[2]);
+        }
+
         pv = GetComponent<PhotonView>();
         
         if (Instance == null)
@@ -84,15 +95,11 @@ public class InGameManager : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
+        masterClient = PhotonNetwork.MasterClient;
     }
 
     void Start()
     {
-        patientSpawn = GetChild(patientTransform);
-        itemGunSpawn = GetChild(itemTransform[0]);
-        itemUnLockSpawn = GetChild(itemTransform[1]);
-        itemLockSpawn = GetChild(itemTransform[2]);
-
         SpawnPlayer();
         if (PhotonNetwork.IsMasterClient)
         {
@@ -112,6 +119,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
             Vector3 spawnPosition = patientSpawn[idx].position;
 
             GameObject player = PhotonNetwork.Instantiate(patientObject.name, spawnPosition, Quaternion.identity, 0);
+
+            pv.RPC("RemoveSpawnPlayerList", RpcTarget.AllBuffered, idx);
         }
     }
     
@@ -235,11 +244,29 @@ public class InGameManager : MonoBehaviourPunCallbacks
         }
     }
 
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        if (otherPlayer.IsMasterClient)
+        {
+            if (otherPlayer == masterClient)
+            {
+                PhotonManager.Instance.MasterClientDisconnect();
+            }
+        }
+    }
+    
     [PunRPC]
     void GameStart()
     {
         isStart = true;
         StartCoroutine(UnEnableLodding());
+    }
+
+    [PunRPC]
+    void RemoveSpawnPlayerList(int idx)
+    {
+        patientSpawn = RemoveTransformAt(patientSpawn, idx);
     }
 
     IEnumerator UnEnableLodding()

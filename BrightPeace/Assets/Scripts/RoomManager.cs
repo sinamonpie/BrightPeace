@@ -30,6 +30,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public bool Ready = false;
     public GameObject loadding;
 
+    public Player masterClient;
+
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
@@ -53,6 +55,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
             readyTxt.text = "준비";
             readyBtn.onClick.AddListener(btnReady);
         }
+
+        masterClient = PhotonNetwork.MasterClient;
 
         if (leaveBtn != null)
             leaveBtn.onClick.AddListener(PhotonManager.Instance.LeaveRoom);
@@ -137,15 +141,21 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        if(PhotonNetwork.IsMasterClient)
+        Debug.Log("Left Player Master ? " + otherPlayer.IsMasterClient);
+        Debug.Log("otherPlayer ? " + otherPlayer);
+        Debug.Log("materClient ? " + masterClient);
+
+        Debug.Log(otherPlayer.NickName);
+        if (PhotonNetwork.IsMasterClient)
         {
+            if (otherPlayer == masterClient)
+            {
+                PhotonManager.Instance.MasterClientDisconnect();
+                return;
+            }
+
             readyCount--;
             pv.RPC("SetReadyCount", RpcTarget.AllBuffered, readyCount);
-        }
-
-        if (otherPlayer.IsMasterClient)
-        {
-            return;
         }
 
         foreach (GameObject _player in GameObject.FindGameObjectsWithTag("RoomPlayer"))
@@ -184,6 +194,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
     void btnReady()
     {
         Ready = !Ready;
+
+        if(Ready)
+            readyTxt.text = "준비 완료";
+        else
+            readyTxt.text = "준비";
 
         pv.RPC("ReceiveReady", RpcTarget.AllBuffered, Ready, PhotonNetwork.LocalPlayer.NickName);
     }

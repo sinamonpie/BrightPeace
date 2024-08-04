@@ -64,24 +64,21 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected)
         {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                foreach (var player in PhotonNetwork.CurrentRoom.Players)
-                {
-                    if (player.Value != PhotonNetwork.LocalPlayer)
-                    {
-                        ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
-                        hashtable.Add("kicked", true);
-
-                        player.Value.SetCustomProperties(hashtable);
-                    }
-                }
-
-            }
-            PhotonNetwork.Disconnect();
+            Debug.Log("Disconnect");
         }
         else
             Debug.Log("Not Connect");
+    }
+
+    public void MasterClientDisconnect()
+    {
+        foreach (var player in PhotonNetwork.CurrentRoom.Players)
+        {
+            ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
+            hashtable.Add("kicked", true);
+
+            player.Value.SetCustomProperties(hashtable);
+        }
     }
 
     public void JoinLobby(string _nick)
@@ -190,7 +187,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("Player : " + nick + " Join Lobby");
+        Debug.Log("Player : " + PhotonNetwork.LocalPlayer.NickName + " Join Lobby");
+
+        PhotonChatManager.Instance.ChatConnect();
+
         if (!SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[1]))
             GameManager.Instance.LoadLobbyScene();
         if (isMatch)
@@ -199,7 +199,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Player : " + nick + " Join Room : " + PhotonNetwork.CurrentRoom.Name);
+        Debug.Log("Player : " + PhotonNetwork.LocalPlayer.NickName + " Join Room : " + PhotonNetwork.CurrentRoom.Name);
         isMatch = false;
 
         GameManager.Instance.LoadRoomScene();
@@ -234,7 +234,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftLobby()
     {
-        Debug.Log("Player " + nick + " Leave Lobby");
+        Debug.Log("Player " + PhotonNetwork.LocalPlayer.NickName + " Leave Lobby");
         nick = "";
         if (!SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[0]))
             GameManager.Instance.LoadLoginScene();
@@ -242,14 +242,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        Debug.Log("Player : " + nick + "LeaveRoom");
+        Debug.Log("Player : " + PhotonNetwork.LocalPlayer.NickName + "LeaveRoom");
         if (PhotonNetwork.IsConnected && !PhotonNetwork.InLobby)
             JoinLobby(nick);
     }
 
     public override void OnCreatedRoom()
     {
-        Debug.Log("Create Complete Player : " + nick);
+        Debug.Log("Create Complete Player : " + PhotonNetwork.LocalPlayer.NickName);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
