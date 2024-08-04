@@ -15,6 +15,8 @@ public class FirstPersonMovement : PlayerController
     // Update is called once per frame
     void Update()
     {
+        Cursor.visible = false;
+
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
@@ -29,8 +31,7 @@ public class FirstPersonMovement : PlayerController
 
     public void MoveTo(Vector3 direction)
     {
-        //moveDirection = direction;
-        Vector3 movedis = cameraTransform.rotation * direction;
+        Vector3 movedis = transform.rotation * direction;
         moveDirection = new Vector3(movedis.x, moveDirection.y, movedis.z);
 
         if (characterController.isGrounded == false)

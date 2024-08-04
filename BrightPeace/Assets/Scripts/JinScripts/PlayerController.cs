@@ -12,4 +12,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     protected Transform cameraTransform;
     protected CharacterController characterController;
+
+    public Transform GetCameraTransform()
+    {
+        return cameraTransform;
+    }
 }
