@@ -2785,7 +2785,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984713666055ce74e8a4e0fdc357ad19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alertText: {fileID: 1493049303}
   swingRange: 3
   swingDelay: 2.5
   unlockTime: 2
@@ -2806,6 +2805,25 @@ MonoBehaviour:
   currentHp: 0
   role: 2
   isInCabinet: 0
+--- !u!114 &1403598664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403598619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0072dbc56515262479a02973f642cd68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SlotsParent: {fileID: 333142258}
+  alertText: {fileID: 1493049303}
+  slotsBg: []
+  slots: []
+  getKnife: 0
+  settingInventory: 0
+  currentSlot: {fileID: 0}
 --- !u!1 &1422872170
 GameObject:
   m_ObjectHideFlags: 0
@@ -5005,6 +5023,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4683823353558962566, guid: b4ac5bc24b6414d46b1069e7b0b23fa0, type: 3}
+    - {fileID: 2030633488005143861, guid: b4ac5bc24b6414d46b1069e7b0b23fa0, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8906115399214139456, guid: b4ac5bc24b6414d46b1069e7b0b23fa0, type: 3}
       insertIndex: -1
@@ -5016,6 +5035,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8906115399214175652, guid: b4ac5bc24b6414d46b1069e7b0b23fa0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1403598653}
+    - targetCorrespondingSourceObject: {fileID: 8906115399214175652, guid: b4ac5bc24b6414d46b1069e7b0b23fa0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1403598664}
   m_SourcePrefab: {fileID: 100100000, guid: b4ac5bc24b6414d46b1069e7b0b23fa0, type: 3}
 --- !u!1001 &5418454347019252888
 PrefabInstance:

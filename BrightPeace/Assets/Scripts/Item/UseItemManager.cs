@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Animations;
 using Photon.Pun;
+using Photon.Realtime;
 
 /// <summary>
 /// 아이템 사용/버리기와 관련된 기능 텍스트출력 등을 기재
@@ -29,6 +30,15 @@ public class UseItemManager : MonoBehaviourPun
     float rate;
     bool isSwingReady;
 
+    [Header("나이프 스턴 시간")]
+    [SerializeField]
+    float stunTime = 2f;
+
+    [Header("회복 아이템 횟수 제한")]
+    [SerializeField]
+    int medikitRate = 2;
+    int medikitUseRate;
+
     [Header("열쇠 문 열리는 시간")]
     [SerializeField]
     float unlockTime = 2f;
@@ -52,6 +62,7 @@ public class UseItemManager : MonoBehaviourPun
 
         animator = transform.GetComponent<Animator>();
         rate = swingDelay;
+        medikitUseRate = 0;
     }
     void Update()
     {
@@ -83,14 +94,20 @@ public class UseItemManager : MonoBehaviourPun
 
                         case "구급약":
                         {
-                            // 체력이 2면 사용 불가
+                            if (medikitRate < medikitUseRate)
+                            { 
+                                goto exit;
+                            }
+
                             int currnetPlayerHp = transform.GetComponent<PlayerState>().GetPlayerHp();
+
                             if (currnetPlayerHp > 1)
                             {
                                 goto exit;
                             }
-                            // 자신 회복
+
                             transform.GetComponent<PlayerState>().Heal(1);
+                            medikitUseRate++;
                             break;
                         }
 
@@ -155,10 +172,10 @@ public class UseItemManager : MonoBehaviourPun
                         {
                             if (hit.transform.CompareTag("Player"))
                             {
-                                PlayerState playerHp = hit.transform.GetComponent<PlayerState>();
-                                if(playerHp != null)
+                                PlayerState playerState = hit.transform.GetComponent<PlayerState>();
+                                if (playerState != null)
                                 {
-                                    photonView.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
+                                    photonView.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID, playerState.isClient);
                                     inventory.currentSlot.ClearSlot();
                                     inventory.getKnife = false;
                                     knife.gameObject.SetActive(false);
@@ -183,6 +200,10 @@ public class UseItemManager : MonoBehaviourPun
                 itemGo.transform.position = PlayerPos + PlayerFwd;
                 StartCoroutine(TextAlert());
                 alertText.text = inventory.currentSlot.item.itemName + " 을(를) 떨어뜨렸습니다.";
+
+                if(inventory.currentSlot.item.itemName == "칼")
+                inventory.getKnife = false;
+
                 inventory.currentSlot.ClearSlot();
             }
         }
@@ -217,7 +238,6 @@ public class UseItemManager : MonoBehaviourPun
 
     }
 
-
     IEnumerator TextAlert()
     {
         alertText.gameObject.SetActive(true);
@@ -232,26 +252,33 @@ public class UseItemManager : MonoBehaviourPun
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().UnlockDoor();
     }
 
+    IEnumerator StunClientPlayer(float time)
+    {
+
+        yield return new WaitForSeconds(time);
+
+        // 정지 풀림
+    }
+
     [PunRPC]
-    void AttackPlayer(int targetViewID)
+    void AttackPlayer(int targetViewID, bool isClient)
     {
         PhotonView targetView = PhotonView.Find(targetViewID);
         if(targetView != null)
         {
-            PlayerState playerHp = targetView.GetComponent<PlayerState>();
-            if(playerHp != null)
+            // 조건 추가 경비원일때는 스턴 2초
+            if (isClient)
             {
-                // 조건 추가 경비원일때는 스턴 2초
-                if (PhotonNetwork.IsMasterClient)
+                targetView.RPC("RPC_Stun", RpcTarget.All, stunTime);
+            }
+            else
+            {
+                PlayerState playerHp = targetView.GetComponent<PlayerState>();
+                if (playerHp != null)
                 {
-
+                    playerHp.TakeDamage(1);
+                    Debug.Log("대상 남은 체력 : " + playerHp.GetPlayerHp().ToString());
                 }
-                else
-                {
-                }
-
-                playerHp.TakeDamage(1);
-                Debug.Log("대상 남은 체력 : " + playerHp.GetPlayerHp().ToString());
             }
         }
     }
