@@ -199,7 +199,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Player : " + PhotonNetwork.LocalPlayer.NickName + " Join Room : " + PhotonNetwork.CurrentRoom.Name);
+        Debug.Log("Player : " + PhotonNetwork.LocalPlayer.NickName);
         isMatch = false;
 
         GameManager.Instance.LoadRoomScene();

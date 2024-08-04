@@ -1,6 +1,7 @@
 using ExitGames.Client.Photon;
 using Photon.Chat;
 using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,8 +47,42 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
         chatClient.ChatRegion = "kr";
         chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat,
                         PhotonNetwork.AppVersion, new AuthenticationValues(userName));
+
+        StartCoroutine(CheckChatCoroution());
     }
 
+    public void JoinRoomChannel(string _room)
+    {
+        currentChannelName = _room;
+        chatClient.Subscribe(new string[] { _room });
+    }
+
+    public void LeaveRoomChannel()
+    {
+        chatClient.Unsubscribe(new string[] { currentChannelName });
+        currentChannelName = "";
+    }
+
+    public void SendChatMessage(string message)
+    {
+        chatClient.PublishMessage(currentChannelName, message);
+    }
+
+    public void SendPrivateMessage(string nick, string message)
+    {
+        chatClient.SendPrivateMessage(nick, message);
+    }
+
+    IEnumerator CheckChatCoroution()
+    {
+        if (chatClient != null)
+            chatClient.Service();
+        else
+            yield break;
+
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(CheckChatCoroution());
+    }
 
     /// <summary>
     /// ///////////////////////Photon Network Override/;//////////////////////////////////////////////////////////
@@ -68,7 +103,7 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
     public void OnConnected()
     {
         Debug.Log("Ãª ¿¬°á¿Ï·á : " + userName);
-        GameManager.Instance.LoadLobbyScene();
+        //GameManager.Instance.LoadLobbyScene();
     }
 
     public void OnDisconnected()
@@ -80,17 +115,17 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
     {
         for (int i = 0; i < senders.Length; i++)
         {
-            //if (InRoomManager.Instance != null)
-            //{
-            //    if (PhotonNetwork.MasterClient.NickName.Equals(senders[i]))
-            //    {
-            //        InRoomManager.Instance.setUserChat(senders[i], messages[i].ToString(), true);
-            //    }
-            //    else
-            //    {
-            //        InRoomManager.Instance.setUserChat(senders[i], messages[i].ToString(), false);
-            //    }
-            //}
+            if (RoomManager.Instance != null)
+            {
+                if (PhotonNetwork.MasterClient.NickName.Equals(senders[i]))
+                {
+                    RoomManager.Instance.setUserChat(senders[i], messages[i].ToString(), true);
+                }
+                else
+                {
+                    RoomManager.Instance.setUserChat(senders[i], messages[i].ToString(), false);
+                }
+            }
             //if (RoomGameManager.Instance != null)
             //{
             //    if (PhotonNetwork.MasterClient.NickName.Equals(senders[i]))

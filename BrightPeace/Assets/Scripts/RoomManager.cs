@@ -32,6 +32,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public Player masterClient;
 
+    public InputField chat;
+    public Transform chatTrans;
+    public GameObject chatObject;
+    public GameObject noticeObject;
+    public GameObject privateChatObject;
+
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
@@ -288,4 +294,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
         isReadySlider = false;
     }
 
+
+    // Photon Chat
+
+    public void setUserChat(string nick, string message, bool isMaster)
+    {
+        GameObject _chat = Instantiate(chatObject, chatTrans);
+        _chat.GetComponent<ChatObjectOption>().SetMessage(nick, message, isMaster);
+    }
 }

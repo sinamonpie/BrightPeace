@@ -15,9 +15,12 @@ public class ButtonManager : MonoBehaviour
     public void JoinLobby()
     {
         string nick = nickInput.text;
+        if(!PhotonNetwork.IsConnectedAndReady)
+        {
+            alertManager.SetMessage("서버가 연결되지 않았습니다.\n잠시후 시도해주세요.");
+        }
         if (nick.Trim().Equals(""))
         {
-            PlayerPrefs.DeleteKey("nick");
             alertManager.SetMessage("닉네임을 입력해주세요.");
             return;
         }
