@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class ThirdPersonMovement : PlayerController
 {
-    public float rataionSpeed = 100;
-    private Vector3 rotaion;
+    [SerializeField]
+    public float moveSpeed = 2.0f;
+
+    public float rotationSpeed = 100;
+    private Vector3 rotation;
+    public Vector3 cameraOffset = new Vector3(0, 2, -3);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,22 +28,33 @@ public class ThirdPersonMovement : PlayerController
         MoveTo(new Vector3(x, 0, z));
 
         float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
 
-        rotaion = new Vector3(0, mouseX * rataionSpeed * Time.deltaTime, 0);
-        transform.Rotate(rotaion);
+        rotation = new Vector3(0, mouseX * rotationSpeed * Time.deltaTime, 0);
+        transform.Rotate(rotation);
+
+        UpdateCameraPosition();
     }
 
     public void MoveTo(Vector3 direction)
     {
-        Vector3 movedis = transform.rotation * direction;
-        moveDirection = new Vector3(movedis.x, moveDirection.y, movedis.z);
+        Vector3 moveDir = transform.rotation * direction;
+        moveDirection = new Vector3(moveDir.x, moveDirection.y, moveDir.z);
 
-        if (characterController.isGrounded == false)
+        if (!characterController.isGrounded)
         {
             moveDirection.y += gravity * Time.deltaTime;
         }
 
         characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+    }
+
+    private void UpdateCameraPosition()
+    {
+        if (cameraTransform != null)
+        {
+            Vector3 desiredPosition = transform.position + transform.TransformDirection(cameraOffset);
+            cameraTransform.position = desiredPosition;
+            cameraTransform.LookAt(transform.position + Vector3.up * cameraOffset.y);
+        }
     }
 }
