@@ -835,8 +835,8 @@ MonoBehaviour:
   - {fileID: 898151852}
   securitySpawn: {fileID: 763803131}
   gameObjects:
-  - {fileID: 7955837623778572221, guid: 99ccbddbea64625498274c4379013461, type: 3}
-  - {fileID: 681187579244043484, guid: ca7128b128b898a4cb8d088b876bfd54, type: 3}
+  - {fileID: 5103330439102501362, guid: 5b3ce1062b900b64fba60d7677045bb9, type: 3}
+  - {fileID: 5103330439102501362, guid: 6fc4bf877192c354ca6ada04fd98a054, type: 3}
   readyBtn: {fileID: 406174129}
   leaveBtn: {fileID: 0}
   readyTxt: {fileID: 2052063954}
@@ -2680,7 +2680,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0023290308, y: 0.0003256364}
+  m_AnchoredPosition: {x: -0.00460815, y: 0.0003256364}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1722653606
