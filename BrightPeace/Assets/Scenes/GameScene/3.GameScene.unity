@@ -1205,7 +1205,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2061368632}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99998677
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2106,7 +2106,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000021455826}
+  m_AnchoredPosition: {x: 0, y: 0.0008803415}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1588794038
@@ -2534,8 +2534,8 @@ MonoBehaviour:
   - {fileID: 1350886006}
   - {fileID: 1350886005}
   - {fileID: 1350886004}
-  securityObject: {fileID: 8993643987517545934, guid: 026dd2d89b6061348b529d9feb504be0, type: 3}
-  patientObject: {fileID: 8993643987517545934, guid: 06da087fc73632a44b1f4c3472ee842c, type: 3}
+  securityObject: {fileID: 7149675440221305535, guid: 026dd2d89b6061348b529d9feb504be0, type: 3}
+  patientObject: {fileID: 2370327318098557362, guid: 06da087fc73632a44b1f4c3472ee842c, type: 3}
   keyObject: {fileID: 2760194355165661054, guid: b96884da91f6e4a499597d161bb9b20e, type: 3}
   gunObject: {fileID: 8493975917277090756, guid: fd09b5b4df6af4f4089ce77bfd665bea, type: 3}
   itemObjects:
