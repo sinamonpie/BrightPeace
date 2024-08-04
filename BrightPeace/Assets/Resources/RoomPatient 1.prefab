@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: -9085300943141763384}
   - component: {fileID: 1605790219412445431}
   m_Layer: 8
-  m_Name: RoomPatient
+  m_Name: RoomPatient 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
