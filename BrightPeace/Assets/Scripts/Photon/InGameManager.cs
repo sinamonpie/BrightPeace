@@ -131,7 +131,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
         spawnedItemCount = UnityEngine.Random.Range(ItemCount.minCount, ItemCount.maxCount);
 
         //ÃÑ ½ºÆù
-        for(int i = 0; i < spawnedGunCount; i++)
+        for (int i = 0; i < spawnedGunCount; i++)
         {
             int idx = UnityEngine.Random.Range(0, itemGunSpawn.Length);
             Vector3 spawnPosition = itemGunSpawn[idx].position;
@@ -149,7 +149,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
             int idx = UnityEngine.Random.Range(0, itemUnLockSpawn.Length);
             Vector3 spawnPosition = itemUnLockSpawn[idx].position;
 
-            PhotonNetwork.Instantiate(gunObject.name, spawnPosition, Quaternion.identity);
+            PhotonNetwork.Instantiate(keyObject.name, spawnPosition, Quaternion.identity);
 
             itemUnLockSpawn = RemoveTransformAt(itemUnLockSpawn, idx);
             if (itemUnLockSpawn == null)
@@ -172,9 +172,11 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
             if(spawnIdx == 0)
             {
+                GameObject itemObject = itemObjects[UnityEngine.Random.Range(0, itemObjects.Length)];
+
                 int idx = UnityEngine.Random.Range(0, itemUnLockSpawn.Length);
                 Vector3 spawnPosition = itemUnLockSpawn[idx].position;
-                PhotonNetwork.Instantiate(gunObject.name, spawnPosition, Quaternion.identity);
+                PhotonNetwork.Instantiate(itemObject.name, spawnPosition, Quaternion.identity);
 
                 itemUnLockSpawn = RemoveTransformAt(itemUnLockSpawn, idx);
                 if (itemUnLockSpawn == null)
@@ -182,9 +184,11 @@ public class InGameManager : MonoBehaviourPunCallbacks
             }
             else
             {
+                GameObject itemObject = itemObjects[UnityEngine.Random.Range(0, itemObjects.Length)];
+
                 int idx = UnityEngine.Random.Range(0, itemLockSpawn.Length);
                 Vector3 spawnPosition = itemLockSpawn[idx].position;
-                PhotonNetwork.Instantiate(gunObject.name, spawnPosition, Quaternion.identity);
+                PhotonNetwork.Instantiate(itemObject.name, spawnPosition, Quaternion.identity);
 
                 itemLockSpawn = RemoveTransformAt(itemLockSpawn, idx);
                 if (itemLockSpawn == null)

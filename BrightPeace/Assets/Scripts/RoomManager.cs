@@ -243,17 +243,17 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         StopAllCoroutines();
         readyAnim.Play("Start");
-        if(PhotonNetwork.IsMasterClient)
-        {
-            StartCoroutine(SetStart());
-        }
+        StartCoroutine(SetStart());
     }
 
     IEnumerator SetStart()
     {
         yield return new WaitForSeconds(2.0f);
         loadding.SetActive(true);
-        GameManager.Instance.LoadGamescene();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameManager.Instance.LoadGamescene();
+        }
     }
 
     IEnumerator SetReadyTimeTicker(int readyCnt)
