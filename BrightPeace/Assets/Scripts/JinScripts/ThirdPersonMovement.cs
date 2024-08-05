@@ -24,7 +24,7 @@ public class ThirdPersonMovement : PlayerController
     public AudioClip[] FootstepAudioClips;
     [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
-    public Camera camera;
+    private Camera camera;
     public float cameraDistance = 3;
 
     // Start is called before the first frame update
@@ -37,6 +37,8 @@ public class ThirdPersonMovement : PlayerController
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        camera = Camera.main;
     }
 
     // Update is called once per frame
