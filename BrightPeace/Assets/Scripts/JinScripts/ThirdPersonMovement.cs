@@ -24,6 +24,9 @@ public class ThirdPersonMovement : PlayerController
     public AudioClip[] FootstepAudioClips;
     [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
+    public Camera camera;
+    public float cameraDistance = 3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,11 +37,6 @@ public class ThirdPersonMovement : PlayerController
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        animator = GetComponent<Animator>();
-        characterController = GetComponent<CharacterController>();
-
-        avatarup = animator.GetBoneTransform(HumanBodyBones.Spine);
     }
 
     // Update is called once per frame
@@ -63,9 +61,11 @@ public class ThirdPersonMovement : PlayerController
         transform.Rotate(Vector3.up * mouseX * rotaionSpeed);
 
         verticalRotation += mouseY * rotaionSpeed;
-        verticalRotation = Mathf.Clamp(verticalRotation, -50f, 30f);
+        verticalRotation = Mathf.Clamp(verticalRotation, -70f, 30f);
 
         cameraTransform.transform.localEulerAngles = Vector3.left * verticalRotation;
+
+        camera.transform.localPosition = new Vector3(0, 0, -cameraDistance);
     }
 
     public void MoveTo()
@@ -107,5 +107,12 @@ public class ThirdPersonMovement : PlayerController
                 AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(characterController.center), FootstepAudioVolume);
             }
         }
+    }
+
+    void AboidObstacle()
+    {
+        RaycastHit hit;
+        Vector3 dir = transform.position - camera.transform.position;
+        Debug.DrawRay(camera.transform.position, dir.normalized * dir.magnitude, Color.red);
     }
 }
