@@ -31,6 +31,9 @@ public class FirstPersonMovement : PlayerController
         characterController = GetComponent<CharacterController>();
 
         avatarup = animator.GetBoneTransform(HumanBodyBones.Spine);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame

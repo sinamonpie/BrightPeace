@@ -7,14 +7,38 @@ public class ThirdPersonMovement : PlayerController
     [SerializeField]
     public float moveSpeed = 2.0f;
 
-    public float rotationSpeed = 100;
-    private Vector3 rotation;
-    public Vector3 cameraOffset = new Vector3(0, 2, -3);
+    [SerializeField]
+    protected float SprintSpeed = 5.335f;
+
+    Animator animator;
+
+    public float rotaionSpeed = 3;
+    private Vector3 rotaion;
+
+    private float currentSpeed;
+
+    private float verticalRotation = 0;
+
+    private Transform avatarup;
+
+    public AudioClip[] FootstepAudioClips;
+    [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+
+        avatarup = animator.GetBoneTransform(HumanBodyBones.Spine);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        animator = GetComponent<Animator>();
+        characterController = GetComponent<CharacterController>();
+
+        avatarup = animator.GetBoneTransform(HumanBodyBones.Spine);
     }
 
     // Update is called once per frame
@@ -22,39 +46,66 @@ public class ThirdPersonMovement : PlayerController
     {
         Cursor.visible = false;
 
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
-
-        MoveTo(new Vector3(x, 0, z));
-
-        float mouseX = Input.GetAxis("Mouse X");
-
-        rotation = new Vector3(0, mouseX * rotationSpeed * Time.deltaTime, 0);
-        transform.Rotate(rotation);
-
-        UpdateCameraPosition();
+        Look();
+        MoveTo();
     }
 
-    public void MoveTo(Vector3 direction)
+    private void LateUpdate()
     {
-        Vector3 moveDir = transform.rotation * direction;
-        moveDirection = new Vector3(moveDir.x, moveDirection.y, moveDir.z);
+        avatarup.localRotation = Quaternion.Euler(-verticalRotation, 0, 0);
+    }
 
-        if (!characterController.isGrounded)
+    void Look()
+    {
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        transform.Rotate(Vector3.up * mouseX * rotaionSpeed);
+
+        verticalRotation += mouseY * rotaionSpeed;
+        verticalRotation = Mathf.Clamp(verticalRotation, -50f, 30f);
+
+        cameraTransform.transform.localEulerAngles = Vector3.left * verticalRotation;
+    }
+
+    public void MoveTo()
+    {
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3(x, 0, z);
+
+        Vector3 movedis = transform.rotation * direction;
+        moveDirection = new Vector3(movedis.x, moveDirection.y, movedis.z);
+
+        if (characterController.isGrounded == false)
         {
             moveDirection.y += gravity * Time.deltaTime;
         }
 
         characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+
+        if (x > 0 || z > 0)
+        {
+            currentSpeed = moveSpeed;
+        }
+        else
+        {
+            currentSpeed = 0;
+        }
+
+        animator.SetFloat("Speed", currentSpeed);
+        animator.SetFloat("MotionSpeed", 1);
     }
 
-    private void UpdateCameraPosition()
+    private void OnFootstep(AnimationEvent animationEvent)
     {
-        if (cameraTransform != null)
+        if (animationEvent.animatorClipInfo.weight > 0.5f)
         {
-            Vector3 desiredPosition = transform.position + transform.TransformDirection(cameraOffset);
-            cameraTransform.position = desiredPosition;
-            cameraTransform.LookAt(transform.position + Vector3.up * cameraOffset.y);
+            if (FootstepAudioClips.Length > 0)
+            {
+                var index = Random.Range(0, FootstepAudioClips.Length);
+                AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(characterController.center), FootstepAudioVolume);
+            }
         }
     }
 }
