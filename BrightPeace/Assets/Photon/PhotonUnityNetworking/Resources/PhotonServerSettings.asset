@@ -55,6 +55,11 @@ MonoBehaviour:
   - RemoveSpawnPlayerList
   - RPC_TakeDamage
   - AttackPlayer
+  - RPC_Stun
+  - RPC_DestroyItem
+  - RPC_DropItem
+  - ShowKnife
+  - RPC_ShowUI
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

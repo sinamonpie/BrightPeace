@@ -5,8 +5,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class ActionController : MonoBehaviour
+public class ActionController : MonoBehaviourPun
 {
     [Header("상호작용 거리")]
     [SerializeField]
@@ -112,7 +113,7 @@ public class ActionController : MonoBehaviour
                 {
                     // 아이템 주울때 사운드 추가
                     Debug.Log("획득하기 " + hitInfo.transform.GetComponent<ItemPickUp>().Item.itemName);
-                    Destroy(hitInfo.transform.gameObject);
+                    photonView.RPC("RPC_DestroyItem", RpcTarget.All);
                 }
                 else
                 {
@@ -258,5 +259,11 @@ public class ActionController : MonoBehaviour
                 ChangePlayerLayer(child.gameObject, toLayer);
             }
         }
+    }
+
+    [PunRPC]
+    void RPC_DestroyItem()
+    {
+        Destroy(gameObject);
     }
 }
