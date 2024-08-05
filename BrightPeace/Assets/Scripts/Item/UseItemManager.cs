@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Animations;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// 아이템 사용/버리기와 관련된 기능 텍스트출력 등을 기재
@@ -196,8 +197,8 @@ public class UseItemManager : MonoBehaviourPun
             {
                 Vector3 PlayerPos = transform.position;
                 Vector3 PlayerFwd = transform.forward;
-                GameObject itemGo = Instantiate<GameObject>(inventory.currentSlot.item.itemPrefab);
-                itemGo.transform.position = PlayerPos + PlayerFwd;
+                GameObject itemGo = PhotonNetwork.Instantiate(inventory.currentSlot.item.itemPrefab.name, PlayerPos + PlayerFwd, Quaternion.identity);
+
                 StartCoroutine(TextAlert());
                 alertText.text = inventory.currentSlot.item.itemName + " 을(를) 떨어뜨렸습니다.";
 
@@ -205,6 +206,8 @@ public class UseItemManager : MonoBehaviourPun
                 inventory.getKnife = false;
 
                 inventory.currentSlot.ClearSlot();
+
+                photonView.RPC("RPC_DropItem", RpcTarget.All, itemGo.transform.position, itemGo.transform.rotation, inventory.currentSlot.item.itemName);
             }
         }
 
@@ -258,6 +261,13 @@ public class UseItemManager : MonoBehaviourPun
         yield return new WaitForSeconds(time);
 
         // 정지 풀림
+    }
+
+    [PunRPC]
+    void RPC_DropItem(Vector3 position, Quaternion rotation, string itemName)
+    {
+        GameObject itemPrefab = Resources.Load<GameObject>(itemName);
+        Instantiate(itemPrefab, position, rotation);
     }
 
     [PunRPC]

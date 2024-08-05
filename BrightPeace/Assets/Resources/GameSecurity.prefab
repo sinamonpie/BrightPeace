@@ -2445,6 +2445,7 @@ GameObject:
   - component: {fileID: 4741775426260520134}
   - component: {fileID: 1520155454144629157}
   - component: {fileID: 7424865524342293120}
+  - component: {fileID: -4991405930459108767}
   m_Layer: 0
   m_Name: GameSecurity
   m_TagString: Player
@@ -2484,10 +2485,10 @@ Animator:
   m_GameObject: {fileID: 7149675440221305535}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 6996385895b383749b266464bf872c69, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -2533,11 +2534,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d086a0162b7659b478d6d63d1bcf838b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 1616321845099385465}
+  cameraTransform: {fileID: 3775940459111542157, guid: 0f6a7ad42e96af34fbfe3c9ec50fa8eb, type: 3}
   moveSpeed: 2
   SprintSpeed: 5.335
   rotaionSpeed: 3
-  FootstepAudioClips: []
+  FootstepAudioClips:
+  - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
+  - {fileID: 8300000, guid: 85016e0f2b01da248b9663dd49a161b0, type: 3}
+  - {fileID: 8300000, guid: 186de84b3207156479abe98f4958fed0, type: 3}
+  - {fileID: 8300000, guid: 1a91fcd19acf1e54bba0945d9f390849, type: 3}
+  - {fileID: 8300000, guid: 14e8a8d2158bec840b56c54f5266e692, type: 3}
+  - {fileID: 8300000, guid: 29841e7d5bbfb5b419c9ad16ca8bc4c1, type: 3}
+  - {fileID: 8300000, guid: dd1af302b8902684d9381de1f2d3a5af, type: 3}
+  - {fileID: 8300000, guid: 67c8b33e424ccdc4486edf538ab91c5a, type: 3}
+  - {fileID: 8300000, guid: 274649b0e221539409070ebf6c18918b, type: 3}
+  - {fileID: 8300000, guid: a3194b8bbc96ef84fab1f98f4b7dae3e, type: 3}
   FootstepAudioVolume: 0.5
 --- !u!114 &1520155454144629157
 MonoBehaviour:
@@ -2578,6 +2589,23 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &-4991405930459108767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149675440221305535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6c066026b14524bab9508fb477db02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 1
+  currentHp: 0
+  role: 2
+  isClient: 0
+  isInCabinet: 0
 --- !u!1 &7362582953946235174
 GameObject:
   m_ObjectHideFlags: 0
