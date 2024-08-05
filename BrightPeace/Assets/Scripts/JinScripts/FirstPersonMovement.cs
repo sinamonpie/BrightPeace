@@ -11,6 +11,7 @@ public class FirstPersonMovement : PlayerController
     protected float SprintSpeed = 5.335f;
 
     Animator animator;
+    private float currentAniSpeed;
 
     public float rotaionSpeed = 3;
     private Vector3 rotaion;
@@ -72,32 +73,39 @@ public class FirstPersonMovement : PlayerController
         Vector3 movedis = transform.rotation * direction;
         moveDirection = new Vector3(movedis.x, moveDirection.y, movedis.z);
 
-        if (characterController.isGrounded == false)
-        {
+        if (characterController.isGrounded == false) {
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
-
-        if (x > 0 || z > 0)
-        {
+        if (x > 0 || z > 0) {
+            if (Input.GetKey(KeyCode.LeftShift)) {
+                currentSpeed = SprintSpeed; 
+            }
+            else {
+                currentSpeed = moveSpeed; 
+            }
+            currentAniSpeed = currentSpeed; 
+        }
+        else if (x < 0 || z < 0) {
             currentSpeed = moveSpeed;
+            currentAniSpeed = -currentSpeed;
         }
-        else
-        {
+        else {
             currentSpeed = 0;
+            currentAniSpeed = currentSpeed;
         }
 
-        animator.SetFloat("Speed", currentSpeed);
+
+        characterController.Move(moveDirection * currentSpeed * Time.deltaTime);
+
+        animator.SetFloat("Speed", currentAniSpeed);
         animator.SetFloat("MotionSpeed", 1);
     }
 
     private void OnFootstep(AnimationEvent animationEvent)
     {
-        if (animationEvent.animatorClipInfo.weight > 0.5f)
-        {
-            if (FootstepAudioClips.Length > 0)
-            {
+        if (animationEvent.animatorClipInfo.weight > 0.5f) {
+            if (FootstepAudioClips.Length > 0) {
                 var index = Random.Range(0, FootstepAudioClips.Length);
                 AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(characterController.center), FootstepAudioVolume);
             }
