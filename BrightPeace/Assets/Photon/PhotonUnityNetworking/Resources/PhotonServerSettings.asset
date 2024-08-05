@@ -58,6 +58,8 @@ MonoBehaviour:
   - RPC_Stun
   - RPC_DestroyItem
   - RPC_DropItem
+  - RPC_ShowUI
+  - ShowKnife
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
