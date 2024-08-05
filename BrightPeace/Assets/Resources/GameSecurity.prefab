@@ -2534,7 +2534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d086a0162b7659b478d6d63d1bcf838b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 3775940459111542157, guid: 0f6a7ad42e96af34fbfe3c9ec50fa8eb, type: 3}
+  cameraTransform: {fileID: 1616321845099385465}
   moveSpeed: 2
   SprintSpeed: 5.335
   rotaionSpeed: 3

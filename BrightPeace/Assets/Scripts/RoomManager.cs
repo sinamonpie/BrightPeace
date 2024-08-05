@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -301,5 +302,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         GameObject _chat = Instantiate(chatObject, chatTrans);
         _chat.GetComponent<ChatObjectOption>().SetMessage(nick, message, isMaster);
+    }
+
+    public void setPrivateUserChat(string sender, string message)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setNotice(string message)
+    {
+        throw new NotImplementedException();
     }
 }
