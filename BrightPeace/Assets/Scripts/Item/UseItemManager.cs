@@ -158,7 +158,10 @@ public class UseItemManager : MonoBehaviourPun
                     ray = new Ray(transform.position + Vector3.up * 1f, transform.forward);
                     Debug.DrawRay(ray.origin, ray.direction * swingRange, Color.red);
 
-                    knife.gameObject.SetActive(true);
+                    if (!knife.activeSelf)
+                    {
+                        photonView.RPC("ShowKnife", RpcTarget.All, true);
+                    }
 
                     rate += Time.deltaTime;
                     isSwingReady = rate > swingDelay;
@@ -177,9 +180,10 @@ public class UseItemManager : MonoBehaviourPun
                                 if (playerState != null)
                                 {
                                     photonView.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID, playerState.isClient);
+
                                     inventory.currentSlot.ClearSlot();
                                     inventory.getKnife = false;
-                                    knife.gameObject.SetActive(false);
+                                    photonView.RPC("ShowKnife", RpcTarget.All, false);
                                 }
 
                             }
@@ -255,19 +259,17 @@ public class UseItemManager : MonoBehaviourPun
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().UnlockDoor();
     }
 
-    IEnumerator StunClientPlayer(float time)
-    {
-
-        yield return new WaitForSeconds(time);
-
-        // 정지 풀림
-    }
-
     [PunRPC]
     void RPC_DropItem(Vector3 position, Quaternion rotation, string itemName)
     {
         GameObject itemPrefab = Resources.Load<GameObject>(itemName);
         Instantiate(itemPrefab, position, rotation);
+    }
+
+    [PunRPC]
+    void ShowKnife(bool show)
+    {
+        knife.gameObject.SetActive(show);
     }
 
     [PunRPC]

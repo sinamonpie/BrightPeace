@@ -6,6 +6,7 @@ using Photon.Pun;
 public class PlayerState : MonoBehaviourPun
 {
     FirstPersonMovement firstPersonMovement;
+    [Header("실험체 체력")]
     [SerializeField] int maxHp = 2;
     [SerializeField] int currentHp;
     public UserRole role = UserRole.Patient;
@@ -23,9 +24,23 @@ public class PlayerState : MonoBehaviourPun
     {
 
     }
+
+    void ClientSetting()
+    {
+        GameObject gameObject = GameObject.Find("SlotsParent");
+        gameObject.SetActive(false);
+    }
     void InitHp()
     {
-        currentHp = maxHp;
+        if (isClient)
+        {
+            currentHp = 1;
+            ClientSetting();
+        }
+        else
+        {
+            currentHp = maxHp;
+        }
     }
 
     public int GetPlayerHp()
