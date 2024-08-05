@@ -2533,9 +2533,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d086a0162b7659b478d6d63d1bcf838b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
   cameraTransform: {fileID: 1616321845099385465}
-  rataionSpeed: 100
+  moveSpeed: 2
+  SprintSpeed: 5.335
+  rotaionSpeed: 3
+  FootstepAudioClips: []
+  FootstepAudioVolume: 0.5
 --- !u!114 &1520155454144629157
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -175,16 +175,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Man_03
       objectReference: {fileID: 0}
+    - target: {fileID: 3344797552917926168, guid: da1203547328fdb41974e0b5334e799a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8340921455869514200, guid: da1203547328fdb41974e0b5334e799a, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
+    - target: {fileID: 8340921455869514200, guid: da1203547328fdb41974e0b5334e799a, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2675361429882964898, guid: da1203547328fdb41974e0b5334e799a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1873304935}
     - targetCorrespondingSourceObject: {fileID: 2675361429882964898, guid: da1203547328fdb41974e0b5334e799a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 252474795}
@@ -192,6 +197,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3344797552917926168, guid: da1203547328fdb41974e0b5334e799a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1692978292}
+    - targetCorrespondingSourceObject: {fileID: 3344797552917926168, guid: da1203547328fdb41974e0b5334e799a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1692978293}
   m_SourcePrefab: {fileID: 100100000, guid: da1203547328fdb41974e0b5334e799a, type: 3}
 --- !u!1 &17455411
 GameObject:
@@ -330,7 +338,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1873304935}
   m_Father: {fileID: 1692978291}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &299140012 stripped
@@ -384,7 +393,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SlotsParent: {fileID: 1398017052}
   alertText: {fileID: 1042459839}
+  slotsBg: []
+  slots: []
   getKnife: 0
+  settingInventory: 0
   currentSlot: {fileID: 0}
 --- !u!1001 &377560227
 PrefabInstance:
@@ -543,6 +555,7 @@ MonoBehaviour:
   maxHp: 2
   currentHp: 0
   role: 2
+  isClient: 0
   isInCabinet: 0
 --- !u!1001 &630418176
 PrefabInstance:
@@ -1948,6 +1961,24 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.14, z: 0}
+--- !u!114 &1692978293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692978287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420ee3daa571e3348b6aa909c683b4f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 252474795}
+  moveSpeed: 2
+  SprintSpeed: 5.335
+  rotaionSpeed: 3
+  FootstepAudioClips: []
+  FootstepAudioVolume: 0.5
 --- !u!1001 &1727095955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2133,11 +2164,11 @@ Transform:
   m_GameObject: {fileID: 1873304934}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.7, z: -3}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1692978291}
+  m_Father: {fileID: 252474795}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &1873304936
 AudioListener:
