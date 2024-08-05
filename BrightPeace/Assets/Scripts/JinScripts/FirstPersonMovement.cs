@@ -6,11 +6,12 @@ public class FirstPersonMovement : PlayerController
 {
     [SerializeField]
     public float moveSpeed = 2.0f;
-   
+
     [SerializeField]
     protected float SprintSpeed = 5.335f;
 
     Animator animator;
+    private float currentAniSpeed;
 
     public float rotaionSpeed = 3;
     private Vector3 rotaion;
@@ -18,7 +19,7 @@ public class FirstPersonMovement : PlayerController
     private float currentSpeed;
 
     private float verticalRotation = 0;
-    
+
     private Transform avatarup;
 
     public AudioClip[] FootstepAudioClips;
@@ -77,18 +78,33 @@ public class FirstPersonMovement : PlayerController
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
-
         if (x > 0 || z > 0)
         {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                currentSpeed = SprintSpeed;
+            }
+            else
+            {
+                currentSpeed = moveSpeed;
+            }
+            currentAniSpeed = currentSpeed;
+        }
+        else if (x < 0 || z < 0)
+        {
             currentSpeed = moveSpeed;
+            currentAniSpeed = -currentSpeed;
         }
         else
         {
             currentSpeed = 0;
+            currentAniSpeed = currentSpeed;
         }
 
-        animator.SetFloat("Speed", currentSpeed);
+
+        characterController.Move(moveDirection * currentSpeed * Time.deltaTime);
+
+        animator.SetFloat("Speed", currentAniSpeed);
         animator.SetFloat("MotionSpeed", 1);
     }
 
