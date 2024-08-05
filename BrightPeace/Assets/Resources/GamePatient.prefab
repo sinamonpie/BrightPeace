@@ -1039,13 +1039,13 @@ GameObject:
   - component: {fileID: 8135566338857101532}
   - component: {fileID: 2494934518742651633}
   - component: {fileID: 1520760871815130243}
-  - component: {fileID: 8958903343992339905}
   - component: {fileID: 4683192970633353497}
   - component: {fileID: 7667213388102358924}
   - component: {fileID: 2595678752194475408}
   - component: {fileID: 6764564892972535885}
   - component: {fileID: 1736229247234760171}
   - component: {fileID: 6368289383712561178}
+  - component: {fileID: 1099902741566787085}
   m_Layer: 0
   m_Name: GamePatient
   m_TagString: Player
@@ -1134,24 +1134,6 @@ CharacterController:
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.93, z: 0}
---- !u!114 &8958903343992339905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2370327318098557362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d086a0162b7659b478d6d63d1bcf838b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 4654377753920380307}
-  moveSpeed: 2
-  SprintSpeed: 5.335
-  rotaionSpeed: 3
-  FootstepAudioClips: []
-  FootstepAudioVolume: 0.5
 --- !u!114 &4683192970633353497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1258,6 +1240,25 @@ MonoBehaviour:
   role: 2
   isClient: 0
   isInCabinet: 0
+--- !u!114 &1099902741566787085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2370327318098557362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420ee3daa571e3348b6aa909c683b4f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 4654377753920380307}
+  moveSpeed: 2
+  SprintSpeed: 5.335
+  rotaionSpeed: 3
+  FootstepAudioClips: []
+  FootstepAudioVolume: 0.5
+  cameraDistance: 3
 --- !u!1 &2652195864033004665
 GameObject:
   m_ObjectHideFlags: 0
@@ -3433,7 +3434,7 @@ Transform:
   m_GameObject: {fileID: 8622934027648653275}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.75, z: 0}
+  m_LocalPosition: {x: 0, y: 1.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
