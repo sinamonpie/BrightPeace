@@ -86,7 +86,7 @@ public class ThirdPersonMovement : PlayerController
 
         characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
 
-        if (x > 0 || z > 0)
+        if (z > 0)
         {
             currentSpeed = moveSpeed;
         }

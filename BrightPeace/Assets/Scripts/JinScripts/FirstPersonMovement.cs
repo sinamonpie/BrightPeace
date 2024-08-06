@@ -58,7 +58,7 @@ public class FirstPersonMovement : PlayerController
         transform.Rotate(Vector3.up * mouseX * rotaionSpeed);
 
         verticalRotation += mouseY * rotaionSpeed;
-        verticalRotation = Mathf.Clamp(verticalRotation, -10f, 30f);
+        verticalRotation = Mathf.Clamp(verticalRotation, -50f, 30f);
 
         cameraTransform.transform.localEulerAngles = Vector3.left * verticalRotation;
     }
@@ -79,9 +79,21 @@ public class FirstPersonMovement : PlayerController
 
         characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
 
-        if (x > 0 || z > 0)
+        if (z > 0)
         {
-            currentSpeed = moveSpeed;
+            currentSpeed = 2;
+        }
+        else if (x > 0)
+        {
+            currentSpeed = 14;
+        }
+        else if (x < 0)
+        {
+            currentSpeed = 10;
+        }
+        else if (z < 0)
+        {
+            currentSpeed = 18;
         }
         else
         {
