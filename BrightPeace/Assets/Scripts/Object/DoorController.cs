@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorController : MonoBehaviourPun
+public class DoorController : MonoBehaviour
 {
     public bool isClose = true;
     public bool DoorRotation = true;
@@ -14,22 +14,27 @@ public class DoorController : MonoBehaviourPun
 
     private float doorAngle = 90;
 
-    private PhotonView pv;
-
     private void Start()
     {
         if(pivot == null)
         {
             pivot = this.gameObject;
         }
-
-        pv = GetComponent<PhotonView>();
     }
 
 
     public void DoorControl()
     {
-        pv.RPC("RPC_DoorControl", RpcTarget.All);
+        if (DoorRotation)
+        {
+            // 일반 문
+            UseDoor(pivot, -doorAngle);
+        }
+        else
+        {
+            // 피벗없는 문
+            UseDoor(pivot, doorAngle);
+        }
     }
 
     void UseDoor(GameObject pivot, float y)
@@ -50,20 +55,5 @@ public class DoorController : MonoBehaviourPun
     public void UnlockDoor()
     {
         unlockDoor = true;
-    }
-
-    [PunRPC]
-    public void RPC_DoorControl()
-    {
-        if (DoorRotation)
-        {
-            // 일반 문
-            UseDoor(pivot, -doorAngle);
-        }
-        else
-        {
-            // 피벗없는 문
-            UseDoor(pivot, doorAngle);
-        }
     }
 }
