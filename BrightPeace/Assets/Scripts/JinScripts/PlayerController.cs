@@ -7,8 +7,7 @@ public class PlayerController : MonoBehaviour
     protected float gravity = -9.81f;
     protected Vector3 moveDirection;
 
-    [SerializeField]
-    protected Transform cameraTransform;
+    public Transform cameraTransform;
     protected CharacterController characterController;
 
     public Transform GetCameraTransform()
