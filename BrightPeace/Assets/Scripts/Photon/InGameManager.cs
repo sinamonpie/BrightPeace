@@ -135,6 +135,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
             Camera.main.transform.position = caemraTrans.position;
             Camera.main.transform.rotation = caemraTrans.rotation;
             Camera.main.transform.SetParent(caemraTrans);
+            Camera.main.transform.GetComponent<ActionController>().SetPlayer();
 
             pv.RPC("RemoveSpawnPlayerList", RpcTarget.AllBuffered, idx);
         }

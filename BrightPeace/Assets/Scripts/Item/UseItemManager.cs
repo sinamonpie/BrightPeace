@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 
 /// <summary>
 /// 아이템 사용/버리기와 관련된 기능 텍스트출력 등을 기재
+/// 아이템 처리 -> 마스터 클라이언트
 /// </summary>
 public class UseItemManager : MonoBehaviourPun
 {
@@ -20,6 +21,7 @@ public class UseItemManager : MonoBehaviourPun
 
     GameObject knife;
     Animator animator;
+    PhotonView pv;
 
     [Header("나이프 공격 거리")]
     [SerializeField]
@@ -54,6 +56,7 @@ public class UseItemManager : MonoBehaviourPun
 
     void Start()
     {
+        pv = GetComponent<PhotonView>();   
         inventory = FindObjectOfType<Inventory>();
         alertText = inventory.alertText;
         actionController = FindObjectOfType<ActionController>();
@@ -160,7 +163,7 @@ public class UseItemManager : MonoBehaviourPun
 
                     if (!knife.activeSelf)
                     {
-                        photonView.RPC("ShowKnife", RpcTarget.All, true);
+                        pv.RPC("ShowKnife", RpcTarget.All, true);
                     }
 
                     rate += Time.deltaTime;
@@ -179,11 +182,11 @@ public class UseItemManager : MonoBehaviourPun
                                 PlayerState playerState = hit.transform.GetComponent<PlayerState>();
                                 if (playerState != null)
                                 {
-                                    photonView.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID, playerState.isClient);
+                                    pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID, playerState.isClient);
 
                                     inventory.currentSlot.ClearSlot();
                                     inventory.getKnife = false;
-                                    photonView.RPC("ShowKnife", RpcTarget.All, false);
+                                    pv.RPC("ShowKnife", RpcTarget.All, false);
                                 }
 
                             }
@@ -211,7 +214,7 @@ public class UseItemManager : MonoBehaviourPun
 
                 inventory.currentSlot.ClearSlot();
 
-                photonView.RPC("RPC_DropItem", RpcTarget.All, itemGo.transform.position, itemGo.transform.rotation, inventory.currentSlot.item.itemName);
+                pv.RPC("RPC_DropItem", RpcTarget.MasterClient, itemGo.transform.position, itemGo.transform.rotation, inventory.currentSlot.item.itemName);
             }
         }
 
@@ -262,14 +265,16 @@ public class UseItemManager : MonoBehaviourPun
     [PunRPC]
     void RPC_DropItem(Vector3 position, Quaternion rotation, string itemName)
     {
-        GameObject itemPrefab = Resources.Load<GameObject>(itemName);
-        Instantiate(itemPrefab, position, rotation);
+        PhotonNetwork.Instantiate(itemName, position, rotation);
     }
 
     [PunRPC]
     void ShowKnife(bool show)
     {
-        knife.gameObject.SetActive(show);
+        if(pv.IsMine)
+        {
+            knife.gameObject.SetActive(show);
+        }
     }
 
     [PunRPC]
