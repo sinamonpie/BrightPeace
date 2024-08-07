@@ -45,6 +45,7 @@ public class FirstPersonMovement : PlayerController
 
         Look();
         MoveTo();
+        Attack();
     }
 
     private void LateUpdate()
@@ -63,6 +64,14 @@ public class FirstPersonMovement : PlayerController
         verticalRotation = Mathf.Clamp(verticalRotation, -25f, 30f);
 
         cameraTransform.transform.localEulerAngles = Vector3.left * verticalRotation;
+    }
+
+    public void Attack()
+    {
+        if (Input.GetMouseButtonDown(0))
+        { 
+            animator.SetTrigger("isSwing");
+        }
     }
 
     public void MoveTo()
