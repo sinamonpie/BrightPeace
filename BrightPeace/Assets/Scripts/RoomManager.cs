@@ -205,7 +205,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            pv.RPC("ReceiveStart", RpcTarget.OthersBuffered);
+            pv.RPC("ReceiveStart", RpcTarget.All);
         }
     }
 
