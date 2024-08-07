@@ -76,6 +76,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     private Player masterClient;
 
+    [SerializeField]
     private bool isMental = false;
     // Start is called before the first frame update
     void Awake()
@@ -137,7 +138,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
             if (!isMental)
             {
                 GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
-                if (_players.Length == PhotonNetwork.CurrentRoom.PlayerCount-1)
+                if (_players.Length > PhotonNetwork.CurrentRoom.PlayerCount-1)
                 {
                     player.GetComponent<PlayerState>().role = UserRole.Mental;
                 }
