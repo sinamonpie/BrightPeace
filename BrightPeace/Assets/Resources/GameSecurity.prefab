@@ -787,12 +787,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2811398282553820656}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.7, z: 0.206}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.35, z: -0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3747806194505962462}
+  m_Father: {fileID: 2186487684969894193}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2878694027897473151
 GameObject:
@@ -2231,7 +2231,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1616321845099385465}
   m_Father: {fileID: 3747806194505962462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &7078260226808937915
@@ -2471,7 +2472,6 @@ Transform:
   - {fileID: 7751144338476762026}
   - {fileID: 2186487684969894193}
   - {fileID: 3562805941058262928}
-  - {fileID: 1616321845099385465}
   - {fileID: 5011672320274453054}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2606,6 +2606,8 @@ MonoBehaviour:
   role: 2
   isClient: 1
   isInCabinet: 0
+  hallucinAudioClips: {fileID: 0}
+  hallucinStepAudioVolume: 0.8
 --- !u!1 &7362582953946235174
 GameObject:
   m_ObjectHideFlags: 0

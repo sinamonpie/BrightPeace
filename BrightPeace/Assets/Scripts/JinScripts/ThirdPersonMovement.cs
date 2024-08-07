@@ -10,6 +10,8 @@ public class ThirdPersonMovement : PlayerController
     [SerializeField]
     protected float SprintSpeed = 5.335f;
 
+    private float realSpeed;
+
     Animator animator;
 
     public float rotaionSpeed = 3;
@@ -24,8 +26,9 @@ public class ThirdPersonMovement : PlayerController
     public AudioClip[] FootstepAudioClips;
     [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
-    private Camera camera;
-    public float cameraDistance = 3;
+    //private Camera camera;
+    public float cameraMaxDistance = 2f;
+    float cameraDistance;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +41,7 @@ public class ThirdPersonMovement : PlayerController
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        camera = Camera.main;
+        //camera = Camera.main;
     }
 
     // Update is called once per frame
@@ -53,6 +56,8 @@ public class ThirdPersonMovement : PlayerController
     private void LateUpdate()
     {
         avatarup.localRotation = Quaternion.Euler(-verticalRotation, 0, 0);
+
+        Camera.main.transform.localPosition = new Vector3(0, 0, -cameraDistance);
     }
 
     void Look()
@@ -67,7 +72,7 @@ public class ThirdPersonMovement : PlayerController
 
         cameraTransform.transform.localEulerAngles = Vector3.left * verticalRotation;
 
-        camera.transform.localPosition = new Vector3(0, 0, -cameraDistance);
+        AboidObstacle();
     }
 
     public void MoveTo()
@@ -84,11 +89,30 @@ public class ThirdPersonMovement : PlayerController
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
-
-        if (x > 0 || z > 0)
+        if (Input.GetKey(KeyCode.LeftShift) && z > 0)
         {
-            currentSpeed = moveSpeed;
+            currentSpeed = 4;
+            realSpeed = SprintSpeed;
+        }
+        else if (z > 0)
+        {
+            currentSpeed = 2;
+            realSpeed = moveSpeed;
+        }
+        else if (x > 0)
+        {
+            currentSpeed = 10;
+            realSpeed = moveSpeed;
+        }
+        else if (x < 0)
+        {
+            currentSpeed = 8;
+            realSpeed = moveSpeed;
+        }
+        else if (z < 0)
+        {
+            currentSpeed = -2;
+            realSpeed = moveSpeed;
         }
         else
         {
@@ -97,6 +121,8 @@ public class ThirdPersonMovement : PlayerController
 
         animator.SetFloat("Speed", currentSpeed);
         animator.SetFloat("MotionSpeed", 1);
+
+        characterController.Move(moveDirection * realSpeed * Time.deltaTime); ;
     }
 
     private void OnFootstep(AnimationEvent animationEvent)
@@ -111,10 +137,22 @@ public class ThirdPersonMovement : PlayerController
         }
     }
 
+    
     void AboidObstacle()
     {
         RaycastHit hit;
-        Vector3 dir = transform.position - camera.transform.position;
-        Debug.DrawRay(camera.transform.position, dir.normalized * dir.magnitude, Color.red);
+        Vector3 dir = Camera.main.transform.position - cameraTransform.transform.position;
+        Debug.DrawRay(cameraTransform.transform.position, dir.normalized * dir.magnitude, Color.red);
+        if (Physics.Raycast(cameraTransform.transform.position, dir.normalized, out hit, dir.magnitude, LayerMask.GetMask("Default", "Object")))
+        {
+            Debug.Log(hit.transform.position);
+            Vector3 dist = hit.point - cameraTransform.transform.position;
+            cameraDistance = (dist.magnitude * 0.9f);
+        }
+        else
+        {
+            cameraDistance = Mathf.Clamp(cameraDistance + (0.8f * Time.deltaTime), -0.9f, cameraMaxDistance);
+        }
     }
+    
 }
