@@ -430,6 +430,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4883240302423756372, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
+      propertyPath: sceneViewId
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 7830046879114808829, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
       propertyPath: sceneViewId
       value: 5
@@ -447,6 +451,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 683867740}
     m_Modifications:
+    - target: {fileID: 1335762888263871074, guid: 86b8d4d19c04d7b44bf19737c725609b, type: 3}
+      propertyPath: sceneViewId
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1985102066707458688, guid: 86b8d4d19c04d7b44bf19737c725609b, type: 3}
       propertyPath: sceneViewId
       value: 9
@@ -568,6 +576,10 @@ PrefabInstance:
     - target: {fileID: 3685321578577622591, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883240302423756372, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
+      propertyPath: sceneViewId
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6301295063840793502, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
       propertyPath: m_TagString
@@ -692,6 +704,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5312864491434877890, guid: 1a6f0b1af371da04f9a2ca0f088abd3c, type: 3}
+      propertyPath: sceneViewId
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7256185450677093277, guid: 1a6f0b1af371da04f9a2ca0f088abd3c, type: 3}
       propertyPath: camera
       value: 
@@ -776,6 +792,10 @@ PrefabInstance:
     - target: {fileID: 3685321578577622591, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883240302423756372, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
+      propertyPath: sceneViewId
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6301295063840793502, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
       propertyPath: m_TagString
@@ -1092,6 +1112,10 @@ PrefabInstance:
     - target: {fileID: 4348828230069183886, guid: b96884da91f6e4a499597d161bb9b20e, type: 3}
       propertyPath: sceneViewId
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426717918243592221, guid: b96884da91f6e4a499597d161bb9b20e, type: 3}
+      propertyPath: sceneViewId
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8563895563288003342, guid: b96884da91f6e4a499597d161bb9b20e, type: 3}
       propertyPath: m_RootOrder
@@ -1675,7 +1699,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794437096}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2008,7 +2032,10 @@ MonoBehaviour:
   maxHp: 2
   currentHp: 0
   role: 2
+  isClient: 0
   isInCabinet: 0
+  hallucinAudioClips: {fileID: 0}
+  hallucinStepAudioVolume: 0.8
 --- !u!1001 &892674838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2068,6 +2095,10 @@ PrefabInstance:
     - target: {fileID: 4632177125999965946, guid: 1a6f0b1af371da04f9a2ca0f088abd3c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5312864491434877890, guid: 1a6f0b1af371da04f9a2ca0f088abd3c, type: 3}
+      propertyPath: sceneViewId
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7256185450677093277, guid: 1a6f0b1af371da04f9a2ca0f088abd3c, type: 3}
       propertyPath: camera
@@ -2193,7 +2224,10 @@ MonoBehaviour:
   maxHp: 2
   currentHp: 0
   role: 2
+  isClient: 0
   isInCabinet: 0
+  hallucinAudioClips: {fileID: 0}
+  hallucinStepAudioVolume: 0.8
 --- !u!1 &1112739318
 GameObject:
   m_ObjectHideFlags: 0
@@ -2382,6 +2416,10 @@ PrefabInstance:
     - target: {fileID: 4348828230069183886, guid: b96884da91f6e4a499597d161bb9b20e, type: 3}
       propertyPath: sceneViewId
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426717918243592221, guid: b96884da91f6e4a499597d161bb9b20e, type: 3}
+      propertyPath: sceneViewId
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8563895563288003342, guid: b96884da91f6e4a499597d161bb9b20e, type: 3}
       propertyPath: m_RootOrder
@@ -2739,6 +2777,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5312864491434877890, guid: 1a6f0b1af371da04f9a2ca0f088abd3c, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7256185450677093277, guid: 1a6f0b1af371da04f9a2ca0f088abd3c, type: 3}
       propertyPath: camera
       value: 
@@ -2785,8 +2827,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984713666055ce74e8a4e0fdc357ad19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
+  sensorCamera: {fileID: 0}
   swingRange: 3
   swingDelay: 2.5
+  stunTime: 2
+  medikitRate: 2
   unlockTime: 2
   wallHackTime: 3
 --- !u!114 &1403598653
@@ -2804,7 +2850,10 @@ MonoBehaviour:
   maxHp: 2
   currentHp: 0
   role: 2
+  isClient: 0
   isInCabinet: 0
+  hallucinAudioClips: {fileID: 0}
+  hallucinStepAudioVolume: 0.8
 --- !u!114 &1403598664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3148,6 +3197,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6280986568946046889, guid: fd09b5b4df6af4f4089ce77bfd665bea, type: 3}
+      propertyPath: sceneViewId
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6928805299032123039, guid: fd09b5b4df6af4f4089ce77bfd665bea, type: 3}
       propertyPath: sceneViewId
       value: 13
       objectReference: {fileID: 0}
@@ -3516,7 +3569,10 @@ MonoBehaviour:
   maxHp: 2
   currentHp: 0
   role: 2
+  isClient: 0
   isInCabinet: 1
+  hallucinAudioClips: {fileID: 0}
+  hallucinStepAudioVolume: 0.8
 --- !u!1001 &1767878652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3707,6 +3763,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 0
+  lockDoorUI: {fileID: 0}
 --- !u!1001 &1841756245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3766,6 +3823,10 @@ PrefabInstance:
     - target: {fileID: 6280986568946046889, guid: fd09b5b4df6af4f4089ce77bfd665bea, type: 3}
       propertyPath: sceneViewId
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6928805299032123039, guid: fd09b5b4df6af4f4089ce77bfd665bea, type: 3}
+      propertyPath: sceneViewId
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8493975917277090756, guid: fd09b5b4df6af4f4089ce77bfd665bea, type: 3}
       propertyPath: m_Name
@@ -4858,6 +4919,10 @@ PrefabInstance:
     - target: {fileID: 3685321578577622591, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883240302423756372, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
+      propertyPath: sceneViewId
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6301295063840793502, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
       propertyPath: m_TagString

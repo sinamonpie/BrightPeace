@@ -182,7 +182,7 @@ public class ThirdPersonMovement : PlayerController
         Debug.DrawRay(cameraTransform.transform.position, dir.normalized * dir.magnitude, Color.red);
         if (Physics.Raycast(cameraTransform.transform.position, dir.normalized, out hit, dir.magnitude, LayerMask.GetMask("Default", "Object")))
         {
-            Debug.Log(hit.transform.position);
+            /*Debug.Log(hit.transform.position);*/
             Vector3 dist = hit.point - cameraTransform.transform.position;
             cameraDistance = (dist.magnitude * 0.9f);
         }

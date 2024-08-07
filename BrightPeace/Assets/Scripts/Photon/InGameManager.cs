@@ -68,6 +68,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
     [SerializeField]
     [Header("잠긴 방 스폰 위치")]
     private Transform[] itemLockSpawn;
+
+    public GameObject doorLockUI;
     public GameObject SlotParents;
     public TMP_Text alertText;
     public PhotonView pv;

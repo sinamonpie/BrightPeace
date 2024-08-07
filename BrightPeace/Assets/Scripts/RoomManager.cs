@@ -39,6 +39,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public GameObject noticeObject;
     public GameObject privateChatObject;
 
+    public GameObject voice;
+
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
@@ -71,6 +73,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
         PlayerCameraSetting();
         InPlayerInfo();
 
+
+        PhotonNetwork.Instantiate(voice.name, new Vector3(0,0,0), Quaternion.identity);
         pv.RPC("setNotice", RpcTarget.All, "[" + PhotonNetwork.NickName + "] ¥‘ ≤≤º≠ ¿‘¿Â«œºÃΩ¿¥œ¥Ÿ.");
     }
 
@@ -270,7 +274,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         if (isStart)
         {
             StopAllCoroutines();
-            readyAnim.Play("Start");
+            /*readyAnim.Play("Start");*/
             StartCoroutine(SetStart());
         }
         else

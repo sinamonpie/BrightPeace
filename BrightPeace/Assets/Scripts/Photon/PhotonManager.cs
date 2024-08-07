@@ -88,6 +88,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             nick = _nick;
 
             PhotonNetwork.LocalPlayer.NickName = nick.Trim();
+
+            PhotonChatManager.Instance.ChatConnect(nick.Trim());
             PhotonNetwork.JoinLobby();
         }
         else
@@ -124,6 +126,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             }
 
         }
+        PhotonChatManager.Instance.LeaveRoomChannel();
         PhotonNetwork.LeaveRoom();
     }
 
@@ -188,8 +191,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("Player : " + PhotonNetwork.LocalPlayer.NickName + " Join Lobby");
-
-        PhotonChatManager.Instance.ChatConnect();
 
         if (!SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[1]))
             GameManager.Instance.LoadLobbyScene();
