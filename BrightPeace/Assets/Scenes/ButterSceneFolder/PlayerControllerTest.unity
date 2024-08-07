@@ -1975,7 +1975,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692978287}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 420ee3daa571e3348b6aa909c683b4f9, type: 3}
   m_Name: 
@@ -1986,7 +1986,6 @@ MonoBehaviour:
   rotaionSpeed: 3
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
-  cameraDistance: 3
 --- !u!114 &1692978295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1994,7 +1993,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692978287}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d086a0162b7659b478d6d63d1bcf838b, type: 3}
   m_Name: 

@@ -10,6 +10,8 @@ public class FirstPersonMovement : PlayerController
     [SerializeField]
     protected float SprintSpeed = 5.335f;
 
+    private float realSpeed;
+
     Animator animator;
 
     public float rotaionSpeed = 3;
@@ -58,7 +60,7 @@ public class FirstPersonMovement : PlayerController
         transform.Rotate(Vector3.up * mouseX * rotaionSpeed);
 
         verticalRotation += mouseY * rotaionSpeed;
-        verticalRotation = Mathf.Clamp(verticalRotation, -50f, 30f);
+        verticalRotation = Mathf.Clamp(verticalRotation, -25f, 30f);
 
         cameraTransform.transform.localEulerAngles = Vector3.left * verticalRotation;
     }
@@ -77,23 +79,30 @@ public class FirstPersonMovement : PlayerController
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
-
-        if (z > 0)
+        if (Input.GetKey(KeyCode.LeftShift) && z > 0)
+        {
+            currentSpeed = 6;
+            realSpeed = SprintSpeed;
+        }
+        else if (z > 0)
         {
             currentSpeed = 2;
+            realSpeed = moveSpeed;
         }
         else if (x > 0)
         {
             currentSpeed = 14;
+            realSpeed = moveSpeed;
         }
         else if (x < 0)
         {
             currentSpeed = 10;
+            realSpeed = moveSpeed;
         }
         else if (z < 0)
         {
             currentSpeed = 18;
+            realSpeed = moveSpeed;
         }
         else
         {
@@ -102,6 +111,9 @@ public class FirstPersonMovement : PlayerController
 
         animator.SetFloat("Speed", currentSpeed);
         animator.SetFloat("MotionSpeed", 1);
+        
+        characterController.Move(moveDirection * realSpeed * Time.deltaTime);
+
     }
 
     private void OnFootstep(AnimationEvent animationEvent)

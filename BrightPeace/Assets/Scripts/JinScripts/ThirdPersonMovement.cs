@@ -10,6 +10,8 @@ public class ThirdPersonMovement : PlayerController
     [SerializeField]
     protected float SprintSpeed = 5.335f;
 
+    private float realSpeed;
+
     Animator animator;
 
     public float rotaionSpeed = 3;
@@ -84,11 +86,30 @@ public class ThirdPersonMovement : PlayerController
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
-
-        if (z > 0)
+        if (Input.GetKey(KeyCode.LeftShift) && z > 0)
         {
-            currentSpeed = moveSpeed;
+            currentSpeed = 6;
+            realSpeed = SprintSpeed;
+        }
+        else if (z > 0)
+        {
+            currentSpeed = 2;
+            realSpeed = moveSpeed;
+        }
+        else if (x > 0)
+        {
+            currentSpeed = 14;
+            realSpeed = moveSpeed;
+        }
+        else if (x < 0)
+        {
+            currentSpeed = 10;
+            realSpeed = moveSpeed;
+        }
+        else if (z < 0)
+        {
+            currentSpeed = 18;
+            realSpeed = moveSpeed;
         }
         else
         {
@@ -97,6 +118,8 @@ public class ThirdPersonMovement : PlayerController
 
         animator.SetFloat("Speed", currentSpeed);
         animator.SetFloat("MotionSpeed", 1);
+
+        characterController.Move(moveDirection * realSpeed * Time.deltaTime); ;
     }
 
     private void OnFootstep(AnimationEvent animationEvent)
