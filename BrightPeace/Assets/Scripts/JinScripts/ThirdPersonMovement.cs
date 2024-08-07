@@ -33,6 +33,8 @@ public class ThirdPersonMovement : PlayerController
     // Start is called before the first frame update
     void Start()
     {
+        if (!pv.IsMine)
+            return;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
@@ -47,6 +49,9 @@ public class ThirdPersonMovement : PlayerController
     // Update is called once per frame
     void Update()
     {
+        if (!pv.IsMine)
+            return;
+
         Cursor.visible = false;
 
         Look();
@@ -55,6 +60,8 @@ public class ThirdPersonMovement : PlayerController
 
     private void LateUpdate()
     {
+        if (!pv.IsMine)
+            return;
         avatarup.localRotation = Quaternion.Euler(-verticalRotation, 0, 0);
 
         Camera.main.transform.localPosition = new Vector3(0, 0, -cameraDistance);
