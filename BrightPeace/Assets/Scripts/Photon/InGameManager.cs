@@ -140,7 +140,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
                 GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
                 if (_players.Length > PhotonNetwork.CurrentRoom.PlayerCount-1)
                 {
-                    player.GetComponent<PlayerState>().role = UserRole.Mental;
+                    pv.RPC("SetPlayerMental", RpcTarget.All);
+                    player.GetComponent<PlayerState>().SetRoleMental();
                 }
                 else
                 {
