@@ -47,6 +47,9 @@ public class ThirdPersonMovement : PlayerController
     // Update is called once per frame
     void Update()
     {
+        if (!pv.IsMine)
+            return;
+
         Cursor.visible = false;
 
         Look();
