@@ -27,7 +27,8 @@ public class ThirdPersonMovement : PlayerController
     [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
     //private Camera camera;
-    //public float cameraDistance = 3;
+    public float cameraMaxDistance = 3;
+    float cameraDistance;
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +70,9 @@ public class ThirdPersonMovement : PlayerController
 
         cameraTransform.transform.localEulerAngles = Vector3.left * verticalRotation;
 
-        //camera.transform.localPosition = new Vector3(0, 0, -cameraDistance);
+        AboidObstacle();
+
+        Camera.main.transform.localPosition = new Vector3(0, 0, -cameraDistance);
     }
 
     public void MoveTo()
@@ -134,12 +137,22 @@ public class ThirdPersonMovement : PlayerController
         }
     }
 
-    /*
+    
     void AboidObstacle()
     {
         RaycastHit hit;
-        Vector3 dir = transform.position - camera.transform.position;
-        Debug.DrawRay(camera.transform.position, dir.normalized * dir.magnitude, Color.red);
+        Vector3 dir = Camera.main.transform.position - cameraTransform.transform.position;
+        Debug.DrawRay(cameraTransform.transform.position, dir.normalized * dir.magnitude, Color.red);
+        if (Physics.Raycast(cameraTransform.transform.position, dir.normalized, out hit, dir.magnitude, LayerMask.GetMask("Default", "Object")))
+        {
+            Debug.Log(hit.transform.position);
+            Vector3 dist = hit.point - cameraTransform.transform.position;
+            cameraDistance = (dist.magnitude * 1.0f);
+        }
+        else
+        {
+            cameraDistance = Mathf.Clamp(cameraDistance + (1f * Time.deltaTime), 1f, cameraMaxDistance);
+        }
     }
-    */
+    
 }
