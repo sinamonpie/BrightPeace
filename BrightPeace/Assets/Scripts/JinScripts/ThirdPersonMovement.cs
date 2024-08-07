@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class ThirdPersonMovement : PlayerController
 {
-    [SerializeField]
-    public float moveSpeed = 2.0f;
-
-    [SerializeField]
-    protected float SprintSpeed = 5.335f;
-
     private float realSpeed;
 
     Animator animator;
