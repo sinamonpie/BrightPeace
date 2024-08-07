@@ -45,6 +45,7 @@ public class FirstPersonMovement : PlayerController
 
         Look();
         MoveTo();
+        Attack();
     }
 
     private void LateUpdate()
@@ -65,6 +66,14 @@ public class FirstPersonMovement : PlayerController
         cameraTransform.transform.localEulerAngles = Vector3.left * verticalRotation;
     }
 
+    public void Attack()
+    {
+        if (Input.GetMouseButtonDown(0))
+        { 
+            animator.SetTrigger("isSwing");
+        }
+    }
+
     public void MoveTo()
     {
         float x = Input.GetAxisRaw("Horizontal");
@@ -81,7 +90,7 @@ public class FirstPersonMovement : PlayerController
 
         if (Input.GetKey(KeyCode.LeftShift) && z > 0)
         {
-            currentSpeed = 6;
+            currentSpeed = 4;
             realSpeed = SprintSpeed;
         }
         else if (z > 0)
@@ -91,17 +100,17 @@ public class FirstPersonMovement : PlayerController
         }
         else if (x > 0)
         {
-            currentSpeed = 14;
+            currentSpeed = 10;
             realSpeed = moveSpeed;
         }
         else if (x < 0)
         {
-            currentSpeed = 10;
+            currentSpeed = 8;
             realSpeed = moveSpeed;
         }
         else if (z < 0)
         {
-            currentSpeed = 18;
+            currentSpeed = -2;
             realSpeed = moveSpeed;
         }
         else

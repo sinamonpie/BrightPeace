@@ -27,7 +27,7 @@ public class ThirdPersonMovement : PlayerController
     [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
     //private Camera camera;
-    public float cameraMaxDistance = 3;
+    public float cameraMaxDistance = 2f;
     float cameraDistance;
 
     // Start is called before the first frame update
@@ -56,6 +56,8 @@ public class ThirdPersonMovement : PlayerController
     private void LateUpdate()
     {
         avatarup.localRotation = Quaternion.Euler(-verticalRotation, 0, 0);
+
+        Camera.main.transform.localPosition = new Vector3(0, 0, -cameraDistance);
     }
 
     void Look()
@@ -71,8 +73,6 @@ public class ThirdPersonMovement : PlayerController
         cameraTransform.transform.localEulerAngles = Vector3.left * verticalRotation;
 
         AboidObstacle();
-
-        Camera.main.transform.localPosition = new Vector3(0, 0, -cameraDistance);
     }
 
     public void MoveTo()
@@ -91,7 +91,7 @@ public class ThirdPersonMovement : PlayerController
 
         if (Input.GetKey(KeyCode.LeftShift) && z > 0)
         {
-            currentSpeed = 6;
+            currentSpeed = 4;
             realSpeed = SprintSpeed;
         }
         else if (z > 0)
@@ -101,17 +101,17 @@ public class ThirdPersonMovement : PlayerController
         }
         else if (x > 0)
         {
-            currentSpeed = 14;
+            currentSpeed = 10;
             realSpeed = moveSpeed;
         }
         else if (x < 0)
         {
-            currentSpeed = 10;
+            currentSpeed = 8;
             realSpeed = moveSpeed;
         }
         else if (z < 0)
         {
-            currentSpeed = 18;
+            currentSpeed = -2;
             realSpeed = moveSpeed;
         }
         else
@@ -147,11 +147,11 @@ public class ThirdPersonMovement : PlayerController
         {
             /*Debug.Log(hit.transform.position);*/
             Vector3 dist = hit.point - cameraTransform.transform.position;
-            cameraDistance = (dist.magnitude * 1.0f);
+            cameraDistance = (dist.magnitude * 0.9f);
         }
         else
         {
-            cameraDistance = Mathf.Clamp(cameraDistance + (1f * Time.deltaTime), 1f, cameraMaxDistance);
+            cameraDistance = Mathf.Clamp(cameraDistance + (0.8f * Time.deltaTime), -0.9f, cameraMaxDistance);
         }
     }
     

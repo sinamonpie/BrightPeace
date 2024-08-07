@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.05
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
@@ -2149,8 +2149,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 24.08.06 21:40:35
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3238e6fc9f0281241bc09fa78a7f9207, type: 2}
-  m_sharedMaterial: {fileID: 7397424314100277007, guid: 3238e6fc9f0281241bc09fa78a7f9207, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
