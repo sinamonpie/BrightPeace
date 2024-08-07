@@ -150,7 +150,14 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
 
                 if (isUse)
                 {
-                    RoomManager.Instance.setPrivateUserChat(sender, message.ToString());
+                    if(PhotonNetwork.LocalPlayer.NickName.Equals(user[0]))
+                    {
+                        RoomManager.Instance.setPrivateUserChat(sender, message.ToString(), true);
+                    }
+                    else
+                    {
+                        RoomManager.Instance.setPrivateUserChat(sender, message.ToString(), false);
+                    }
                 }
                 else
                 {

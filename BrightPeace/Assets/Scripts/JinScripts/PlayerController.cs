@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,8 +9,16 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTransform;
     protected CharacterController characterController;
 
+    [SerializeField]
+    protected PhotonView pv;
+
     public Transform GetCameraTransform()
     {
         return cameraTransform;
+    }
+
+    public void Awake()
+    {
+        pv = GetComponent<PhotonView>();
     }
 }
