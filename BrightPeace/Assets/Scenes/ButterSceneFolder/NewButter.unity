@@ -1789,6 +1789,8 @@ MonoBehaviour:
   role: 2
   isClient: 0
   isInCabinet: 0
+  hallucinAudioClips: {fileID: 0}
+  hallucinStepAudioVolume: 0.8
 --- !u!1 &1393873110 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8944336655422409498, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
@@ -2029,7 +2031,7 @@ MonoBehaviour:
   rotaionSpeed: 3
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
-  cameraDistance: 3
+  cameraMaxDistance: 3
 --- !u!143 &1600042736
 CharacterController:
   m_ObjectHideFlags: 0
