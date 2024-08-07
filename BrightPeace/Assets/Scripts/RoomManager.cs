@@ -33,7 +33,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public Player masterClient;
 
-    public InputField chat;
+    public TMP_InputField chat;
     public Transform chatTrans;
     public GameObject chatObject;
     public GameObject noticeObject;
@@ -70,8 +70,34 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         PlayerCameraSetting();
         InPlayerInfo();
+
+        pv.RPC("setNotice", RpcTarget.All, "[" + PhotonNetwork.NickName + "] 님 께서 입장하셨습니다.");
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (chat.text != "")
+            {
+
+                if (chat.text.Contains(">>"))
+                {
+                    string[] chatTxt = chat.text.Split(">>");
+
+                    string nick = chatTxt[0];
+                    string message = chatTxt[1];
+                    PhotonChatManager.Instance.SendPrivateMessage(nick, message);
+                }
+                else
+                {
+                    PhotonChatManager.Instance.SendChatMessage(chat.text);
+                }
+                chat.text = "";
+            }
+            chat.ActivateInputField();
+        }
+    }
 
     void PlayerCameraSetting()
     {
@@ -148,11 +174,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        Debug.Log("Left Player Master ? " + otherPlayer.IsMasterClient);
-        Debug.Log("otherPlayer ? " + otherPlayer);
-        Debug.Log("materClient ? " + masterClient);
-
-        Debug.Log(otherPlayer.NickName);
         if (PhotonNetwork.IsMasterClient)
         {
             if (otherPlayer == masterClient)
@@ -164,6 +185,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
             readyCount--;
             pv.RPC("SetReadyCount", RpcTarget.AllBuffered, readyCount);
         }
+
+        setNotice("[" + otherPlayer.NickName + "] 님 께서 퇴장하셨습니다.");
 
         foreach (GameObject _player in GameObject.FindGameObjectsWithTag("RoomPlayer"))
         {
@@ -182,19 +205,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-
-            bool isStart = true;
-            foreach (GameObject _player in GameObject.FindGameObjectsWithTag("RoomPlayer"))
-            {
-                if (!_player.GetComponent<RoomPlayer>().Ready)
-                {
-                    isStart = false;
-                }
-            }
-            if (isStart)
-            {
-                pv.RPC("ReceiveStart", RpcTarget.All);
-            }
+            pv.RPC("ReceiveStart", RpcTarget.OthersBuffered);
         }
     }
 
@@ -248,9 +259,24 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void ReceiveStart()
     {
-        StopAllCoroutines();
-/*        readyAnim.Play("Start");        // 에러*/
-        StartCoroutine(SetStart());
+        bool isStart = true;
+        foreach (GameObject _player in GameObject.FindGameObjectsWithTag("RoomPlayer"))
+        {
+            if (!_player.GetComponent<RoomPlayer>().Ready)
+            {
+                isStart = false;
+            }
+        }
+        if (isStart)
+        {
+            StopAllCoroutines();
+            readyAnim.Play("Start");
+            StartCoroutine(SetStart());
+        }
+        else
+        {
+            setNotice("준비를 하지 않은 플레이어가 있습니다.");
+        }
     }
 
     IEnumerator SetStart()
@@ -298,19 +324,22 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     // Photon Chat
 
+    [PunRPC]
+    public void setNotice(string message)
+    {
+        GameObject _chat = Instantiate(noticeObject, chatTrans);
+        _chat.GetComponent<ChatObjectOption>().SetNotice(message);
+    }
+
     public void setUserChat(string nick, string message, bool isMaster)
     {
         GameObject _chat = Instantiate(chatObject, chatTrans);
         _chat.GetComponent<ChatObjectOption>().SetMessage(nick, message, isMaster);
     }
 
-    public void setPrivateUserChat(string sender, string message)
+    public void setPrivateUserChat(string sender, string message, bool isMine)
     {
-        throw new NotImplementedException();
-    }
-
-    public void setNotice(string message)
-    {
-        throw new NotImplementedException();
+        GameObject _chat = Instantiate(chatObject, chatTrans);
+        _chat.GetComponent<ChatObjectOption>().SetPrivateMessage(sender, message, isMine);
     }
 }
