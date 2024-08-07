@@ -107,12 +107,12 @@ public class FirstPersonMovement : PlayerController
         }
         else if (x > 0)
         {
-            currentSpeed = 10;
+            currentSpeed = 8;
             realSpeed = moveSpeed;
         }
         else if (x < 0)
         {
-            currentSpeed = 8;
+            currentSpeed = 10;
             realSpeed = moveSpeed;
         }
         else if (z < 0)
