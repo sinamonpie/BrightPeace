@@ -29,6 +29,8 @@ public class FirstPersonMovement : PlayerController
     // Start is called before the first frame update
     void Start()
     {
+        if (!pv.IsMine)
+            return;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
@@ -53,6 +55,8 @@ public class FirstPersonMovement : PlayerController
 
     private void LateUpdate()
     {
+        if (!pv.IsMine)
+            return;
         avatarup.localRotation = Quaternion.Euler(-verticalRotation, 0, 0);
     }
 
