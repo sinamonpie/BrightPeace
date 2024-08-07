@@ -18,7 +18,7 @@ MonoBehaviour:
     AppIdChat: a400f78e-323e-4ad8-8d0d-31780076d4ed
     AppIdVoice: e04f89b8-5a9c-427e-84bb-c1b6a07379ce
     AppVersion: 0.1
-    UseNameServer: 1
+    UseNameServer: 0
     FixedRegion: kr
     Server: 
     Port: 0

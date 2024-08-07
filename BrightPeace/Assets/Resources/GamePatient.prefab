@@ -1046,6 +1046,7 @@ GameObject:
   - component: {fileID: 6764564892972535885}
   - component: {fileID: 1736229247234760171}
   - component: {fileID: 6368289383712561178}
+  - component: {fileID: 7931250959345450914}
   m_Layer: 0
   m_Name: GamePatient
   m_TagString: Player
@@ -1147,11 +1148,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 4654377753920380307}
+  pv: {fileID: 0}
   moveSpeed: 2
   SprintSpeed: 5.335
   rotaionSpeed: 3
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
+  cameraMaxDistance: 2
 --- !u!114 &4683192970633353497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1260,6 +1263,18 @@ MonoBehaviour:
   isInCabinet: 0
   hallucinAudioClips: {fileID: 0}
   hallucinStepAudioVolume: 0.8
+--- !u!114 &7931250959345450914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2370327318098557362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126494ae2a10a34499272ed97a6c9f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2652195864033004665
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     {
         PhotonNetwork.LoadLevel(sceneName[2]);
         PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonChatManager.Instance.JoinRoomChannel(PhotonNetwork.CurrentRoom.Name);
     }
 
     public void LoadGamescene()
