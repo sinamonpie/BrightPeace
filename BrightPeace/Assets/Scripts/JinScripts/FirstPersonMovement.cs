@@ -78,7 +78,7 @@ public class FirstPersonMovement : PlayerController
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        if (x > 0 || z > 0)
+        if (z > 0)
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -90,9 +90,14 @@ public class FirstPersonMovement : PlayerController
             }
             currentAniSpeed = currentSpeed;
         }
-        else if (x < 0 || z < 0)
+        else if ( x < 0 || x > 0)
         {
             currentSpeed = moveSpeed;
+            currentAniSpeed = currentSpeed;
+        }
+        else if (z < 0)
+        {
+            currentSpeed = moveSpeed; 
             currentAniSpeed = -currentSpeed;
         }
         else
