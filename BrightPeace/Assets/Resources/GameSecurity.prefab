@@ -2448,6 +2448,7 @@ GameObject:
   - component: {fileID: 7424865524342293120}
   - component: {fileID: -4991405930459108767}
   - component: {fileID: 4264108236207079382}
+  - component: {fileID: 6794736138916220699}
   m_Layer: 8
   m_Name: GameSecurity
   m_TagString: Player
@@ -2536,6 +2537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1616321845099385465}
+  pv: {fileID: 0}
   moveSpeed: 2
   SprintSpeed: 5.335
   rotaionSpeed: 3
@@ -2622,6 +2624,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMaterial: {fileID: 2100000, guid: 54c66f913f7fc9e4f8f9dc48f3484397, type: 2}
+--- !u!114 &6794736138916220699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7149675440221305535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126494ae2a10a34499272ed97a6c9f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7362582953946235174
 GameObject:
   m_ObjectHideFlags: 0
