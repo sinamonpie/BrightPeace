@@ -2,7 +2,13 @@ using Photon.Pun;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
-{ 
+{
+    [SerializeField]
+    public float moveSpeed = 2.0f;
+
+    [SerializeField]
+    public float SprintSpeed = 5.335f;
+
     protected float gravity = -9.81f;
     protected Vector3 moveDirection;
 
