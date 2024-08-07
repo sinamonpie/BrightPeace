@@ -22,16 +22,19 @@ public class RoomPlayer : MonoBehaviour
         {
             Ready = true;
             nickTxt.text = $"{playerInfo.NickName}";
+            nickTxt.color = Color.red;
         }
         else
         {
             if (Ready)
             {
                 nickTxt.text = $"{playerInfo.NickName}";
+                nickTxt.color = Color.red;
             }
             else
             {
                 nickTxt.text = $"{playerInfo.NickName}";
+                nickTxt.color = Color.white;
             }
         }
 
@@ -46,11 +49,13 @@ public class RoomPlayer : MonoBehaviour
     {
         if (Ready)
         {
-            nickTxt.text = $"{playerInfo.NickName}" + " Ready";
+            nickTxt.text = $"{playerInfo.NickName}";
+            nickTxt.color = Color.red;
         }
         else
         {
             nickTxt.text = $"{playerInfo.NickName}";
+            nickTxt.color = Color.white;
         }
     }
 }
