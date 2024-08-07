@@ -7,6 +7,7 @@ using UnityEngine.Animations;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UIElements;
+using Unity.VisualScripting;
 
 /// <summary>
 /// 아이템 사용/버리기와 관련된 기능 텍스트출력 등을 기재
@@ -17,7 +18,9 @@ public class UseItemManager : MonoBehaviourPun
     TMP_Text alertText;
     Inventory inventory;
     ActionController actionController;
-    SensorCamera sensorCamera;
+
+    [SerializeField] Camera mainCamera;
+    [SerializeField] SensorCamera sensorCamera;
 
     GameObject knife;
     Animator animator;
@@ -62,7 +65,8 @@ public class UseItemManager : MonoBehaviourPun
         actionController = FindObjectOfType<ActionController>();
         knife = GameObject.FindWithTag("ItemHasPoint").gameObject;
         knife.gameObject.SetActive(false);
-        sensorCamera = Camera.main.GetComponentInChildren<SensorCamera>();
+        mainCamera = GetComponentInChildren<Camera>();
+        sensorCamera = mainCamera.gameObject.GetComponentInChildren<SensorCamera>();
 
         animator = transform.GetComponent<Animator>();
         rate = swingDelay;
@@ -86,9 +90,9 @@ public class UseItemManager : MonoBehaviourPun
                             if (!actionController.canDoor)
                             goto exit;
 
-                            if (!GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().IsLockDoor())
+                            if (!mainCamera.gameObject.GetComponent<ActionController>().IsLockDoor())
                             {
-                                if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().CanDoorAction(unlockTime))
+                                if (mainCamera.gameObject.GetComponent<ActionController>().CanDoorAction(unlockTime))
                                 {
                                     StartCoroutine(UseKey(unlockTime));
                                 }
@@ -116,9 +120,10 @@ public class UseItemManager : MonoBehaviourPun
                         }
 
                         case "투시경":
-                        {                   
+                        {
                             // 단, 캐비넷에 들어가있는 플레이어는 감지되지 않는다.
-                            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GrayScreen>().ApplyGrayScreen(wallHackTime);
+                            GetComponentInChildren<GrayScreen>().ApplyGrayScreen(wallHackTime);
+                            /*GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GrayScreen>().ApplyGrayScreen(wallHackTime);*/
                             StartCoroutine(WallHack(wallHackTime));
                             break;
                         }
@@ -204,7 +209,7 @@ public class UseItemManager : MonoBehaviourPun
             {
                 Vector3 PlayerPos = transform.position;
                 Vector3 PlayerFwd = transform.forward;
-                GameObject itemGo = PhotonNetwork.Instantiate(inventory.currentSlot.item.itemPrefab.name, PlayerPos + PlayerFwd, Quaternion.identity);
+                string itemName = inventory.currentSlot.item.itemPrefab.name;
 
                 StartCoroutine(TextAlert());
                 alertText.text = inventory.currentSlot.item.itemName + " 을(를) 떨어뜨렸습니다.";
@@ -212,9 +217,9 @@ public class UseItemManager : MonoBehaviourPun
                 if(inventory.currentSlot.item.itemName == "칼")
                 inventory.getKnife = false;
 
-                inventory.currentSlot.ClearSlot();
+                pv.RPC("RPC_DropItem", RpcTarget.MasterClient, PlayerPos + PlayerFwd, Quaternion.identity, itemName);
 
-                pv.RPC("RPC_DropItem", RpcTarget.MasterClient, itemGo.transform.position, itemGo.transform.rotation, inventory.currentSlot.item.itemName);
+                inventory.currentSlot.ClearSlot();
             }
         }
 

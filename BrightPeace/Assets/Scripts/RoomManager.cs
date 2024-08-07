@@ -249,7 +249,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     void ReceiveStart()
     {
         StopAllCoroutines();
-        readyAnim.Play("Start");
+/*        readyAnim.Play("Start");        // ¿¡·¯*/
         StartCoroutine(SetStart());
     }
 

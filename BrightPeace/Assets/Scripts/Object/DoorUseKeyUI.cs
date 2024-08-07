@@ -7,13 +7,15 @@ using Photon.Pun;
 /// <summary>
 /// 잠긴 문에 2초간 열리는 UI 생성
 /// </summary>
-public class DoorUseKeyUI : MonoBehaviourPun
+public class DoorUseKeyUI : MonoBehaviour
 {
     [SerializeField] Image image;     
-    [SerializeField] TMP_Text text;      
+    [SerializeField] TMP_Text text;
+    [SerializeField] PhotonView pv;
     void Start()
     {
         this.gameObject.transform.position = transform.parent.position;
+        pv = transform.GetComponent<PhotonView>();
         image = transform.GetComponentInChildren<Image>();
         text = transform.GetComponentInChildren<TMP_Text>();
 
@@ -23,7 +25,7 @@ public class DoorUseKeyUI : MonoBehaviourPun
 
     public void DoorUI(float time)
     {
-        photonView.RPC("RPC_ShowUI", RpcTarget.All, time);
+        pv.RPC("RPC_ShowUI", RpcTarget.All, time);
     }
     IEnumerator DoorUseKey(float time)
     {            
