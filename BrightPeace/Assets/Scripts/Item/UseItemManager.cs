@@ -58,23 +58,28 @@ public class UseItemManager : MonoBehaviourPun
     Ray ray;
 
     void Start()
-    {
-        pv = GetComponent<PhotonView>();   
-        inventory = FindObjectOfType<Inventory>();
-        alertText = inventory.alertText;
-        actionController = FindObjectOfType<ActionController>();
-        knife = GameObject.FindWithTag("ItemHasPoint").gameObject;
-        knife.gameObject.SetActive(false);
-        mainCamera = GetComponentInChildren<Camera>();
-        sensorCamera = mainCamera.gameObject.GetComponentInChildren<SensorCamera>();
+    { 
+        pv = GetComponent<PhotonView>(); 
+        
+        if(pv.IsMine)
+        {
+            inventory = FindObjectOfType<Inventory>();
+            alertText = inventory.alertText;
+            actionController = FindObjectOfType<ActionController>();
+            knife = GameObject.FindWithTag("ItemHasPoint").gameObject;
+            knife.gameObject.SetActive(false);
+            mainCamera = GetComponentInChildren<Camera>();
+            sensorCamera = mainCamera.gameObject.GetComponentInChildren<SensorCamera>();
 
-        animator = transform.GetComponent<Animator>();
-        rate = swingDelay;
-        medikitUseRate = 0;
+            animator = transform.GetComponent<Animator>();
+            rate = swingDelay;
+            medikitUseRate = 0;
+        }
+
     }
     void Update()
     {
-
+        if (!pv.IsMine) { return; }
         if (inventory.currentSlot != null && inventory.currentSlot.item != null)
         {
             if (inventory.currentSlot.item.itemType == ItemType.Used)
@@ -187,7 +192,7 @@ public class UseItemManager : MonoBehaviourPun
                                 PlayerState playerState = hit.transform.GetComponent<PlayerState>();
                                 if (playerState != null)
                                 {
-                                    pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID, playerState.isClient);
+                                    pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
 
                                     inventory.currentSlot.ClearSlot();
                                     inventory.getKnife = false;
@@ -283,15 +288,15 @@ public class UseItemManager : MonoBehaviourPun
     }
 
     [PunRPC]
-    void AttackPlayer(int targetViewID, bool isClient)
+    void AttackPlayer(int targetViewID)
     {
         PhotonView targetView = PhotonView.Find(targetViewID);
         if(targetView != null)
         {
             // 조건 추가 경비원일때는 스턴 2초
-            if (isClient)
+            if (targetView.Owner.IsMasterClient)
             {
-                targetView.RPC("RPC_Stun", RpcTarget.All, stunTime);
+                targetView.RPC("RPC_Stun", RpcTarget.MasterClient, stunTime);
             }
             else
             {

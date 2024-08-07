@@ -266,11 +266,11 @@ public class ActionController : MonoBehaviourPun
     {
         player = transform.root.gameObject;
 
-        if (!player.GetComponent<PlayerState>().isClient)
+        if (!PhotonNetwork.IsMasterClient && photonView.IsMine)
         {
             inventory = player.GetComponent<Inventory>();
-        }
 
-        isSetting = true;
+            isSetting = true;
+        }
     }
 }
