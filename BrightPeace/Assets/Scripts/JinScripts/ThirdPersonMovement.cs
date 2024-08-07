@@ -89,15 +89,22 @@ public class ThirdPersonMovement : PlayerController
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && z > 0)
+        if (z > 0)
         {
-            currentSpeed = 4;
-            realSpeed = SprintSpeed;
-        }
-        else if (z > 0)
-        {
-            currentSpeed = 2;
-            realSpeed = moveSpeed;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                currentSpeed = 4;
+                realSpeed = SprintSpeed;
+            }
+            else if (Input.GetKey(KeyCode.LeftControl))
+            {
+
+            }
+            else
+            {
+                currentSpeed = 2;
+                realSpeed = moveSpeed;
+            }
         }
         else if (x > 0)
         {
