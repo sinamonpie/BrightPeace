@@ -91,7 +91,7 @@ public class ThirdPersonMovement : PlayerController
 
         if (Input.GetKey(KeyCode.LeftShift) && z > 0)
         {
-            currentSpeed = 6;
+            currentSpeed = 4;
             realSpeed = SprintSpeed;
         }
         else if (z > 0)
@@ -101,17 +101,17 @@ public class ThirdPersonMovement : PlayerController
         }
         else if (x > 0)
         {
-            currentSpeed = 14;
+            currentSpeed = 10;
             realSpeed = moveSpeed;
         }
         else if (x < 0)
         {
-            currentSpeed = 10;
+            currentSpeed = 8;
             realSpeed = moveSpeed;
         }
         else if (z < 0)
         {
-            currentSpeed = 18;
+            currentSpeed = -2;
             realSpeed = moveSpeed;
         }
         else

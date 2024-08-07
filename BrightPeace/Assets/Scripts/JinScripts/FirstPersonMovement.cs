@@ -6,12 +6,13 @@ public class FirstPersonMovement : PlayerController
 {
     [SerializeField]
     public float moveSpeed = 2.0f;
-
+   
     [SerializeField]
     protected float SprintSpeed = 5.335f;
 
+    private float realSpeed;
+
     Animator animator;
-    private float currentAniSpeed;
 
     public float rotaionSpeed = 3;
     private Vector3 rotaion;
@@ -19,7 +20,7 @@ public class FirstPersonMovement : PlayerController
     private float currentSpeed;
 
     private float verticalRotation = 0;
-
+    
     private Transform avatarup;
 
     public AudioClip[] FootstepAudioClips;
@@ -59,7 +60,7 @@ public class FirstPersonMovement : PlayerController
         transform.Rotate(Vector3.up * mouseX * rotaionSpeed);
 
         verticalRotation += mouseY * rotaionSpeed;
-        verticalRotation = Mathf.Clamp(verticalRotation, -10f, 30f);
+        verticalRotation = Mathf.Clamp(verticalRotation, -25f, 30f);
 
         cameraTransform.transform.localEulerAngles = Vector3.left * verticalRotation;
     }
@@ -78,39 +79,41 @@ public class FirstPersonMovement : PlayerController
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        if (z > 0)
+        if (Input.GetKey(KeyCode.LeftShift) && z > 0)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                currentSpeed = SprintSpeed;
-            }
-            else
-            {
-                currentSpeed = moveSpeed;
-            }
-            currentAniSpeed = currentSpeed;
+            currentSpeed = 4;
+            realSpeed = SprintSpeed;
         }
-        else if ( x < 0 || x > 0)
+        else if (z > 0)
         {
-            currentSpeed = moveSpeed;
-            currentAniSpeed = currentSpeed;
+            currentSpeed = 2;
+            realSpeed = moveSpeed;
+        }
+        else if (x > 0)
+        {
+            currentSpeed = 10;
+            realSpeed = moveSpeed;
+        }
+        else if (x < 0)
+        {
+            currentSpeed = 8;
+            realSpeed = moveSpeed;
         }
         else if (z < 0)
         {
-            currentSpeed = moveSpeed; 
-            currentAniSpeed = -currentSpeed;
+            currentSpeed = -2;
+            realSpeed = moveSpeed;
         }
         else
         {
             currentSpeed = 0;
-            currentAniSpeed = currentSpeed;
         }
 
-
-        characterController.Move(moveDirection * currentSpeed * Time.deltaTime);
-
-        animator.SetFloat("Speed", currentAniSpeed);
+        animator.SetFloat("Speed", currentSpeed);
         animator.SetFloat("MotionSpeed", 1);
+        
+        characterController.Move(moveDirection * realSpeed * Time.deltaTime);
+
     }
 
     private void OnFootstep(AnimationEvent animationEvent)
