@@ -137,7 +137,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
             if (!isMental)
             {
                 GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
-                if (_players.Length == PhotonNetwork.CurrentRoom.PlayerCount)
+                if (_players.Length == PhotonNetwork.CurrentRoom.PlayerCount-1)
                 {
                     player.GetComponent<PlayerState>().role = UserRole.Mental;
                 }
@@ -146,8 +146,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
                     int rand = UnityEngine.Random.Range(0, 2);
                     if(rand == 0)
                     {
-                        player.GetComponent<PlayerState>().role = UserRole.Mental;
                         pv.RPC("SetPlayerMental", RpcTarget.All);
+                        player.GetComponent<PlayerState>().SetRoleMental();
                     }
                 }
             }
