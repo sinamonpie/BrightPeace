@@ -122,7 +122,7 @@ public class UseItemManager : MonoBehaviourPun
                         case "투시경":
                         {
                             // 단, 캐비넷에 들어가있는 플레이어는 감지되지 않는다.
-                            GetComponentInChildren<GrayScreen>().ApplyGrayScreen(wallHackTime);
+                            mainCamera.GetComponentInChildren<GrayScreen>().ApplyGrayScreen(wallHackTime);
                             /*GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GrayScreen>().ApplyGrayScreen(wallHackTime);*/
                             StartCoroutine(WallHack(wallHackTime));
                             break;

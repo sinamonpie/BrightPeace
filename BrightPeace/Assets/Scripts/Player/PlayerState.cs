@@ -64,22 +64,23 @@ public class PlayerState : MonoBehaviourPun
 
 
 
-    void ClientSetting()
+    void UISetting(bool isMaster)
     {
         GameObject gameObject = GameObject.Find("SlotsParent");
-        gameObject.SetActive(false);
+        gameObject.SetActive(!isMaster);
+
     }
     void InitHp()
     {
         if (isClient)
         {
             currentHp = 1;
-            ClientSetting();
         }
         else
         {
             currentHp = maxHp;
         }
+        UISetting(isClient);
     }
 
     public int GetPlayerHp()

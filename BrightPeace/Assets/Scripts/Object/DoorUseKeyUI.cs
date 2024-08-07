@@ -13,6 +13,9 @@ public class DoorUseKeyUI : MonoBehaviour
     void Start()
     {
         this.gameObject.transform.position = transform.parent.position;
+        this.gameObject.transform.position += new Vector3(-0.5f, 0f, 0.3f);
+        this.gameObject.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 180f, transform.rotation.eulerAngles.z);
+
         image = transform.GetComponentInChildren<Image>();
         text = transform.GetComponentInChildren<TMP_Text>();
 

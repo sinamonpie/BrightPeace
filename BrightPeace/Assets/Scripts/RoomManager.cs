@@ -270,7 +270,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         if (isStart)
         {
             StopAllCoroutines();
-            readyAnim.Play("Start");
+            /*readyAnim.Play("Start");*/
             StartCoroutine(SetStart());
         }
         else

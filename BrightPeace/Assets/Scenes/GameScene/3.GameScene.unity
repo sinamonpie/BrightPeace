@@ -3091,9 +3091,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 25041603973848472, guid: 1115ec01e34f2ff41909238fc3a4a9b2, type: 3}
+      propertyPath: unlockDoor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 292099980309944776, guid: 1115ec01e34f2ff41909238fc3a4a9b2, type: 3}
       propertyPath: sceneViewId
       value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 498191203221776742, guid: 1115ec01e34f2ff41909238fc3a4a9b2, type: 3}
+      propertyPath: unlockDoor
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 760007195562484662, guid: 1115ec01e34f2ff41909238fc3a4a9b2, type: 3}
       propertyPath: m_AnchorMax.y
@@ -9551,7 +9559,7 @@ MonoBehaviour:
   itemGunSpawn: []
   itemUnLockSpawn: []
   itemLockSpawn: []
-  doorLockUI: {fileID: 0}
+  doorLockUI: {fileID: 6400580186566007555, guid: 178b003c26b716b458f8f1267bf6d8a7, type: 3}
   SlotParents: {fileID: 925498052653449332}
   alertText: {fileID: 4536756681013572624}
   pv: {fileID: 0}
@@ -10580,7 +10588,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289304796267587413}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 3
   m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
@@ -10609,7 +10617,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 10
-  m_Depth: -1
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 256
