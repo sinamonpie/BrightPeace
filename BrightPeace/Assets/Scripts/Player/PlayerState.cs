@@ -6,12 +6,16 @@ using Photon.Pun;
 public class PlayerState : MonoBehaviourPun
 {
     FirstPersonMovement firstPersonMovement;
+    [Header("실험체 체력")]
     [SerializeField] int maxHp = 2;
     [SerializeField] int currentHp;
     public UserRole role = UserRole.Patient;
 
     public bool isClient;
     public bool isInCabinet;
+
+    public AudioClip hallucinAudioClips;
+    [Range(0, 1)] public float hallucinStepAudioVolume = 0.8f;
 
     void Start()
     {
@@ -23,9 +27,59 @@ public class PlayerState : MonoBehaviourPun
     {
 
     }
+
+    public void SetMetal()
+    {
+        StartCoroutine(SetHearVoice());
+    }
+
+    IEnumerator SetHearVoice()
+    {
+        float time = Random.Range(60f, 120f);
+        yield return new WaitForSeconds(time);
+
+        GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
+        float shortDis = Vector3.Distance(transform.position, _players[0].transform.position);
+
+        GameObject foundPlayer = _players[0];
+        foreach (GameObject found in _players)
+        {
+            if (found != this)
+            {
+                float Distance = Vector3.Distance(gameObject.transform.position, found.transform.position);
+                if (Distance < shortDis)
+                {
+                    shortDis = Distance;
+                    foundPlayer = found;
+                }
+            }
+        }
+
+    }
+
+    void SetVoice(GameObject obj)
+    {
+        AudioSource.PlayClipAtPoint(hallucinAudioClips, transform.TransformPoint(obj.transform.position), hallucinStepAudioVolume);
+    }
+
+
+
+    void ClientSetting()
+    {
+        GameObject gameObject = GameObject.Find("SlotsParent");
+        gameObject.SetActive(false);
+    }
     void InitHp()
     {
-        currentHp = maxHp;
+        if (isClient)
+        {
+            currentHp = 1;
+            ClientSetting();
+        }
+        else
+        {
+            currentHp = maxHp;
+        }
     }
 
     public int GetPlayerHp()

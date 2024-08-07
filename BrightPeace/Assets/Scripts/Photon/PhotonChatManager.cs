@@ -126,17 +126,6 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
                     RoomManager.Instance.setUserChat(senders[i], messages[i].ToString(), false);
                 }
             }
-            //if (RoomGameManager.Instance != null)
-            //{
-            //    if (PhotonNetwork.MasterClient.NickName.Equals(senders[i]))
-            //    {
-            //        RoomGameManager.Instance.setUserChat(senders[i], messages[i].ToString(), true);
-            //    }
-            //    else
-            //    {
-            //        RoomGameManager.Instance.setUserChat(senders[i], messages[i].ToString(), false);
-            //    }
-            //}
         }
     }
 
@@ -144,37 +133,7 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
     {
         string[] user = channelName.Split(":");
 
-        //if (InRoomManager.Instance != null)
-        //{
-        //    bool isUse = false;
-
-        //    if (!user[0].Equals(user[1]))
-        //    {
-        //        Dictionary<int, Photon.Realtime.Player> playerList = PhotonNetwork.CurrentRoom.Players;
-        //        foreach (var player in playerList)
-        //        {
-        //            if (player.Value.NickName.Equals(user[1].Trim()))
-        //            {
-        //                isUse = true;
-        //            }
-        //        }
-
-        //        if (isUse)
-        //        {
-        //            InRoomManager.Instance.setPrivateUserChat(sender, message.ToString());
-        //        }
-        //        else
-        //        {
-        //            InRoomManager.Instance.setNotice("해당하는 유저가 없습니다.", 0);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        InRoomManager.Instance.setNotice("자신에게 비밀챗을 보낼 수 없습니다.", 0);
-        //    }
-        //}
-
-        if (RoomGameManager.Instance != null)
+        if (RoomManager.Instance != null)
         {
             bool isUse = false;
 
@@ -191,16 +150,16 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
 
                 if (isUse)
                 {
-                   // RoomGameManager.Instance.setPrivateUserChat(sender, message.ToString());
+                    RoomManager.Instance.setPrivateUserChat(sender, message.ToString());
                 }
                 else
                 {
-                  //  RoomGameManager.Instance.setNotice("해당하는 유저가 없습니다.");
+                    RoomManager.Instance.setNotice("해당하는 유저가 없습니다.");
                 }
             }
             else
             {
-              //  RoomGameManager.Instance.setNotice("자신에게 비밀챗을 보낼 수 없습니다.");
+                RoomManager.Instance.setNotice("자신에게 비밀챗을 보낼 수 없습니다.");
             }
         }
     }

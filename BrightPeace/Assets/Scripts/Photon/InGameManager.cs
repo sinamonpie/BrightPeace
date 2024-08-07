@@ -73,6 +73,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
     public PhotonView pv;
 
     private Player masterClient;
+
+    private bool isMental = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -130,11 +132,30 @@ public class InGameManager : MonoBehaviourPunCallbacks
             GameObject player = PhotonNetwork.Instantiate(patientObject.name, spawnPosition, Quaternion.identity, 0);
             player.GetComponent<PlayerState>().isClient = false;
 
+            if (!isMental)
+            {
+                GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
+                if (_players.Length == PhotonNetwork.CurrentRoom.PlayerCount)
+                {
+                    player.GetComponent<PlayerState>().role = UserRole.Mental;
+                }
+                else
+                {
+                    int rand = UnityEngine.Random.Range(0, 2);
+                    if(rand == 0)
+                    {
+                        player.GetComponent<PlayerState>().role = UserRole.Mental;
+                        pv.RPC("SetPlayerMental", RpcTarget.All);
+                    }
+                }
+            }
+
             Transform caemraTrans = player.GetComponent<PlayerController>().GetCameraTransform();
 
             Camera.main.transform.position = caemraTrans.position;
             Camera.main.transform.rotation = caemraTrans.rotation;
             Camera.main.transform.SetParent(caemraTrans);
+            Camera.main.transform.GetComponent<ActionController>().SetPlayer();
 
             pv.RPC("RemoveSpawnPlayerList", RpcTarget.AllBuffered, idx);
         }
@@ -287,6 +308,12 @@ public class InGameManager : MonoBehaviourPunCallbacks
     void RemoveSpawnPlayerList(int idx)
     {
         patientSpawn = RemoveTransformAt(patientSpawn, idx);
+    }
+
+    [PunRPC]
+    void SetPlayerMental()
+    {
+        isMental = true;
     }
 
     IEnumerator UnEnableLodding()

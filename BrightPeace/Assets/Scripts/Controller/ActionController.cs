@@ -20,19 +20,19 @@ public class ActionController : MonoBehaviourPun
     [SerializeField] private TMP_Text actionText;
     [SerializeField] private TMP_Text alertText;
 
-    Inventory inventory;
+    [SerializeField] Inventory inventory;
+    [SerializeField] PlayerState playerState;
+    [SerializeField] GameObject player;
+
     public bool isRayItem;
     public bool canDoor = false;
-    public GameObject player;
-
-    void Start()
-    {
-        inventory = FindObjectOfType<Inventory>();
-    }
-
+    private bool isSetting = false;
     void Update()
     {
-        CheckInteraction();
+        if (isSetting)
+        {
+            CheckInteraction();
+        }
     }
 
     void CheckInteraction()
@@ -113,7 +113,8 @@ public class ActionController : MonoBehaviourPun
                 {
                     // 아이템 주울때 사운드 추가
                     Debug.Log("획득하기 " + hitInfo.transform.GetComponent<ItemPickUp>().Item.itemName);
-                    photonView.RPC("RPC_DestroyItem", RpcTarget.All);
+                    GameObject item = hitInfo.transform.gameObject;
+                    item.GetComponent<ItemPickUp>().TakeItem();
                 }
                 else
                 {
@@ -261,9 +262,15 @@ public class ActionController : MonoBehaviourPun
         }
     }
 
-    [PunRPC]
-    void RPC_DestroyItem()
+    public void SetPlayer()
     {
-        Destroy(gameObject);
+        player = transform.root.gameObject;
+
+        if (!player.GetComponent<PlayerState>().isClient)
+        {
+            inventory = player.GetComponent<Inventory>();
+        }
+
+        isSetting = true;
     }
 }
