@@ -96,41 +96,64 @@ public class ThirdPersonMovement : PlayerController
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        if (z > 0)
+        if(Input.GetKey(KeyCode.LeftShift) && z > 0)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            currentSpeed = 4;
+            realSpeed = SprintSpeed;
+        }
+        else if (Input.GetKey(KeyCode.LeftControl))
+        {
+            if (z > 0)
             {
-                currentSpeed = 4;
-                realSpeed = SprintSpeed;
+                currentSpeed = 16;
+                realSpeed = moveSpeed - 1f;
             }
-            else if (Input.GetKey(KeyCode.LeftControl))
+            else if (z < 0)
             {
-
+                currentSpeed = 14;
+                realSpeed = moveSpeed - 1f;
+            }
+            else if (x > 0)
+            {
+                currentSpeed = 18;
+                realSpeed = moveSpeed - 1f;
+            }
+            else if (x < 0)
+            {
+                currentSpeed = 20;
+                realSpeed = moveSpeed - 1f;
             }
             else
+            {
+                currentSpeed = 12;
+            }
+        }
+        else
+        {
+            if (z > 0)
             {
                 currentSpeed = 2;
                 realSpeed = moveSpeed;
             }
-        }
-        else if (x > 0)
-        {
-            currentSpeed = 10;
-            realSpeed = moveSpeed;
-        }
-        else if (x < 0)
-        {
-            currentSpeed = 8;
-            realSpeed = moveSpeed;
-        }
-        else if (z < 0)
-        {
-            currentSpeed = -2;
-            realSpeed = moveSpeed;
-        }
-        else
-        {
-            currentSpeed = 0;
+            else if (z < 0)
+            {
+                currentSpeed = -2;
+                realSpeed = moveSpeed;
+            }
+            else if (x > 0)
+            {
+                currentSpeed = 8;
+                realSpeed = moveSpeed;
+            }
+            else if (x < 0)
+            {
+                currentSpeed = 10;
+                realSpeed = moveSpeed;
+            }
+            else
+            {
+                currentSpeed = 0;
+            }
         }
 
         animator.SetFloat("Speed", currentSpeed);
