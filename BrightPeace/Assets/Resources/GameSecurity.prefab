@@ -2606,7 +2606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 1
   currentHp: 0
-  role: 2
+  role: 1
   isClient: 1
   isInCabinet: 0
   hallucinAudioClips: {fileID: 0}
