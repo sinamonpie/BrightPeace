@@ -119,13 +119,13 @@ public class InGameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             GameObject player = PhotonNetwork.Instantiate(securityObject.name, securitySpawn.position, Quaternion.identity, 0);
-            player.GetComponent<PlayerState>().isClient = true;
 
             Transform caemraTrans = player.GetComponent<PlayerController>().GetCameraTransform();
 
             Camera.main.transform.position = caemraTrans.position;
             Camera.main.transform.rotation = caemraTrans.rotation;
             Camera.main.transform.SetParent(caemraTrans);
+            Camera.main.transform.GetComponent<ActionController>().SetPlayer();
         }
         else
         {
@@ -133,7 +133,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
             Vector3 spawnPosition = patientSpawn[idx].position;
 
             GameObject player = PhotonNetwork.Instantiate(patientObject.name, spawnPosition, Quaternion.identity, 0);
-            player.GetComponent<PlayerState>().isClient = false;
 
             if (!isMental)
             {
@@ -160,6 +159,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
             Camera.main.transform.rotation = caemraTrans.rotation;
             Camera.main.transform.SetParent(caemraTrans);
             Camera.main.transform.GetComponent<ActionController>().SetPlayer();
+            player.GetComponent<Inventory>().SettingInventory();
 
             Camera.main.transform.localPosition = new Vector3(0, 0, -3);
             // ㄴ 2024.08.07 14:01 테스트로 넣어본 문장

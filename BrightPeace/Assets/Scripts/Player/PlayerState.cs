@@ -23,7 +23,6 @@ public class PlayerState : MonoBehaviourPun
 
     void Update()
     {
-
     }
 
     public void SetMetal()
@@ -60,14 +59,6 @@ public class PlayerState : MonoBehaviourPun
         AudioSource.PlayClipAtPoint(hallucinAudioClips, transform.TransformPoint(obj.transform.position), hallucinStepAudioVolume);
     }
 
-
-
-    void UISetting(bool isMaster)
-    {
-        GameObject gameObject = GameObject.Find("SlotsParent");
-        gameObject.SetActive(!isMaster);
-
-    }
     void InitHp()
     {
         if (photonView.Owner.IsMasterClient)
@@ -78,7 +69,6 @@ public class PlayerState : MonoBehaviourPun
         {
             currentHp = maxHp;
         }
-        UISetting(photonView.Owner.IsMasterClient);
     }
 
     public int GetPlayerHp()

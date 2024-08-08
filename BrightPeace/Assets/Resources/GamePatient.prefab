@@ -1098,7 +1098,7 @@ Animator:
   m_GameObject: {fileID: 2370327318098557362}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b8a7488d12adc39498433d60811eab1a, type: 3}
-  m_Controller: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1147,10 +1147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420ee3daa571e3348b6aa909c683b4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 4654377753920380307}
-  pv: {fileID: 0}
   moveSpeed: 2
   SprintSpeed: 5.335
+  cameraTransform: {fileID: 4654377753920380307}
+  pv: {fileID: 0}
   rotaionSpeed: 3
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
@@ -1261,7 +1261,6 @@ MonoBehaviour:
   maxHp: 2
   currentHp: 0
   role: 2
-  isClient: 0
   isInCabinet: 0
   hallucinAudioClips: {fileID: 0}
   hallucinStepAudioVolume: 0.8
