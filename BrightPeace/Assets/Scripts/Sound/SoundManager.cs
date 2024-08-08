@@ -136,7 +136,13 @@ EscapeRouteOpenedAmbienceSF.wav
 탈출 성공 시 나오는 배경음
 EscapeSuccessBGM.wav
 
-가능하다면 간수 발소리 이걸로 변경해주세용 랜덤으로
+시간 여유가 있다면 간수 발소리 이걸로 변경해주세용 가능하다면 랜덤으로
+SecurityFootstepSF01.wav
+SecurityFootstepSF02.wav
+SecurityFootstepSF03.wav
+SecurityFootstepSF04.wav
+
+나머지 플레이어들 발소리
 FootstepSF01.wav
 FootstepSF02.wav
 FootstepSF03.wav
