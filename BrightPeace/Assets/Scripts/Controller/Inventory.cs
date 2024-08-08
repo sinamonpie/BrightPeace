@@ -26,12 +26,9 @@ public class Inventory : MonoBehaviour
         pv = GetComponent<PhotonView>();
         settingInventory = false;
 
-        if(pv != null && SlotsParent == null && alertText == null)
+        if (pv.IsMine)
         {
-            if(pv.IsMine)
-            {
-                SettingInventory();
-            }
+            SettingInventory();
         }
     }
 
@@ -75,64 +72,76 @@ public class Inventory : MonoBehaviour
 
     public void SettingInventory()
     {
-        SlotsParent = InGameManager.Instance.SlotParents;
-        alertText = InGameManager.Instance.alertText;
-        slots = SlotsParent.GetComponentsInChildren<Slot>();
-        slotsBg = SlotsParent.GetComponentsInChildren<SlotBackGround>();
+        if (!pv.Owner.IsMasterClient)
+        {
+            SlotsParent = InGameManager.Instance.SlotParents;
+            alertText = InGameManager.Instance.alertText;
+            slots = SlotsParent.GetComponentsInChildren<Slot>();
+            slotsBg = SlotsParent.GetComponentsInChildren<SlotBackGround>();
+            SlotsParent.SetActive(true);
+        }
+
         settingInventory = true;
     }
 
     void CurrentSlot(int index)
     {
-        if (getKnife)
+        if (pv.IsMine)
         {
-            currentSlot = slots[knifeSlotNum];
-        }
-        else
-        {
-            currentSlot = slots[index];
-        }
-
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (!getKnife)
+            if (getKnife)
             {
-                if (i == index)
-                {
-                    slotsBg[i].SetSlot();
-                }
-                else
-                {
-                    slotsBg[i].DisSlot();
-                }
+                currentSlot = slots[knifeSlotNum];
             }
             else
             {
-                if (i == knifeSlotNum)
+                currentSlot = slots[index];
+            }
+
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (!getKnife)
                 {
-                    slotsBg[i].SetSlot();
+                    if (i == index)
+                    {
+                        slotsBg[i].SetSlot();
+                    }
+                    else
+                    {
+                        slotsBg[i].DisSlot();
+                    }
                 }
                 else
                 {
-                    slotsBg[i].DisSlot();
+                    if (i == knifeSlotNum)
+                    {
+                        slotsBg[i].SetSlot();
+                    }
+                    else
+                    {
+                        slotsBg[i].DisSlot();
+                    }
                 }
             }
         }
     }
     public bool AddItem(ItemData item)
     {
-        for(int i = 0; i < slots.Length; i++)
+        if (pv.IsMine)
         {
-            if (slots[i].item == null)
+            for (int i = 0; i < slots.Length; i++)
             {
-                slots[i].AddItem(item);
-                if(item.itemName == "Į")
+                if (slots[i].item == null)
                 {
-                    getKnife = true;
-                    knifeSlotNum = i;
+                    slots[i].AddItem(item);
+                    if (item.itemName == "Į")
+                    {
+                        getKnife = true;
+                        knifeSlotNum = i;
+                    }
+                    return true;
                 }
-                return true;
             }
+            return false;
         }
         return false;
     }

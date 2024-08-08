@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class ThirdPersonMovement : PlayerController
 {
-    [SerializeField]
-    public float moveSpeed = 2.0f;
-
-    [SerializeField]
-    protected float SprintSpeed = 5.335f;
-
     private float realSpeed;
 
     Animator animator;
@@ -33,6 +27,8 @@ public class ThirdPersonMovement : PlayerController
     // Start is called before the first frame update
     void Start()
     {
+        if (!pv.IsMine)
+            return;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
@@ -47,6 +43,9 @@ public class ThirdPersonMovement : PlayerController
     // Update is called once per frame
     void Update()
     {
+        if (!pv.IsMine)
+            return;
+
         Cursor.visible = false;
 
         Look();
@@ -55,6 +54,8 @@ public class ThirdPersonMovement : PlayerController
 
     private void LateUpdate()
     {
+        if (!pv.IsMine)
+            return;
         avatarup.localRotation = Quaternion.Euler(-verticalRotation, 0, 0);
 
         Camera.main.transform.localPosition = new Vector3(0, 0, -cameraDistance);
@@ -89,34 +90,64 @@ public class ThirdPersonMovement : PlayerController
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && z > 0)
+        if(Input.GetKey(KeyCode.LeftShift) && z > 0)
         {
             currentSpeed = 4;
             realSpeed = SprintSpeed;
         }
-        else if (z > 0)
+        else if (Input.GetKey(KeyCode.LeftControl))
         {
-            currentSpeed = 2;
-            realSpeed = moveSpeed;
-        }
-        else if (x > 0)
-        {
-            currentSpeed = 10;
-            realSpeed = moveSpeed;
-        }
-        else if (x < 0)
-        {
-            currentSpeed = 8;
-            realSpeed = moveSpeed;
-        }
-        else if (z < 0)
-        {
-            currentSpeed = -2;
-            realSpeed = moveSpeed;
+            if (z > 0)
+            {
+                currentSpeed = 16;
+                realSpeed = moveSpeed - 1f;
+            }
+            else if (z < 0)
+            {
+                currentSpeed = 14;
+                realSpeed = moveSpeed - 1f;
+            }
+            else if (x > 0)
+            {
+                currentSpeed = 18;
+                realSpeed = moveSpeed - 1f;
+            }
+            else if (x < 0)
+            {
+                currentSpeed = 20;
+                realSpeed = moveSpeed - 1f;
+            }
+            else
+            {
+                currentSpeed = 12;
+            }
         }
         else
         {
-            currentSpeed = 0;
+            if (z > 0)
+            {
+                currentSpeed = 2;
+                realSpeed = moveSpeed;
+            }
+            else if (z < 0)
+            {
+                currentSpeed = -2;
+                realSpeed = moveSpeed;
+            }
+            else if (x > 0)
+            {
+                currentSpeed = 8;
+                realSpeed = moveSpeed;
+            }
+            else if (x < 0)
+            {
+                currentSpeed = 10;
+                realSpeed = moveSpeed;
+            }
+            else
+            {
+                currentSpeed = 0;
+            }
         }
 
         animator.SetFloat("Speed", currentSpeed);
@@ -145,7 +176,7 @@ public class ThirdPersonMovement : PlayerController
         Debug.DrawRay(cameraTransform.transform.position, dir.normalized * dir.magnitude, Color.red);
         if (Physics.Raycast(cameraTransform.transform.position, dir.normalized, out hit, dir.magnitude, LayerMask.GetMask("Default", "Object")))
         {
-            Debug.Log(hit.transform.position);
+            /*Debug.Log(hit.transform.position);*/
             Vector3 dist = hit.point - cameraTransform.transform.position;
             cameraDistance = (dist.magnitude * 0.9f);
         }

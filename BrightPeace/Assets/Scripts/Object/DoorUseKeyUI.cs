@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Photon.Pun;
 /// <summary>
 /// 잠긴 문에 2초간 열리는 UI 생성
 /// </summary>
-public class DoorUseKeyUI : MonoBehaviourPun
+public class DoorUseKeyUI : MonoBehaviour
 {
     [SerializeField] Image image;     
-    [SerializeField] TMP_Text text;      
+    [SerializeField] TMP_Text text;
     void Start()
     {
         this.gameObject.transform.position = transform.parent.position;
+        this.gameObject.transform.position += new Vector3(-0.5f, 0f, 0.3f);
+        this.gameObject.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 180f, transform.rotation.eulerAngles.z);
+
         image = transform.GetComponentInChildren<Image>();
         text = transform.GetComponentInChildren<TMP_Text>();
 
@@ -23,7 +25,9 @@ public class DoorUseKeyUI : MonoBehaviourPun
 
     public void DoorUI(float time)
     {
-        photonView.RPC("RPC_ShowUI", RpcTarget.All, time);
+        image.gameObject.SetActive(true);
+        text.gameObject.SetActive(true);
+        StartCoroutine(DoorUseKey(time));
     }
     IEnumerator DoorUseKey(float time)
     {            
@@ -49,11 +53,4 @@ public class DoorUseKeyUI : MonoBehaviourPun
         }
     }
 
-    [PunRPC]
-    void RPC_ShowUI(float time)
-    {
-        image.gameObject.SetActive(true);
-        text.gameObject.SetActive(true);
-        StartCoroutine(DoorUseKey(time));
-    }
 }

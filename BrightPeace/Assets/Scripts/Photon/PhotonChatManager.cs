@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class PhotonChatManager : MonoBehaviour, IChatClientListener
 {
+    [SerializeField]
     private ChatClient chatClient;
     private string userName;
     private string currentChannelName;
@@ -37,18 +38,21 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
         }
     }
 
-    public void ChatConnect()
+    public void ChatConnect(string nick)
     {
         Application.runInBackground = true;
 
-        userName = PhotonNetwork.LocalPlayer.NickName;
+        userName = nick;
 
         chatClient = new ChatClient(this);
-        chatClient.ChatRegion = "kr";
+        chatClient.ChatRegion = "asia";
         chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat,
                         PhotonNetwork.AppVersion, new AuthenticationValues(userName));
+    }
 
-        StartCoroutine(CheckChatCoroution());
+    public void Disconnect()
+    {
+        chatClient.Disconnect();
     }
 
     public void JoinRoomChannel(string _room)
@@ -73,15 +77,12 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
         chatClient.SendPrivateMessage(nick, message);
     }
 
-    IEnumerator CheckChatCoroution()
+    void Update()
     {
-        if (chatClient != null)
+        if (PhotonNetwork.IsConnected && chatClient != null)
+        {
             chatClient.Service();
-        else
-            yield break;
-
-        yield return new WaitForSeconds(0.1f);
-        StartCoroutine(CheckChatCoroution());
+        }
     }
 
     /// <summary>
@@ -150,7 +151,14 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
 
                 if (isUse)
                 {
-                    RoomManager.Instance.setPrivateUserChat(sender, message.ToString());
+                    if(PhotonNetwork.LocalPlayer.NickName.Equals(user[0]))
+                    {
+                        RoomManager.Instance.setPrivateUserChat(sender, message.ToString(), true);
+                    }
+                    else
+                    {
+                        RoomManager.Instance.setPrivateUserChat(sender, message.ToString(), false);
+                    }
                 }
                 else
                 {

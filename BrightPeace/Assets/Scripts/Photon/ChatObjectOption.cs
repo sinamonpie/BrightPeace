@@ -5,17 +5,18 @@ public class ChatObjectOption : MonoBehaviour
 {
     // Start is called before the first frame update
     public TMP_Text nickNameObject;
+    public TMP_Text privateMine;
     public TMP_Text messageObject;
-    public GameObject masterObject;
 
     public void SetMessage(string nickName, string message, bool isMaster)
     {
+        if(isMaster)
+        {
+            nickNameObject.color = Color.red;
+            messageObject.color = Color.red;
+        }
         nickNameObject.text = nickName;
         messageObject.text = message;
-        if (isMaster)
-        {
-            masterObject.SetActive(true);
-        }
     }
 
     public void SetMessage(string nickName, string message)
@@ -27,5 +28,19 @@ public class ChatObjectOption : MonoBehaviour
     public void SetNotice(string message)
     {
         messageObject.text = message;
+    }
+
+    public void SetPrivateMessage(string nickName, string message, bool isMine)
+    {
+        nickNameObject.text = nickName;
+        messageObject.text = message;
+        if(isMine)
+        {
+            privateMine.text = ">>";
+        }
+        else
+        {
+            privateMine.text = "<<";
+        }
     }
 }

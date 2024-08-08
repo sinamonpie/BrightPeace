@@ -5,13 +5,10 @@ using Photon.Pun;
 
 public class PlayerState : MonoBehaviourPun
 {
-    FirstPersonMovement firstPersonMovement;
     [Header("실험체 체력")]
     [SerializeField] int maxHp = 2;
     [SerializeField] int currentHp;
     public UserRole role = UserRole.Patient;
-
-    public bool isClient;
     public bool isInCabinet;
 
     public AudioClip hallucinAudioClips;
@@ -19,13 +16,11 @@ public class PlayerState : MonoBehaviourPun
 
     void Start()
     {
-        firstPersonMovement = GetComponent<FirstPersonMovement>();
         InitHp();
     }
 
     void Update()
     {
-
     }
 
     public void SetMetal()
@@ -62,19 +57,11 @@ public class PlayerState : MonoBehaviourPun
         AudioSource.PlayClipAtPoint(hallucinAudioClips, transform.TransformPoint(obj.transform.position), hallucinStepAudioVolume);
     }
 
-
-
-    void ClientSetting()
-    {
-        GameObject gameObject = GameObject.Find("SlotsParent");
-        gameObject.SetActive(false);
-    }
     void InitHp()
     {
-        if (isClient)
+        if (photonView.Owner.IsMasterClient)
         {
             currentHp = 1;
-            ClientSetting();
         }
         else
         {
@@ -109,6 +96,20 @@ public class PlayerState : MonoBehaviourPun
         }
     }
 
+    public void SetRoleMental()
+    {
+        if (photonView.IsMine)
+        {
+            photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    void RPC_SetRoleMental()
+    {
+        role = UserRole.Mental;
+    }
+
     [PunRPC]
     public void RPC_Stun(float duration)
     {
@@ -127,17 +128,17 @@ public class PlayerState : MonoBehaviourPun
 
     IEnumerator ClientPlayerStun(float duration)
     {
+        PlayerController playerController = GetComponent<PlayerController>();
+        float moveSpeed = playerController.moveSpeed;
+        float sprintSpeed = playerController.SprintSpeed;
 
-        if (firstPersonMovement != null)
-        {
-            firstPersonMovement.enabled = false;
-        }
+        playerController.moveSpeed = 0f;
+        playerController.SprintSpeed = 0f;
 
         yield return new WaitForSeconds(duration);
 
-        if (firstPersonMovement != null)
-        {
-            firstPersonMovement.enabled = true;
-        }
+        playerController.moveSpeed = moveSpeed;
+        playerController.SprintSpeed = sprintSpeed;
+
     }
 }

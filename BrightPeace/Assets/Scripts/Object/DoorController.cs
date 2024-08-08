@@ -13,7 +13,11 @@ public class DoorController : MonoBehaviour
     public bool unlockDoor = true;
 
     private float doorAngle = 90;
+
     private PhotonView pv;
+
+    [SerializeField]
+    private GameObject lockDoorUI;
 
     private void Awake()
     {
@@ -25,6 +29,15 @@ public class DoorController : MonoBehaviour
         if(pivot == null)
         {
             pivot = this.gameObject;
+        }
+
+        if (!unlockDoor)
+        {
+            if (pv != null)
+            {
+                lockDoorUI = InGameManager.Instance.doorLockUI;
+                Instantiate(lockDoorUI, this.transform);
+            }
         }
     }
 

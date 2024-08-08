@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class FirstPersonMovement : PlayerController
 {
-    [SerializeField]
-    public float moveSpeed = 2.0f;
-   
-    [SerializeField]
-    protected float SprintSpeed = 5.335f;
-
     private float realSpeed;
 
     Animator animator;
@@ -29,6 +23,8 @@ public class FirstPersonMovement : PlayerController
     // Start is called before the first frame update
     void Start()
     {
+        if (!pv.IsMine)
+            return;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
@@ -41,14 +37,20 @@ public class FirstPersonMovement : PlayerController
     // Update is called once per frame
     void Update()
     {
+        if (!pv.IsMine)
+            return;
+
         Cursor.visible = false;
 
         Look();
         MoveTo();
+        Attack();
     }
 
     private void LateUpdate()
     {
+        if (!pv.IsMine)
+            return;
         avatarup.localRotation = Quaternion.Euler(-verticalRotation, 0, 0);
     }
 
@@ -63,6 +65,14 @@ public class FirstPersonMovement : PlayerController
         verticalRotation = Mathf.Clamp(verticalRotation, -25f, 30f);
 
         cameraTransform.transform.localEulerAngles = Vector3.left * verticalRotation;
+    }
+
+    public void Attack()
+    {
+        if (Input.GetMouseButtonDown(0))
+        { 
+            animator.SetTrigger("isSwing");
+        }
     }
 
     public void MoveTo()
@@ -91,12 +101,12 @@ public class FirstPersonMovement : PlayerController
         }
         else if (x > 0)
         {
-            currentSpeed = 10;
+            currentSpeed = 8;
             realSpeed = moveSpeed;
         }
         else if (x < 0)
         {
-            currentSpeed = 8;
+            currentSpeed = 10;
             realSpeed = moveSpeed;
         }
         else if (z < 0)

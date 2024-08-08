@@ -68,12 +68,15 @@ public class InGameManager : MonoBehaviourPunCallbacks
     [SerializeField]
     [Header("잠긴 방 스폰 위치")]
     private Transform[] itemLockSpawn;
+
+    public GameObject doorLockUI;
     public GameObject SlotParents;
     public TMP_Text alertText;
     public PhotonView pv;
 
     private Player masterClient;
 
+    [SerializeField]
     private bool isMental = false;
     // Start is called before the first frame update
     void Awake()
@@ -116,13 +119,13 @@ public class InGameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             GameObject player = PhotonNetwork.Instantiate(securityObject.name, securitySpawn.position, Quaternion.identity, 0);
-            player.GetComponent<PlayerState>().isClient = true;
 
             Transform caemraTrans = player.GetComponent<PlayerController>().GetCameraTransform();
 
             Camera.main.transform.position = caemraTrans.position;
             Camera.main.transform.rotation = caemraTrans.rotation;
             Camera.main.transform.SetParent(caemraTrans);
+            Camera.main.transform.GetComponent<ActionController>().SetPlayer();
         }
         else
         {
@@ -130,22 +133,22 @@ public class InGameManager : MonoBehaviourPunCallbacks
             Vector3 spawnPosition = patientSpawn[idx].position;
 
             GameObject player = PhotonNetwork.Instantiate(patientObject.name, spawnPosition, Quaternion.identity, 0);
-            player.GetComponent<PlayerState>().isClient = false;
 
             if (!isMental)
             {
                 GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
-                if (_players.Length == PhotonNetwork.CurrentRoom.PlayerCount)
+                if (_players.Length > PhotonNetwork.CurrentRoom.PlayerCount-1)
                 {
-                    player.GetComponent<PlayerState>().role = UserRole.Mental;
+                    pv.RPC("SetPlayerMental", RpcTarget.All);
+                    player.GetComponent<PlayerState>().SetRoleMental();
                 }
                 else
                 {
                     int rand = UnityEngine.Random.Range(0, 2);
                     if(rand == 0)
                     {
-                        player.GetComponent<PlayerState>().role = UserRole.Mental;
                         pv.RPC("SetPlayerMental", RpcTarget.All);
+                        player.GetComponent<PlayerState>().SetRoleMental();
                     }
                 }
             }
