@@ -109,6 +109,7 @@ public class PlayerState : MonoBehaviourPun
     [PunRPC]
     void RPC_SetRoleMental()
     {
+        Debug.Log("Mental : " + photonView.Owner.NickName);
         role = UserRole.Mental;
     }
 

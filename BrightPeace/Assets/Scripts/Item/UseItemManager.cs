@@ -190,6 +190,8 @@ public class UseItemManager : MonoBehaviourPun
                                 if (hit.transform.CompareTag("Player"))
                                 {
                                     PlayerState playerState = hit.transform.GetComponent<PlayerState>();
+                                    
+                                    // 다른 플레이어가 맞았으면 
                                     if (playerState != null)
                                     {
                                         pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
@@ -206,7 +208,27 @@ public class UseItemManager : MonoBehaviourPun
 
                     }
 
+                }
 
+                else if (inventory.currentSlot.item.itemType == ItemType.Escape)
+                {
+                    // 다른 아이템 줍기 중복 제한
+                    if (!actionController.isRayItem)
+                    {
+                        if (inventory.currentSlot.item.itemName == "퓨즈")
+                        {
+
+                        }
+                        else if (inventory.currentSlot.item.itemName == "락픽")
+                        {
+
+                        }
+                        else if (inventory.currentSlot.item.itemName == "밸브")
+                        {
+
+                        }
+
+                    }
 
                 }
                 // 아이템 버리기
@@ -281,7 +303,7 @@ public class UseItemManager : MonoBehaviourPun
     [PunRPC]
     void ShowKnife(bool show)
     {
-        if(pv.IsMine)
+        if (pv.IsMine)
         {
             knife.gameObject.SetActive(show);
         }

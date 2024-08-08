@@ -123,6 +123,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
             Camera.main.transform.position = caemraTrans.position;
             Camera.main.transform.rotation = caemraTrans.rotation;
             Camera.main.transform.SetParent(caemraTrans);
+            Camera.main.cullingMask = ~(1 << LayerMask.NameToLayer("Security"));
             Camera.main.transform.GetComponent<ActionController>().SetPlayer();
         }
         else
@@ -263,21 +264,21 @@ public class InGameManager : MonoBehaviourPunCallbacks
                 GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
                 if(_players.Length == PhotonNetwork.CurrentRoom.PlayerCount)
                 {
-                    List<GameObject> _playerList = new List<GameObject>(_players);
-                    GameObject security = null;
-                    foreach(GameObject _player in _playerList)
-                    {
-                        if(_player.GetComponent<PlayerState>().role == UserRole.Security)
-                        {
-                            security = _player;
-                        }
-                    }
-                    _playerList.Remove(security);
+                    //List<GameObject> _playerList = new List<GameObject>(_players);
+                    //GameObject security = null;
+                    //foreach(GameObject _player in _playerList)
+                    //{
+                    //    if(_player.GetComponent<PlayerState>().role == UserRole.Security)
+                    //    {
+                    //        security = _player;
+                    //    }
+                    //}
+                    //_playerList.Remove(security);
 
-                    _players = _playerList.ToArray();
+                    //_players = _playerList.ToArray();
 
-                    int randIdx = UnityEngine.Random.Range(0, _players.Length);
-                    _players[randIdx].GetComponent<PlayerState>().SetRoleMental();
+                    //int randIdx = UnityEngine.Random.Range(0, _players.Length);
+                    //_players[randIdx].GetComponent<PlayerState>().SetRoleMental();
 
                     pv.RPC("GameStart", RpcTarget.All);
                 }
