@@ -5,7 +5,6 @@ using Photon.Pun;
 
 public class PlayerState : MonoBehaviourPun
 {
-    FirstPersonMovement firstPersonMovement;
     [Header("실험체 체력")]
     [SerializeField] int maxHp = 2;
     [SerializeField] int currentHp;
@@ -17,7 +16,6 @@ public class PlayerState : MonoBehaviourPun
 
     void Start()
     {
-        firstPersonMovement = GetComponent<FirstPersonMovement>();
         InitHp();
     }
 

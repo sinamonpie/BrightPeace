@@ -72,15 +72,15 @@ public class Inventory : MonoBehaviour
 
     public void SettingInventory()
     {
-        SlotsParent = InGameManager.Instance.SlotParents;
-        alertText = InGameManager.Instance.alertText;
-
-        if(SlotsParent != null)
+        if (!pv.Owner.IsMasterClient)
         {
+            SlotsParent = InGameManager.Instance.SlotParents;
+            alertText = InGameManager.Instance.alertText;
             slots = SlotsParent.GetComponentsInChildren<Slot>();
             slotsBg = SlotsParent.GetComponentsInChildren<SlotBackGround>();
             SlotsParent.SetActive(true);
         }
+
         settingInventory = true;
     }
 
