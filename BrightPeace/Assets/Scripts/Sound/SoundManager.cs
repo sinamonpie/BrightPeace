@@ -130,7 +130,7 @@ DayRoomAmbienceSF.wav
 두 개 이상의 탈출구가 열리면 3 분간 나오는 배경음
 EmergencyEscapeBGM.wav
 
-탈출구가 열리면 탈출구 주변에서 나오는 소리
+탈출구가 열리면 탈출구 주변에서 나오는 소리, 10M 이내에서 들림
 EscapeRouteOpenedAmbienceSF.wav
 
 탈출 성공 시 나오는 배경음
@@ -148,7 +148,7 @@ FootstepSF02.wav
 FootstepSF03.wav
 FootstepSF04.wav
 
-게임씬 전체에 깔린 배경음
+게임씬 전체에 깔린 배경음, 앰비언스들과 중첩될 수 있습니다.
 GameMainBGM.wav
 
 아이템 상자 열고 닫는 소리
@@ -166,7 +166,7 @@ KnifeHitSF02.wav
 KnifeMissSF01.wav
 KnifeMissSF02.wav
 
-로비 배경음
+게임 시작부터 로비 내내 배경음
 LobbyMainBGM.wav
 
 미치광이 플레이어에게 랜덤하게 들리는 소리
