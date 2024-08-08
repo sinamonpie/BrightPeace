@@ -1616,7 +1616,6 @@ MonoBehaviour:
   actionText: {fileID: 452241615}
   alertText: {fileID: 1987663475}
   inventory: {fileID: 0}
-  playerState: {fileID: 0}
   player: {fileID: 1096555839}
   isRayItem: 0
   canDoor: 0
@@ -1790,7 +1789,6 @@ MonoBehaviour:
   maxHp: 2
   currentHp: 0
   role: 2
-  isClient: 0
   isInCabinet: 0
   hallucinAudioClips: {fileID: 0}
   hallucinStepAudioVolume: 0.8
@@ -1907,7 +1905,6 @@ MonoBehaviour:
   actionText: {fileID: 0}
   alertText: {fileID: 0}
   inventory: {fileID: 0}
-  playerState: {fileID: 0}
   player: {fileID: 1096555839}
   isRayItem: 0
   canDoor: 0
@@ -1977,9 +1974,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d086a0162b7659b478d6d63d1bcf838b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 1826579703}
   moveSpeed: 2
   SprintSpeed: 5.335
+  cameraTransform: {fileID: 1826579703}
+  pv: {fileID: 0}
   rotaionSpeed: 3
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
@@ -1995,9 +1993,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420ee3daa571e3348b6aa909c683b4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 1826579703}
   moveSpeed: 2
   SprintSpeed: 5.335
+  cameraTransform: {fileID: 1826579703}
+  pv: {fileID: 0}
   rotaionSpeed: 3
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
@@ -2179,7 +2178,6 @@ MonoBehaviour:
   actionText: {fileID: 452241615}
   alertText: {fileID: 1987663475}
   inventory: {fileID: 0}
-  playerState: {fileID: 0}
   player: {fileID: 1096555839}
   isRayItem: 0
   canDoor: 0
@@ -2354,9 +2352,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420ee3daa571e3348b6aa909c683b4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 964357291}
   moveSpeed: 2
   SprintSpeed: 5.335
+  cameraTransform: {fileID: 964357291}
+  pv: {fileID: 0}
   rotaionSpeed: 3
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
@@ -2404,9 +2403,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d086a0162b7659b478d6d63d1bcf838b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 964357291}
   moveSpeed: 2
   SprintSpeed: 5.335
+  cameraTransform: {fileID: 964357291}
+  pv: {fileID: 0}
   rotaionSpeed: 3
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
