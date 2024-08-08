@@ -79,7 +79,6 @@ public class UseItemManager : MonoBehaviourPun
     }
     void Update()
     {
-        /*if (!pv.IsMine) { return; }*/
         if (pv.IsMine)
         {
             if (inventory.currentSlot != null && inventory.currentSlot.item != null)
@@ -130,7 +129,6 @@ public class UseItemManager : MonoBehaviourPun
                                 {
                                     // 단, 캐비넷에 들어가있는 플레이어는 감지되지 않는다.
                                     mainCamera.GetComponentInChildren<GrayScreen>().ApplyGrayScreen(wallHackTime);
-                                    /*GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GrayScreen>().ApplyGrayScreen(wallHackTime);*/
                                     StartCoroutine(WallHack(wallHackTime));
                                     break;
                                 }
