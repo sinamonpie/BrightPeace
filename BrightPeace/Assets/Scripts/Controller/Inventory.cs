@@ -25,14 +25,6 @@ public class Inventory : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
         settingInventory = false;
-
-        if(pv != null && SlotsParent == null && alertText == null)
-        {
-            if(pv.IsMine)
-            {
-                SettingInventory();
-            }
-        }
     }
 
     void Update()
@@ -75,11 +67,19 @@ public class Inventory : MonoBehaviour
 
     public void SettingInventory()
     {
-        SlotsParent = InGameManager.Instance.SlotParents;
-        alertText = InGameManager.Instance.alertText;
-        slots = SlotsParent.GetComponentsInChildren<Slot>();
-        slotsBg = SlotsParent.GetComponentsInChildren<SlotBackGround>();
-        settingInventory = true;
+        if(pv != null && pv.IsMine)
+        {
+            SlotsParent = InGameManager.Instance.SlotParents;
+            alertText = InGameManager.Instance.alertText;
+
+            if(SlotsParent != null)
+            {
+                slots = SlotsParent.GetComponentsInChildren<Slot>();
+                slotsBg = SlotsParent.GetComponentsInChildren<SlotBackGround>();
+                SlotsParent.SetActive(true);
+            }
+            settingInventory = true;
+        }
     }
 
     void CurrentSlot(int index)
