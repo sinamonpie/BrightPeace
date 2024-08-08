@@ -76,8 +76,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     private Player masterClient;
 
-    [SerializeField]
-    private bool isMental = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -133,26 +131,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
             Vector3 spawnPosition = patientSpawn[idx].position;
 
             GameObject player = PhotonNetwork.Instantiate(patientObject.name, spawnPosition, Quaternion.identity, 0);
-
-            if (!isMental)
-            {
-                GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
-                if (_players.Length > PhotonNetwork.CurrentRoom.PlayerCount-1)
-                {
-                    pv.RPC("SetPlayerMental", RpcTarget.All);
-                    player.GetComponent<PlayerState>().SetRoleMental();
-                }
-                else
-                {
-                    int rand = UnityEngine.Random.Range(0, 2);
-                    if(rand == 0)
-                    {
-                        pv.RPC("SetPlayerMental", RpcTarget.All);
-                        player.GetComponent<PlayerState>().SetRoleMental();
-                    }
-                }
-            }
-
             Transform caemraTrans = player.GetComponent<PlayerController>().GetCameraTransform();
 
             Camera.main.transform.position = caemraTrans.position;
@@ -285,8 +263,24 @@ public class InGameManager : MonoBehaviourPunCallbacks
                 GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
                 if(_players.Length == PhotonNetwork.CurrentRoom.PlayerCount)
                 {
+                    List<GameObject> _playerList = new List<GameObject>(_players);
+                    GameObject security = null;
+                    foreach(GameObject _player in _playerList)
+                    {
+                        if(_player.GetComponent<PlayerState>().role == UserRole.Security)
+                        {
+                            security = _player;
+                        }
+                    }
+                    _playerList.Remove(security);
+
+                    _players = _playerList.ToArray();
+
+                    int randIdx = UnityEngine.Random.Range(0, _players.Length);
+                    _players[randIdx].GetComponent<PlayerState>().SetRoleMental();
+
                     pv.RPC("GameStart", RpcTarget.All);
-                }    
+                }
             }
         }
     }
@@ -314,12 +308,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
     void RemoveSpawnPlayerList(int idx)
     {
         patientSpawn = RemoveTransformAt(patientSpawn, idx);
-    }
-
-    [PunRPC]
-    void SetPlayerMental()
-    {
-        isMental = true;
     }
 
     IEnumerator UnEnableLodding()

@@ -9,6 +9,7 @@ public class PlayerState : MonoBehaviourPun
     [Header("실험체 체력")]
     [SerializeField] int maxHp = 2;
     [SerializeField] int currentHp;
+
     public UserRole role = UserRole.Patient;
     public bool isInCabinet;
 
@@ -102,6 +103,7 @@ public class PlayerState : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
+            Debug.Log("Mental Setting : " + PhotonNetwork.LocalPlayer.NickName);
             photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
         }
     }
