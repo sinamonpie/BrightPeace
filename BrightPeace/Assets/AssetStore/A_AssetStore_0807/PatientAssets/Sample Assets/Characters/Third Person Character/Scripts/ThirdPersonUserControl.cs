@@ -35,9 +35,9 @@ public class ThirdPersonUserControl : MonoBehaviour {
 		bool crouch = Input.GetKey(KeyCode.C);
 
 		#if CROSS_PLATFORM_INPUT
-		bool jump = CrossPlatformInput.GetButton("Jump");
-		float h = CrossPlatformInput.GetAxis("Horizontal");
-		float v = CrossPlatformInput.GetAxis("Vertical");
+		//bool jump = CrossPlatformInput.GetButton("Jump");
+		//float h = CrossPlatformInput.GetAxis("Horizontal");
+		//float v = CrossPlatformInput.GetAxis("Vertical");
 		#else
 		bool jump = Input.GetButton("Jump");
 		float h = Input.GetAxis("Horizontal");
@@ -49,10 +49,10 @@ public class ThirdPersonUserControl : MonoBehaviour {
 		{
 			// calculate camera relative direction to move:
 			camForward = Vector3.Scale (cam.forward, new Vector3(1,0,1)).normalized;
-			move = v * camForward + h * cam.right;	
+			//move = v * camForward + h * cam.right;	
 		} else {
 			// we use world-relative directions in the case of no main camera
-			move = v * Vector3.forward + h * Vector3.right;
+			//move = v * Vector3.forward + h * Vector3.right;
 		}
 
 		if (move.magnitude > 1) move.Normalize();
@@ -76,7 +76,7 @@ public class ThirdPersonUserControl : MonoBehaviour {
 	                  : transform.position + transform.forward * 100;
 
 	    // pass all parameters to the character control script
-		character.Move( move, crouch, jump, lookPos );
+		//character.Move( move, crouch, jump, lookPos );
 	}
 
 
