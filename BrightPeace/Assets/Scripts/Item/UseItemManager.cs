@@ -58,171 +58,176 @@ public class UseItemManager : MonoBehaviourPun
     Ray ray;
 
     void Start()
-    {
-        pv = GetComponent<PhotonView>();   
-        inventory = FindObjectOfType<Inventory>();
-        alertText = inventory.alertText;
-        actionController = FindObjectOfType<ActionController>();
-        knife = GameObject.FindWithTag("ItemHasPoint").gameObject;
-        knife.gameObject.SetActive(false);
-        mainCamera = GetComponentInChildren<Camera>();
-        sensorCamera = mainCamera.gameObject.GetComponentInChildren<SensorCamera>();
+    { 
+        pv = GetComponent<PhotonView>(); 
+        
+        if(pv.IsMine)
+        {
+            inventory = FindObjectOfType<Inventory>();
+            alertText = inventory.alertText;
+            actionController = FindObjectOfType<ActionController>();
+            knife = GameObject.FindWithTag("ItemHasPoint").gameObject;
+            knife.gameObject.SetActive(false);
+            mainCamera = GetComponentInChildren<Camera>();
+            sensorCamera = mainCamera.gameObject.GetComponentInChildren<SensorCamera>();
 
-        animator = transform.GetComponent<Animator>();
-        rate = swingDelay;
-        medikitUseRate = 0;
+            animator = transform.GetComponent<Animator>();
+            rate = swingDelay;
+            medikitUseRate = 0;
+        }
+
     }
     void Update()
     {
-
-        if (inventory.currentSlot != null && inventory.currentSlot.item != null)
+        if (pv.IsMine)
         {
-            if (inventory.currentSlot.item.itemType == ItemType.Used)
+            if (inventory.currentSlot != null && inventory.currentSlot.item != null)
             {
-                // 아이템 줍기랑 사용 중복 제한
-                if (Input.GetKeyDown(KeyCode.E) && !actionController.isRayItem)
+                if (inventory.currentSlot.item.itemType == ItemType.Used)
                 {
-                    switch (inventory.currentSlot.item.itemName)
+                    // 아이템 줍기랑 사용 중복 제한
+                    if (Input.GetKeyDown(KeyCode.E) && !actionController.isRayItem)
                     {
-                        case "열쇠":
+                        switch (inventory.currentSlot.item.itemName)
                         {
-                            // 잠기지 않은 문은 아이템 사용 불가
-                            if (!actionController.canDoor)
-                            goto exit;
-
-                            if (!mainCamera.gameObject.GetComponent<ActionController>().IsLockDoor())
-                            {
-                                if (mainCamera.gameObject.GetComponent<ActionController>().CanDoorAction(unlockTime))
+                            case "열쇠":
                                 {
-                                    StartCoroutine(UseKey(unlockTime));
+                                    // 잠기지 않은 문은 아이템 사용 불가
+                                    if (!actionController.canDoor)
+                                        goto exit;
+
+                                    if (!mainCamera.gameObject.GetComponent<ActionController>().IsLockDoor())
+                                    {
+                                        if (mainCamera.gameObject.GetComponent<ActionController>().CanDoorAction(unlockTime))
+                                        {
+                                            StartCoroutine(UseKey(unlockTime));
+                                        }
+                                    }
+                                    break;
+                                }
+
+                            case "구급약":
+                                {
+                                    if (medikitRate < medikitUseRate)
+                                    {
+                                        goto exit;
+                                    }
+
+                                    int currnetPlayerHp = transform.GetComponent<PlayerState>().GetPlayerHp();
+
+                                    if (currnetPlayerHp > 1)
+                                    {
+                                        goto exit;
+                                    }
+
+                                    transform.GetComponent<PlayerState>().Heal(1);
+                                    medikitUseRate++;
+                                    break;
+                                }
+
+                            case "투시경":
+                                {
+                                    // 단, 캐비넷에 들어가있는 플레이어는 감지되지 않는다.
+                                    mainCamera.GetComponentInChildren<GrayScreen>().ApplyGrayScreen(wallHackTime);
+                                    StartCoroutine(WallHack(wallHackTime));
+                                    break;
+                                }
+
+                            case "드라이버":
+                                {
+                                    if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().CanDoorAction())
+                                    {
+                                        GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().Driver_Trigger();
+                                        GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().EndigTriggerCheck();
+                                        Debug.Log("Use Dirver");
+
+                                    }
+                                    break;
+                                }
+
+                            case "쇠지렛대":
+                                {
+                                    if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().CanDoorAction())
+                                    {
+                                        GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().CrowBar_Trigger();
+                                        GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().EndigTriggerCheck();
+                                        Debug.Log("Use CrowBar");
+                                    }
+                                    break;
+                                }
+                        }
+                        StartCoroutine(TextAlert());
+                        alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
+                        inventory.currentSlot.ClearSlot();
+                    }
+                exit:;
+
+                }
+
+                else if (inventory.currentSlot.item.itemType == ItemType.Equip)
+                {
+                    if (inventory.currentSlot.item.itemName == "칼")
+                    {
+                        ray = new Ray(transform.position + Vector3.up * 1f, transform.forward);
+                        Debug.DrawRay(ray.origin, ray.direction * swingRange, Color.red);
+
+                        if (!knife.activeSelf)
+                        {
+                            pv.RPC("ShowKnife", RpcTarget.All, true);
+                        }
+
+                        rate += Time.deltaTime;
+                        isSwingReady = rate > swingDelay;
+
+                        if (Input.GetButtonDown("Fire1") && isSwingReady)
+                        {
+                            // 나이프 휘두르는 사운드 추가
+                            animator.SetTrigger("isSwing");
+                            rate = 0;
+
+                            if (Physics.Raycast(ray, out hit, swingRange))
+                            {
+                                if (hit.transform.CompareTag("Player"))
+                                {
+                                    PlayerState playerState = hit.transform.GetComponent<PlayerState>();
+                                    if (playerState != null)
+                                    {
+                                        pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
+
+                                        inventory.currentSlot.ClearSlot();
+                                        inventory.getKnife = false;
+                                        pv.RPC("ShowKnife", RpcTarget.All, false);
+                                    }
+
                                 }
                             }
-                            break;
                         }
 
-                        case "구급약":
-                        {
-                            if (medikitRate < medikitUseRate)
-                            { 
-                                goto exit;
-                            }
 
-                            int currnetPlayerHp = transform.GetComponent<PlayerState>().GetPlayerHp();
-
-                            if (currnetPlayerHp > 1)
-                            {
-                                goto exit;
-                            }
-
-                            transform.GetComponent<PlayerState>().Heal(1);
-                            medikitUseRate++;
-                            break;
-                        }
-
-                        case "투시경":
-                        {
-                            // 단, 캐비넷에 들어가있는 플레이어는 감지되지 않는다.
-                            mainCamera.GetComponentInChildren<GrayScreen>().ApplyGrayScreen(wallHackTime);
-                            /*GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GrayScreen>().ApplyGrayScreen(wallHackTime);*/
-                            StartCoroutine(WallHack(wallHackTime));
-                            break;
-                        }
-
-                        case "드라이버":
-                        {
-                            if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().CanDoorAction())
-                            {
-                                GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().Driver_Trigger();
-                                GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().EndigTriggerCheck();
-                                Debug.Log("Use Dirver");
-                                
-                            }
-                            break;
-                        }
-
-                        case "쇠지렛대":
-                        {
-                            if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ActionController>().CanDoorAction())
-                            {
-                                GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().CrowBar_Trigger();
-                                GameObject.FindGameObjectWithTag("Ending").GetComponent<EscapeEnding>().EndigTriggerCheck();
-                                Debug.Log("Use CrowBar");
-                            }
-                            break;
-                        }
                     }
+
+
+
+                }
+                // 아이템 버리기
+                if (Input.GetKeyUp(KeyCode.G))
+                {
+                    Vector3 PlayerPos = transform.position;
+                    Vector3 PlayerFwd = transform.forward;
+                    string itemName = inventory.currentSlot.item.itemPrefab.name;
+
                     StartCoroutine(TextAlert());
-                    alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
+                    alertText.text = inventory.currentSlot.item.itemName + " 을(를) 떨어뜨렸습니다.";
+
+                    if (inventory.currentSlot.item.itemName == "칼")
+                        inventory.getKnife = false;
+
+                    pv.RPC("RPC_DropItem", RpcTarget.MasterClient, PlayerPos + PlayerFwd, Quaternion.identity, itemName);
+
                     inventory.currentSlot.ClearSlot();
                 }
-            exit:;
-               
-            }
-
-            else if (inventory.currentSlot.item.itemType == ItemType.Equip)
-            {
-                if (inventory.currentSlot.item.itemName == "칼")
-                {
-                    ray = new Ray(transform.position + Vector3.up * 1f, transform.forward);
-                    Debug.DrawRay(ray.origin, ray.direction * swingRange, Color.red);
-
-                    if (!knife.activeSelf)
-                    {
-                        pv.RPC("ShowKnife", RpcTarget.All, true);
-                    }
-
-                    rate += Time.deltaTime;
-                    isSwingReady = rate > swingDelay;
-
-                    if (Input.GetButtonDown("Fire1") && isSwingReady)
-                    {
-                        // 나이프 휘두르는 사운드 추가
-                        animator.SetTrigger("isSwing");
-                        rate = 0;
-
-                        if (Physics.Raycast(ray, out hit, swingRange))
-                        {
-                            if (hit.transform.CompareTag("Player"))
-                            {
-                                PlayerState playerState = hit.transform.GetComponent<PlayerState>();
-                                if (playerState != null)
-                                {
-                                    pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID, playerState.isClient);
-
-                                    inventory.currentSlot.ClearSlot();
-                                    inventory.getKnife = false;
-                                    pv.RPC("ShowKnife", RpcTarget.All, false);
-                                }
-
-                            }
-                        }
-                    }
-
-
-                }
-
-
-
-            }
-            // 아이템 버리기
-            if (Input.GetKeyUp(KeyCode.G)) 
-            {
-                Vector3 PlayerPos = transform.position;
-                Vector3 PlayerFwd = transform.forward;
-                string itemName = inventory.currentSlot.item.itemPrefab.name;
-
-                StartCoroutine(TextAlert());
-                alertText.text = inventory.currentSlot.item.itemName + " 을(를) 떨어뜨렸습니다.";
-
-                if(inventory.currentSlot.item.itemName == "칼")
-                inventory.getKnife = false;
-
-                pv.RPC("RPC_DropItem", RpcTarget.MasterClient, PlayerPos + PlayerFwd, Quaternion.identity, itemName);
-
-                inventory.currentSlot.ClearSlot();
             }
         }
-
     }
 
     public Inventory GetInventory()
@@ -283,15 +288,15 @@ public class UseItemManager : MonoBehaviourPun
     }
 
     [PunRPC]
-    void AttackPlayer(int targetViewID, bool isClient)
+    void AttackPlayer(int targetViewID)
     {
         PhotonView targetView = PhotonView.Find(targetViewID);
         if(targetView != null)
         {
             // 조건 추가 경비원일때는 스턴 2초
-            if (isClient)
+            if (targetView.Owner.IsMasterClient)
             {
-                targetView.RPC("RPC_Stun", RpcTarget.All, stunTime);
+                targetView.RPC("RPC_Stun", RpcTarget.MasterClient, stunTime);
             }
             else
             {

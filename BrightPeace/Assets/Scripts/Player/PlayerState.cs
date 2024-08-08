@@ -10,8 +10,6 @@ public class PlayerState : MonoBehaviourPun
     [SerializeField] int maxHp = 2;
     [SerializeField] int currentHp;
     public UserRole role = UserRole.Patient;
-
-    public bool isClient;
     public bool isInCabinet;
 
     public AudioClip hallucinAudioClips;
@@ -25,7 +23,6 @@ public class PlayerState : MonoBehaviourPun
 
     void Update()
     {
-
     }
 
     public void SetMetal()
@@ -62,17 +59,9 @@ public class PlayerState : MonoBehaviourPun
         AudioSource.PlayClipAtPoint(hallucinAudioClips, transform.TransformPoint(obj.transform.position), hallucinStepAudioVolume);
     }
 
-
-
-    void UISetting(bool isMaster)
-    {
-        GameObject gameObject = GameObject.Find("SlotsParent");
-        gameObject.SetActive(!isMaster);
-
-    }
     void InitHp()
     {
-        if (isClient)
+        if (photonView.Owner.IsMasterClient)
         {
             currentHp = 1;
         }
@@ -80,7 +69,6 @@ public class PlayerState : MonoBehaviourPun
         {
             currentHp = maxHp;
         }
-        UISetting(isClient);
     }
 
     public int GetPlayerHp()
@@ -142,17 +130,17 @@ public class PlayerState : MonoBehaviourPun
 
     IEnumerator ClientPlayerStun(float duration)
     {
+        PlayerController playerController = GetComponent<PlayerController>();
+        float moveSpeed = playerController.moveSpeed;
+        float sprintSpeed = playerController.SprintSpeed;
 
-        if (firstPersonMovement != null)
-        {
-            firstPersonMovement.enabled = false;
-        }
+        playerController.moveSpeed = 0f;
+        playerController.SprintSpeed = 0f;
 
         yield return new WaitForSeconds(duration);
 
-        if (firstPersonMovement != null)
-        {
-            firstPersonMovement.enabled = true;
-        }
+        playerController.moveSpeed = moveSpeed;
+        playerController.SprintSpeed = sprintSpeed;
+
     }
 }

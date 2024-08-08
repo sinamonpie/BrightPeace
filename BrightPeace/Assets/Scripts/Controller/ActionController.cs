@@ -16,17 +16,18 @@ public class ActionController : MonoBehaviourPun
     private Ray ray;
     private bool isInvenFull;
     private GameObject currentLockDoor;
+
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private TMP_Text actionText;
     [SerializeField] private TMP_Text alertText;
 
     [SerializeField] Inventory inventory;
-    [SerializeField] PlayerState playerState;
     [SerializeField] GameObject player;
 
     public bool isRayItem;
     public bool canDoor = false;
     private bool isSetting = false;
+
     void Update()
     {
         if (isSetting)
@@ -43,7 +44,7 @@ public class ActionController : MonoBehaviourPun
         if (Physics.Raycast(ray, out hitInfo, range, layerMask))
         {
 
-            if (hitInfo.transform.tag == "Item")
+            if (hitInfo.transform.tag == "Item" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
                 ItemInfoAppear();
                 isRayItem = true;
@@ -55,13 +56,13 @@ public class ActionController : MonoBehaviourPun
                 DoorInfoAppear();
             }
 
-            if(hitInfo.transform.tag == "Ending")
+            if(hitInfo.transform.tag == "Ending" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
                 canDoor = true;
                 EndigInfoAppear();
             }
 
-            if (hitInfo.transform.tag == "Cabinet")
+            if (hitInfo.transform.tag == "Cabinet" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
                 canDoor = true;
                 HideCabinetInfoAppear();
@@ -265,12 +266,12 @@ public class ActionController : MonoBehaviourPun
     public void SetPlayer()
     {
         player = transform.root.gameObject;
+        inventory = null;
 
-        if (!player.GetComponent<PlayerState>().isClient)
+        if (!PhotonNetwork.IsMasterClient && photonView.IsMine)
         {
             inventory = player.GetComponent<Inventory>();
         }
-
         isSetting = true;
     }
 }
