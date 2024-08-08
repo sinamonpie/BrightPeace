@@ -90,7 +90,17 @@ public class SoundManager : MonoBehaviour
     }
 }
 
+
+
 /*
+
+Ambience는 무한 반복되는 특정 방이나 사물 주변 배경음입니다
+
+SF는 단일 효과음입니다
+
+BGM은 배경음악입니다 한 번에 하나씩만 재생됩니다
+
+
 각 층의 방들의 배경음
 1FRoomAmbienceSF.wav
 2FRoomAmbienceSF.wav
