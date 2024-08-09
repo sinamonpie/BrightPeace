@@ -3467,6 +3467,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1115ec01e34f2ff41909238fc3a4a9b2, type: 3}
+--- !u!1 &654421770 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1777062046614266664, guid: 1115ec01e34f2ff41909238fc3a4a9b2, type: 3}
+  m_PrefabInstance: {fileID: 654421769}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &722473237
 GameObject:
   m_ObjectHideFlags: 0
@@ -9119,7 +9124,7 @@ MonoBehaviour:
   time: 120
   currentTime: 0
   valveSpeed: 300
-  B1Door: {fileID: 0}
+  B1Door: {fileID: 654421770}
   valve: {fileID: 0}
   isvalve: 0
 --- !u!114 &1927026708

@@ -37,6 +37,7 @@ public class EscapeEnding : MonoBehaviour
 
     private bool endingTrigger = false;
 
+    // 활성화되면 열림
     public void EndingOK()
     {
         endingTrigger = true;

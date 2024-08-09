@@ -68,7 +68,9 @@ public class ValveTank : MonoBehaviourPun
         StartCoroutine(RotateValve(time));
         GetComponentInChildren<DoorUseKeyUI>().DoorUI(time);
         yield return new WaitForSeconds(time);
+
         // 지하실 문 열리기
+        B1Door.GetComponent<EscapeEnding>().EndingOK();
     }
 
     IEnumerator RotateValve(float duration)
