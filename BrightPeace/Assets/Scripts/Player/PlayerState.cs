@@ -99,11 +99,8 @@ public class PlayerState : MonoBehaviourPun
 
     public void SetRoleMental()
     {
-        if (photonView.IsMine)
-        {
-            Debug.Log("Mental Setting : " + PhotonNetwork.LocalPlayer.NickName);
-            photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
-        }
+        Debug.Log("Mental Setting : " + PhotonNetwork.LocalPlayer.NickName);
+        photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
     }
 
     [PunRPC]
