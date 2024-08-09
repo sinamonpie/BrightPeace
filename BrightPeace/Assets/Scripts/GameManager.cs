@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
         PhotonNetwork.LoadLevel(sceneName[2]);
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonChatManager.Instance.JoinRoomChannel(PhotonNetwork.CurrentRoom.Name);
+        playKill = 0;
         SoundManager.instance.PlayBGM("·ë");
     }
 

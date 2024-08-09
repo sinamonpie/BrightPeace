@@ -86,16 +86,16 @@ public class PlayerState : MonoBehaviourPun
     {
         currentHp += heal;
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, int fromViewID)
     {
         if (photonView.IsMine)
         {
-            photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+            photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage, fromViewID);
         }
     }
 
     [PunRPC]
-    void RPC_TakeDamage(int damage)
+    void RPC_TakeDamage(int damage, int fromViewID)
     {
         currentHp -= damage;
         if (currentHp <= 0)
@@ -103,6 +103,8 @@ public class PlayerState : MonoBehaviourPun
             isDead = true;
             if(role == UserRole.Patient)
             {
+                PhotonView targetView = PhotonView.Find(fromViewID);
+                targetView.RPC("RPC_GetKill", RpcTarget.All);
                 InGameManager.Instance.DeadPatientPlayer();
             }
             else if(role == UserRole.Mental)
@@ -111,6 +113,13 @@ public class PlayerState : MonoBehaviourPun
             }
             InGameManager.Instance.GameEnding(0);
         }
+    }
+
+    [PunRPC]
+    void RPC_GetKill()
+    {
+        if (photonView.IsMine)
+            GameManager.Instance.playKill++;
     }
 
     public void SetRoleMental()
