@@ -90,88 +90,67 @@ public class ThirdPersonMovement : PlayerController
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if(Input.GetKey(KeyCode.LeftShift) && z > 0)
         {
-            animator.SetBool("IsSit", !animator.GetBool("IsSit"));
-            Debug.Log("SitSitSit");
+            currentSpeed = 4;
+            realSpeed = SprintSpeed;
         }
-
-
-        if (animator.GetBool("IsSit"))
+        else if (Input.GetKey(KeyCode.LeftControl))
         {
             if (z > 0)
             {
-                currentSpeed = 1;
+                currentSpeed = 16;
                 realSpeed = moveSpeed - 1f;
-                animator.SetFloat("SitSpeed", currentSpeed);
             }
             else if (z < 0)
             {
-                currentSpeed = 2;
+                currentSpeed = 14;
                 realSpeed = moveSpeed - 1f;
-                animator.SetFloat("SitSpeed", currentSpeed);
             }
             else if (x > 0)
             {
-                currentSpeed = 4;
+                currentSpeed = 18;
                 realSpeed = moveSpeed - 1f;
-                animator.SetFloat("SitSpeed", currentSpeed);
             }
             else if (x < 0)
             {
-                currentSpeed = 3;
+                currentSpeed = 20;
                 realSpeed = moveSpeed - 1f;
-                animator.SetFloat("SitSpeed", currentSpeed);
             }
             else
             {
-                currentSpeed = 0;
-                animator.SetFloat("SitSpeed", currentSpeed);
+                currentSpeed = 12;
             }
         }
         else
         {
-            if (Input.GetKey(KeyCode.LeftShift) && z > 0)
+            if (z > 0)
             {
-                currentSpeed = 4;
-                animator.SetFloat("Speed", currentSpeed);
-                realSpeed = SprintSpeed;
+                currentSpeed = 2;
+                realSpeed = moveSpeed;
+            }
+            else if (z < 0)
+            {
+                currentSpeed = -2;
+                realSpeed = moveSpeed;
+            }
+            else if (x > 0)
+            {
+                currentSpeed = 8;
+                realSpeed = moveSpeed;
+            }
+            else if (x < 0)
+            {
+                currentSpeed = 10;
+                realSpeed = moveSpeed;
             }
             else
             {
-                if (z > 0)
-                {
-                    currentSpeed = 2;
-                    animator.SetFloat("Speed", currentSpeed);
-                    realSpeed = moveSpeed;
-                }
-                else if (z < 0)
-                {
-                    currentSpeed = -2;
-                    animator.SetFloat("Speed", currentSpeed);
-                    realSpeed = moveSpeed;
-                }
-                else if (x > 0)
-                {
-                    currentSpeed = 8;
-                    animator.SetFloat("Speed", currentSpeed);
-                    realSpeed = moveSpeed;
-                }
-                else if (x < 0)
-                {
-                    currentSpeed = 10;
-                    animator.SetFloat("Speed", currentSpeed);
-                    realSpeed = moveSpeed;
-                }
-                else
-                {
-                    currentSpeed = 0;
-                    animator.SetFloat("Speed", currentSpeed);
-                }
+                currentSpeed = 0;
             }
         }
 
-        
+        animator.SetFloat("Speed", currentSpeed);
         animator.SetFloat("MotionSpeed", 1);
 
         characterController.Move(moveDirection * realSpeed * Time.deltaTime); ;
@@ -199,7 +178,7 @@ public class ThirdPersonMovement : PlayerController
         {
             /*Debug.Log(hit.transform.position);*/
             Vector3 dist = hit.point - cameraTransform.transform.position;
-            cameraDistance = (dist.magnitude * 1f);
+            cameraDistance = (dist.magnitude * 0.9f);
         }
         else
         {
