@@ -6,8 +6,11 @@ using UnityEngine;
 /// </summary>
 public class ValveTank : MonoBehaviour
 {
-    [Header("지하실 문 열리는 시간")]
+    [Header("지하실 문 열리는 시간(초)")]
     public float time = 120f;
+    [Header("밸브 돌아가는 속도")]
+    public float valveSpeed = 100f;
+
     [SerializeField] GameObject B1Door;
     [SerializeField] GameObject valve;
     [SerializeField] bool isvalve;
@@ -47,8 +50,20 @@ public class ValveTank : MonoBehaviour
 
     IEnumerator OpenTheWaitGate(float time)
     {
-        Debug.Log("잘 됨 수구");
+        // 밸브 돌아감
+        RotateValve(time);
         yield return new WaitForSeconds(time);
         // 지하실 문 열리기
+    }
+
+    IEnumerator RotateValve(float duration)
+    {
+        float time = 0f;
+        while (time < duration)
+        {
+            transform.Rotate(Vector3.up, valveSpeed * Time.deltaTime);
+            time += Time.deltaTime;
+            yield return null;
+        }
     }
 }
