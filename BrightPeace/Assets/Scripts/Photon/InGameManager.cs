@@ -5,27 +5,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
+[System.Serializable]
+public class PrefabsItem
+{
+    public GameObject obj;
+    public int minCount;
+    public int maxCount;
+}
+
 public class InGameManager : MonoBehaviourPunCallbacks
 {
     public static InGameManager Instance { get; private set; }
 
-    private bool isStart = false;
     public GameObject loadding;
 
     [Header("스폰할 열쇠 갯수")]
-    public CountRange KeyCount;
+    public PrefabsItem KeyItem;
+    [Header("스폰할 퓨즈박스 갯수")]
+    public PrefabsItem FuzeBoxItem;
     [Header("스폰할 총 갯수")]
-    public CountRange GunCount;
+    public PrefabsItem GunItem;
     [Header("스폰할 아이템 갯수")]
-    public CountRange ItemCount;
+    public PrefabsItem[] Items;
 
 
     [Header("스폰된 열쇠 갯수")]
     [SerializeField]
     private int spawnedKeyCount;
-    [Header("스폰된 총 갯수")]
+    [Header("스폰된 퓨즈박스 갯수")]
     [SerializeField]
-    private int spawnedGunCount;
+    private int spawnedFuzeBoxCount;
     [Header("스폰된 아이템 갯수")]
     [SerializeField]
     private int spawnedItemCount;
@@ -46,12 +56,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
     public GameObject securityObject;
     [Header("환자 프리팹")]
     public GameObject patientObject;
-    [Header("열쇠 프리팹")]
-    public GameObject keyObject;
-    [Header("총 프리팹")]
-    public GameObject gunObject;
-    [Header("나머지 아이템 프리팹")]
-    public GameObject[] itemObjects;
 
     [Space(20)]
 
@@ -60,8 +64,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
     private Transform[] patientSpawn;
 
     [SerializeField]
-    [Header("총 스폰 위치")]
-    private Transform[] itemGunSpawn;
+    [Header("퓨즈박스 스폰 위치")]
+    private Transform[] itemFuzeBoxSpawn;
     [SerializeField]
     [Header("안 잠긴 방 스폰 위치")]
     private Transform[] itemUnLockSpawn;
@@ -79,21 +83,29 @@ public class InGameManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject[] _players;
 
+    [SerializeField]
+    private int patientCount;
+    
+    [SerializeField]
+    private bool isDeadMental;
+
+
     // Start is called before the first frame update
     void Awake()
     {
-        if(patientSpawn.Length == 0)
+        isDeadMental = true;
+        if (patientSpawn.Length == 0)
             patientSpawn = GetChild(patientTransform);
 
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
-            itemGunSpawn = GetChild(itemTransform[0]);
+            itemFuzeBoxSpawn = GetChild(itemTransform[0]);
             itemUnLockSpawn = GetChild(itemTransform[1]);
             itemLockSpawn = GetChild(itemTransform[2]);
         }
 
         pv = GetComponent<PhotonView>();
-        
+
         if (Instance == null)
         {
             Instance = this;
@@ -148,23 +160,44 @@ public class InGameManager : MonoBehaviourPunCallbacks
             pv.RPC("RemoveSpawnPlayerList", RpcTarget.AllBuffered, idx);
         }
     }
-    
+
+    private void SpawnGun()
+    {
+        if(itemUnLockSpawn != null)
+        {
+            int idx = UnityEngine.Random.Range(0, itemUnLockSpawn.Length);
+            Vector3 spawnPosition = itemUnLockSpawn[idx].position;
+
+            PhotonNetwork.Instantiate(GunItem.obj.name, spawnPosition, Quaternion.identity);
+
+            itemUnLockSpawn = RemoveTransformAt(itemUnLockSpawn, idx);
+        }
+        else if(itemLockSpawn != null)
+        {
+            int idx = UnityEngine.Random.Range(0, itemLockSpawn.Length);
+            Vector3 spawnPosition = itemLockSpawn[idx].position;
+            PhotonNetwork.Instantiate(GunItem.obj.name, spawnPosition, Quaternion.identity);
+
+            itemLockSpawn = RemoveTransformAt(itemLockSpawn, idx);
+        }
+    }
+
     private void SpawnItem()
     {
-        spawnedKeyCount = UnityEngine.Random.Range(KeyCount.minCount, KeyCount.maxCount);
-        spawnedGunCount = UnityEngine.Random.Range(GunCount.minCount, GunCount.maxCount);
-        spawnedItemCount = UnityEngine.Random.Range(ItemCount.minCount, ItemCount.maxCount);
+        spawnedKeyCount = UnityEngine.Random.Range(KeyItem.minCount, KeyItem.maxCount);
+        spawnedFuzeBoxCount = UnityEngine.Random.Range(FuzeBoxItem.minCount, FuzeBoxItem.maxCount);
 
-        //총 스폰
-        for (int i = 0; i < spawnedGunCount; i++)
+        //퓨즈박스 스폰
+        for (int i = 0; i < spawnedFuzeBoxCount; i++)
         {
-            int idx = UnityEngine.Random.Range(0, itemGunSpawn.Length);
-            Vector3 spawnPosition = itemGunSpawn[idx].position;
+            int idx = UnityEngine.Random.Range(0, itemFuzeBoxSpawn.Length);
+            Vector3 spawnPosition = itemFuzeBoxSpawn[idx].position;
+            Quaternion spawnRotation = itemFuzeBoxSpawn[idx].rotation;
 
-            PhotonNetwork.Instantiate(gunObject.name, spawnPosition, Quaternion.identity);
+            PhotonNetwork.Instantiate(FuzeBoxItem.obj.name, spawnPosition, spawnRotation);
 
-            itemGunSpawn = RemoveTransformAt(itemGunSpawn, idx);
-            if (itemGunSpawn == null)
+            itemFuzeBoxSpawn = RemoveTransformAt(itemFuzeBoxSpawn, idx);
+            if (itemFuzeBoxSpawn == null)
                 break;
         }
 
@@ -174,7 +207,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
             int idx = UnityEngine.Random.Range(0, itemUnLockSpawn.Length);
             Vector3 spawnPosition = itemUnLockSpawn[idx].position;
 
-            PhotonNetwork.Instantiate(keyObject.name, spawnPosition, Quaternion.identity);
+            PhotonNetwork.Instantiate(KeyItem.obj.name, spawnPosition, Quaternion.identity);
 
             itemUnLockSpawn = RemoveTransformAt(itemUnLockSpawn, idx);
             if (itemUnLockSpawn == null)
@@ -185,40 +218,43 @@ public class InGameManager : MonoBehaviourPunCallbacks
         bool itemUnLock = false;
         bool itemLock = false;
 
-        for (int i = 0; i < spawnedItemCount; i++)
+        spawnedItemCount = 0;
+        for (int i = 0; i < Items.Length; i++)
         {
-            int spawnIdx = UnityEngine.Random.Range(0, 2);
-            if (itemUnLock)
-                spawnIdx = 1;
-            else if (itemLock)
-                spawnIdx = 0;
-            else if (itemUnLock && itemLock)
-                break;
-
-            if(spawnIdx == 0)
+            int spwanItemCnt = UnityEngine.Random.Range(Items[i].minCount, Items[i].maxCount);
+            PrefabsItem itemObject = Items[i];
+            for (int j = 0; j < spwanItemCnt; j++)
             {
-                GameObject itemObject = itemObjects[UnityEngine.Random.Range(0, itemObjects.Length)];
+                int spawnIdx = UnityEngine.Random.Range(0, 2);
+                if (itemUnLock)
+                    spawnIdx = 1;
+                else if (itemLock)
+                    spawnIdx = 0;
+                else if (itemUnLock && itemLock)
+                    break;
 
-                int idx = UnityEngine.Random.Range(0, itemUnLockSpawn.Length);
-                Vector3 spawnPosition = itemUnLockSpawn[idx].position;
-                PhotonNetwork.Instantiate(itemObject.name, spawnPosition, Quaternion.identity);
+                if (spawnIdx == 0)
+                {
+                    int idx = UnityEngine.Random.Range(0, itemUnLockSpawn.Length);
+                    Vector3 spawnPosition = itemUnLockSpawn[idx].position;
+                    PhotonNetwork.Instantiate(itemObject.obj.name, spawnPosition, Quaternion.identity);
 
-                itemUnLockSpawn = RemoveTransformAt(itemUnLockSpawn, idx);
-                if (itemUnLockSpawn == null)
-                    itemUnLock = true;
+                    itemUnLockSpawn = RemoveTransformAt(itemUnLockSpawn, idx);
+                    if (itemUnLockSpawn == null)
+                        itemUnLock = true;
+                }
+                else
+                {
+                    int idx = UnityEngine.Random.Range(0, itemLockSpawn.Length);
+                    Vector3 spawnPosition = itemLockSpawn[idx].position;
+                    PhotonNetwork.Instantiate(itemObject.obj.name, spawnPosition, Quaternion.identity);
+
+                    itemLockSpawn = RemoveTransformAt(itemLockSpawn, idx);
+                    if (itemLockSpawn == null)
+                        itemLock = true;
+                }
             }
-            else
-            {
-                GameObject itemObject = itemObjects[UnityEngine.Random.Range(0, itemObjects.Length)];
-
-                int idx = UnityEngine.Random.Range(0, itemLockSpawn.Length);
-                Vector3 spawnPosition = itemLockSpawn[idx].position;
-                PhotonNetwork.Instantiate(itemObject.name, spawnPosition, Quaternion.identity);
-
-                itemLockSpawn = RemoveTransformAt(itemLockSpawn, idx);
-                if (itemLockSpawn == null)
-                    itemLock = true;
-            }
+            spawnedItemCount += spwanItemCnt;
         }
     }
 
@@ -226,7 +262,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     {
         Transform[] _transforms = _transform.GetComponentsInChildren<Transform>();
 
-        if(_transforms.Length <= 1)
+        if (_transforms.Length <= 1)
         {
             return null;
         }
@@ -242,7 +278,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     Transform[] RemoveTransformAt(Transform[] _transforms, int idx)
     {
-        if(_transforms.Length <= 1)
+        if (_transforms.Length <= 1)
         {
             return null;
         }
@@ -260,14 +296,14 @@ public class InGameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if(!isStart)
+        if (!GameManager.Instance.isGameStart)
         {
-            if(PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
-                _players = GameObject.FindGameObjectsWithTag("Player");
-                if(_players.Length == PhotonNetwork.CurrentRoom.PlayerCount)
+                if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
                 {
-                    if(PhotonNetwork.CurrentRoom.PlayerCount > 1)
+                    _players = GameObject.FindGameObjectsWithTag("Player");
+                    if (_players.Length == PhotonNetwork.CurrentRoom.PlayerCount)
                     {
                         List<GameObject> _playerList = new List<GameObject>(_players);
                         GameObject security = null;
@@ -284,9 +320,16 @@ public class InGameManager : MonoBehaviourPunCallbacks
                         int randIdx = UnityEngine.Random.Range(0, _players.Length);
                         _players[randIdx].GetComponent<PlayerState>().SetRoleMental();
 
-                        pv.RPC("GameStart", RpcTarget.All);
+                        isDeadMental = false;
+
+                        pv.RPC("GameStart", RpcTarget.All, _players.Length - 1);
                     }
                 }
+                else
+                {
+                    pv.RPC("GameStart", RpcTarget.All, 0);
+                }
+
             }
         }
     }
@@ -302,12 +345,63 @@ public class InGameManager : MonoBehaviourPunCallbacks
             }
         }
     }
-    
-    [PunRPC]
-    void GameStart()
+
+    public void GameEnding(int endIdx)
     {
-        isStart = true;
+        GameManager.Instance.SetEnding(endIdx);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            pv.RPC("MentalWin", RpcTarget.Others);
+        }
+        PhotonNetwork.LeaveRoom();
+    }
+
+    public void DeadMenetalPlayer()
+    {
+        pv.RPC("SetDeadMantal", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    void SetDeadMantal()
+    {
+        isDeadMental = true;
+    }
+
+
+    public void DeadPatientPlayer()
+    {
+        pv.RPC("SetPlayerCount", RpcTarget.Others, patientCount - 1);
+    }
+
+    [PunRPC]
+    void SetPlayerCount(int PlayerCnt)
+    {
+        patientCount = PlayerCnt;
+        if(patientCount == 0 && !isDeadMental && PhotonNetwork.IsMasterClient)
+        {
+            SpawnGun();
+        }
+        else
+        {
+            GameManager.Instance.SetEnding(2);
+            PhotonNetwork.LeaveRoom();
+        }
+    }
+
+    [PunRPC]
+    void GameStart(int PlayerCnt)
+    {
+        patientCount = PlayerCnt;
+
         StartCoroutine(UnEnableLodding());
+    }
+
+    [PunRPC]
+    void MentalWin()
+    {
+        GameManager.Instance.SetEnding(2);
+
+        PhotonNetwork.LeaveRoom();
     }
 
     [PunRPC]
@@ -320,13 +414,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(3.0f);
 
+        GameManager.Instance.isGameStart = true;
         loadding.SetActive(false);
     }
-}
-
-[Serializable]
-public class CountRange
-{
-    public int minCount;
-    public int maxCount;
 }

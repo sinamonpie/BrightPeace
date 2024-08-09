@@ -719,7 +719,7 @@ MonoBehaviour:
   pv: {fileID: 0}
   rotaionSpeed: 3
   FootstepAudioClips: []
-  FootstepAudioVolume: 0.5
+  FootstepAudioVolume: 0.2
   cameraMaxDistance: 3
 --- !u!114 &4683192970633353497
 MonoBehaviour:
@@ -830,8 +830,9 @@ MonoBehaviour:
   currentHp: 0
   role: 2
   isInCabinet: 0
-  hallucinAudioClips: {fileID: 0}
-  hallucinStepAudioVolume: 0.8
+  isDead: 0
+  hallucinAudioClips: {fileID: 8300000, guid: 81b56126330ae014492a020572d17494, type: 3}
+  hallucinStepAudioVolume: 0.712
 --- !u!114 &-4427182109022512229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1222,7 +1223,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

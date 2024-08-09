@@ -12,8 +12,11 @@ public class PlayerState : MonoBehaviourPun
     public UserRole role = UserRole.Patient;
     public bool isInCabinet;
 
+    [SerializeField]
+    private bool isDead;
+
     public AudioClip hallucinAudioClips;
-    [Range(0, 1)] public float hallucinStepAudioVolume = 0.8f;
+    [Range(0, 1)] public float hallucinStepAudioVolume = 0.4f;
 
     void Start()
     {
@@ -51,6 +54,7 @@ public class PlayerState : MonoBehaviourPun
             }
         }
 
+        SetVoice(foundPlayer);
     }
 
     void SetVoice(GameObject obj)
@@ -60,6 +64,7 @@ public class PlayerState : MonoBehaviourPun
 
     void InitHp()
     {
+        isDead = false;
         if (photonView.Owner.IsMasterClient)
         {
             currentHp = 1;
@@ -68,6 +73,8 @@ public class PlayerState : MonoBehaviourPun
         {
             currentHp = maxHp;
         }
+
+        GameManager.Instance.SetRole(role);
     }
 
     public int GetPlayerHp()
@@ -93,21 +100,33 @@ public class PlayerState : MonoBehaviourPun
         currentHp -= damage;
         if (currentHp <= 0)
         {
-            this.gameObject.SetActive(false);
+            isDead = true;
+            if(role == UserRole.Patient)
+            {
+                InGameManager.Instance.DeadPatientPlayer();
+            }
+            else if(role == UserRole.Mental)
+            {
+                InGameManager.Instance.DeadMenetalPlayer();
+            }
+            InGameManager.Instance.GameEnding(0);
         }
     }
 
     public void SetRoleMental()
     {
-        Debug.Log("Mental Setting : " + PhotonNetwork.LocalPlayer.NickName);
         photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
     }
 
     [PunRPC]
     void RPC_SetRoleMental()
     {
-        Debug.Log("Mental : " + photonView.Owner.NickName);
         role = UserRole.Mental;
+        if(photonView.IsMine)
+        {
+            GameManager.Instance.SetRole(role);
+            SetMetal();
+        }
     }
 
     [PunRPC]
