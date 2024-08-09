@@ -12,7 +12,7 @@ public class ActionController : MonoBehaviourPun
     [Header("상호작용 거리")]
     [SerializeField]
     private float range;
-    private RaycastHit hitInfo;
+    public RaycastHit hitInfo;
     private Ray ray;
     private bool isInvenFull;
     private GameObject currentLockDoor;
@@ -63,6 +63,12 @@ public class ActionController : MonoBehaviourPun
             }
 
             if (hitInfo.transform.tag == "Cabinet" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
+            {
+                canDoor = true;
+                HideCabinetInfoAppear();
+            }
+
+            if(hitInfo.transform.tag == "FuseBox" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
                 canDoor = true;
                 HideCabinetInfoAppear();

@@ -10,6 +10,8 @@ TagManager:
   - Ending
   - ItemHasPoint
   - RoomPlayer
+  - Cabinet
+  - FuseBox
   layers:
   - Default
   - TransparentFX
