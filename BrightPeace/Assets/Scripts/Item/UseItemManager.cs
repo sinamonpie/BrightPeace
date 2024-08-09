@@ -223,21 +223,40 @@ public class UseItemManager : MonoBehaviourPun
                                 // 퓨즈박스라고 뜨는 문구 @@@@@@
                                 if (Input.GetKeyDown(KeyCode.E))
                                 {
-                                    actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
-                                    if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
+                                    if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() < 3)
                                     {
-                                        actionController.hitInfo.transform.GetComponent<FuseBox>().UnlockLobbyDoor();
-                                        string text = "퓨즈 다 넣었으니 로비문 열림 ㅇㅇ";
-                                        StartCoroutine(TextAlert());
-                                        alertText.SetText(text);
+                                        actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
+                                        if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
+                                        {
+                                            actionController.hitInfo.transform.GetComponent<FuseBox>().ClearPuseBox();
+                                            if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() == 3)
+                                            {
+                                                actionController.hitInfo.transform.GetComponent<FuseBox>().UnlockLobbyDoor();
+                                                string text = "퓨즈박스 3개 다 넣었습니다.";
+                                                StartCoroutine(TextAlert());
+                                                alertText.SetText(text);
+                                            }
+                                            else
+                                            {
+                                                string text = "남은 퓨즈박스 개수 : " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck());
+                                                StartCoroutine(TextAlert());
+                                                alertText.SetText(text);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            string text = "남은 퓨즈 개수 = " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum());
+                                            StartCoroutine(TextAlert());
+                                            alertText.SetText(text);
+                                        }
+                                        inventory.currentSlot.ClearSlot();
                                     }
                                     else
                                     {
-                                        string text = "넣은 퓨즈 개수 = " +                                       actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum();
+                                        string text = "해당 퓨즈박스는 퓨즈를 다 채웠습니다.";
                                         StartCoroutine(TextAlert());
                                         alertText.SetText(text);
                                     }
-                                    inventory.currentSlot.ClearSlot();
                                 }
                             }
                         }

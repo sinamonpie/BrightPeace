@@ -97,8 +97,7 @@ public class ActionController : MonoBehaviourPun
 
             if (hitInfo.transform.tag == "FuseBox" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
-                canDoor = true;
-                HideCabinetInfoAppear();
+                PuseBoxInfoAppear();
             }
 
         }
@@ -324,4 +323,10 @@ public class ActionController : MonoBehaviourPun
 
         alertText.gameObject.SetActive(false);
     }
+
+    public void PuseBoxInfoAppear()
+    {
+        actionText.gameObject.SetActive(true);
+        actionText.text = "퓨즈 넣기 " + "<color=yellow>" + "E키" + "</color>";
     }
+}

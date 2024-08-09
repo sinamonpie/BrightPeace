@@ -45,6 +45,16 @@ public class FuseBox : MonoBehaviour
         lobbyDoor.GetComponent<EscapeEnding>().EndingOK();
     }
 
+    public int PuseBoxCheck()
+    {
+        return lobbyDoor.GetComponent<EscapeEnding>().PuseBoxEndingCheck();
+    }
+
+    public void ClearPuseBox()
+    {
+        lobbyDoor.GetComponent<EscapeEnding>().ClearPuseBox();
+    }
+
     void Start()
     {
         puseA.SetActive(false);
