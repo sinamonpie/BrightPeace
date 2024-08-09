@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour
     float wheelInput;
     int currentSlotNum;
     int knifeSlotNum;
-    public bool getKnife;
+    public bool getKnife = false;
     public bool settingInventory;
 
     //  ÇöÀç ½½·Ô
