@@ -9073,6 +9073,7 @@ MonoBehaviour:
   SlotParents: {fileID: 925498052653449332}
   alertText: {fileID: 4536756681013572624}
   pv: {fileID: 0}
+  _players: []
 --- !u!114 &2037795857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10222,7 +10223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6114726939135993203
 RectTransform:
   m_ObjectHideFlags: 0
