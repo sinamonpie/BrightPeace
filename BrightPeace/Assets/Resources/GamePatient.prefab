@@ -793,6 +793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   sensorCamera: {fileID: 0}
+  knife: {fileID: 7826601040416145155}
   swingRange: 1.5
   swingDelay: 2.5
   stunTime: 2
@@ -875,6 +876,12 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: isSwing
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsSit
+  - Type: 1
+    SynchronizeType: 0
+    Name: SitSpeed
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -2540,6 +2547,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3685321578577622590, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685321578577622590, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
       propertyPath: m_TagString
       value: ItemHasPoint
       objectReference: {fileID: 0}
@@ -2615,5 +2626,10 @@ PrefabInstance:
 --- !u!4 &7826601040416145154 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3685321578577622591, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
+  m_PrefabInstance: {fileID: 6897623876793502013}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7826601040416145155 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3685321578577622590, guid: 2de9dfb5c13464644b1930b58304a8fe, type: 3}
   m_PrefabInstance: {fileID: 6897623876793502013}
   m_PrefabAsset: {fileID: 0}

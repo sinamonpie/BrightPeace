@@ -8,8 +8,9 @@ public class ValveTank : MonoBehaviour
 {
     [Header("지하실 문 열리는 시간(초)")]
     public float time = 120f;
-    [Header("밸브 돌아가는 속도")]
-    public float valveSpeed = 100f;
+    [SerializeField]
+    private float currentTime = 0f;
+    public float valveSpeed = 300f;
 
     [SerializeField] GameObject B1Door;
     [SerializeField] GameObject valve;
@@ -51,19 +52,21 @@ public class ValveTank : MonoBehaviour
     IEnumerator OpenTheWaitGate(float time)
     {
         // 밸브 돌아감
-        RotateValve(time);
+        StartCoroutine(RotateValve(time));
         yield return new WaitForSeconds(time);
         // 지하실 문 열리기
     }
 
     IEnumerator RotateValve(float duration)
     {
-        float time = 0f;
-        while (time < duration)
+        currentTime = 0f;
+        while (currentTime < duration)
         {
-            transform.Rotate(Vector3.up, valveSpeed * Time.deltaTime);
-            time += Time.deltaTime;
+            valve.transform.Rotate(Vector3.up, valveSpeed * Time.deltaTime);
+            currentTime += Time.deltaTime;
             yield return null;
         }
+
+        yield break;
     }
 }
