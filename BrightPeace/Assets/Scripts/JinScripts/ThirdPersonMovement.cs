@@ -90,67 +90,88 @@ public class ThirdPersonMovement : PlayerController
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        if(Input.GetKey(KeyCode.LeftShift) && z > 0)
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            currentSpeed = 4;
-            realSpeed = SprintSpeed;
+            animator.SetBool("IsSit", !animator.GetBool("IsSit"));
+            Debug.Log("SitSitSit");
         }
-        else if (Input.GetKey(KeyCode.LeftControl))
+
+
+        if (animator.GetBool("IsSit"))
         {
             if (z > 0)
             {
-                currentSpeed = 16;
+                currentSpeed = 1;
                 realSpeed = moveSpeed - 1f;
+                animator.SetFloat("SitSpeed", currentSpeed);
             }
             else if (z < 0)
-            {
-                currentSpeed = 14;
-                realSpeed = moveSpeed - 1f;
-            }
-            else if (x > 0)
-            {
-                currentSpeed = 18;
-                realSpeed = moveSpeed - 1f;
-            }
-            else if (x < 0)
-            {
-                currentSpeed = 20;
-                realSpeed = moveSpeed - 1f;
-            }
-            else
-            {
-                currentSpeed = 12;
-            }
-        }
-        else
-        {
-            if (z > 0)
             {
                 currentSpeed = 2;
-                realSpeed = moveSpeed;
-            }
-            else if (z < 0)
-            {
-                currentSpeed = -2;
-                realSpeed = moveSpeed;
+                realSpeed = moveSpeed - 1f;
+                animator.SetFloat("SitSpeed", currentSpeed);
             }
             else if (x > 0)
             {
-                currentSpeed = 8;
-                realSpeed = moveSpeed;
+                currentSpeed = 4;
+                realSpeed = moveSpeed - 1f;
+                animator.SetFloat("SitSpeed", currentSpeed);
             }
             else if (x < 0)
             {
-                currentSpeed = 10;
-                realSpeed = moveSpeed;
+                currentSpeed = 3;
+                realSpeed = moveSpeed - 1f;
+                animator.SetFloat("SitSpeed", currentSpeed);
             }
             else
             {
                 currentSpeed = 0;
+                animator.SetFloat("SitSpeed", currentSpeed);
+            }
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.LeftShift) && z > 0)
+            {
+                currentSpeed = 4;
+                animator.SetFloat("Speed", currentSpeed);
+                realSpeed = SprintSpeed;
+            }
+            else
+            {
+                if (z > 0)
+                {
+                    currentSpeed = 2;
+                    animator.SetFloat("Speed", currentSpeed);
+                    realSpeed = moveSpeed;
+                }
+                else if (z < 0)
+                {
+                    currentSpeed = -2;
+                    animator.SetFloat("Speed", currentSpeed);
+                    realSpeed = moveSpeed;
+                }
+                else if (x > 0)
+                {
+                    currentSpeed = 8;
+                    animator.SetFloat("Speed", currentSpeed);
+                    realSpeed = moveSpeed;
+                }
+                else if (x < 0)
+                {
+                    currentSpeed = 10;
+                    animator.SetFloat("Speed", currentSpeed);
+                    realSpeed = moveSpeed;
+                }
+                else
+                {
+                    currentSpeed = 0;
+                    animator.SetFloat("Speed", currentSpeed);
+                }
             }
         }
 
-        animator.SetFloat("Speed", currentSpeed);
+        
         animator.SetFloat("MotionSpeed", 1);
 
         characterController.Move(moveDirection * realSpeed * Time.deltaTime); ;
@@ -178,7 +199,7 @@ public class ThirdPersonMovement : PlayerController
         {
             /*Debug.Log(hit.transform.position);*/
             Vector3 dist = hit.point - cameraTransform.transform.position;
-            cameraDistance = (dist.magnitude * 0.9f);
+            cameraDistance = (dist.magnitude * 1f);
         }
         else
         {

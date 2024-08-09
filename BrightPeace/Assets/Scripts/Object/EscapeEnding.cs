@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class EscapeEnding : MonoBehaviour
 {
+    // 여기서부터
+
     public bool crowBar_Trigger = false;
     public bool driver_Trigger = false;
     public bool TEST_Trigger = false;
-
-    private bool endingTrigger = false;
 
     public void EndigTriggerCheck()
     {
@@ -33,4 +33,12 @@ public class EscapeEnding : MonoBehaviour
         return endingTrigger;
     }
 
+    // 여기까지 필요없지만 다른데에서 참조해서 나중에 지우는게 나을듯
+
+    private bool endingTrigger = false;
+
+    public void EndingOK()
+    {
+        endingTrigger = true;
+    }
 }
