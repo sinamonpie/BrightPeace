@@ -11,6 +11,9 @@ TagManager:
   - ItemHasPoint
   - RoomPlayer
   - Tank
+  - FuseBox
+  - Cabinet
+  - EndingLobby
   layers:
   - Default
   - TransparentFX

@@ -289,6 +289,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &2814762433002935349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4836,9 +4837,9 @@ GameObject:
   - component: {fileID: 8592280953107396784}
   - component: {fileID: 8614136575265724128}
   - component: {fileID: 2364247756941409017}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: MainDoor
-  m_TagString: Ending
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -4945,6 +4946,7 @@ MonoBehaviour:
   crowBar_Trigger: 0
   driver_Trigger: 0
   TEST_Trigger: 0
+  clearPuseBox: 0
 --- !u!1 &8604409324610155446
 GameObject:
   m_ObjectHideFlags: 0
@@ -17506,6 +17508,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &4694728589999937868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20915,6 +20918,7 @@ MonoBehaviour:
   crowBar_Trigger: 0
   driver_Trigger: 0
   TEST_Trigger: 0
+  clearPuseBox: 0
 --- !u!1 &8604516355249169868
 GameObject:
   m_ObjectHideFlags: 0
@@ -23034,6 +23038,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &9182588552128646574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26152,6 +26157,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 0
+  lockDoorUI: {fileID: 0}
 --- !u!114 &6692972335385763823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31430,6 +31436,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &4007797396644730970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33290,6 +33297,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 0
+  lockDoorUI: {fileID: 0}
 --- !u!114 &1688522827520014930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38758,6 +38766,7 @@ Transform:
   - {fileID: 8610704553510823776}
   - {fileID: 8602015696730309218}
   - {fileID: 8610705932923688550}
+  - {fileID: 8131582396737529253}
   - {fileID: 8602122571498702358}
   - {fileID: 8610394472727340998}
   - {fileID: 8610438488843985322}
@@ -40767,6 +40776,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 6645122555011127885}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &4913472637485637086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41480,6 +41490,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &5487831828593989194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45198,6 +45209,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &7766667772764882196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47575,6 +47587,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &904404478865366330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48534,6 +48547,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &6704604756344854637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49141,6 +49155,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 8941322056886063428}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &543788253891441419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51591,6 +51606,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &4124960055112132550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53172,6 +53188,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &4972569889160296183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53318,6 +53335,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 0
+  lockDoorUI: {fileID: 0}
 --- !u!114 &1602777644634128585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53547,6 +53565,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &8525338878063262550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55743,6 +55762,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &6747508769883903915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67299,6 +67319,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &1511462165777119080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71300,6 +71321,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 3086527413601572066}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &2586091852886721653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78963,6 +78985,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &4488290486420216890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82153,6 +82176,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &3537314342684005522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90937,6 +90961,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 2149216223822604578}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &8547154797177509177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91483,6 +91508,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 3084293914957789380}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &1384148959504712624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95512,6 +95538,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &3823447774572402333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96330,6 +96357,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &4016024429227151679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97902,6 +97930,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &2772811652654489591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101668,6 +101697,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 6038919246270676138}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &4415360349971639060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103099,6 +103129,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &8117933704739192067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107514,6 +107545,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 0
+  lockDoorUI: {fileID: 0}
 --- !u!114 &309887038254801031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109833,6 +109865,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &8448059426934076412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112291,6 +112324,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 0
+  lockDoorUI: {fileID: 0}
 --- !u!114 &2858914186976088882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117064,6 +117098,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &1992908767784264467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131923,6 +131958,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &5586316207854921836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136529,6 +136565,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &2689959040003272541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137864,6 +137901,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &8099155562458588740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140184,6 +140222,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &8375258535159650463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140897,6 +140936,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &2511929843768119014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142753,6 +142793,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &5423028704083347423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143260,6 +143301,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &6652557961282421142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144939,6 +144981,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &768068021721440518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146602,6 +146645,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 0
+  lockDoorUI: {fileID: 0}
 --- !u!114 &4356986951700995444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151747,6 +151791,7 @@ MonoBehaviour:
   DoorRotation: 0
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &5680677602552041899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152295,6 +152340,7 @@ MonoBehaviour:
   crowBar_Trigger: 0
   driver_Trigger: 0
   TEST_Trigger: 0
+  clearPuseBox: 0
 --- !u!1 &8605363944483561802
 GameObject:
   m_ObjectHideFlags: 0
@@ -154273,6 +154319,7 @@ MonoBehaviour:
   DoorRotation: 1
   pivot: {fileID: 0}
   unlockDoor: 1
+  lockDoorUI: {fileID: 0}
 --- !u!114 &1428453073264935262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157386,6 +157433,128 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2136965965488691308, guid: ed7cda7ac99610d489cd4c74eedf017e, type: 3}
   m_PrefabInstance: {fileID: 1183050326836516332}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2089569892402727615
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8610610490163247910}
+    m_Modifications:
+    - target: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.297
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -13.674091
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201563450, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_Name
+      value: Gate Access Machine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201563450, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201563450, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_TagString
+      value: EndingLobby
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793069743201563450, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7793069743201563450, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 558191618531245751}
+    - targetCorrespondingSourceObject: {fileID: 7793069743201563450, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8387849328708736072}
+  m_SourcePrefab: {fileID: 100100000, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+--- !u!1 &8131582396737501573 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7793069743201563450, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+  m_PrefabInstance: {fileID: 2089569892402727615}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &558191618531245751
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8131582396737501573}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.024224857, y: 0.46085927, z: 0.40071037}
+  m_Center: {x: 0, y: -0.0000005662441, z: 0.0000011399391}
+--- !u!114 &8387849328708736072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8131582396737501573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9bd76e97d9fc4b49a682e8425a7e02a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crowBar_Trigger: 0
+  driver_Trigger: 0
+  TEST_Trigger: 0
+  clearPuseBox: 0
+--- !u!4 &8131582396737529253 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+  m_PrefabInstance: {fileID: 2089569892402727615}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3152070787200620209
 PrefabInstance:

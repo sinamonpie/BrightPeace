@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 /// <summary>
 /// 밸브를 가져와 끼우고 돌리면 지하실 문이 2분 후 열림
 /// </summary>
-public class ValveTank : MonoBehaviour
+public class ValveTank : MonoBehaviourPun
 {
     [Header("지하실 문 열리는 시간(초)")]
     public float time = 120f;
@@ -25,9 +26,7 @@ public class ValveTank : MonoBehaviour
 
     public void SetValve()
     {
-        valve.SetActive(true);
-        StopCoroutine(SetValveDelay());
-        StartCoroutine(SetValveDelay());
+        photonView.RPC("RPC_SetValve", RpcTarget.All);
     }
     
     public bool GetValve()
@@ -39,7 +38,7 @@ public class ValveTank : MonoBehaviour
     {
         if(isvalve)
         {
-            StartCoroutine(OpenTheWaitGate(time));
+            photonView.RPC("RPC_OpenTheGate", RpcTarget.All);
         }
     }
 
@@ -49,12 +48,29 @@ public class ValveTank : MonoBehaviour
         isvalve = true;
     }
 
+    [PunRPC]
+    void RPC_SetValve()
+    {
+        valve.SetActive(true);
+        StopCoroutine(SetValveDelay());
+        StartCoroutine(SetValveDelay());
+    }
+    
+
+    [PunRPC]
+    void RPC_OpenTheGate()
+    {
+        StartCoroutine(OpenTheWaitGate(time));
+    }
     IEnumerator OpenTheWaitGate(float time)
     {
         // 밸브 돌아감
         StartCoroutine(RotateValve(time));
+        GetComponentInChildren<DoorUseKeyUI>().DoorUI(time);
         yield return new WaitForSeconds(time);
+
         // 지하실 문 열리기
+        B1Door.GetComponent<EscapeEnding>().EndingOK();
     }
 
     IEnumerator RotateValve(float duration)

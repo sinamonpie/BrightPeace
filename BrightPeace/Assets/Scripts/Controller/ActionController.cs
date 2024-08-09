@@ -97,8 +97,13 @@ public class ActionController : MonoBehaviourPun
 
             if (hitInfo.transform.tag == "FuseBox" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
+                PuseBoxInfoAppear();
+            }
+
+            if (hitInfo.transform.tag == "EndingLobby" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
+            {
                 canDoor = true;
-                HideCabinetInfoAppear();
+                EndigInfoAppear();
             }
 
         }
@@ -199,7 +204,7 @@ public class ActionController : MonoBehaviourPun
     }
     public bool CanDoorAction(float time)
     {
-        hitInfo.transform.GetComponentInChildren<DoorUseKeyUI>().DoorUI(time);
+        hitInfo.transform.GetComponent<DoorController>().SetDoorUI(time);
         currentLockDoor = hitInfo.transform.gameObject;
         return canDoor;
     }
@@ -324,4 +329,10 @@ public class ActionController : MonoBehaviourPun
 
         alertText.gameObject.SetActive(false);
     }
+
+    public void PuseBoxInfoAppear()
+    {
+        actionText.gameObject.SetActive(true);
+        actionText.text = "퓨즈 넣기 " + "<color=yellow>" + "E키" + "</color>";
     }
+}

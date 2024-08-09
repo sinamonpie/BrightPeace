@@ -221,21 +221,40 @@ public class UseItemManager : MonoBehaviourPun
                                 // 퓨즈박스라고 뜨는 문구 @@@@@@
                                 if (Input.GetKeyDown(KeyCode.E))
                                 {
-                                    actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
-                                    if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
+                                    if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() < 3)
                                     {
-                                        actionController.hitInfo.transform.GetComponent<FuseBox>().UnlockLobbyDoor();
-                                        string text = "퓨즈 다 넣었으니 로비문 열림 ㅇㅇ";
-                                        StartCoroutine(TextAlert());
-                                        alertText.SetText(text);
+                                        actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
+                                        if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
+                                        {
+                                            actionController.hitInfo.transform.GetComponent<FuseBox>().ClearPuseBox();
+                                            if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() == 3)
+                                            {
+                                                actionController.hitInfo.transform.GetComponent<FuseBox>().UnlockLobbyDoor();
+                                                string text = "퓨즈박스 3개 다 넣었습니다.";
+                                                StartCoroutine(TextAlert());
+                                                alertText.SetText(text);
+                                            }
+                                            else
+                                            {
+                                                string text = "남은 퓨즈박스 개수 : " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck());
+                                                StartCoroutine(TextAlert());
+                                                alertText.SetText(text);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            string text = "남은 퓨즈 개수 = " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum());
+                                            StartCoroutine(TextAlert());
+                                            alertText.SetText(text);
+                                        }
+                                        inventory.currentSlot.ClearSlot();
                                     }
                                     else
                                     {
-                                        string text = "넣은 퓨즈 개수 = " +                                       actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum();
+                                        string text = "해당 퓨즈박스는 퓨즈를 다 채웠습니다.";
                                         StartCoroutine(TextAlert());
                                         alertText.SetText(text);
                                     }
-                                    inventory.currentSlot.ClearSlot();
                                 }
                             }
                         }
@@ -245,7 +264,7 @@ public class UseItemManager : MonoBehaviourPun
                         }
                         else if (inventory.currentSlot.item.itemName == "밸브")
                         {
-                            // 액션 컨트롤러로 옮기기 NULL 오류 , 밸브 돌아가는거 애니메이션 추가 , 문짝 추가, RPC 연결
+                            // 액션 컨트롤러로 옮기기 NULL 오류 
                             if (actionController.hitInfo.transform.tag == "Tank")
                             {
                                 actionController.actionText.text = "밸브 넣기 " + "<color=yellow>" + "E키" + "</color>";
@@ -281,7 +300,10 @@ public class UseItemManager : MonoBehaviourPun
                     alertText.text = inventory.currentSlot.item.itemName + " 을(를) 떨어뜨렸습니다.";
 
                     if (inventory.currentSlot.item.itemName == "칼")
+                    {
                         inventory.getKnife = false;
+                        pv.RPC("ShowKnife", RpcTarget.All, false);
+                    }
 
                     pv.RPC("RPC_DropItem", RpcTarget.MasterClient, PlayerPos + PlayerFwd, Quaternion.identity, itemName);
 
@@ -342,10 +364,7 @@ public class UseItemManager : MonoBehaviourPun
     [PunRPC]
     void ShowKnife(bool show)
     {
-        if (pv.IsMine)
-        {
-            knife.gameObject.SetActive(show);
-        }
+        knife.gameObject.SetActive(show);
     }
 
     [PunRPC]
