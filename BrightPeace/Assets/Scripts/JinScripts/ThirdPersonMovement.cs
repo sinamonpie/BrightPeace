@@ -199,7 +199,7 @@ public class ThirdPersonMovement : PlayerController
         {
             /*Debug.Log(hit.transform.position);*/
             Vector3 dist = hit.point - cameraTransform.transform.position;
-            cameraDistance = (dist.magnitude * 0.9f);
+            cameraDistance = (dist.magnitude * 1f);
         }
         else
         {

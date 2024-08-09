@@ -42,7 +42,7 @@ public class FuseBox : MonoBehaviour
     public void UnlockLobbyDoor()
     {
         //로비문 열리는 트리거
-        //lobbyDoor.GetComponent<>().unlockdoor();
+        lobbyDoor.GetComponent<EscapeEnding>().EndingOK();
     }
 
     void Start()
