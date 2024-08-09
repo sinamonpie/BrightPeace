@@ -245,7 +245,7 @@ public class UseItemManager : MonoBehaviourPun
                         }
                         else if (inventory.currentSlot.item.itemName == "밸브")
                         {
-                            // 액션 컨트롤러로 옮기기 NULL 오류 , 밸브 돌아가는거 애니메이션 추가 , 문짝 추가, RPC 연결
+                            // 액션 컨트롤러로 옮기기 NULL 오류 
                             if (actionController.hitInfo.transform.tag == "Tank")
                             {
                                 actionController.actionText.text = "밸브 넣기 " + "<color=yellow>" + "E키" + "</color>";
@@ -281,7 +281,10 @@ public class UseItemManager : MonoBehaviourPun
                     alertText.text = inventory.currentSlot.item.itemName + " 을(를) 떨어뜨렸습니다.";
 
                     if (inventory.currentSlot.item.itemName == "칼")
+                    {
                         inventory.getKnife = false;
+                        pv.RPC("ShowKnife", RpcTarget.All, false);
+                    }
 
                     pv.RPC("RPC_DropItem", RpcTarget.MasterClient, PlayerPos + PlayerFwd, Quaternion.identity, itemName);
 
@@ -342,10 +345,7 @@ public class UseItemManager : MonoBehaviourPun
     [PunRPC]
     void ShowKnife(bool show)
     {
-        if (pv.IsMine)
-        {
-            knife.gameObject.SetActive(show);
-        }
+        knife.gameObject.SetActive(show);
     }
 
     [PunRPC]
