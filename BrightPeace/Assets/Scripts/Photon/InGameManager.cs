@@ -76,7 +76,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     private Player masterClient;
 
-    GameObject[] _players;
+    [SerializeField]
+    private GameObject[] _players;
 
     // Start is called before the first frame update
     void Awake()
