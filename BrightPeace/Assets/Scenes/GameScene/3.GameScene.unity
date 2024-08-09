@@ -5590,7 +5590,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1350886006 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4913476403705021916, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5224562303811807684, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
   m_PrefabInstance: {fileID: 1350886001}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1364087595
@@ -8709,6 +8709,10 @@ MonoBehaviour:
     obj: {fileID: 2062695007098144965, guid: 61becc3f81d5682478984599024e2f7b, type: 3}
     minCount: 3
     maxCount: 4
+  GunItem:
+    obj: {fileID: 8493975917277090756, guid: fd09b5b4df6af4f4089ce77bfd665bea, type: 3}
+    minCount: 1
+    maxCount: 2
   Items:
   - obj: {fileID: 2170693270029236873, guid: 91f8240a37da290429ef77b68c67d62c, type: 3}
     minCount: 4
@@ -8732,7 +8736,7 @@ MonoBehaviour:
     minCount: 1
     maxCount: 2
   spawnedKeyCount: 0
-  spawnedGunCount: 0
+  spawnedFuzeBoxCount: 0
   spawnedItemCount: 0
   securitySpawn: {fileID: 1350886002}
   patientTransform: {fileID: 1350886003}
@@ -8743,7 +8747,7 @@ MonoBehaviour:
   securityObject: {fileID: 7149675440221305535, guid: 026dd2d89b6061348b529d9feb504be0, type: 3}
   patientObject: {fileID: 2370327318098557362, guid: 06da087fc73632a44b1f4c3472ee842c, type: 3}
   patientSpawn: []
-  itemGunSpawn: []
+  itemFuzeBoxSpawn: []
   itemUnLockSpawn: []
   itemLockSpawn: []
   doorLockUI: {fileID: 6400580186566007555, guid: 178b003c26b716b458f8f1267bf6d8a7, type: 3}
@@ -8752,6 +8756,7 @@ MonoBehaviour:
   pv: {fileID: 0}
   _players: []
   patientCount: 0
+  isDeadMental: 0
 --- !u!114 &2037795857
 MonoBehaviour:
   m_ObjectHideFlags: 0
