@@ -46,6 +46,7 @@ public class SoundManager : MonoBehaviour
                     if (!audioSoundEffects[j].isPlaying)
                     {
                         audioSoundEffects[j].clip = soundEffects[i].clip;
+                        audioSoundEffects[j].volume = bgmSounds[i].volume;
                         audioSoundEffects[j].Play();
                         return;
                     }
@@ -64,6 +65,7 @@ public class SoundManager : MonoBehaviour
             if (_name == bgmSounds[i].name)
             {
                 audioSourceBGM.clip = bgmSounds[i].clip;
+                audioSourceBGM.volume = bgmSounds[i].volume;
                 audioSourceBGM.Play();
                 return;
             }
