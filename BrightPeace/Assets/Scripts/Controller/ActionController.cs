@@ -50,14 +50,14 @@ public class ActionController : MonoBehaviourPun
                 ItemInfoAppear();
                 isRayItem = true;
             }
-            
-            if(hitInfo.transform.tag == "Door")
+
+            if (hitInfo.transform.tag == "Door")
             {
                 canDoor = true;
                 DoorInfoAppear();
             }
 
-            if(hitInfo.transform.tag == "Ending" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
+            if (hitInfo.transform.tag == "Ending" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
                 canDoor = true;
                 EndigInfoAppear();
@@ -69,7 +69,7 @@ public class ActionController : MonoBehaviourPun
                 HideCabinetInfoAppear();
             }
 
-            if(hitInfo.transform.tag == "Tank")
+            if (hitInfo.transform.tag == "Tank")
             {
                 if (hitInfo.transform.GetComponent<ValveTank>().GetValve())
                 {
@@ -90,18 +90,24 @@ public class ActionController : MonoBehaviourPun
                 else
                 {
                     alertText.gameObject.SetActive(true);
-                    alertText.text = "발전기를 사용하려면 밸브 아이템이 필요합니다. "; 
+                    alertText.text = "발전기를 사용하려면 밸브 아이템이 필요합니다. ";
                 }
- 
+
             }
 
-        }
-        else
-        {
-            InfoDisapper();
-        }
-    }
+            if (hitInfo.transform.tag == "FuseBox" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
+            {
+                canDoor = true;
+                HideCabinetInfoAppear();
+            }
 
+            else
+            {
+                InfoDisapper();
+            }
+        }
+
+    }
     void ItemInfoAppear()
     {
         actionText.gameObject.SetActive(true);
@@ -210,7 +216,7 @@ public class ActionController : MonoBehaviourPun
 
     public void EndingAction()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             if (hitInfo.transform != null)
             {
@@ -243,7 +249,7 @@ public class ActionController : MonoBehaviourPun
             {
                 hitInfo.transform.GetComponent<CabinetController>().CabinetControl(player);
                 if (hitInfo.transform.GetComponent<CabinetController>().HideInCabinet())
-                {   
+                {
                     // 캐비넷 들어가는 사운드 추가
                     // 플레이어 투시경에 안보이게 하는거 임시용
                     player.SetActive(false);
@@ -317,4 +323,4 @@ public class ActionController : MonoBehaviourPun
 
         alertText.gameObject.SetActive(false);
     }
-}
+    }

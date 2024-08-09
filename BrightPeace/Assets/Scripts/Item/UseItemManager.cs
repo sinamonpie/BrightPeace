@@ -218,6 +218,28 @@ public class UseItemManager : MonoBehaviourPun
                         if (inventory.currentSlot.item.itemName == "퓨즈")
                         {
                             
+                            if(actionController.hitInfo.transform.tag == "FuseBox")
+                            {
+                                // 퓨즈박스라고 뜨는 문구 @@@@@@
+                                if (Input.GetKeyDown(KeyCode.E))
+                                {
+                                    actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
+                                    if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
+                                    {
+                                        actionController.hitInfo.transform.GetComponent<FuseBox>().UnlockLobbyDoor();
+                                        string text = "퓨즈 다 넣었으니 로비문 열림 ㅇㅇ";
+                                        StartCoroutine(TextAlert());
+                                        alertText.SetText(text);
+                                    }
+                                    else
+                                    {
+                                        string text = "넣은 퓨즈 개수 = " +                                       actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum();
+                                        StartCoroutine(TextAlert());
+                                        alertText.SetText(text);
+                                    }
+                                    inventory.currentSlot.ClearSlot();
+                                }
+                            }
                         }
                         else if (inventory.currentSlot.item.itemName == "락픽")
                         {
