@@ -20,13 +20,21 @@ public class FirstPersonMovement : PlayerController
     public AudioClip[] FootstepAudioClips;
     [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
+    ActionController actionController;
+
     private bool isSwing = false;
+
+    [SerializeField] private LayerMask ch_layerMask;
 
     // Start is called before the first frame update
     void Start()
     {
         if (!pv.IsMine)
             return;
+        else
+        {
+            actionController = FindObjectOfType<ActionController>();
+        }
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
@@ -77,6 +85,10 @@ public class FirstPersonMovement : PlayerController
         { 
             animator.SetTrigger("isSwing");
             IsSwing();
+            if (Physics.Raycast(actionController.ray, out actionController.hitInfo, actionController.range, ch_layerMask))
+            {
+                actionController.hitInfo.transform.GetComponent<PlayerState>().TakeDamage(1);
+            }
             Invoke("IsSwing", 1f);
         }
     }

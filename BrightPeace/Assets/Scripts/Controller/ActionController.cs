@@ -11,9 +11,9 @@ public class ActionController : MonoBehaviourPun
 {
     [Header("상호작용 거리")]
     [SerializeField]
-    private float range;
+    public float range;
     public RaycastHit hitInfo;
-    private Ray ray;
+    public Ray ray;
     private bool isInvenFull;
     private GameObject currentLockDoor;
 
