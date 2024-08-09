@@ -22,7 +22,7 @@ public class UseItemManager : MonoBehaviourPun
     [SerializeField] Camera mainCamera;
     [SerializeField] SensorCamera sensorCamera;
 
-    GameObject knife;
+    public GameObject knife;
     Animator animator;
     PhotonView pv;
 
@@ -66,8 +66,6 @@ public class UseItemManager : MonoBehaviourPun
             inventory = FindObjectOfType<Inventory>();
             alertText = inventory.alertText;
             actionController = FindObjectOfType<ActionController>();
-            knife = GameObject.FindWithTag("ItemHasPoint").gameObject;
-            knife.gameObject.SetActive(false);
             mainCamera = GetComponentInChildren<Camera>();
             sensorCamera = mainCamera.gameObject.GetComponentInChildren<SensorCamera>();
 
