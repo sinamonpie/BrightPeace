@@ -68,6 +68,7 @@ MonoBehaviour:
   - RPC_DoorUI
   - RPC_SetValve
   - SwingAnim
+  - RPC_SetPuse
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
