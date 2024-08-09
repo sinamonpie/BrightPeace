@@ -42,4 +42,16 @@ public class EscapeEnding : MonoBehaviour
     {
         endingTrigger = true;
     }
+
+    public int clearPuseBox = 0;
+
+    public void ClearPuseBox()
+    {
+        clearPuseBox++;
+    }
+
+    public int PuseBoxEndingCheck()
+    {
+        return clearPuseBox;
+    }
 }
