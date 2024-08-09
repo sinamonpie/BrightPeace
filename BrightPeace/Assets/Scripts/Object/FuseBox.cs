@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class FuseBox : MonoBehaviour
+using Photon.Pun;
+/// <summary>
+/// 퓨즈 3개를 가져와 활성화를 시켜야함 퓨즈박스는 총 3개임
+/// </summary>
+public class FuseBox : MonoBehaviourPun
 {
     public int puseNum = 0;
     public GameObject puseA;
@@ -14,21 +17,22 @@ public class FuseBox : MonoBehaviour
     public void InsertPuse()
     {
         puseNum++;
-        SetPuse();
+        photonView.RPC("RPC_SetPuse", RpcTarget.All, puseNum);
     }
 
-    public void SetPuse()
+    [PunRPC]
+    void RPC_SetPuse(int num)
     {
-        switch (puseNum)
+        switch (num)
         {
             case 1:
-                puseA.SetActive(true);
+                puseA.gameObject.SetActive(true);
                 break;
             case 2:
-                puseB.SetActive(true);
+                puseB.gameObject.SetActive(true);
                 break;
             case 3:
-                puseC.SetActive(true);
+                puseC.gameObject.SetActive(true);
                 break;
             default: break;
         }
@@ -45,10 +49,18 @@ public class FuseBox : MonoBehaviour
         lobbyDoor.GetComponent<EscapeEnding>().EndingOK();
     }
 
+    public int PuseBoxCheck()
+    {
+        return lobbyDoor.GetComponent<EscapeEnding>().PuseBoxEndingCheck();
+    }
+
+    public void ClearPuseBox()
+    {
+        lobbyDoor.GetComponent<EscapeEnding>().ClearPuseBox();
+    }
+
     void Start()
     {
-        puseA.SetActive(false);
-        puseB.SetActive(false);
-        puseC.SetActive(false);
+        lobbyDoor = GameObject.FindGameObjectWithTag("EndingLobby");
     }
 }

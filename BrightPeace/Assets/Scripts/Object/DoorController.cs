@@ -36,6 +36,7 @@ public class DoorController : MonoBehaviour
             if (pv != null)
             {
                 lockDoorUI = InGameManager.Instance.doorLockUI;
+                lockDoorUI.GetComponent<DoorUseKeyUI>().isDoor = true;
                 Instantiate(lockDoorUI, this.transform);
             }
         }
@@ -66,6 +67,17 @@ public class DoorController : MonoBehaviour
     {
         unlockDoor = true;
     }
+
+    public void SetDoorUI(float time)
+    {
+        pv.RPC("RPC_DoorUI", RpcTarget.All, time);
+    }
+
+    [PunRPC]
+    void RPC_DoorUI(float time)
+    {
+        GetComponentInChildren<DoorUseKeyUI>().DoorUI(time);
+    } 
 
     [PunRPC]
     public void RPC_DoorControl()

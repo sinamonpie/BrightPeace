@@ -37,8 +37,21 @@ public class EscapeEnding : MonoBehaviour
 
     private bool endingTrigger = false;
 
+    // 활성화되면 열림
     public void EndingOK()
     {
         endingTrigger = true;
+    }
+
+    public int clearPuseBox = 0;
+
+    public void ClearPuseBox()
+    {
+        clearPuseBox++;
+    }
+
+    public int PuseBoxEndingCheck()
+    {
+        return clearPuseBox;
     }
 }
