@@ -9,6 +9,11 @@ public class GameManager : MonoBehaviour
     public GameObject player = null;
     public List<string> sceneName = new List<string>();
 
+    public bool isGameStart = false;
+    public UserRole role;
+    public int endding = 0;
+    public int playKill = 0;
+
     private static GameManager instance;
 
     public static GameManager Instance
@@ -36,6 +41,17 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void SetRole(UserRole _role)
+    {
+        role = _role;
+    }
+
+    public void SetEnding(int endIdx)
+    {
+        isGameStart = false;
+        endding = endIdx;
+    }
+
     public void LoadLoginScene()
     {
         SceneManager.LoadSceneAsync(0);
@@ -61,5 +77,10 @@ public class GameManager : MonoBehaviour
     {
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.LoadLevel(sceneName[3]);
+    }
+
+    public void LoadEndding()
+    {
+        SceneManager.LoadSceneAsync(4);
     }
 }
