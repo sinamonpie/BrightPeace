@@ -1328,7 +1328,7 @@ MonoBehaviour:
   ApplyDontDestroyOnLoad: 1
   runInBackground: 1
   statsResetInterval: 1000
-  speakerPrefab: {fileID: 5947097724825286896, guid: 74d3f5789ce48c041b35b67b9f1e8064, type: 3}
+  speakerPrefab: {fileID: 0}
   primaryRecorder: {fileID: 91385829}
   usePrimaryRecorder: 0
   cppCompatibilityMode: 0
@@ -4935,6 +4935,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2013834488}
     m_Modifications:
+    - target: {fileID: 1459761056281144068, guid: 4fd8c3711ab270d47aab123e78d02454, type: 3}
+      propertyPath: ClampVelocityModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1459761056281144068, guid: 4fd8c3711ab270d47aab123e78d02454, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1980297469602488319, guid: 4fd8c3711ab270d47aab123e78d02454, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
