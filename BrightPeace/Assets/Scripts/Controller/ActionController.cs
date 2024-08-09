@@ -12,13 +12,13 @@ public class ActionController : MonoBehaviourPun
     [Header("상호작용 거리")]
     [SerializeField]
     private float range;
-    private RaycastHit hitInfo;
+    public RaycastHit hitInfo;
     private Ray ray;
     private bool isInvenFull;
     private GameObject currentLockDoor;
 
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] private TMP_Text actionText;
+    [SerializeField] public TMP_Text actionText;
     [SerializeField] private TMP_Text alertText;
 
     [SerializeField] Inventory inventory;
@@ -27,6 +27,7 @@ public class ActionController : MonoBehaviourPun
     public bool isRayItem;
     public bool canDoor = false;
     private bool isSetting = false;
+    private bool isUseValve = false;
 
     void Update()
     {
@@ -68,6 +69,32 @@ public class ActionController : MonoBehaviourPun
                 HideCabinetInfoAppear();
             }
 
+            if(hitInfo.transform.tag == "Tank")
+            {
+                if (hitInfo.transform.GetComponent<ValveTank>().GetValve())
+                {
+                    if (!isUseValve)
+                    {
+                        actionText.gameObject.SetActive(true);
+                        actionText.text = "밸브 돌리기 " + "<color=yellow>" + "E Key" + "</color>";
+                        if (Input.GetKeyDown(KeyCode.E))
+                        {
+                            UseValve();
+                        }
+                    }
+                    else
+                    {
+                        actionText.gameObject.SetActive(false);
+                    }
+                }
+                else
+                {
+                    alertText.gameObject.SetActive(true);
+                    alertText.text = "발전기를 사용하려면 밸브 아이템이 필요합니다. "; 
+                }
+ 
+            }
+
         }
         else
         {
@@ -99,6 +126,7 @@ public class ActionController : MonoBehaviourPun
     void InfoDisapper()
     {
         actionText.gameObject.SetActive(false);
+        alertText.gameObject.SetActive(false);
         canDoor = false;
         isRayItem = false;
     }
@@ -273,5 +301,20 @@ public class ActionController : MonoBehaviourPun
             inventory = player.GetComponent<Inventory>();
         }
         isSetting = true;
+    }
+
+    void UseValve()
+    {
+        GameObject tank = hitInfo.transform.gameObject;
+        tank.GetComponent<ValveTank>().OpenTheGate();
+        isUseValve = true;
+    }
+
+    IEnumerator TextAlert()
+    {
+        alertText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+
+        alertText.gameObject.SetActive(false);
     }
 }

@@ -10,6 +10,7 @@ TagManager:
   - Ending
   - ItemHasPoint
   - RoomPlayer
+  - Tank
   layers:
   - Default
   - TransparentFX

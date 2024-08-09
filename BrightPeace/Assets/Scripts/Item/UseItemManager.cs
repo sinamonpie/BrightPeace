@@ -217,7 +217,7 @@ public class UseItemManager : MonoBehaviourPun
                     {
                         if (inventory.currentSlot.item.itemName == "퓨즈")
                         {
-
+                            
                         }
                         else if (inventory.currentSlot.item.itemName == "락픽")
                         {
@@ -225,11 +225,30 @@ public class UseItemManager : MonoBehaviourPun
                         }
                         else if (inventory.currentSlot.item.itemName == "밸브")
                         {
+                            // 액션 컨트롤러로 옮기기 NULL 오류 , 밸브 돌아가는거 애니메이션 추가 , 문짝 추가, RPC 연결
+                            if (actionController.hitInfo.transform.tag == "Tank")
+                            {
+                                actionController.actionText.text = "밸브 넣기 " + "<color=yellow>" + "E키" + "</color>";
+                                actionController.actionText.gameObject.SetActive(true);
 
+                                if (Input.GetKeyDown(KeyCode.E))
+                                {
+                                    StartCoroutine(TextAlert());
+                                    alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
+
+                                    GameObject tank = actionController.hitInfo.transform.gameObject;
+                                    tank.GetComponent<ValveTank>().SetValve();
+                                    inventory.currentSlot.ClearSlot();
+                                }
+                            }
+                            else
+                            {
+                                goto exit;
+                            }
                         }
 
                     }
-
+                exit:;
                 }
                 // 아이템 버리기
                 if (Input.GetKeyUp(KeyCode.G))
