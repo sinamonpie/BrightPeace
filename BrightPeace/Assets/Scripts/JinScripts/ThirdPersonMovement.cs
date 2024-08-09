@@ -90,10 +90,14 @@ public class ThirdPersonMovement : PlayerController
             moveDirection.y += gravity * Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl))
         {
-            animator.SetBool("IsSit", !animator.GetBool("IsSit"));
+            animator.SetBool("IsSit", true);
             Debug.Log("SitSitSit");
+        }
+        else
+        {
+            animator.SetBool("IsSit", false);
         }
 
 

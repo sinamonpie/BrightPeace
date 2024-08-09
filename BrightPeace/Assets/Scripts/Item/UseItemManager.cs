@@ -236,14 +236,14 @@ public class UseItemManager : MonoBehaviourPun
                                             }
                                             else
                                             {
-                                                string text = "남은 퓨즈박스 개수 : " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck());
+                                                string text = "남은 퓨즈박스 개수 : " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck()).ToString();
                                                 StartCoroutine(TextAlert());
                                                 alertText.SetText(text);
                                             }
                                         }
                                         else
                                         {
-                                            string text = "남은 퓨즈 개수 = " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum());
+                                            string text = "남은 퓨즈 개수 = " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum()).ToString();
                                             StartCoroutine(TextAlert());
                                             alertText.SetText(text);
                                         }
@@ -265,7 +265,7 @@ public class UseItemManager : MonoBehaviourPun
                         else if (inventory.currentSlot.item.itemName == "밸브")
                         {
                             // 액션 컨트롤러로 옮기기 NULL 오류 
-                            if (actionController.hitInfo.transform.tag == "Tank")
+                            if (actionController.hitInfo.transform.tag == "Tank" && actionController.hitInfo.transform != null)
                             {
                                 actionController.actionText.text = "밸브 넣기 " + "<color=yellow>" + "E키" + "</color>";
                                 actionController.actionText.gameObject.SetActive(true);
