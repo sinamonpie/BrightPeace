@@ -6,6 +6,7 @@ using UnityEngine;
 public class Sound
 {
     public string name;
+    public float volume;
     public AudioClip clip;
 }
 
