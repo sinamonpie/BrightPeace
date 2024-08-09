@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 6667448703014894144}
   - component: {fileID: 2623718855504523761}
   - component: {fileID: 322572037846068794}
+  - component: {fileID: 5609458842343554456}
   m_Layer: 6
   m_Name: FuseBox
   m_TagString: FuseBox
@@ -214,6 +215,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.28201556, y: 0.39999998, z: 0.14852487}
   m_Center: {x: 0.00042507797, y: -0.000000022351742, z: 0.07445989}
+--- !u!114 &5609458842343554456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062695007098144965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2470536817537428562
 GameObject:
   m_ObjectHideFlags: 0
