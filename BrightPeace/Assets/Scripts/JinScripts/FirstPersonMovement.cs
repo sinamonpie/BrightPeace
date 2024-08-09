@@ -20,6 +20,8 @@ public class FirstPersonMovement : PlayerController
     public AudioClip[] FootstepAudioClips;
     [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
+    private bool isSwing = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,10 +43,12 @@ public class FirstPersonMovement : PlayerController
             return;
 
         Cursor.visible = false;
-
-        Look();
-        MoveTo();
-        Attack();
+        if (!isSwing)
+        {
+            Look();
+            MoveTo();
+            Attack();
+        }
     }
 
     private void LateUpdate()
@@ -72,6 +76,8 @@ public class FirstPersonMovement : PlayerController
         if (Input.GetMouseButtonDown(0))
         { 
             animator.SetTrigger("isSwing");
+            IsSwing();
+            Invoke("IsSwing", 1f);
         }
     }
 
@@ -136,5 +142,10 @@ public class FirstPersonMovement : PlayerController
                 AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(characterController.center), FootstepAudioVolume);
             }
         }
+    }
+
+    private void IsSwing()
+    {
+        isSwing = !isSwing;
     }
 }
