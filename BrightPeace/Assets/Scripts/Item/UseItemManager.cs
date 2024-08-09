@@ -285,6 +285,13 @@ public class UseItemManager : MonoBehaviourPun
                                 goto exit;
                             }
                         }
+                        else if(inventory.currentSlot.item.itemName == "Ä«µåÅ°")
+                        {
+                            if (Input.GetKeyDown(KeyCode.E))
+                            {
+                                actionController.EndingLobbyAction();
+                            }
+                        }
 
                     }
                 exit:;
