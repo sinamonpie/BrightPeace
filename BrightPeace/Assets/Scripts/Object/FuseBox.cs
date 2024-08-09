@@ -60,5 +60,7 @@ public class FuseBox : MonoBehaviour
         puseA.SetActive(false);
         puseB.SetActive(false);
         puseC.SetActive(false);
+
+        lobbyDoor = GameObject.FindGameObjectWithTag("EndingLobby");
     }
 }

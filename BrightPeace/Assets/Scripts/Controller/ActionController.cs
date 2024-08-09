@@ -100,6 +100,12 @@ public class ActionController : MonoBehaviourPun
                 PuseBoxInfoAppear();
             }
 
+            if (hitInfo.transform.tag == "EndingLobby" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
+            {
+                canDoor = true;
+                EndigInfoAppear();
+            }
+
         }
 
         else
