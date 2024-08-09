@@ -5,10 +5,10 @@ using Photon.Pun;
 
 public class PlayerState : MonoBehaviourPun
 {
-    FirstPersonMovement firstPersonMovement;
     [Header("실험체 체력")]
     [SerializeField] int maxHp = 2;
     [SerializeField] int currentHp;
+
     public UserRole role = UserRole.Patient;
     public bool isInCabinet;
 
@@ -17,7 +17,6 @@ public class PlayerState : MonoBehaviourPun
 
     void Start()
     {
-        firstPersonMovement = GetComponent<FirstPersonMovement>();
         InitHp();
     }
 
@@ -102,6 +101,7 @@ public class PlayerState : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
+            Debug.Log("Mental Setting : " + PhotonNetwork.LocalPlayer.NickName);
             photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
         }
     }
@@ -109,6 +109,7 @@ public class PlayerState : MonoBehaviourPun
     [PunRPC]
     void RPC_SetRoleMental()
     {
+        Debug.Log("Mental : " + photonView.Owner.NickName);
         role = UserRole.Mental;
     }
 
