@@ -101,10 +101,11 @@ public class ActionController : MonoBehaviourPun
                 HideCabinetInfoAppear();
             }
 
-            else
-            {
-                InfoDisapper();
-            }
+        }
+
+        else
+        {
+            InfoDisapper();
         }
 
     }
