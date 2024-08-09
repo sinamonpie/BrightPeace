@@ -64,6 +64,9 @@ MonoBehaviour:
   - SetPlayerMental
   - setNotice
   - RPC_SetRoleMental
+  - RPC_OpenTheGate
+  - RPC_DoorUI
+  - RPC_SetValve
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -199,7 +199,7 @@ public class ActionController : MonoBehaviourPun
     }
     public bool CanDoorAction(float time)
     {
-        hitInfo.transform.GetComponentInChildren<DoorUseKeyUI>().DoorUI(time);
+        hitInfo.transform.GetComponent<DoorController>().SetDoorUI(time);
         currentLockDoor = hitInfo.transform.gameObject;
         return canDoor;
     }
