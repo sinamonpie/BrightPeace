@@ -76,7 +76,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     private Player masterClient;
 
-    GameObject[] _players;
+    [SerializeField]
+    private GameObject[] _players;
 
     // Start is called before the first frame update
     void Awake()
@@ -268,22 +269,22 @@ public class InGameManager : MonoBehaviourPunCallbacks
                 {
                     if(PhotonNetwork.CurrentRoom.PlayerCount > 1)
                     {
-                        //List<GameObject> _playerList = new List<GameObject>(_players);
-                        //GameObject security = null;
-                        //foreach (GameObject _player in _playerList)
-                        //{
-                        //    if (_player.GetComponent<PlayerState>().role == UserRole.Security)
-                        //    {
-                        //        security = _player;
-                        //    }
-                        //}
-                        //_playerList.Remove(security);
-                        //_players = _playerList.ToArray();
+                        List<GameObject> _playerList = new List<GameObject>(_players);
+                        GameObject security = null;
+                        foreach (GameObject _player in _playerList)
+                        {
+                            if (_player.GetComponent<PlayerState>().role == UserRole.Security)
+                            {
+                                security = _player;
+                            }
+                        }
+                        _playerList.Remove(security);
+                        _players = _playerList.ToArray();
 
-                        //int randIdx = UnityEngine.Random.Range(0, _players.Length);
-                        //_players[randIdx].GetComponent<PlayerState>().SetRoleMental();
+                        int randIdx = UnityEngine.Random.Range(0, _players.Length);
+                        _players[randIdx].GetComponent<PlayerState>().SetRoleMental();
 
-                        //pv.RPC("GameStart", RpcTarget.All);
+                        pv.RPC("GameStart", RpcTarget.All);
                     }
                 }
             }

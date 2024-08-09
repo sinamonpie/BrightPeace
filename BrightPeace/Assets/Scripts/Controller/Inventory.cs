@@ -23,6 +23,8 @@ public class Inventory : MonoBehaviour
     private PhotonView pv;
     void Start()
     {
+        currentSlotNum = 0;
+
         pv = GetComponent<PhotonView>();
         settingInventory = false;
 
@@ -66,6 +68,13 @@ public class Inventory : MonoBehaviour
                     currentSlotNum = slots.Length - 1;
                 }
             }
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (settingInventory)
+        {
             CurrentSlot(currentSlotNum);
         }
     }

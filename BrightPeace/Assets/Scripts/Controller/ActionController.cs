@@ -102,8 +102,7 @@ public class ActionController : MonoBehaviourPun
 
             if (hitInfo.transform.tag == "EndingLobby" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
-                canDoor = true;
-                EndigInfoAppear();
+                EndigLobbyInfoAppear();
             }
 
         }
@@ -245,6 +244,29 @@ public class ActionController : MonoBehaviourPun
         actionText.gameObject.SetActive(true);
         actionText.text = "<color=yellow>" + " 탈출하기 " + "E Key" + "</color>";
         EndingAction();
+    }
+
+    public void EndingLobbyAction()
+    {
+        if (hitInfo.transform != null)
+        {
+            if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
+            {
+                Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+            }
+            else
+            {
+                alertText.gameObject.SetActive(true);
+                alertText.text = "퓨즈가 아직 다 활성화가 안되었습니다.";
+                Invoke("DisAlert", 1f);
+            }
+        }
+    }
+
+    public void EndigLobbyInfoAppear()
+    {
+        actionText.gameObject.SetActive(true);
+        actionText.text = "<color=yellow>" + " 카드키로 탈출하기 " + "E Key" + "</color>";
     }
 
     public void HideCabinetAction()
