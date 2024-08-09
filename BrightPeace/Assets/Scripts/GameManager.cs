@@ -38,12 +38,14 @@ public class GameManager : MonoBehaviour
     public void LoadLoginScene()
     {
         SceneManager.LoadSceneAsync(0);
+        SoundManager.instance.PlayBGM("LobbyMainBGM");
     }
 
     public void LoadLobbyScene()
     {
         PhotonNetwork.AutomaticallySyncScene = false;
         SceneManager.LoadSceneAsync(1);
+        SoundManager.instance.PlayBGM("AiGeneratedGameIntroduceBGM");
     }
 
     public void LoadRoomScene()
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour
         PhotonNetwork.LoadLevel(sceneName[2]);
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonChatManager.Instance.JoinRoomChannel(PhotonNetwork.CurrentRoom.Name);
+        SoundManager.instance.PlayBGM("GameMainBGM");
     }
 
     public void LoadGamescene()
