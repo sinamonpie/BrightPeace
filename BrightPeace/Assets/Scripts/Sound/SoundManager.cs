@@ -73,6 +73,19 @@ public class SoundManager : MonoBehaviour
         Debug.Log(_name + "BGM을 찾을 수 없음");
     }
 
+    public void PlayEffectAtPoint(string _name, Vector3 point)
+    {
+        for (int i = 0; i < soundEffects.Length; i++)
+        {
+            if (_name == soundEffects[i].name)
+            {
+                AudioSource.PlayClipAtPoint(soundEffects[i].clip, transform.TransformPoint(point), soundEffects[i].volume);
+                return;
+            }
+        }
+        Debug.Log(_name + "사운드 효과를 찾을 수 없음");
+    }
+
     public void StopBGM()
     {
         audioSourceBGM.Stop();
