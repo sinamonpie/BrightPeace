@@ -98,16 +98,16 @@ public class InGameManager : MonoBehaviourPunCallbacks
             _obj.volume = 0;
         }
 
-        isDeadMental = true;
-        if (patientSpawn.Length == 0)
-            patientSpawn = GetChild(patientTransform);
-
         if (PhotonNetwork.IsMasterClient)
         {
             itemFuzeBoxSpawn = GetChild(itemTransform[0]);
             itemUnLockSpawn = GetChild(itemTransform[1]);
             itemLockSpawn = GetChild(itemTransform[2]);
         }
+
+        isDeadMental = true;
+        if (patientSpawn.Length == 0)
+            patientSpawn = GetChild(patientTransform);
 
         pv = GetComponent<PhotonView>();
 
@@ -202,6 +202,10 @@ public class InGameManager : MonoBehaviourPunCallbacks
                 break;
         }
 
+        //아이템 스폰
+        bool itemUnLock = itemUnLockSpawn != null ? false : true;
+        bool itemLock = itemLockSpawn != null ? false : true;
+
         //키 스폰
         for (int i = 0; i < spawnedKeyCount; i++)
         {
@@ -212,12 +216,11 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
             itemUnLockSpawn = RemoveTransformAt(itemUnLockSpawn, idx);
             if (itemUnLockSpawn == null)
+            {
+                itemUnLock = true;
                 break;
+            }
         }
-
-        //아이템 스폰
-        bool itemUnLock = false;
-        bool itemLock = false;
 
         spawnedItemCount = 0;
         for (int i = 0; i < Items.Length; i++)
