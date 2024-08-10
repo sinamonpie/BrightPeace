@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -87,7 +88,8 @@ public class FirstPersonMovement : PlayerController
             IsSwing();
             if (Physics.Raycast(actionController.ray, out actionController.hitInfo, actionController.range, ch_layerMask))
             {
-                actionController.hitInfo.transform.GetComponent<PlayerState>().TakeDamage(1);
+                pv.RPC("AttackPaintient", RpcTarget.All);
+                //actionController.hitInfo.transform.GetComponent<PlayerState>().TakeDamage(1);
                 Debug.Log(actionController.hitInfo.transform.tag);
                 Debug.Log("때리기 적용");
             }
@@ -161,5 +163,20 @@ public class FirstPersonMovement : PlayerController
     private void IsSwing()
     {
         isSwing = !isSwing;
+    }
+
+    [PunRPC]
+    void AttackPaintient(int targetViewID)
+    {
+        PhotonView targetView = PhotonView.Find(targetViewID);
+        if (targetView != null)
+        {
+            PlayerState playerHp = targetView.GetComponent<PlayerState>();
+            if (playerHp != null)
+            {
+                playerHp.TakeDamage(1);
+                Debug.Log("대상 남은 체력 : " + playerHp.GetPlayerHp().ToString());
+            }
+        }
     }
 }
