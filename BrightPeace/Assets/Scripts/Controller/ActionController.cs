@@ -336,8 +336,10 @@ public class ActionController : MonoBehaviourPun
         {
             if (hitInfo.transform != null)
             {
+                Debug.Log("엔딩 확인1");
                 if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
                 {
+                    Debug.Log("엔딩 확인2");
                     if (GameManager.Instance.role == UserRole.Patient)
                     {
                         GameManager.Instance.SetEnding(UserEnding.WinEnding);

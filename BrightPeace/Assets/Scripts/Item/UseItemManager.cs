@@ -330,13 +330,13 @@ public class UseItemManager : MonoBehaviourPun
                                 useLockPick = false;
                             }
                         }
-                        else if (inventory.currentSlot.item.itemName == "¸ÁÄ¡")
+                        else if (inventory.currentSlot.item.itemName == "¹åÁÙ")
                         {
                             if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "Ending" && actionController.hitInfo.transform.GetComponent<EscapeEnding>().IsWindow())
                             {
                                 if (!actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
                                 {
-                                    actionController.actionText.text = "¸ÁÄ¡ »ç¿ë " + "<color=yellow>" + "EÅ°" + "</color>";
+                                    actionController.actionText.text = "¹åÁÙ »ç¿ë " + "<color=yellow>" + "EÅ°" + "</color>";
                                     actionController.actionText.gameObject.SetActive(true);
 
                                     if (Input.GetKeyDown(KeyCode.E))
@@ -361,7 +361,7 @@ public class UseItemManager : MonoBehaviourPun
                                         int minutes = Mathf.FloorToInt(time / 60);
                                         int seconds = Mathf.FloorToInt(time % 60);
 
-                                        alertText.text = string.Format("¸ÁÄ¡¸ÁÄ¡...{0:0}:{1:00}", minutes, seconds);
+                                        alertText.text = string.Format("¹åÁÙ ¹­´Â Áß...{0:0}:{1:00}", minutes, seconds);
                                         alertText.gameObject.SetActive(true);
 
                                         if (time <= 0)
