@@ -203,7 +203,7 @@ public class UseItemManager : MonoBehaviourPun
                                     if (playerState != null)
                                     {
                                         pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
-                                        SoundManager.instance.PlaySoundEffect("KnifeHit");
+                                      
                                         inventory.currentSlot.ClearSlot();
                                         inventory.getKnife = false;
                                         pv.RPC("ShowKnife", RpcTarget.All, false);
@@ -536,6 +536,8 @@ public class UseItemManager : MonoBehaviourPun
                     Debug.Log("대상 남은 체력 : " + playerHp.GetPlayerHp().ToString());
                 }
             }
+            Transform player = targetView.GetComponent<Transform>();
+            SoundManager.instance.PlayEffectAtPoint("KnifeHit", player.position);
         }
     }
 }
