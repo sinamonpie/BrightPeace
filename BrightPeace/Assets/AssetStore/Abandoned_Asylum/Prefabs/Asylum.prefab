@@ -40666,6 +40666,7 @@ GameObject:
   - component: {fileID: 8613861861098282322}
   - component: {fileID: 1001174888820246649}
   - component: {fileID: 4913472637485637086}
+  - component: {fileID: 210003467198082334}
   m_Layer: 6
   m_Name: DoorD_V2_Left
   m_TagString: Door
@@ -40799,6 +40800,27 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!65 &210003467198082334
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8604639024287645434}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.948614, y: 2.098418, z: 0.15871}
+  m_Center: {x: 0.47858202, y: 1.070727, z: 0.059524998}
 --- !u!1 &8604639357861341026
 GameObject:
   m_ObjectHideFlags: 0
@@ -49045,6 +49067,7 @@ GameObject:
   - component: {fileID: 8614285301339245344}
   - component: {fileID: 5498491780407245896}
   - component: {fileID: 543788253891441419}
+  - component: {fileID: 2007052022935388651}
   m_Layer: 6
   m_Name: DoorD_V2_Left
   m_TagString: ExitDoor
@@ -49154,7 +49177,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 0
   pivot: {fileID: 8941322056886063428}
-  unlockDoor: 1
+  unlockDoor: 0
   lockDoorUI: {fileID: 0}
 --- !u!114 &543788253891441419
 MonoBehaviour:
@@ -49178,6 +49201,27 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!65 &2007052022935388651
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8604700770285963400}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.948614, y: 2.098418, z: 0.15871}
+  m_Center: {x: 0.47858202, y: 1.070727, z: 0.059524998}
 --- !u!1 &8604700807021752656
 GameObject:
   m_ObjectHideFlags: 0
@@ -71211,6 +71255,7 @@ GameObject:
   - component: {fileID: 8613936724480469970}
   - component: {fileID: 2089832804243963911}
   - component: {fileID: 2586091852886721653}
+  - component: {fileID: 7527811333752031787}
   m_Layer: 6
   m_Name: DoorD_V2_Right
   m_TagString: ExitDoor
@@ -71320,7 +71365,7 @@ MonoBehaviour:
   isClose: 1
   DoorRotation: 0
   pivot: {fileID: 3086527413601572066}
-  unlockDoor: 1
+  unlockDoor: 0
   lockDoorUI: {fileID: 0}
 --- !u!114 &2586091852886721653
 MonoBehaviour:
@@ -71344,6 +71389,27 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!65 &7527811333752031787
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8604842251446419608}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.948614, y: 2.098418, z: 0.15871}
+  m_Center: {x: 0.475051, y: 1.0707275, z: 0.059524998}
 --- !u!1 &8604842254898727184
 GameObject:
   m_ObjectHideFlags: 0
@@ -90851,6 +90917,7 @@ GameObject:
   - component: {fileID: 8613600173260114690}
   - component: {fileID: 279877208636819951}
   - component: {fileID: 8547154797177509177}
+  - component: {fileID: 8373950871495159520}
   m_Layer: 6
   m_Name: DoorD_V2_Right
   m_TagString: Door
@@ -90984,6 +91051,27 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!65 &8373950871495159520
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8604969872868820600}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.948614, y: 2.098418, z: 0.15871}
+  m_Center: {x: 0.475051, y: 1.070727, z: 0.059524998}
 --- !u!1 &8604971445149748340
 GameObject:
   m_ObjectHideFlags: 0
@@ -91398,6 +91486,7 @@ GameObject:
   - component: {fileID: 8613948896245488068}
   - component: {fileID: 1975265325599040825}
   - component: {fileID: 1384148959504712624}
+  - component: {fileID: 7140894031274467287}
   m_Layer: 6
   m_Name: DoorD_V2_Left
   m_TagString: Door
@@ -91531,6 +91620,27 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!65 &7140894031274467287
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8604975208023371010}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.948614, y: 2.098418, z: 0.15871}
+  m_Center: {x: 0.47858202, y: 1.0707271, z: 0.059524998}
 --- !u!1 &8604975473944516930
 GameObject:
   m_ObjectHideFlags: 0
@@ -101587,6 +101697,7 @@ GameObject:
   - component: {fileID: 8613988745963183000}
   - component: {fileID: 4272517597435265180}
   - component: {fileID: 4415360349971639060}
+  - component: {fileID: 6333624500891966389}
   m_Layer: 6
   m_Name: DoorD_V2_Right
   m_TagString: Door
@@ -101720,6 +101831,27 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!65 &6333624500891966389
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8605040193556079814}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.948614, y: 2.098418, z: 0.15871}
+  m_Center: {x: 0.475051, y: 1.070727, z: 0.059524998}
 --- !u!1 &8605041859167836592
 GameObject:
   m_ObjectHideFlags: 0
