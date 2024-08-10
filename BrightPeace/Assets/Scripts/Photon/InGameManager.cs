@@ -126,10 +126,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
     void Start()
     {
         SpawnPlayer();
-        if (PhotonNetwork.IsMasterClient)
-        {
-            SpawnItem();
-        }
     }
 
     private void SpawnPlayer()
@@ -326,6 +322,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
                         _players[randIdx].GetComponent<PlayerState>().SetRoleMental();
 
                         isDeadMental = false;
+
+                        SpawnItem();
 
                         pv.RPC("GameStart", RpcTarget.All, _players.Length - 1);
                     }
