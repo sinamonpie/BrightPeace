@@ -2690,6 +2690,10 @@ MonoBehaviour:
   moveSpeed: 2
   SprintSpeed: 5.335
   cameraTransform: {fileID: 1616321845099385465}
+  sitVolume: 0
+  walkVolume: 0
+  runVolume: 0
+  currentVolume: 0
   pv: {fileID: 0}
   rotaionSpeed: 3
   FootstepAudioClips:
@@ -2703,7 +2707,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 67c8b33e424ccdc4486edf538ab91c5a, type: 3}
   - {fileID: 8300000, guid: 274649b0e221539409070ebf6c18918b, type: 3}
   - {fileID: 8300000, guid: a3194b8bbc96ef84fab1f98f4b7dae3e, type: 3}
-  FootstepAudioVolume: 0.4
   ch_layerMask:
     serializedVersion: 2
     m_Bits: 0
