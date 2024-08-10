@@ -80,71 +80,75 @@ public class ActionController : MonoBehaviourPun
                 // 밸브를 달았을때
                 if (hitInfo.transform.GetComponent<ValveTank>().GetValve())
                 {
-                    // 밸브가 활성화 안되었다면
-                    if (!hitInfo.transform.GetComponent<ValveTank>().isUseValve)
+                    if(!hitInfo.transform.GetComponent<ValveTank>().isFinished)
                     {
-                        // 실험체에 경우에만 밸브를 활성화 할 수 있음
-                        if(player.GetComponent<PlayerState>().role != UserRole.Security)
+                        // 밸브가 활성화 안되었다면
+                        if (!hitInfo.transform.GetComponent<ValveTank>().isUseValve)
                         {
-                            actionText.gameObject.SetActive(true);
-                            actionText.text = "밸브 돌리기 " + "<color=yellow>" + "E Key" + "</color>";
-
-                            if (Input.GetKey(KeyCode.E))
+                            // 실험체에 경우에만 밸브를 활성화 할 수 있음
+                            if (player.GetComponent<PlayerState>().role != UserRole.Security)
                             {
-                                _holdTime += Time.deltaTime;
+                                actionText.gameObject.SetActive(true);
+                                actionText.text = "밸브 돌리기 " + "<color=yellow>" + "E Key" + "</color>";
 
-                                actionImage.gameObject.SetActive(true);
-                                actionImage.fillAmount = 1f - (_holdTime / holdTime);
-
-                                // 특정 시간동안 키를 눌러야 활성화
-                                if (_holdTime >= holdTime)
+                                if (Input.GetKey(KeyCode.E))
                                 {
-                                    actionImage.gameObject.SetActive(false);
-                                    actionText.gameObject.SetActive(false);
+                                    _holdTime += Time.deltaTime;
+
+                                    actionImage.gameObject.SetActive(true);
+                                    actionImage.fillAmount = 1f - (_holdTime / holdTime);
+
+                                    // 특정 시간동안 키를 눌러야 활성화
+                                    if (_holdTime >= holdTime)
+                                    {
+                                        actionImage.gameObject.SetActive(false);
+                                        actionText.gameObject.SetActive(false);
+                                        _holdTime = 0f;
+                                        UseValve(true);
+                                    }
+                                }
+                                else
+                                {
                                     _holdTime = 0f;
-                                    UseValve(true);
+                                    actionImage.fillAmount = 1f;
+                                    actionImage.gameObject.SetActive(false);
                                 }
                             }
-                            else
-                            {
-                                _holdTime = 0f;
-                                actionImage.fillAmount = 1f;
-                                actionImage.gameObject.SetActive(false);
-                            }
                         }
-                    }
-                    else
-                    {
-                        // 밸브가 활성화 되어 있을때, 경비원 과 배신자는 밸브를 돌릴 수 있음
-                        if (player.GetComponent<PlayerState>().role != UserRole.Patient)
+                        else
                         {
-                            actionText.gameObject.SetActive(true);
-                            actionText.text = "밸브 방해하기 " + "<color=yellow>" + "E Key" + "</color>";
-
-                            if (Input.GetKey(KeyCode.E))
+                            // 밸브가 활성화 되어 있을때, 경비원 과 배신자는 밸브를 돌릴 수 있음
+                            if (player.GetComponent<PlayerState>().role != UserRole.Patient)
                             {
-                                _holdTime += Time.deltaTime;
+                                actionText.gameObject.SetActive(true);
+                                actionText.text = "밸브 방해하기 " + "<color=yellow>" + "E Key" + "</color>";
 
-                                actionImage.gameObject.SetActive(true);
-                                actionImage.fillAmount = 1f - (_holdTime / holdTime);
-
-                                // 특정 시간동안 키를 눌러야 활성화
-                                if (_holdTime >= holdTime)
+                                if (Input.GetKey(KeyCode.E))
                                 {
-                                    actionImage.gameObject.SetActive(false);
-                                    actionText.gameObject.SetActive(false);
-                                    _holdTime = 0f;
-                                    UseValve(false);
-                                }
-                            }
-                            else
-                            {
-                                _holdTime = 0f;
-                                actionImage.fillAmount = 1f;
-                                actionImage.gameObject.SetActive(false);
-                            }
+                                    _holdTime += Time.deltaTime;
 
+                                    actionImage.gameObject.SetActive(true);
+                                    actionImage.fillAmount = 1f - (_holdTime / holdTime);
+
+                                    // 특정 시간동안 키를 눌러야 활성화
+                                    if (_holdTime >= holdTime)
+                                    {
+                                        actionImage.gameObject.SetActive(false);
+                                        actionText.gameObject.SetActive(false);
+                                        _holdTime = 0f;
+                                        UseValve(false);
+                                    }
+                                }
+                                else
+                                {
+                                    _holdTime = 0f;
+                                    actionImage.fillAmount = 1f;
+                                    actionImage.gameObject.SetActive(false);
+                                }
+
+                            }
                         }
+
                     }
                 }
                 else

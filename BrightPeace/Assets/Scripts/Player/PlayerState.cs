@@ -19,7 +19,6 @@ public class PlayerState : MonoBehaviourPun
     private bool isMentalSetting = false;
 
     public Sound[] hallucinAudioClips;
-
     void Start()
     {
         InitHp();
@@ -169,12 +168,23 @@ public class PlayerState : MonoBehaviourPun
 
     IEnumerator ClientPlayerStun(float duration)
     {
+        GameObject StunUIPrefab = InGameManager.Instance.StunUIPrefab;
         PlayerController playerController = GetComponent<PlayerController>();
         playerController.UnEnableMove();
+
+        if (photonView.IsMine)
+        {
+            StunUIPrefab.SetActive(true);
+
+        }
 
         yield return new WaitForSeconds(duration);
 
         playerController.EnableMove();
 
+        if(photonView.IsMine)
+        {
+            StunUIPrefab.SetActive(false);
+        }
     }
 }

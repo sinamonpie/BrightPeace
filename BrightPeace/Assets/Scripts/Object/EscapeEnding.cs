@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class EscapeEnding : MonoBehaviour
+using Photon.Pun;
+public class EscapeEnding : MonoBehaviourPun
 {
     // 여기서부터
 
@@ -53,5 +53,16 @@ public class EscapeEnding : MonoBehaviour
     public int PuseBoxEndingCheck()
     {
         return clearPuseBox;
+    }
+
+    public void OpenEndingDoor()
+    {
+        photonView.RPC("RPC_OpenEndingDoor", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_OpenEndingDoor()
+    {
+        endingTrigger = true;
     }
 }

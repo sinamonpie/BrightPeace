@@ -18,6 +18,7 @@ public class ValveTank : MonoBehaviourPun
     [SerializeField] GameObject valve;
     [SerializeField] bool isvalve;
     public bool isUseValve;
+    public bool isFinished;
     bool checkCor;
     void Start()
     {
@@ -114,6 +115,7 @@ public class ValveTank : MonoBehaviourPun
         // 지하실 문 열리기
         B1Door.GetComponent<EscapeEnding>().EndingOK();
         checkCor = false;
+        isFinished = true;
     }
 
 }
