@@ -429,7 +429,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
         foreach (AudioSource _obj in FindObjectsOfType<AudioSource>())
         {
-            _obj.volume = 0;
+            _obj.volume = 1;
         }
     }
 }
