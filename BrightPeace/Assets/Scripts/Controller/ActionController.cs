@@ -371,7 +371,6 @@ public class ActionController : MonoBehaviourPun
     
     public void StopLockPick()
     {
-        StopAllCoroutines();
         GetComponent<PlayerController>().EnableMove();
     }
 

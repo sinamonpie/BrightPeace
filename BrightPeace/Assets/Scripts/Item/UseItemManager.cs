@@ -289,7 +289,7 @@ public class UseItemManager : MonoBehaviourPun
 
                                     if(Input.GetKeyUp(KeyCode.E))
                                     {
-                                        StopAllCoroutines();
+                                        StopCoroutine(LockPickAlert(lockPickTime, actionController.hitInfo.transform.GetComponent<DoorController>()));
                                         GetComponent<PlayerController>().EnableMove();
                                         animator.SetBool("IsSit", false);
                                         useLockPick = false;
@@ -300,7 +300,7 @@ public class UseItemManager : MonoBehaviourPun
                             {
                                 GetComponent<PlayerController>().EnableMove();
                                 animator.SetBool("IsSit", false);
-                                StopAllCoroutines();
+                                StopCoroutine(LockPickAlert(lockPickTime, actionController.hitInfo.transform.GetComponent<DoorController>()));
                             }
                         }
                         else if (inventory.currentSlot.item.itemName == "¹ëºê")
