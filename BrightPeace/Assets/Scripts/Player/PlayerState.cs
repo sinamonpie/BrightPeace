@@ -99,6 +99,7 @@ public class PlayerState : MonoBehaviourPun
     public void Dead()
     {
         isDead = true;
+        this.transform.GetComponent<UseItemManager>().DieToDropItem();
         if (role == UserRole.Patient)
         {
             InGameManager.Instance.DeadPatientPlayer();

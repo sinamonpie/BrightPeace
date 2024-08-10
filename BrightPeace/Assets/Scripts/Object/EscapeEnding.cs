@@ -35,7 +35,7 @@ public class EscapeEnding : MonoBehaviourPun
 
     // 여기까지 필요없지만 다른데에서 참조해서 나중에 지우는게 나을듯
 
-    private bool endingTrigger = false;
+    public bool endingTrigger = false;
 
     // 활성화되면 열림
     public void EndingOK()
@@ -71,6 +71,11 @@ public class EscapeEnding : MonoBehaviourPun
     public bool IsWindow()
     {
         return isWindow;
+    }
+
+    public void NotWindow()
+    {
+        isWindow = false;
     }
 
 }
