@@ -116,7 +116,6 @@ public class PlayerState : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            SoundManager.instance.PlaySoundEffect("PainSound");
             currentHp -= damage;
             if (currentHp <= 0)
             {
@@ -129,6 +128,7 @@ public class PlayerState : MonoBehaviourPun
     [PunRPC]
     void RPC_TakeDamage(int damage)
     {
+        SoundManager.instance.PlayEffectAtPoint("PainSound", transform.position);
         currentHp -= damage;
     }
 
