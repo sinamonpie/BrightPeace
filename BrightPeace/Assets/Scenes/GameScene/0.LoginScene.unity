@@ -1897,6 +1897,18 @@ MonoBehaviour:
   - name: ButtenClick
     volume: 1
     clip: {fileID: 8300000, guid: 7b7519f7d66dc4078abecd7b8b0ad797, type: 3}
+  - name: PainSound
+    volume: 1
+    clip: {fileID: 8300000, guid: e11427e4313748745942d8d43384ef51, type: 3}
+  - name: PutValve
+    volume: 1
+    clip: {fileID: 8300000, guid: ed7327649d6420c4e8a642d5d4ad226c, type: 3}
+  - name: TurnValve
+    volume: 1
+    clip: {fileID: 8300000, guid: cf006c3dc6248d8429c6c666ff130a47, type: 3}
+  - name: ItemGet
+    volume: 1
+    clip: {fileID: 8300000, guid: e667efee6d6be4ed98aaa5cc46607b18, type: 3}
   bgmSounds:
   - name: "\uB85C\uADF8\uC778"
     volume: 0.05
