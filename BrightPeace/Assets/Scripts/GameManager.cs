@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     public bool isGameStart = false;
     public UserRole role;
-    public int endding = 0;
+    public UserEnding endding = 0;
     public int playKill = 0;
 
     private static GameManager instance;
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         role = _role;
     }
 
-    public void SetEnding(int endIdx)
+    public void SetEnding(UserEnding endIdx)
     {
         isGameStart = false;
         endding = endIdx;
