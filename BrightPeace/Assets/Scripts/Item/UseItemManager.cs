@@ -272,7 +272,7 @@ public class UseItemManager : MonoBehaviourPun
                         {
                             if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "ExitDoor")
                             {
-                                if (actionController.hitInfo.transform.GetComponent<DoorController>().UseableDoor())
+                                if (!actionController.hitInfo.transform.GetComponent<DoorController>().UseableDoor())
                                 {
                                     actionController.actionText.text = "락픽 사용 " + "<color=yellow>" + "E키" + "</color>";
                                     actionController.actionText.gameObject.SetActive(true);
