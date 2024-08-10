@@ -138,7 +138,7 @@ public class ValveTank : MonoBehaviourPun
         }
 
         // 지하실 문 열리기
-        B1Door.GetComponent<EscapeEnding>().EndingOK();
+        B1Door.GetComponent<EscapeEnding>().OpenEndingDoor();
         checkCor = false;
     }
 
