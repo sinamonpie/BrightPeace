@@ -49047,7 +49047,7 @@ GameObject:
   - component: {fileID: 543788253891441419}
   m_Layer: 6
   m_Name: DoorD_V2_Left
-  m_TagString: Door
+  m_TagString: ExitDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71213,7 +71213,7 @@ GameObject:
   - component: {fileID: 2586091852886721653}
   m_Layer: 6
   m_Name: DoorD_V2_Right
-  m_TagString: Door
+  m_TagString: ExitDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
