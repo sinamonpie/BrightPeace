@@ -121,16 +121,7 @@ public class PlayerState : MonoBehaviourPun
         currentHp -= damage;
         if (currentHp <= 0)
         {
-            isDead = true;
-            if(role == UserRole.Patient)
-            {
-                InGameManager.Instance.DeadPatientPlayer();
-            }
-            else if(role == UserRole.Mental)
-            {
-                InGameManager.Instance.DeadMenetalPlayer();
-            }
-            InGameManager.Instance.GameEnding(UserEnding.DeadEnding);
+            Dead();
         }
     }
 
