@@ -41,6 +41,7 @@ public class UseItemManager : MonoBehaviourPun
     float stunTime = 2f;
 
     bool useLockPick = false;
+    bool useLockPick2 = false;
 
     [Header("È¸º¹ ¾ÆÀÌÅÛ È½¼ö Á¦ÇÑ")]
     [SerializeField]
@@ -320,6 +321,60 @@ public class UseItemManager : MonoBehaviourPun
                                 GetComponent<PlayerController>().EnableMove();
                                 animator.SetBool("IsSit", false);
                                 useLockPick = false;
+                            }
+                        }
+                        else if (inventory.currentSlot.item.itemName == "¸ÁÄ¡")
+                        {
+                            if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "Ending" && actionController.hitInfo.transform.GetComponent<EscapeEnding>().IsWindow())
+                            {
+                                if (actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
+                                {
+                                    actionController.actionText.text = "¸ÁÄ¡ »ç¿ë " + "<color=yellow>" + "EÅ°" + "</color>";
+                                    actionController.actionText.gameObject.SetActive(true);
+
+                                    if (Input.GetKeyDown(KeyCode.E))
+                                    {
+                                        GetComponent<PlayerController>().UnEnableMove();
+                                        animator.SetBool("IsSit", true);
+                                        startLockPickTime = Time.time;
+                                        useLockPick2 = true;
+                                    }
+                                    else if (Input.GetKeyUp(KeyCode.E))
+                                    {
+                                        GetComponent<PlayerController>().EnableMove();
+                                        animator.SetBool("IsSit", false);
+                                        useLockPick2 = false;
+                                    }
+
+                                    if (useLockPick2)
+                                    {
+                                        float currentTime = Time.time - startLockPickTime;
+                                        float time = lockPickTime - currentTime;
+
+                                        int minutes = Mathf.FloorToInt(time / 60);
+                                        int seconds = Mathf.FloorToInt(time % 60);
+
+                                        alertText.text = string.Format("¸ÁÄ¡¸ÁÄ¡...{0:0}:{1:00}", minutes, seconds);
+                                        alertText.gameObject.SetActive(true);
+
+                                        if (time <= 0)
+                                        {
+                                            alertText.gameObject.SetActive(false);
+                                            actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndingOK();
+                                            inventory.currentSlot.ClearSlot();
+                                        }
+                                    }
+                                }
+                                else
+                                {
+
+                                }
+                            }
+                            else
+                            {
+                                GetComponent<PlayerController>().EnableMove();
+                                animator.SetBool("IsSit", false);
+                                useLockPick2 = false;
                             }
                         }
                         else if (inventory.currentSlot.item.itemName == "¹ëºê")
