@@ -1871,7 +1871,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSoundEffects: []
   audioSourceBGM: {fileID: 1672210196}
-  soundEffects: []
+  soundEffects:
+  - name: OpenDoor
+    volume: 0.5
+    clip: {fileID: 8300000, guid: a5bd7639e50394eed9f18759efa33ffa, type: 3}
+  - name: CloseDoor
+    volume: 0.5
+    clip: {fileID: 8300000, guid: 5b59bd5f65de04d649fa7a0c9f4cc659, type: 3}
   bgmSounds:
   - name: "\uB85C\uADF8\uC778"
     volume: 0.05

@@ -628,6 +628,7 @@ GameObject:
   - component: {fileID: 6368289383712561178}
   - component: {fileID: -4427182109022512229}
   - component: {fileID: -4320042796924132850}
+  - component: {fileID: 1326999513228299806}
   m_Layer: 8
   m_Name: GamePatient
   m_TagString: Player
@@ -831,8 +832,43 @@ MonoBehaviour:
   role: 2
   isInCabinet: 0
   isDead: 0
-  hallucinAudioClips: {fileID: 8300000, guid: 81b56126330ae014492a020572d17494, type: 3}
-  hallucinStepAudioVolume: 0.712
+  hallucinAudioClips:
+  - name: 
+    volume: 0.3
+    clip: {fileID: 8300000, guid: af67d831bbd25f74f8e07064801bd85c, type: 3}
+  - name: 
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 8e48ad2b3d6efb34399fceba44a5409e, type: 3}
+  - name: 
+    volume: 0.3
+    clip: {fileID: 8300000, guid: d19e9be734d0f454aa3c337d39ad69e9, type: 3}
+  - name: 
+    volume: 0.3
+    clip: {fileID: 8300000, guid: f2251cd8f26d93c458687640283f429d, type: 3}
+  - name: 
+    volume: 0.3
+    clip: {fileID: 8300000, guid: e882cdf47b76c504cb439376e28dbf4f, type: 3}
+  - name: 
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 6d8eab99b0341a34f8bad19e3847d4cd, type: 3}
+  - name: 
+    volume: 0.3
+    clip: {fileID: 8300000, guid: fa2e1462234805842b2cb5758f26668b, type: 3}
+  - name: 
+    volume: 0.3
+    clip: {fileID: 8300000, guid: f13a174765fc6b449b394b637db3813e, type: 3}
+  - name: 
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 8788eae590e2b3245a19c2ef0969792b, type: 3}
+  - name: 
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 3494fcc3fb17a61448d8ba772d18bf1c, type: 3}
+  - name: 
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 4d8acbfe13fcb9c439e2fa39bf0f6910, type: 3}
+  - name: 
+    volume: 0.3
+    clip: {fileID: 8300000, guid: 81b56126330ae014492a020572d17494, type: 3}
 --- !u!114 &-4427182109022512229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -879,16 +915,112 @@ MonoBehaviour:
     SynchronizeType: 0
     Name: isSwing
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: IsSit
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: SitSpeed
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 0
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 1
+--- !u!82 &1326999513228299806
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2370327318098557362}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 5
+  MinDistance: 1
+  MaxDistance: 3
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2433769970404635503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,11 +1303,11 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 5
   MinDistance: 1
-  MaxDistance: 2
+  MaxDistance: 3.5
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1223,7 +1355,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

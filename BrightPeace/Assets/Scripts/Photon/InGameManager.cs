@@ -93,6 +93,11 @@ public class InGameManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Awake()
     {
+        foreach (AudioSource _obj in FindObjectsOfType<AudioSource>())
+        {
+            _obj.volume = 0;
+        }
+
         isDeadMental = true;
         if (patientSpawn.Length == 0)
             patientSpawn = GetChild(patientTransform);
@@ -420,6 +425,11 @@ public class InGameManager : MonoBehaviourPunCallbacks
         foreach (GameObject _speaker in GameObject.FindGameObjectsWithTag("Speaker"))
         {
             _speaker.GetComponent<AudioSource>().volume = 1;
+        }
+
+        foreach (AudioSource _obj in FindObjectsOfType<AudioSource>())
+        {
+            _obj.volume = 0;
         }
     }
 }
