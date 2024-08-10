@@ -21,7 +21,6 @@ public class EndingManager : MonoBehaviour
     public EndingObject[] endingObjects;
     private UserRole userRole;
     private UserEnding userEnding;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -32,12 +31,12 @@ public class EndingManager : MonoBehaviour
     }
     public void SetEnding()
     {
-        for(int i = 0; i < endingObjects.Length; i++)
+        for (int i = 0; i < endingObjects.Length; i++)
         {
             if (endingObjects[i].role == userRole)
-            { 
+            {
                 endingObjects[i].roleobject.SetActive(true);
-                foreach(Ending obj in endingObjects[i].endingobject)
+                foreach (Ending obj in endingObjects[i].endingobject)
                 {
                     if (obj.ending == userEnding)
                     {
@@ -49,8 +48,8 @@ public class EndingManager : MonoBehaviour
 
         }
     }
-    public void SetEndingData()
+    public void Gomenu()
     {
-
+        GameManager.Instance.LoadLobbyScene();
     }
 }

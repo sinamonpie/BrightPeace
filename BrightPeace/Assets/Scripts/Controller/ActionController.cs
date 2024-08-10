@@ -289,8 +289,15 @@ public class ActionController : MonoBehaviourPun
                     if (GameManager.Instance.role == UserRole.Patient)
                     {
                         GameManager.Instance.SetEnding(UserEnding.WinEnding);
+                        PhotonNetwork.LeaveRoom();
                         Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                     } 
+                    else if (GameManager.Instance.role == UserRole.Mental)
+                    {
+                        GameManager.Instance.SetEnding(UserEnding.NomalEnding);
+                        PhotonNetwork.LeaveRoom();
+                        Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                    }
                 }
                 else
                 {
@@ -318,6 +325,13 @@ public class ActionController : MonoBehaviourPun
                 if (GameManager.Instance.role == UserRole.Patient)
                 {
                     GameManager.Instance.SetEnding(UserEnding.WinEnding);
+                    PhotonNetwork.LeaveRoom();
+                    Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                }
+                else if (GameManager.Instance.role == UserRole.Mental)
+                {
+                    GameManager.Instance.SetEnding(UserEnding.NomalEnding);
+                    PhotonNetwork.LeaveRoom();
                     Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                 }
             }
