@@ -106,7 +106,6 @@ public class ActionController : MonoBehaviourPun
             }
 
         }
-
         else
         {
             InfoDisapper();
@@ -188,6 +187,8 @@ public class ActionController : MonoBehaviourPun
             }
         }
     }
+
+
     public bool IsLockDoor()
     {
         if (hitInfo.transform.GetComponent<DoorController>().UseableDoor())
@@ -356,5 +357,38 @@ public class ActionController : MonoBehaviourPun
     {
         actionText.gameObject.SetActive(true);
         actionText.text = "퓨즈 넣기 " + "<color=yellow>" + "E키" + "</color>";
+    }
+
+    public void UseLockPick()
+    {
+        if(currentLockDoor != hitInfo.transform.gameObject)
+        {
+            GetComponent<PlayerController>().UnEnableMove();
+            currentLockDoor = hitInfo.transform.gameObject;
+            StartCoroutine(LockPickAlert(120f, currentLockDoor.GetComponent<DoorController>()));
+        }
+    }
+    
+    public void StopLockPick()
+    {
+        StopAllCoroutines();
+        GetComponent<PlayerController>().EnableMove();
+    }
+
+    IEnumerator LockPickAlert(float time, DoorController door)
+    {
+        while (time > 0)
+        {
+            int minutes = Mathf.FloorToInt(time / 60);
+            int seconds = Mathf.FloorToInt(time % 60);
+
+            alertText.text = string.Format("문 따는 중...{0:0}:{1:00}", minutes, seconds);
+            alertText.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1f);
+            time -= 1f;
+        }
+        alertText.gameObject.SetActive(false);
+
+        door.UnlockDoor();
     }
 }

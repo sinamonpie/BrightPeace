@@ -49,9 +49,9 @@ public class ThirdPersonMovement : PlayerController
 
         Cursor.visible = false;
 
-        Look();
         if (isMove)
         {
+            Look();
             MoveTo();
         }
     }
