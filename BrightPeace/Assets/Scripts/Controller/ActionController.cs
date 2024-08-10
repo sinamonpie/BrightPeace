@@ -103,7 +103,6 @@ public class ActionController : MonoBehaviourPun
 
                                 if (Input.GetKey(KeyCode.E))
                                 {
-                                    SoundManager.instance.PlaySoundEffect("TurnValve");
                                     if (hitInfo.transform.GetComponent<ValveTank>().usePlayer == null)
                                         hitInfo.transform.GetComponent<ValveTank>().SetUsing(player.GetPhotonView().ViewID);
 
@@ -155,7 +154,6 @@ public class ActionController : MonoBehaviourPun
 
                                 if (Input.GetKey(KeyCode.E))
                                 {
-                                    SoundManager.instance.PlaySoundEffect("TurnValve");
                                     if (hitInfo.transform.GetComponent<ValveTank>().usePlayer == null)
                                         hitInfo.transform.GetComponent<ValveTank>().SetUsing(player.GetPhotonView().ViewID);
 
