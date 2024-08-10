@@ -11,7 +11,7 @@ public class Inventory : MonoBehaviour
     public GameObject SlotsParent;
     public TMP_Text alertText;
     [SerializeField] private SlotBackGround[] slotsBg;
-    [SerializeField] private Slot[] slots;
+    [SerializeField] public Slot[] slots;
     float wheelInput;
     int currentSlotNum;
     int knifeSlotNum;
