@@ -1860,7 +1860,7 @@ GameObject:
   - component: {fileID: 6753178754807542773}
   m_Layer: 8
   m_Name: Speaker
-  m_TagString: Untagged
+  m_TagString: Speaker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2107,7 +2107,7 @@ GameObject:
   - component: {fileID: 7098241326205852727}
   m_Layer: 8
   m_Name: RoomSecurity
-  m_TagString: Speaker
+  m_TagString: RoomPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
