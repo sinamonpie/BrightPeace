@@ -415,6 +415,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     void SetPlayerCount(int PlayerCnt)
     {
         patientCount = PlayerCnt;
+        // 경비원과 미치광이만 살아남았다면
         if(patientCount == 0 && !isDeadMental && PhotonNetwork.IsMasterClient)
         {
             SpawnGun();

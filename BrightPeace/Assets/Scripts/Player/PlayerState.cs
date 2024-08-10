@@ -110,6 +110,7 @@ public class PlayerState : MonoBehaviourPun
         }
 
         InGameManager.Instance.GameEnding(UserEnding.DeadEnding);
+        // PhotonNetwork.LeaveRoom(); ??
     }
 
     public void TakeDamage(int damage)
