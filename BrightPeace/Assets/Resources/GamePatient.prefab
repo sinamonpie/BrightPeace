@@ -718,7 +718,7 @@ MonoBehaviour:
   SprintSpeed: 5.335
   cameraTransform: {fileID: 4654377753920380307}
   sitVolume: 0
-  walkVolume: 0.2
+  walkVolume: 0.1
   runVolume: 0.4
   currentVolume: 0
   pv: {fileID: 0}
@@ -2251,7 +2251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6011036417269610827}
   - component: {fileID: 6279916479295319391}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PatientCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}

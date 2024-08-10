@@ -75,7 +75,8 @@ MonoBehaviour:
   - SetDeadMantal
   - RPC_GetKill
   - AttackPaintient
-  - RPC_OpenEndingDoor
+  - SetMentalSpawn
+  - RPC_SetUseValve
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -90,6 +90,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private bool isDeadMental;
 
+    [SerializeField]
+    private bool isSetting;
 
     // Start is called before the first frame update
     void Awake()
@@ -149,6 +151,36 @@ public class InGameManager : MonoBehaviourPunCallbacks
             Vector3 spawnPosition = patientSpawn[idx].position;
 
             GameObject player = PhotonNetwork.Instantiate(patientObject.name, spawnPosition, Quaternion.identity, 0);
+
+            _players = GameObject.FindGameObjectsWithTag("Player");
+            List<GameObject> _playerList = new List<GameObject>(_players);
+            GameObject security = null;
+            foreach (GameObject _player in _playerList)
+            {
+                if (_player.GetComponent<PlayerState>().role == UserRole.Security)
+                {
+                    security = _player;
+                    break;
+                }
+            }
+            _playerList.Remove(security);
+            _players = _playerList.ToArray();
+
+            if (_players.Length >= 4 && isDeadMental)
+            {
+                player.GetComponent<PlayerState>().SetRoleMental();
+                pv.RPC("SetMentalSpawn", RpcTarget.All);
+            }
+            else
+            {
+                int m = UnityEngine.Random.Range(0, 2);
+                if(m == 0)
+                {
+                    player.GetComponent<PlayerState>().SetRoleMental();
+                    pv.RPC("SetMentalSpawn", RpcTarget.All);
+                }
+            }
+
             Transform caemraTrans = player.GetComponent<PlayerController>().GetCameraTransform();
 
             Camera.main.transform.position = caemraTrans.position;
@@ -294,51 +326,47 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     }
 
-
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!GameManager.Instance.isGameStart)
         {
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient && !isSetting)
             {
-                if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
-                {
-                    _players = GameObject.FindGameObjectsWithTag("Player");
-                    if (_players.Length == PhotonNetwork.CurrentRoom.PlayerCount)
-                    {
-                        List<GameObject> _playerList = new List<GameObject>(_players);
-                        GameObject security = null;
-                        foreach (GameObject _player in _playerList)
-                        {
-                            if (_player.GetComponent<PlayerState>().role == UserRole.Security)
-                            {
-                                security = _player;
-                                break;
-                            }
-                        }
-                        _playerList.Remove(security);
-                        _players = _playerList.ToArray();
-
-                        int randIdx = UnityEngine.Random.Range(0, _players.Length);
-                        _players[randIdx].GetComponent<PlayerState>().SetRoleMental();
-
-                        isDeadMental = false;
-
-                        SpawnItem();
-
-                        pv.RPC("GameStart", RpcTarget.All, _players.Length - 1);
-                    }
-                }
-                else
-                {
-                    pv.RPC("GameStart", RpcTarget.All, 0);
-                }
-
+                Setting();
             }
         }
     }
 
+    public void Setting()
+    {
+        _players = GameObject.FindGameObjectsWithTag("Player");
+        if (_players.Length == PhotonNetwork.CurrentRoom.PlayerCount)
+        {
+            isSetting = true;
+            //List<GameObject> _playerList = new List<GameObject>(_players);
+            //GameObject security = null;
+            //foreach (GameObject _player in _playerList)
+            //{
+            //    if (_player.GetComponent<PlayerState>().role == UserRole.Security)
+            //    {
+            //        security = _player;
+            //        break;
+            //    }
+            //}
+            //_playerList.Remove(security);
+            //_players = _playerList.ToArray();
+
+            //int randIdx = UnityEngine.Random.Range(0, _players.Length);
+            //_players[randIdx].GetComponent<PlayerState>().SetRoleMental();
+
+            //isDeadMental = false;
+
+            SpawnItem();
+
+            pv.RPC("GameStart", RpcTarget.All, _players.Length - 1);
+        }
+    }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
@@ -372,6 +400,11 @@ public class InGameManager : MonoBehaviourPunCallbacks
         isDeadMental = true;
     }
 
+    [PunRPC]
+    void SetMentalSpawn()
+    {
+        isDeadMental = false;
+    }
 
     public void DeadPatientPlayer()
     {

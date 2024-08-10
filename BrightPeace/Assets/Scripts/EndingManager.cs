@@ -25,6 +25,7 @@ public class EndingManager : MonoBehaviour
     void Start()
     {
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         userRole = GameManager.Instance.role;
         userEnding = GameManager.Instance.endding;
         SetEnding();
