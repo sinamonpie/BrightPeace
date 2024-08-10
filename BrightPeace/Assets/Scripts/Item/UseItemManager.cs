@@ -62,6 +62,12 @@ public class UseItemManager : MonoBehaviourPun
     [SerializeField]
     float startLockPickTime = 0f;
 
+    [Header("¹åÁÙ ½Ã°£")]
+    [SerializeField]
+    float lockPickTime2 = 20f;
+    [SerializeField]
+    float startLockPickTime2 = 0f;
+
     [SerializeField]
     RaycastHit hit;
     Ray ray;
@@ -88,7 +94,6 @@ public class UseItemManager : MonoBehaviourPun
     {
         if (pv.IsMine)
         {
-            DieToDropItem();
             if (inventory.currentSlot != null && inventory.currentSlot.item != null)
             {
                 if (inventory.currentSlot.item.itemType == ItemType.Used)
@@ -325,20 +330,20 @@ public class UseItemManager : MonoBehaviourPun
                                 useLockPick = false;
                             }
                         }
-                        else if (inventory.currentSlot.item.itemName == "¸ÁÄ¡")
+                        else if (inventory.currentSlot.item.itemName == "¹åÁÙ")
                         {
                             if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "Ending" && actionController.hitInfo.transform.GetComponent<EscapeEnding>().IsWindow())
                             {
-                                if (actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
+                                if (!actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
                                 {
-                                    actionController.actionText.text = "¸ÁÄ¡ »ç¿ë " + "<color=yellow>" + "EÅ°" + "</color>";
+                                    actionController.actionText.text = "¹åÁÙ »ç¿ë " + "<color=yellow>" + "EÅ°" + "</color>";
                                     actionController.actionText.gameObject.SetActive(true);
 
                                     if (Input.GetKeyDown(KeyCode.E))
                                     {
                                         GetComponent<PlayerController>().UnEnableMove();
                                         animator.SetBool("IsSit", true);
-                                        startLockPickTime = Time.time;
+                                        startLockPickTime2 = Time.time;
                                         useLockPick2 = true;
                                     }
                                     else if (Input.GetKeyUp(KeyCode.E))
@@ -350,26 +355,25 @@ public class UseItemManager : MonoBehaviourPun
 
                                     if (useLockPick2)
                                     {
-                                        float currentTime = Time.time - startLockPickTime;
-                                        float time = lockPickTime - currentTime;
+                                        float currentTime = Time.time - startLockPickTime2;
+                                        float time = lockPickTime2 - currentTime;
 
                                         int minutes = Mathf.FloorToInt(time / 60);
                                         int seconds = Mathf.FloorToInt(time % 60);
 
-                                        alertText.text = string.Format("¸ÁÄ¡¸ÁÄ¡...{0:0}:{1:00}", minutes, seconds);
+                                        alertText.text = string.Format("¹åÁÙ ¹­´Â Áß...{0:0}:{1:00}", minutes, seconds);
                                         alertText.gameObject.SetActive(true);
 
                                         if (time <= 0)
                                         {
                                             alertText.gameObject.SetActive(false);
                                             actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndingOK();
+                                            actionController.hitInfo.transform.GetComponent<EscapeEnding>().NotWindow();
+                                            GetComponent<PlayerController>().EnableMove();
                                             inventory.currentSlot.ClearSlot();
+                                            Debug.Log(actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger());
                                         }
                                     }
-                                }
-                                else
-                                {
-
                                 }
                             }
                             else

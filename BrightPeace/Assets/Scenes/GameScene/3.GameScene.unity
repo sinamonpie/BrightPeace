@@ -5423,6 +5423,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2737829160205642548, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.541
+      objectReference: {fileID: 0}
+    - target: {fileID: 4292575639599202875, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -12.447
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487762117215629932, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.59
+      objectReference: {fileID: 0}
     - target: {fileID: 7545551075677505036, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
       propertyPath: m_Name
       value: Spawn_
@@ -5431,8 +5443,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8446943125612582960, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 8596748541855795245, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.188
+      objectReference: {fileID: 0}
+    - target: {fileID: 9088011400673687532, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.519
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1066639453190532360, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+    - {fileID: 6721528810954982404, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
@@ -8347,6 +8373,9 @@ MonoBehaviour:
   - obj: {fileID: 7782822512737329682, guid: 891f3fbcd18d5964a8d06fe695f45e3d, type: 3}
     minCount: 1
     maxCount: 2
+  - obj: {fileID: 815761469548504526, guid: b5dc8b66db4c66d4a9ea2d70739ae998, type: 3}
+    minCount: 1
+    maxCount: 2
   spawnedKeyCount: 0
   spawnedFuzeBoxCount: 0
   spawnedItemCount: 0
@@ -9303,7 +9332,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 4352
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

@@ -74,8 +74,11 @@ public class ActionController : MonoBehaviourPun
 
             if (hitInfo.transform.tag == "Ending" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
-                canDoor = true;
-                EndigInfoAppear();
+                if (!hitInfo.transform.GetComponent<EscapeEnding>().IsWindow())
+                {
+                    canDoor = true;
+                    EndigInfoAppear();
+                }
             }
 
             if (hitInfo.transform.tag == "Cabinet" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
@@ -335,6 +338,7 @@ public class ActionController : MonoBehaviourPun
         {
             if (hitInfo.transform != null)
             {
+                Debug.Log("엔딩 확인1");
                 if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
                 {
                     // 실험체 탈출 성공
