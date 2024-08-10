@@ -50,7 +50,10 @@ public class ThirdPersonMovement : PlayerController
         Cursor.visible = false;
 
         Look();
-        MoveTo();
+        if (isMove)
+        {
+            MoveTo();
+        }
     }
 
     private void LateUpdate()

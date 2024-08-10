@@ -265,7 +265,27 @@ public class UseItemManager : MonoBehaviourPun
                         {
                             if (Physics.Raycast(ray, out actionController.hitInfo, actionController.range, 6))
                             {
+                                if (actionController.hitInfo.transform.tag == "ExitDoor" && actionController.hitInfo.transform != null)
+                                {
+                                    if (!actionController.hitInfo.transform.GetComponent<ActionController>().IsLockDoor())
+                                    {
+                                        actionController.actionText.text = "락픽 사용 " + "<color=yellow>" + "E키" + "</color>";
+                                        actionController.actionText.gameObject.SetActive(true);
 
+                                        if (Input.GetKey(KeyCode.E))
+                                        {
+                                            GetComponent<PlayerController>().UnEnableMove();
+                                            animator.SetBool("IsSit", true);
+                                            StartCoroutine(LockPickAlert(120f, actionController.hitInfo.transform.GetComponent<ActionController>()));
+                                        }
+                                        else
+                                        {
+                                            GetComponent<PlayerController>().EnableMove();
+                                            animator.SetBool("IsSit", false);
+                                            StopAllCoroutines();
+                                        }
+                                    }
+                                }
                             }
                         }
                         else if (inventory.currentSlot.item.itemName == "밸브")
@@ -359,6 +379,23 @@ public class UseItemManager : MonoBehaviourPun
 
         sensorCamera.SetCamera(false);
 
+    }
+
+    IEnumerator LockPickAlert(float time, ActionController door)
+    {
+        while(time > 0)
+        {
+            int minutes = Mathf.FloorToInt(time / 60);
+            int seconds = Mathf.FloorToInt(time % 60);
+
+            alertText.text = string.Format("문 따는 중...{0:0}:{1:00}", minutes, seconds);
+            alertText.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1f);
+            time -= 1f;
+        }
+        alertText.gameObject.SetActive(false);
+
+        door.UnlockDoor();
     }
 
     IEnumerator TextAlert()
