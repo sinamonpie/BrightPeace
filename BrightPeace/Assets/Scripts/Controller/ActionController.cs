@@ -327,6 +327,8 @@ public class ActionController : MonoBehaviourPun
         alertText.gameObject.SetActive(false);
     }
 
+
+    // 지하실 밸브 탈출 엔딩
     public void EndingAction()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -335,12 +337,16 @@ public class ActionController : MonoBehaviourPun
             {
                 if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
                 {
+                    // 실험체 탈출 성공
+                    // WinEnding
                     if (GameManager.Instance.role == UserRole.Patient)
                     {
                         GameManager.Instance.SetEnding(UserEnding.WinEnding);
                         PhotonNetwork.LeaveRoom();
                         Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                     } 
+                    // 미치광이 탈출 성공
+                    // NormalEnding
                     else if (GameManager.Instance.role == UserRole.Mental)
                     {
                         GameManager.Instance.SetEnding(UserEnding.NomalEnding);
@@ -365,18 +371,24 @@ public class ActionController : MonoBehaviourPun
         EndingAction();
     }
 
+
+    // 로비에서 탈출 엔딩
     public void EndingLobbyAction()
     {
         if (hitInfo.transform != null && hitInfo.transform.GetComponent<EscapeEnding>())
         {
             if (hitInfo.transform.GetComponent<EscapeEnding>() != null && hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
             {
+                // 실험체 탈출 성공
+                // WinEnding
                 if (GameManager.Instance.role == UserRole.Patient)
                 {
                     GameManager.Instance.SetEnding(UserEnding.WinEnding);
                     PhotonNetwork.LeaveRoom();
                     Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                 }
+                // 미치광이 탈출 성공
+                // NormalEnding
                 else if (GameManager.Instance.role == UserRole.Mental)
                 {
                     GameManager.Instance.SetEnding(UserEnding.NomalEnding);

@@ -58,6 +58,7 @@ public class DoorUseKeyUI : MonoBehaviourPun
         if(currentTime >= totalTime)
         {
             image.color = Color.green;
+            text.color = Color.green;
             text.text = "¿Ï·á";
         }
     }
