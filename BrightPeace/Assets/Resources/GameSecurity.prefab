@@ -2703,6 +2703,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 274649b0e221539409070ebf6c18918b, type: 3}
   - {fileID: 8300000, guid: a3194b8bbc96ef84fab1f98f4b7dae3e, type: 3}
   FootstepAudioVolume: 0.2
+  ch_layerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &1520155454144629157
 MonoBehaviour:
   m_ObjectHideFlags: 0
