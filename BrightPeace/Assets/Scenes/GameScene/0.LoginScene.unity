@@ -1878,6 +1878,24 @@ MonoBehaviour:
   - name: CloseDoor
     volume: 0.5
     clip: {fileID: 8300000, guid: 5b59bd5f65de04d649fa7a0c9f4cc659, type: 3}
+  - name: ValveClose
+    volume: 1
+    clip: {fileID: 8300000, guid: daef7e43e593140b781b541fd2ccaf73, type: 3}
+  - name: KnifeHit
+    volume: 1
+    clip: {fileID: 8300000, guid: f3b92b2437eb84cebbdf05f90216ef86, type: 3}
+  - name: KnifeMiss
+    volume: 1
+    clip: {fileID: 8300000, guid: f749bd6b5dc1d49538513beb102869ac, type: 3}
+  - name: GunFire
+    volume: 1
+    clip: {fileID: 8300000, guid: 5de5970fee5dd7847aea72225e1e8e73, type: 3}
+  - name: Key
+    volume: 1
+    clip: {fileID: 8300000, guid: 5b59bd5f65de04d649fa7a0c9f4cc659, type: 3}
+  - name: ButtenClick
+    volume: 1
+    clip: {fileID: 8300000, guid: 7b7519f7d66dc4078abecd7b8b0ad797, type: 3}
   bgmSounds:
   - name: "\uB85C\uADF8\uC778"
     volume: 0.05
