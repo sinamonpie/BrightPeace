@@ -66,8 +66,7 @@ public class DoorController : MonoBehaviour
 
     public void UnlockDoor()
     {
-        SoundManager.instance.PlayEffectAtPoint("CloseDoor", transform.position);
-        unlockDoor = true;
+        pv.RPC("RPC_UnlockDoor", RpcTarget.All);
     }
 
     public void SetDoorUI(float time)
@@ -80,6 +79,12 @@ public class DoorController : MonoBehaviour
     {
         GetComponentInChildren<DoorUseKeyUI>().DoorUI(time);
     } 
+
+    [PunRPC]
+    void RPC_UnlockDoor()
+    {
+        unlockDoor = true;
+    }
 
     [PunRPC]
     public void RPC_DoorControl()
