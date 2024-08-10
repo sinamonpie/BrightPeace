@@ -63,6 +63,15 @@ public class ActionController : MonoBehaviourPun
                 DoorInfoAppear();
             }
 
+            if(hitInfo.transform.tag == "ExitDoor")
+            {
+                if(hitInfo.transform.GetComponent<DoorController>().UseableDoor())
+                {
+                    canDoor = true;
+                    DoorInfoAppear();
+                }
+            }
+
             if (hitInfo.transform.tag == "Ending" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
                 canDoor = true;

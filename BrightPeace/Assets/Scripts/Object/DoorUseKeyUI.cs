@@ -54,6 +54,12 @@ public class DoorUseKeyUI : MonoBehaviourPun
         float progress = currentTime / totalTime;
         int percentage = Mathf.FloorToInt(progress * 100); // 0% ~ 100%로 변환
         text.text = string.Format("진행도\n{0}%", percentage);
+
+        if(currentTime >= totalTime)
+        {
+            image.color = Color.green;
+            text.text = "완료";
+        }
     }
 
     IEnumerator DoorUseKey(float time)
@@ -78,47 +84,6 @@ public class DoorUseKeyUI : MonoBehaviourPun
         image.gameObject.SetActive(false);
         text.gameObject.SetActive(false);
     }
-
-/*    IEnumerator UseValveUI(float totalTime)
-    {
-        float progress;
-
-        checkCor = true;
-        image.gameObject.SetActive(true);
-        text.gameObject.SetActive(true);
-
-        while (currentTime < totalTime && currentTime >= 0)
-        {
-            if (this.isPartient)
-            {
-                progress = currentTime / totalTime;
-                image.fillAmount = currentTime / totalTime;
-                currentTime += Time.deltaTime;
-            }
-            else
-            {
-                progress = 1f - (currentTime / totalTime);
-                image.fillAmount = 1f - (currentTime / totalTime);
-                currentTime -= Time.deltaTime;
-
-                if (currentTime < 0f)
-                {
-                    currentTime = 0f;
-                    checkCor = false;
-                    image.fillAmount = 1f;
-                    text.text = "진행도\n0%";
-                    yield break;
-                }
-            }
-            int percentage = Mathf.FloorToInt(progress * 100); // 0% ~ 100%로 변환
-            text.text = string.Format("진행도\n{0}%", percentage);
-
-            yield return null;
-        }
-
-        checkCor = false;
-    }*/
-
 
     IEnumerator DoorUseKeyText(float time)
     {

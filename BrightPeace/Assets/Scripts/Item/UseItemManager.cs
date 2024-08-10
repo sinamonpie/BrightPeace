@@ -306,8 +306,13 @@ public class UseItemManager : MonoBehaviourPun
                                         {
                                             alertText.gameObject.SetActive(false);
                                             actionController.hitInfo.transform.GetComponent<DoorController>().UnlockDoor();
+                                            inventory.currentSlot.ClearSlot();
                                         }
                                     }
+                                }
+                                else
+                                {
+
                                 }
                             }
                             else
