@@ -286,7 +286,11 @@ public class ActionController : MonoBehaviourPun
             {
                 if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
                 {
-                    Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                    if (GameManager.Instance.role == UserRole.Patient)
+                    {
+                        GameManager.Instance.SetEnding(UserEnding.WinEnding);
+                        Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                    } 
                 }
                 else
                 {
@@ -311,7 +315,11 @@ public class ActionController : MonoBehaviourPun
         {
             if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
             {
-                Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                if (GameManager.Instance.role == UserRole.Patient)
+                {
+                    GameManager.Instance.SetEnding(UserEnding.WinEnding);
+                    Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                }
             }
             else
             {
