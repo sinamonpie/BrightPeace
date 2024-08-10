@@ -88,8 +88,10 @@ public class FirstPersonMovement : PlayerController
             if (Physics.Raycast(actionController.ray, out actionController.hitInfo, actionController.range, ch_layerMask))
             {
                 actionController.hitInfo.transform.GetComponent<PlayerState>().TakeDamage(1);
+                Debug.Log(actionController.hitInfo.transform.tag);
+                Debug.Log("때리기 적용");
             }
-            Invoke("IsSwing", 1f);
+            Invoke("IsSwing", 2f);
         }
     }
 
