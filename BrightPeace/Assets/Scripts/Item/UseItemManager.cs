@@ -222,47 +222,45 @@ public class UseItemManager : MonoBehaviourPun
                         ray = actionController.ray;
                         if (inventory.currentSlot.item.itemName == "퓨즈")
                         {
-                            if (Physics.Raycast(ray, out actionController.hitInfo, actionController.range, 6))
+                            if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "FuseBox")
                             {
-                                if (actionController.hitInfo.transform.tag == "FuseBox")
+                                // 퓨즈박스라고 뜨는 문구 @@@@@@
+                                if (Input.GetKeyDown(KeyCode.E))
                                 {
-                                    // 퓨즈박스라고 뜨는 문구 @@@@@@
-                                    if (Input.GetKeyDown(KeyCode.E))
+                                    Debug.Log("퓨즈사용");
+                                    if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() < 3)
                                     {
-                                        if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() < 3)
+                                        actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
+                                        if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
                                         {
-                                            actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
-                                            if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
+                                            actionController.hitInfo.transform.GetComponent<FuseBox>().ClearPuseBox();
+                                            if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() == 3)
                                             {
-                                                actionController.hitInfo.transform.GetComponent<FuseBox>().ClearPuseBox();
-                                                if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() == 3)
-                                                {
-                                                    actionController.hitInfo.transform.GetComponent<FuseBox>().UnlockLobbyDoor();
-                                                    string text = "퓨즈박스 3개 다 넣었습니다.";
-                                                    StartCoroutine(TextAlert());
-                                                    alertText.SetText(text);
-                                                }
-                                                else
-                                                {
-                                                    string text = "남은 퓨즈박스 개수 : " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck()).ToString();
-                                                    StartCoroutine(TextAlert());
-                                                    alertText.SetText(text);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                string text = "남은 퓨즈 개수 = " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum()).ToString();
+                                                actionController.hitInfo.transform.GetComponent<FuseBox>().UnlockLobbyDoor();
+                                                string text = "퓨즈박스 3개 다 넣었습니다.";
                                                 StartCoroutine(TextAlert());
                                                 alertText.SetText(text);
                                             }
-                                            inventory.currentSlot.ClearSlot();
+                                            else
+                                            {
+                                                string text = "남은 퓨즈박스 개수 : " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck()).ToString();
+                                                StartCoroutine(TextAlert());
+                                                alertText.SetText(text);
+                                            }
                                         }
                                         else
                                         {
-                                            string text = "해당 퓨즈박스는 퓨즈를 다 채웠습니다.";
+                                            string text = "남은 퓨즈 개수 = " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum()).ToString();
                                             StartCoroutine(TextAlert());
                                             alertText.SetText(text);
                                         }
+                                        inventory.currentSlot.ClearSlot();
+                                    }
+                                    else
+                                    {
+                                        string text = "해당 퓨즈박스는 퓨즈를 다 채웠습니다.";
+                                        StartCoroutine(TextAlert());
+                                        alertText.SetText(text);
                                     }
                                 }
                             }
@@ -305,38 +303,32 @@ public class UseItemManager : MonoBehaviourPun
                         }
                         else if (inventory.currentSlot.item.itemName == "밸브")
                         {
-                            if (Physics.Raycast(ray, out actionController.hitInfo, actionController.range, 6))
+                            if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "Tank")
                             {
-                                if (actionController.hitInfo.transform.tag == "Tank" && actionController.hitInfo.transform != null)
-                                {
-                                    actionController.actionText.text = "밸브 넣기 " + "<color=yellow>" + "E키" + "</color>";
-                                    actionController.actionText.gameObject.SetActive(true);
+                                actionController.actionText.text = "밸브 넣기 " + "<color=yellow>" + "E키" + "</color>";
+                                actionController.actionText.gameObject.SetActive(true);
 
-                                    if (Input.GetKeyDown(KeyCode.E))
-                                    {
-                                        StartCoroutine(TextAlert());
-                                        alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
-
-                                        GameObject tank = actionController.hitInfo.transform.gameObject;
-                                        tank.GetComponent<ValveTank>().SetValve();
-                                        inventory.currentSlot.ClearSlot();
-                                    }
-                                }
-                                else
+                                if (Input.GetKeyDown(KeyCode.E))
                                 {
-                                    goto exit;
+                                    StartCoroutine(TextAlert());
+                                    alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
+
+                                    GameObject tank = actionController.hitInfo.transform.gameObject;
+                                    tank.GetComponent<ValveTank>().SetValve();
+                                    inventory.currentSlot.ClearSlot();
                                 }
+                            }
+                            else
+                            {
+                                goto exit;
                             }
                             // 액션 컨트롤러로 옮기기 NULL 오류 
                         }
                         else if(inventory.currentSlot.item.itemName == "카드키")
                         {
-                            if (Physics.Raycast(ray, out actionController.hitInfo, actionController.range, 6))
+                            if (Input.GetKeyDown(KeyCode.E))
                             {
-                                if (Input.GetKeyDown(KeyCode.E))
-                                {
-                                    actionController.EndingLobbyAction();
-                                }
+                                actionController.EndingLobbyAction();
                             }
 
                         }
