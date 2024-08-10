@@ -49,5 +49,8 @@ public class EndingManager : MonoBehaviour
 
         }
     }
+    public void SetEndingData()
+    {
 
+    }
 }
