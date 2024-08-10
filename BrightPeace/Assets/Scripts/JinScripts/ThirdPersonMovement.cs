@@ -27,12 +27,13 @@ public class ThirdPersonMovement : PlayerController
     // Start is called before the first frame update
     void Start()
     {
-        if (!pv.IsMine)
-            return;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
         avatarup = animator.GetBoneTransform(HumanBodyBones.Spine);
+
+        if (!pv.IsMine)
+            return;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
