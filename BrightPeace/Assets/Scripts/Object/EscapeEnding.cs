@@ -65,4 +65,12 @@ public class EscapeEnding : MonoBehaviourPun
     {
         endingTrigger = true;
     }
+
+    public bool isWindow = false;
+
+    public bool IsWindow()
+    {
+        return isWindow;
+    }
+
 }

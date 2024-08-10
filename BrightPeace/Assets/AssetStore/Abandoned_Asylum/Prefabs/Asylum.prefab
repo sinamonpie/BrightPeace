@@ -4947,6 +4947,7 @@ MonoBehaviour:
   driver_Trigger: 0
   TEST_Trigger: 0
   clearPuseBox: 0
+  isWindow: 0
 --- !u!1 &8604409324610155446
 GameObject:
   m_ObjectHideFlags: 0
@@ -20919,6 +20920,7 @@ MonoBehaviour:
   driver_Trigger: 0
   TEST_Trigger: 0
   clearPuseBox: 0
+  isWindow: 1
 --- !u!1 &8604516355249169868
 GameObject:
   m_ObjectHideFlags: 0
@@ -152473,6 +152475,7 @@ MonoBehaviour:
   driver_Trigger: 0
   TEST_Trigger: 0
   clearPuseBox: 0
+  isWindow: 0
 --- !u!1 &8605363944483561802
 GameObject:
   m_ObjectHideFlags: 0
@@ -157683,6 +157686,7 @@ MonoBehaviour:
   driver_Trigger: 0
   TEST_Trigger: 0
   clearPuseBox: 0
+  isWindow: 0
 --- !u!4 &8131582396737529253 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}

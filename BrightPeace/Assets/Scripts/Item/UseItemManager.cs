@@ -41,6 +41,7 @@ public class UseItemManager : MonoBehaviourPun
     float stunTime = 2f;
 
     bool useLockPick = false;
+    bool useLockPick2 = false;
 
     [Header("회복 아이템 횟수 제한")]
     [SerializeField]
@@ -242,7 +243,7 @@ public class UseItemManager : MonoBehaviourPun
                                         if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
                                         {
                                             actionController.hitInfo.transform.GetComponent<FuseBox>().ClearPuseBox();
-                                            if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() == 3)
+                                            if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() == 2)
                                             {
                                                 actionController.hitInfo.transform.GetComponent<FuseBox>().UnlockLobbyDoor();
                                                 string text = "퓨즈박스 3개 다 넣었습니다.";
@@ -251,7 +252,7 @@ public class UseItemManager : MonoBehaviourPun
                                             }
                                             else
                                             {
-                                                string text = "남은 퓨즈박스 개수 : " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck()).ToString();
+                                                string text = "남은 퓨즈박스 개수 : " + (2 - actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck()).ToString();
                                                 StartCoroutine(TextAlert());
                                                 alertText.SetText(text);
                                             }
@@ -322,6 +323,60 @@ public class UseItemManager : MonoBehaviourPun
                                 GetComponent<PlayerController>().EnableMove();
                                 animator.SetBool("IsSit", false);
                                 useLockPick = false;
+                            }
+                        }
+                        else if (inventory.currentSlot.item.itemName == "망치")
+                        {
+                            if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "Ending" && actionController.hitInfo.transform.GetComponent<EscapeEnding>().IsWindow())
+                            {
+                                if (actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
+                                {
+                                    actionController.actionText.text = "망치 사용 " + "<color=yellow>" + "E키" + "</color>";
+                                    actionController.actionText.gameObject.SetActive(true);
+
+                                    if (Input.GetKeyDown(KeyCode.E))
+                                    {
+                                        GetComponent<PlayerController>().UnEnableMove();
+                                        animator.SetBool("IsSit", true);
+                                        startLockPickTime = Time.time;
+                                        useLockPick2 = true;
+                                    }
+                                    else if (Input.GetKeyUp(KeyCode.E))
+                                    {
+                                        GetComponent<PlayerController>().EnableMove();
+                                        animator.SetBool("IsSit", false);
+                                        useLockPick2 = false;
+                                    }
+
+                                    if (useLockPick2)
+                                    {
+                                        float currentTime = Time.time - startLockPickTime;
+                                        float time = lockPickTime - currentTime;
+
+                                        int minutes = Mathf.FloorToInt(time / 60);
+                                        int seconds = Mathf.FloorToInt(time % 60);
+
+                                        alertText.text = string.Format("망치망치...{0:0}:{1:00}", minutes, seconds);
+                                        alertText.gameObject.SetActive(true);
+
+                                        if (time <= 0)
+                                        {
+                                            alertText.gameObject.SetActive(false);
+                                            actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndingOK();
+                                            inventory.currentSlot.ClearSlot();
+                                        }
+                                    }
+                                }
+                                else
+                                {
+
+                                }
+                            }
+                            else
+                            {
+                                GetComponent<PlayerController>().EnableMove();
+                                animator.SetBool("IsSit", false);
+                                useLockPick2 = false;
                             }
                         }
                         else if (inventory.currentSlot.item.itemName == "밸브")
