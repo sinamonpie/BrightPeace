@@ -197,18 +197,23 @@ public class UseItemManager : MonoBehaviourPun
                                 if (hit.transform.CompareTag("Player"))
                                 {
                                     PlayerState playerState = hit.transform.GetComponent<PlayerState>();
-                                    
+
                                     // 다른 플레이어가 맞았으면 
                                     if (playerState != null)
                                     {
                                         pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
-
+                                        SoundManager.instance.PlaySoundEffect("KnifeHit");
                                         inventory.currentSlot.ClearSlot();
                                         inventory.getKnife = false;
                                         pv.RPC("ShowKnife", RpcTarget.All, false);
                                     }
 
                                 }
+                            }
+                            else
+                            {
+                                //나이프 빗맞았을 떄
+                                SoundManager.instance.PlaySoundEffect("KnifeMiss");
                             }
                         }
 
@@ -333,6 +338,8 @@ public class UseItemManager : MonoBehaviourPun
                                 {
                                     StartCoroutine(TextAlert());
                                     alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
+
+                                    SoundManager.instance.PlaySoundEffect("PutValve");
 
                                     GameObject tank = actionController.hitInfo.transform.gameObject;
                                     tank.GetComponent<ValveTank>().SetValve();

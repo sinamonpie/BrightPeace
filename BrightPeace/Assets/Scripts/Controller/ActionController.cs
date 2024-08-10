@@ -103,6 +103,7 @@ public class ActionController : MonoBehaviourPun
 
                                 if (Input.GetKey(KeyCode.E))
                                 {
+                                    SoundManager.instance.PlaySoundEffect("TurnValve");
                                     if (hitInfo.transform.GetComponent<ValveTank>().usePlayer == null)
                                         hitInfo.transform.GetComponent<ValveTank>().SetUsing(player.GetPhotonView().ViewID);
 
@@ -154,6 +155,7 @@ public class ActionController : MonoBehaviourPun
 
                                 if (Input.GetKey(KeyCode.E))
                                 {
+                                    SoundManager.instance.PlaySoundEffect("TurnValve");
                                     if (hitInfo.transform.GetComponent<ValveTank>().usePlayer == null)
                                         hitInfo.transform.GetComponent<ValveTank>().SetUsing(player.GetPhotonView().ViewID);
 
@@ -257,7 +259,7 @@ public class ActionController : MonoBehaviourPun
                 isInvenFull = inventory.AddItem(hitInfo.transform.GetComponent<ItemPickUp>().Item);
                 if (isInvenFull)
                 {
-                    // 아이템 주울때 사운드 추가
+                    SoundManager.instance.PlaySoundEffect("ItemGet");
                     Debug.Log("획득하기 " + hitInfo.transform.GetComponent<ItemPickUp>().Item.itemName);
                     GameObject item = hitInfo.transform.gameObject;
                     item.GetComponent<ItemPickUp>().TakeItem();
