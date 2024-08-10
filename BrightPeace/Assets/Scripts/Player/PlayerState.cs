@@ -140,18 +140,15 @@ public class PlayerState : MonoBehaviourPun
 
     public void SetRoleMental()
     {
-        if (photonView.IsMine)
-        {
-            photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
-        }
+        GameManager.Instance.SetRole(role);
+        SetMetal();
+        photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
     }
 
     [PunRPC]
     void RPC_SetRoleMental()
     {
         role = UserRole.Mental;
-        GameManager.Instance.SetRole(role);
-        SetMetal();
     }
 
     [PunRPC]
