@@ -19,7 +19,7 @@ public class ValveTank : MonoBehaviourPun
     [SerializeField] bool isvalve;
     public bool isUseValve;
 
-    public bool isUsing;
+    public GameObject usePlayer;
 
     bool checkCor;
     void Start()
@@ -28,7 +28,7 @@ public class ValveTank : MonoBehaviourPun
         valve = transform.GetChild(0).gameObject;
         valve.SetActive(false);
         isvalve = false;
-        isUsing = false;
+        usePlayer = null;
     }
 
     public void SetValve()
@@ -41,9 +41,14 @@ public class ValveTank : MonoBehaviourPun
         return isvalve;
     }
 
-    public void SetUsing(bool _use)
+    public void SetUsing(int _use)
     {
         photonView.RPC("RPC_SetUseValve", RpcTarget.All, _use);
+    }
+
+    public void NotUsing()
+    {
+        photonView.RPC("RPC_NotUseValve", RpcTarget.All);
     }
 
     public void OpenTheGate(bool isPartient)
@@ -61,11 +66,16 @@ public class ValveTank : MonoBehaviourPun
     }
 
     [PunRPC]
-    void RPC_SetUseValve(bool _use)
+    void RPC_SetUseValve(int _ID)
     {
-        isUsing = _use;
+        usePlayer = PhotonView.Find(_ID).gameObject;
     }
 
+    [PunRPC]
+    void RPC_NotUseValve()
+    {
+        usePlayer = null;
+    }
 
     [PunRPC]
     void RPC_SetValve()
