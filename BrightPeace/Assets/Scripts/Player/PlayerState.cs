@@ -91,6 +91,22 @@ public class PlayerState : MonoBehaviourPun
     {
         currentHp += heal;
     }
+    
+    public void Dead()
+    {
+        isDead = true;
+        if (role == UserRole.Patient)
+        {
+            InGameManager.Instance.DeadPatientPlayer();
+        }
+        else if (role == UserRole.Mental)
+        {
+            InGameManager.Instance.DeadMenetalPlayer();
+        }
+
+        InGameManager.Instance.GameEnding(UserEnding.DeadEnding);
+    }
+
     public void TakeDamage(int damage)
     {
         if (photonView.IsMine)
@@ -105,16 +121,7 @@ public class PlayerState : MonoBehaviourPun
         currentHp -= damage;
         if (currentHp <= 0)
         {
-            isDead = true;
-            if(role == UserRole.Patient)
-            {
-                InGameManager.Instance.DeadPatientPlayer();
-            }
-            else if(role == UserRole.Mental)
-            {
-                InGameManager.Instance.DeadMenetalPlayer();
-            }
-            InGameManager.Instance.GameEnding(UserEnding.DeadEnding);
+            Dead();
         }
     }
 
@@ -127,18 +134,19 @@ public class PlayerState : MonoBehaviourPun
 
     public void SetRoleMental()
     {
-        photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
+        if (photonView.IsMine)
+        {
+            photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
+
+        }
     }
 
     [PunRPC]
     void RPC_SetRoleMental()
     {
         role = UserRole.Mental;
-        if(photonView.IsMine)
-        {
-            GameManager.Instance.SetRole(role);
-            SetMetal();
-        }
+        GameManager.Instance.SetRole(role);
+        SetMetal();
     }
 
     [PunRPC]
@@ -160,16 +168,11 @@ public class PlayerState : MonoBehaviourPun
     IEnumerator ClientPlayerStun(float duration)
     {
         PlayerController playerController = GetComponent<PlayerController>();
-        float moveSpeed = playerController.moveSpeed;
-        float sprintSpeed = playerController.SprintSpeed;
-
-        playerController.moveSpeed = 0f;
-        playerController.SprintSpeed = 0f;
+        playerController.UnEnableMove();
 
         yield return new WaitForSeconds(duration);
 
-        playerController.moveSpeed = moveSpeed;
-        playerController.SprintSpeed = sprintSpeed;
+        playerController.EnableMove();
 
     }
 }

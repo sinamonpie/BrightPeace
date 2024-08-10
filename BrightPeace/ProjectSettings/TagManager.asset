@@ -15,6 +15,7 @@ TagManager:
   - Cabinet
   - EndingLobby
   - Speaker
+  - ExitDoor
   layers:
   - Default
   - TransparentFX

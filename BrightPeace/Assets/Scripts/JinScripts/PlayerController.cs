@@ -15,6 +15,15 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTransform;
     protected CharacterController characterController;
 
+    protected bool isMove = true;
+
+    [Range(0, 1)] public float sitVolume;
+    [Range(0, 1)] public float walkVolume;
+    [Range(0, 1)] public float runVolume;
+
+    [SerializeField]
+    protected float currentVolume;
+
     [SerializeField]
     protected PhotonView pv;
 
@@ -26,5 +35,15 @@ public class PlayerController : MonoBehaviour
     public void Awake()
     {
         pv = GetComponent<PhotonView>();
+    }
+
+    public void EnableMove()
+    {
+        isMove = true;
+    }
+
+    public void UnEnableMove()
+    {
+        isMove = false;
     }
 }

@@ -40,6 +40,8 @@ public class UseItemManager : MonoBehaviourPun
     [SerializeField]
     float stunTime = 2f;
 
+    bool useLockPick = false;
+
     [Header("회복 아이템 횟수 제한")]
     [SerializeField]
     int medikitRate = 2;
@@ -52,6 +54,10 @@ public class UseItemManager : MonoBehaviourPun
     [Header("투시경 지속 시간")]
     [SerializeField]
     float wallHackTime = 3f;
+
+    [Header("락픽 시간")]
+    [SerializeField]
+    float lockPickTime = 50f;
 
     [SerializeField]
     RaycastHit hit;
@@ -213,14 +219,15 @@ public class UseItemManager : MonoBehaviourPun
                     // 다른 아이템 줍기 중복 제한
                     if (!actionController.isRayItem)
                     {
+                        ray = actionController.ray;
                         if (inventory.currentSlot.item.itemName == "퓨즈")
                         {
-                            
-                            if(actionController.hitInfo.transform.tag == "FuseBox")
+                            if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "FuseBox")
                             {
                                 // 퓨즈박스라고 뜨는 문구 @@@@@@
                                 if (Input.GetKeyDown(KeyCode.E))
                                 {
+                                    Debug.Log("퓨즈사용");
                                     if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() < 3)
                                     {
                                         actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
@@ -260,12 +267,43 @@ public class UseItemManager : MonoBehaviourPun
                         }
                         else if (inventory.currentSlot.item.itemName == "락픽")
                         {
+                            if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "ExitDoor")
+                            {
+                                if (actionController.hitInfo.transform.GetComponent<DoorController>().UseableDoor())
+                                {
+                                    actionController.actionText.text = "락픽 사용 " + "<color=yellow>" + "E키" + "</color>";
+                                    actionController.actionText.gameObject.SetActive(true);
 
+                                    if (Input.GetKeyDown(KeyCode.E))
+                                    {
+                                        if(!useLockPick)
+                                        {
+                                            GetComponent<PlayerController>().UnEnableMove();
+                                            animator.SetBool("IsSit", true);
+                                            StartCoroutine(LockPickAlert(lockPickTime, actionController.hitInfo.transform.GetComponent<DoorController>()));
+                                            useLockPick = true;
+                                        }
+                                    }
+
+                                    if(Input.GetKeyUp(KeyCode.E))
+                                    {
+                                        StopCoroutine(LockPickAlert(lockPickTime, actionController.hitInfo.transform.GetComponent<DoorController>()));
+                                        GetComponent<PlayerController>().EnableMove();
+                                        animator.SetBool("IsSit", false);
+                                        useLockPick = false;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                GetComponent<PlayerController>().EnableMove();
+                                animator.SetBool("IsSit", false);
+                                StopCoroutine(LockPickAlert(lockPickTime, actionController.hitInfo.transform.GetComponent<DoorController>()));
+                            }
                         }
                         else if (inventory.currentSlot.item.itemName == "밸브")
                         {
-                            // 액션 컨트롤러로 옮기기 NULL 오류 
-                            if (actionController.hitInfo.transform.tag == "Tank" && actionController.hitInfo.transform != null)
+                            if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "Tank")
                             {
                                 actionController.actionText.text = "밸브 넣기 " + "<color=yellow>" + "E키" + "</color>";
                                 actionController.actionText.gameObject.SetActive(true);
@@ -284,6 +322,7 @@ public class UseItemManager : MonoBehaviourPun
                             {
                                 goto exit;
                             }
+                            // 액션 컨트롤러로 옮기기 NULL 오류 
                         }
                         else if(inventory.currentSlot.item.itemName == "카드키")
                         {
@@ -291,6 +330,7 @@ public class UseItemManager : MonoBehaviourPun
                             {
                                 actionController.EndingLobbyAction();
                             }
+
                         }
 
                     }
@@ -346,6 +386,23 @@ public class UseItemManager : MonoBehaviourPun
 
         sensorCamera.SetCamera(false);
 
+    }
+
+    IEnumerator LockPickAlert(float time, DoorController door)
+    {
+        while(time > 0)
+        {
+            int minutes = Mathf.FloorToInt(time / 60);
+            int seconds = Mathf.FloorToInt(time % 60);
+
+            alertText.text = string.Format("문 따는 중...{0:0}:{1:00}", minutes, seconds);
+            alertText.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1f);
+            time -= 1f;
+        }
+
+        alertText.gameObject.SetActive(false);
+        door.UnlockDoor();
     }
 
     IEnumerator TextAlert()
