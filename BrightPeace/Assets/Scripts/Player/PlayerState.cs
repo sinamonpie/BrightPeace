@@ -115,6 +115,7 @@ public class PlayerState : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
+            SoundManager.instance.PlaySoundEffect("PainSound");
             currentHp -= damage;
             if (currentHp <= 0)
             {
