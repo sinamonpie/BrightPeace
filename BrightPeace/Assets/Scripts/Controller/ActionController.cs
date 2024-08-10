@@ -363,7 +363,7 @@ public class ActionController : MonoBehaviourPun
                 {
                     // 캐비넷 들어가는 사운드 추가
                     // 플레이어 투시경에 안보이게 하는거 임시용
-                    player.SetActive(false);
+                    //player.GetComponent<ThirdPersonCharacter>()
                     player.GetComponent<PlayerState>().PlayerInCabinet();
 
                     // 7 = hiddenCharactor Layer
@@ -371,7 +371,6 @@ public class ActionController : MonoBehaviourPun
                 }
                 else
                 {
-                    player.SetActive(true);
                     player.GetComponent<PlayerState>().PlayerInCabinet();
 
                     // 8 = Charactor Layer

@@ -23,6 +23,8 @@ public class ThirdPersonMovement : PlayerController
     public float cameraMaxDistance = 2f;
     float cameraDistance;
 
+    private bool inCabinet = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -111,25 +113,25 @@ public class ThirdPersonMovement : PlayerController
         {
             if (z > 0)
             {
-                currentSpeed = 1;
+                currentSpeed = 4;
                 realSpeed = moveSpeed - 1f;
                 animator.SetFloat("SitSpeed", currentSpeed);
             }
             else if (z < 0)
             {
-                currentSpeed = 2;
+                currentSpeed = 3;
                 realSpeed = moveSpeed - 1f;
                 animator.SetFloat("SitSpeed", currentSpeed);
             }
             else if (x > 0)
             {
-                currentSpeed = 4;
+                currentSpeed = 2;
                 realSpeed = moveSpeed - 1f;
                 animator.SetFloat("SitSpeed", currentSpeed);
             }
             else if (x < 0)
             {
-                currentSpeed = 3;
+                currentSpeed = 1;
                 realSpeed = moveSpeed - 1f;
                 animator.SetFloat("SitSpeed", currentSpeed);
             }
@@ -222,4 +224,9 @@ public class ThirdPersonMovement : PlayerController
         }
     }
     
+    public bool InCabinet()
+    {
+        return inCabinet;
+    }
+
 }
