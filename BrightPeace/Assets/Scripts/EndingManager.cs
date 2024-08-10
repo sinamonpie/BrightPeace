@@ -51,6 +51,7 @@ public class EndingManager : MonoBehaviour
     }
     public void Gomenu()
     {
+        SoundManager.instance.PlaySoundEffect("ButtenClick");
         GameManager.Instance.LoadLobbyScene();
     }
 }
