@@ -28,8 +28,8 @@ public class PlayerState : MonoBehaviourPun
 
     public void SetMetal()
     {
-        if(photonView.IsMine)
-            StartCoroutine(SetHearVoice());
+        //if(photonView.IsMine)
+        //    StartCoroutine(SetHearVoice());
     }
 
     IEnumerator SetHearVoice()
