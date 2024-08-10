@@ -1916,7 +1916,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 142084, guid: e6dfc6cc0cb127e43a220e29dbadbfd6, type: 3}
       propertyPath: m_Name
-      value: MetalCabinetDDWalledFull04 1
+      value: Cabinet
       objectReference: {fileID: 0}
     - target: {fileID: 142084, guid: e6dfc6cc0cb127e43a220e29dbadbfd6, type: 3}
       propertyPath: m_Layer
@@ -3054,11 +3054,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 7
+  holdTime: 3
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  actionText: {fileID: 452241615}
   alertText: {fileID: 1987663475}
+  actionText: {fileID: 452241615}
+  actionImage: {fileID: 0}
   inventory: {fileID: 0}
   player: {fileID: 1096555839}
   isRayItem: 0
@@ -3357,6 +3359,7 @@ MonoBehaviour:
   role: 2
   isInCabinet: 0
   isDead: 0
+  isMentalSetting: 0
   hallucinAudioClips:
   - name: 
     volume: 0
@@ -3468,11 +3471,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 7
+  holdTime: 3
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  actionText: {fileID: 0}
   alertText: {fileID: 0}
+  actionText: {fileID: 0}
+  actionImage: {fileID: 0}
   inventory: {fileID: 0}
   player: {fileID: 1096555839}
   isRayItem: 0
@@ -3546,10 +3551,13 @@ MonoBehaviour:
   moveSpeed: 2
   SprintSpeed: 5.335
   cameraTransform: {fileID: 1826579703}
+  sitVolume: 0
+  walkVolume: 0
+  runVolume: 0
+  currentVolume: 0
   pv: {fileID: 0}
   rotaionSpeed: 3
   FootstepAudioClips: []
-  FootstepAudioVolume: 0.5
   ch_layerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -3569,10 +3577,13 @@ MonoBehaviour:
   moveSpeed: 2
   SprintSpeed: 5.335
   cameraTransform: {fileID: 1826579703}
+  sitVolume: 0
+  walkVolume: 0
+  runVolume: 0
+  currentVolume: 0
   pv: {fileID: 0}
   rotaionSpeed: 3
   FootstepAudioClips: []
-  FootstepAudioVolume: 0.5
   cameraMaxDistance: 3
 --- !u!143 &1410889523
 CharacterController:
@@ -3807,11 +3818,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 7
+  holdTime: 3
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  actionText: {fileID: 452241615}
   alertText: {fileID: 1987663475}
+  actionText: {fileID: 452241615}
+  actionImage: {fileID: 0}
   inventory: {fileID: 0}
   player: {fileID: 1096555839}
   isRayItem: 0
@@ -4027,10 +4040,13 @@ MonoBehaviour:
   moveSpeed: 2
   SprintSpeed: 5.335
   cameraTransform: {fileID: 1611976833}
+  sitVolume: 0
+  walkVolume: 0
+  runVolume: 0
+  currentVolume: 0
   pv: {fileID: 0}
   rotaionSpeed: 3
   FootstepAudioClips: []
-  FootstepAudioVolume: 0.5
   cameraMaxDistance: 3
 --- !u!4 &1538689672 stripped
 Transform:
@@ -4108,10 +4124,13 @@ MonoBehaviour:
   moveSpeed: 2
   SprintSpeed: 5.335
   cameraTransform: {fileID: 964357291}
+  sitVolume: 0
+  walkVolume: 0
+  runVolume: 0
+  currentVolume: 0
   pv: {fileID: 0}
   rotaionSpeed: 3
   FootstepAudioClips: []
-  FootstepAudioVolume: 0.5
   cameraMaxDistance: 3
 --- !u!143 &1600042736
 CharacterController:
@@ -4159,10 +4178,13 @@ MonoBehaviour:
   moveSpeed: 2
   SprintSpeed: 5.335
   cameraTransform: {fileID: 964357291}
+  sitVolume: 0
+  walkVolume: 0
+  runVolume: 0
+  currentVolume: 0
   pv: {fileID: 0}
   rotaionSpeed: 3
   FootstepAudioClips: []
-  FootstepAudioVolume: 0.5
   ch_layerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -4691,11 +4713,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 7
+  holdTime: 3
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  actionText: {fileID: 452241615}
   alertText: {fileID: 1987663475}
+  actionText: {fileID: 452241615}
+  actionImage: {fileID: 0}
   inventory: {fileID: 0}
   player: {fileID: 1096555839}
   isRayItem: 0
