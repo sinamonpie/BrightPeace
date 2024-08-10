@@ -14,6 +14,7 @@ public class ValveTank : MonoBehaviourPun
     private float currentTime = 0f;
     public float valveSpeed = 300f;
 
+    [SerializeField] AudioSource audioSource;
     [SerializeField] GameObject B1Door;
     [SerializeField] GameObject valve;
     [SerializeField] bool isvalve;
@@ -29,6 +30,7 @@ public class ValveTank : MonoBehaviourPun
         valve.SetActive(false);
         isvalve = false;
         usePlayer = null;
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void SetValve()
@@ -68,12 +70,17 @@ public class ValveTank : MonoBehaviourPun
     [PunRPC]
     void RPC_SetUseValve(int _ID)
     {
+        if (!audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
         usePlayer = PhotonView.Find(_ID).gameObject;
     }
 
     [PunRPC]
     void RPC_NotUseValve()
     {
+        audioSource.Stop();
         usePlayer = null;
     }
 
