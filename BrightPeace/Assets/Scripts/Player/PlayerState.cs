@@ -13,7 +13,7 @@ public class PlayerState : MonoBehaviourPun
     public bool isInCabinet;
 
     [SerializeField]
-    private bool isDead;
+    public bool isDead;
 
     public Sound[] hallucinAudioClips;
 

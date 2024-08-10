@@ -29,7 +29,7 @@ public class ActionController : MonoBehaviourPun
     public Image actionImage;
 
     [SerializeField] Inventory inventory;
-    [SerializeField] GameObject player;
+    [SerializeField] public GameObject player;
 
     public bool isRayItem;
     public bool canDoor = false;

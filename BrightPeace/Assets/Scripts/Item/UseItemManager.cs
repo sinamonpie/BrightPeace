@@ -85,6 +85,7 @@ public class UseItemManager : MonoBehaviourPun
     {
         if (pv.IsMine)
         {
+            DieToDropItem();
             if (inventory.currentSlot != null && inventory.currentSlot.item != null)
             {
                 if (inventory.currentSlot.item.itemType == ItemType.Used)
@@ -358,28 +359,26 @@ public class UseItemManager : MonoBehaviourPun
                     inventory.currentSlot.ClearSlot();
                 }
             }
-            
-            if (Input.GetKeyUp(KeyCode.R))
-            {
-                DieToDropItem();
-            }
         }
     }
 
     public void DieToDropItem()
     {
-        for (int i = 0; i<inventory.slots.Length; i++)
+        if (actionController.player.transform.GetComponent<PlayerState>().isDead == true)
         {
-            if (inventory.slots[i].item != null)
+            for (int i = 0; i < inventory.slots.Length; i++)
             {
-                Vector3 PlayerPos = transform.position + new Vector3(i * 0.2f, 0, 0);
-                Vector3 PlayerFwd = transform.forward;
-                string itemName = inventory.slots[i].item.itemPrefab.name;
+                if (inventory.slots[i].item != null)
+                {
+                    Vector3 PlayerPos = transform.position + new Vector3(i * 0.2f, 0, 0);
+                    Vector3 PlayerFwd = transform.forward;
+                    string itemName = inventory.slots[i].item.itemPrefab.name;
 
-                pv.RPC("RPC_DropItem", RpcTarget.MasterClient, PlayerPos + PlayerFwd, Quaternion.identity, itemName);
+                    pv.RPC("RPC_DropItem", RpcTarget.MasterClient, PlayerPos + PlayerFwd, Quaternion.identity, itemName);
 
-                inventory.slots[i].ClearSlot();
-                Debug.Log("죽어서 모든템 드랍");
+                    inventory.slots[i].ClearSlot();
+                    Debug.Log("죽어서 모든템 드랍");
+                }
             }
         }
     }
