@@ -343,7 +343,7 @@ public class ActionController : MonoBehaviourPun
                 {
                     // 실험체 탈출 성공
                     // WinEnding
-                    if (GameManager.Instance.role == UserRole.Patient)
+                    if (player.transform.GetComponent<PlayerState>().role == UserRole.Patient)
                     {
                         GameManager.Instance.SetEnding(UserEnding.WinEnding);
                         PhotonNetwork.LeaveRoom();
@@ -351,7 +351,7 @@ public class ActionController : MonoBehaviourPun
                     } 
                     // 미치광이 탈출 성공
                     // NormalEnding
-                    else if (GameManager.Instance.role == UserRole.Mental)
+                    else if (player.transform.GetComponent<PlayerState>().role == UserRole.Mental)
                     {
                         GameManager.Instance.SetEnding(UserEnding.NomalEnding);
                         PhotonNetwork.LeaveRoom();
@@ -385,7 +385,7 @@ public class ActionController : MonoBehaviourPun
             {
                 // 실험체 탈출 성공
                 // WinEnding
-                if (GameManager.Instance.role == UserRole.Patient)
+                if (player.transform.GetComponent<PlayerState>().role == UserRole.Patient)
                 {
                     GameManager.Instance.SetEnding(UserEnding.WinEnding);
                     PhotonNetwork.LeaveRoom();
@@ -393,7 +393,7 @@ public class ActionController : MonoBehaviourPun
                 }
                 // 미치광이 탈출 성공
                 // NormalEnding
-                else if (GameManager.Instance.role == UserRole.Mental)
+                else if (player.transform.GetComponent<PlayerState>().role == UserRole.Mental)
                 {
                     GameManager.Instance.SetEnding(UserEnding.NomalEnding);
                     PhotonNetwork.LeaveRoom();
