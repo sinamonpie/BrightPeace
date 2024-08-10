@@ -357,6 +357,7 @@ public class UseItemManager : MonoBehaviourPun
                     Vector3 PlayerPos = transform.position;
                     Vector3 PlayerFwd = transform.forward;
                     string itemName = inventory.currentSlot.item.itemPrefab.name;
+                    Debug.Log(itemName + "¹ö¸®±â");
 
                     StartCoroutine(TextAlert());
                     alertText.text = inventory.currentSlot.item.itemName + " À»(¸¦) ¶³¾î¶ß·È½À´Ï´Ù.";
@@ -371,6 +372,29 @@ public class UseItemManager : MonoBehaviourPun
 
                     inventory.currentSlot.ClearSlot();
                 }
+            }
+            
+            if (Input.GetKeyUp(KeyCode.R))
+            {
+                DieToDropItem();
+            }
+        }
+    }
+
+    public void DieToDropItem()
+    {
+        for (int i = 0; i<inventory.slots.Length; i++)
+        {
+            if (inventory.slots[i].item != null)
+            {
+                Vector3 PlayerPos = transform.position + new Vector3(i * 0.2f, 0, 0);
+                Vector3 PlayerFwd = transform.forward;
+                string itemName = inventory.slots[i].item.itemPrefab.name;
+
+                pv.RPC("RPC_DropItem", RpcTarget.MasterClient, PlayerPos + PlayerFwd, Quaternion.identity, itemName);
+
+                inventory.slots[i].ClearSlot();
+                Debug.Log("Á×¾î¼­ ¸ðµçÅÛ µå¶ø");
             }
         }
     }

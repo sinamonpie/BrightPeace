@@ -318,7 +318,7 @@ public class ActionController : MonoBehaviourPun
 
     public void EndingLobbyAction()
     {
-        if (hitInfo.transform != null)
+        if (hitInfo.transform != null && hitInfo.transform.GetComponent<EscapeEnding>())
         {
             if (hitInfo.transform.GetComponent<EscapeEnding>() != null && hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
             {
