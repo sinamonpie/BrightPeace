@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
+using static UnityEngine.Rendering.DebugUI;
 /// <summary>
 /// 잠긴 문에 n초간 열리는 UI 생성
 /// </summary>
@@ -40,6 +41,13 @@ public class DoorUseKeyUI : MonoBehaviourPun
         StartCoroutine(DoorUseKey(time));
     }
 
+    public void DoorUI(float totalTime, float currnetTime, bool isPartient)
+    {
+        image.gameObject.SetActive(true);
+        text.gameObject.SetActive(true);
+        StartCoroutine(UseValveUI(totalTime, currnetTime, isPartient));
+    }
+
     IEnumerator DoorUseKey(float time)
     {            
         if(isDoor)
@@ -63,6 +71,44 @@ public class DoorUseKeyUI : MonoBehaviourPun
         text.gameObject.SetActive(false);
     }
 
+    IEnumerator UseValveUI(float totalTime, float currentTime, bool isPartient)
+    {
+        StartCoroutine(TankUseText(totalTime, currentTime, isPartient));
+
+        while (currentTime < totalTime && currentTime >= 0)
+        {
+            if (isPartient)
+            {
+                image.fillAmount = currentTime / totalTime;
+                currentTime += Time.deltaTime;
+            }
+            else
+            {
+                image.fillAmount = 1f - (currentTime / totalTime);
+                currentTime -= Time.deltaTime;
+
+                if (currentTime < 0f)
+                {
+                    currentTime = 0f;
+                    image.fillAmount = 1f; 
+                    yield break;
+                }
+            }
+
+            yield return null;
+        }
+
+        if (isPartient)
+        {
+            image.fillAmount = 0f; 
+        }
+        else
+        {
+            image.fillAmount = 1f; 
+        }
+    }
+
+
     IEnumerator DoorUseKeyText(float time)
     {
         float textTime = time / 3.0f;
@@ -74,20 +120,56 @@ public class DoorUseKeyUI : MonoBehaviourPun
         }
     }
 
+    IEnumerator TankUseText(float totalTime, float currentTime, bool isPartient)
+    {
+
+        while (currentTime >= 0 && currentTime <= totalTime)
+        {
+            // 진행도를 계산하여 %로 변환
+            float progress;
+
+            if (isPartient)
+            {
+                progress = currentTime / totalTime;
+            }
+            else
+            {
+                progress = 1f - (currentTime / totalTime);
+            }
+
+            int percentage = Mathf.FloorToInt(progress * 100); // 0% ~ 100%로 변환
+
+            // 텍스트를 "n%" 형식으로 표시
+            text.text = string.Format("진행도\n{0}%", percentage);
+
+            yield return new WaitForSeconds(1f);
+
+            // 현재 시간을 갱신
+            currentTime = isPartient ? currentTime + 1f : currentTime - 1f;
+
+        }
+
+        text.text = isPartient ? "진행도\n100%" : "진행도\n0%";
+    }
+
     IEnumerator TankUseText(float time)
     {
+        float totalTime = time;
+
         while (time > 0)
         {
-            int minutes = Mathf.FloorToInt(time / 60);
-            int seconds = Mathf.FloorToInt(time % 60);
+            // 진행도를 계산하여 %로 변환
+            float progress = 1f - (time / totalTime);
+            int percentage = Mathf.FloorToInt(progress * 100);
 
-            text.text = string.Format("{0:0}:{1:00}", minutes, seconds);
+            text.text += string.Format("{0}%", percentage);
+
             yield return new WaitForSeconds(1f);
 
             time -= 1f;
         }
 
-        // 카운트다운이 끝난 후 "0:00"으로 표시
-        text.text = "0:00";
+
+        text.text = "100%";
     }
 }

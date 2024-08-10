@@ -6,20 +6,27 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using Photon.Pun;
+using System.Data;
 
 public class ActionController : MonoBehaviourPun
 {
     [Header("상호작용 거리")]
     [SerializeField]
     public float range;
+
+    [Header("특정 상호작용 시간")]
+    [SerializeField]
+    private float holdTime = 3f;
+    private float _holdTime = 0f;
     public RaycastHit hitInfo;
     public Ray ray;
     private bool isInvenFull;
     private GameObject currentLockDoor;
 
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] public TMP_Text actionText;
     [SerializeField] private TMP_Text alertText;
+    public TMP_Text actionText;
+    public Image actionImage;
 
     [SerializeField] Inventory inventory;
     [SerializeField] GameObject player;
@@ -27,7 +34,6 @@ public class ActionController : MonoBehaviourPun
     public bool isRayItem;
     public bool canDoor = false;
     private bool isSetting = false;
-    private bool isUseValve = false;
 
     void Update()
     {
@@ -71,20 +77,72 @@ public class ActionController : MonoBehaviourPun
 
             if (hitInfo.transform.tag == "Tank")
             {
+                // 밸브를 달았을때
                 if (hitInfo.transform.GetComponent<ValveTank>().GetValve())
                 {
-                    if (!isUseValve)
+                    // 밸브가 활성화 안되었다면
+                    if (!hitInfo.transform.GetComponent<ValveTank>().isUseValve)
                     {
-                        actionText.gameObject.SetActive(true);
-                        actionText.text = "밸브 돌리기 " + "<color=yellow>" + "E Key" + "</color>";
-                        if (Input.GetKeyDown(KeyCode.E))
+                        // 실험체에 경우에만 밸브를 활성화 할 수 있음
+                        if(player.GetComponent<PlayerState>().role == UserRole.Patient)
                         {
-                            UseValve();
+                            actionText.gameObject.SetActive(true);
+                            actionText.text = "밸브 돌리기 " + "<color=yellow>" + "E Key" + "</color>";
+
+                            if (Input.GetKey(KeyCode.E))
+                            {
+                                _holdTime += Time.deltaTime;
+
+                                actionImage.gameObject.SetActive(true);
+                                actionImage.fillAmount = 1f - (_holdTime / holdTime);
+
+                                // 특정 시간동안 키를 눌러야 활성화
+                                if (_holdTime >= holdTime)
+                                {
+                                    actionImage.gameObject.SetActive(false);
+                                    _holdTime = 0f;
+                                    UseValve(true);
+                                }
+                            }
+                            else
+                            {
+                                _holdTime = 0f;
+                                actionImage.fillAmount = 1f;
+                                actionImage.gameObject.SetActive(false);
+                            }
                         }
                     }
                     else
                     {
-                        actionText.gameObject.SetActive(false);
+                        // 밸브가 활성화 되어 있을때, 경비원 과 배신자는 밸브를 돌릴 수 있음
+                        if (player.GetComponent<PlayerState>().role == UserRole.Mental || player.GetComponent<PlayerState>().role == UserRole.Security)
+                        {
+                            actionText.gameObject.SetActive(true);
+                            actionText.text = "밸브 방해하기 " + "<color=yellow>" + "E Key" + "</color>";
+
+                            if (Input.GetKey(KeyCode.E))
+                            {
+                                _holdTime += Time.deltaTime;
+
+                                actionImage.gameObject.SetActive(true);
+                                actionImage.fillAmount = 1f - (_holdTime / holdTime);
+
+                                // 특정 시간동안 키를 눌러야 활성화
+                                if (_holdTime >= holdTime)
+                                {
+                                    actionImage.gameObject.SetActive(false);
+                                    _holdTime = 0f;
+                                    UseValve(false);
+                                }
+                            }
+                            else
+                            {
+                                _holdTime = 0f;
+                                actionImage.fillAmount = 1f;
+                                actionImage.gameObject.SetActive(false);
+                            }
+
+                        }
                     }
                 }
                 else
@@ -326,6 +384,7 @@ public class ActionController : MonoBehaviourPun
         }
     }
 
+
     public void SetPlayer()
     {
         player = transform.root.gameObject;
@@ -334,15 +393,26 @@ public class ActionController : MonoBehaviourPun
         if (!PhotonNetwork.IsMasterClient && photonView.IsMine)
         {
             inventory = player.GetComponent<Inventory>();
+            if(player.GetComponent<PlayerState>().role == UserRole.Patient)
+            {
+                holdTime = 6f;
+            }
+            else
+            {
+                // 배신자는 3초임
+                holdTime = 3f;
+            }
         }
+
         isSetting = true;
     }
 
-    void UseValve()
+
+    // 매개변수 true이면 실험체, false면 배신자, 경비원
+    void UseValve(bool isPartient)
     {
         GameObject tank = hitInfo.transform.gameObject;
-        tank.GetComponent<ValveTank>().OpenTheGate();
-        isUseValve = true;
+        tank.GetComponent<ValveTank>().OpenTheGate(isPartient);
     }
 
     IEnumerator TextAlert()
@@ -353,10 +423,19 @@ public class ActionController : MonoBehaviourPun
         alertText.gameObject.SetActive(false);
     }
 
-    public void PuseBoxInfoAppear()
+    IEnumerator KeyDownUI(float holdtime)
     {
-        actionText.gameObject.SetActive(true);
-        actionText.text = "퓨즈 넣기 " + "<color=yellow>" + "E키" + "</color>";
+        actionImage.gameObject.SetActive(true);
+
+        while (holdTime > holdtime)
+        {
+            actionImage.fillAmount = 1f - (holdTime / holdtime);
+        }
+
+        yield return new WaitForFixedUpdate();
+
+        actionImage.gameObject.SetActive(false);
+        actionImage.fillAmount = 1f;
     }
 
     public void UseLockPick()
@@ -389,5 +468,11 @@ public class ActionController : MonoBehaviourPun
         alertText.gameObject.SetActive(false);
 
         door.UnlockDoor();
+    }
+
+    public void PuseBoxInfoAppear()
+    {
+        actionText.gameObject.SetActive(true);
+        actionText.text = "퓨즈 넣기 " + "<color=yellow>" + "E키" + "</color>";
     }
 }
