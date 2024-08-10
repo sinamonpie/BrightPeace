@@ -192,7 +192,7 @@ public class UseItemManager : MonoBehaviourPun
                                     // 다른 플레이어가 맞았으면 
                                     if (playerState != null)
                                     {
-                                        pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID, pv.ViewID);
+                                        pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
 
                                         inventory.currentSlot.ClearSlot();
                                         inventory.getKnife = false;
@@ -375,7 +375,7 @@ public class UseItemManager : MonoBehaviourPun
     }
 
     [PunRPC]
-    void AttackPlayer(int targetViewID, int fromViewID)
+    void AttackPlayer(int targetViewID)
     {
         PhotonView targetView = PhotonView.Find(targetViewID);
         if(targetView != null)
@@ -390,7 +390,7 @@ public class UseItemManager : MonoBehaviourPun
                 PlayerState playerHp = targetView.GetComponent<PlayerState>();
                 if (playerHp != null)
                 {
-                    playerHp.TakeDamage(1, fromViewID);
+                    playerHp.TakeDamage(1);
                     Debug.Log("대상 남은 체력 : " + playerHp.GetPlayerHp().ToString());
                 }
             }

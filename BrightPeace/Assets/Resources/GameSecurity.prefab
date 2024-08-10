@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 5683634140304176710}
   m_Layer: 8
   m_Name: Speaker
-  m_TagString: Untagged
+  m_TagString: Speaker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -363,7 +363,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -372,7 +372,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 5
+  MaxDistance: 2
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -2703,6 +2703,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 274649b0e221539409070ebf6c18918b, type: 3}
   - {fileID: 8300000, guid: a3194b8bbc96ef84fab1f98f4b7dae3e, type: 3}
   FootstepAudioVolume: 0.2
+  ch_layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1520155454144629157
 MonoBehaviour:
   m_ObjectHideFlags: 0

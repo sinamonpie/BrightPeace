@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -38,7 +38,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
+    private void Start()
+    {
+        SoundManager.instance.PlayBGM("·Î±×ÀÎ");
     }
 
     public void SetRole(UserRole _role)

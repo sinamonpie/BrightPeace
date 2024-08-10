@@ -416,5 +416,10 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
         GameManager.Instance.isGameStart = true;
         loadding.SetActive(false);
+
+        foreach (GameObject _speaker in GameObject.FindGameObjectsWithTag("Speaker"))
+        {
+            _speaker.GetComponent<AudioSource>().volume = 1;
+        }
     }
 }

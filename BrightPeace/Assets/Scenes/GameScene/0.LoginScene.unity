@@ -413,8 +413,10 @@ MonoBehaviour:
   - 2.RoomScene
   - 3.GameScene
   - 4.GameEndingScene
+  isGameStart: 0
   role: 0
   endding: 0
+  playKill: 0
 --- !u!4 &236302410
 Transform:
   m_ObjectHideFlags: 0
@@ -1846,8 +1848,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1672210195}
-  - component: {fileID: 1672210194}
   - component: {fileID: 1672210196}
+  - component: {fileID: 1672210194}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -1872,22 +1874,22 @@ MonoBehaviour:
   soundEffects: []
   bgmSounds:
   - name: "\uB85C\uADF8\uC778"
-    volume: 1
+    volume: 0.05
     clip: {fileID: 8300000, guid: 68bee9664a8f74a1796c03b9bab72f6b, type: 3}
   - name: "\uB85C\uBE44"
-    volume: 0
+    volume: 0.01
     clip: {fileID: 8300000, guid: a2f85ebff587d43c4b411e3f56fb07ad, type: 3}
   - name: "\uB8F8"
-    volume: 0
+    volume: 0.01
     clip: {fileID: 8300000, guid: 0b8fb29b3a2864d239e034b84fb275e4, type: 3}
   - name: "\uC0AC\uB9DD \uC5D4\uB529"
-    volume: 0
+    volume: 0.01
     clip: {fileID: 8300000, guid: 03bac0fbab6954127856bc86b5d06926, type: 3}
   - name: "\uC2E4\uD328 \uC5D4\uB529"
-    volume: 0
+    volume: 0.01
     clip: {fileID: 8300000, guid: 0b8fb29b3a2864d239e034b84fb275e4, type: 3}
   - name: "\uC131\uACF5 \uC5D4\uB529"
-    volume: 0
+    volume: 0.01
     clip: {fileID: 8300000, guid: 9fe8ce345d4504d22b6124a7738bfd2b, type: 3}
 --- !u!4 &1672210195
 Transform:
@@ -1898,7 +1900,7 @@ Transform:
   m_GameObject: {fileID: 1672210193}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 58.31179, y: 129.48897, z: 8.419434}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
