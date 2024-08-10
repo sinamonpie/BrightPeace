@@ -80,20 +80,22 @@ public class ActionController : MonoBehaviourPun
                 // 밸브를 달았을때
                 if (hitInfo.transform.GetComponent<ValveTank>().GetValve())
                 {
-                    if(!hitInfo.transform.GetComponent<ValveTank>().isFinished)
+                    // 밸브가 활성화 안되었다면
+                    if (!hitInfo.transform.GetComponent<ValveTank>().isUseValve)
                     {
-                        // 밸브가 활성화 안되었다면
-                        if (!hitInfo.transform.GetComponent<ValveTank>().isUseValve)
+                        // 실험체에 경우에만 밸브를 활성화 할 수 있음
+                        if(player.GetComponent<PlayerState>().role != UserRole.Security)
                         {
-                            if(!hitInfo.transform.GetComponent<ValveTank>().isUsing)
+                            if(hitInfo.transform.GetComponent<ValveTank>().usePlayer == null ||
+                                hitInfo.transform.GetComponent<ValveTank>().usePlayer.GetPhotonView().ViewID == player.GetPhotonView().ViewID)
                             {
                                 actionText.gameObject.SetActive(true);
                                 actionText.text = "밸브 돌리기 " + "<color=yellow>" + "E Key" + "</color>";
 
                                 if (Input.GetKey(KeyCode.E))
                                 {
-                                    if (!hitInfo.transform.GetComponent<ValveTank>().isUsing)
-                                        hitInfo.transform.GetComponent<ValveTank>().SetUsing(true);
+                                    if (hitInfo.transform.GetComponent<ValveTank>().usePlayer == null)
+                                        hitInfo.transform.GetComponent<ValveTank>().SetUsing(player.GetPhotonView().ViewID);
 
                                     player.GetComponent<PlayerController>().UnEnableMove();
                                     _holdTime += Time.deltaTime;
@@ -104,6 +106,7 @@ public class ActionController : MonoBehaviourPun
                                     // 특정 시간동안 키를 눌러야 활성화
                                     if (_holdTime >= holdTime)
                                     {
+                                        hitInfo.transform.GetComponent<ValveTank>().NotUsing();
                                         player.GetComponent<PlayerController>().EnableMove();
                                         actionImage.gameObject.SetActive(false);
                                         actionText.gameObject.SetActive(false);
@@ -113,8 +116,7 @@ public class ActionController : MonoBehaviourPun
                                 }
                                 else
                                 {
-                                    if (hitInfo.transform.GetComponent<ValveTank>().isUsing)
-                                        hitInfo.transform.GetComponent<ValveTank>().SetUsing(false);
+                                    hitInfo.transform.GetComponent<ValveTank>().NotUsing();
 
                                     player.GetComponent<PlayerController>().EnableMove();
                                     _holdTime = 0f;
@@ -124,21 +126,27 @@ public class ActionController : MonoBehaviourPun
                             }
                             else
                             {
+                                player.GetComponent<PlayerController>().EnableMove();
                                 actionText.gameObject.SetActive(true);
                                 actionText.text = "다른사람이 벨브를 돌리고 있습니다. ";
                             }
                         }
-                        else
+                    }
+                    else
+                    {
+                        // 밸브가 활성화 되어 있을때, 경비원 과 배신자는 밸브를 돌릴 수 있음
+                        if (player.GetComponent<PlayerState>().role != UserRole.Patient)
                         {
-                            if (!hitInfo.transform.GetComponent<ValveTank>().isUsing)
+                            if (hitInfo.transform.GetComponent<ValveTank>().usePlayer == null ||
+                                hitInfo.transform.GetComponent<ValveTank>().usePlayer.GetPhotonView().ViewID == player.GetPhotonView().ViewID)
                             {
                                 actionText.gameObject.SetActive(true);
                                 actionText.text = "밸브 방해하기 " + "<color=yellow>" + "E Key" + "</color>";
 
                                 if (Input.GetKey(KeyCode.E))
                                 {
-                                    if (!hitInfo.transform.GetComponent<ValveTank>().isUsing)
-                                        hitInfo.transform.GetComponent<ValveTank>().SetUsing(true);
+                                    if (hitInfo.transform.GetComponent<ValveTank>().usePlayer == null)
+                                        hitInfo.transform.GetComponent<ValveTank>().SetUsing(player.GetPhotonView().ViewID);
 
                                     player.GetComponent<PlayerController>().UnEnableMove();
                                     _holdTime += Time.deltaTime;
@@ -149,7 +157,9 @@ public class ActionController : MonoBehaviourPun
                                     // 특정 시간동안 키를 눌러야 활성화
                                     if (_holdTime >= holdTime)
                                     {
+                                        hitInfo.transform.GetComponent<ValveTank>().NotUsing();
                                         player.GetComponent<PlayerController>().EnableMove();
+
                                         actionImage.gameObject.SetActive(false);
                                         actionText.gameObject.SetActive(false);
                                         _holdTime = 0f;
@@ -158,8 +168,7 @@ public class ActionController : MonoBehaviourPun
                                 }
                                 else
                                 {
-                                    if (hitInfo.transform.GetComponent<ValveTank>().isUsing)
-                                        hitInfo.transform.GetComponent<ValveTank>().SetUsing(false);
+                                    hitInfo.transform.GetComponent<ValveTank>().NotUsing();
 
                                     player.GetComponent<PlayerController>().EnableMove();
                                     _holdTime = 0f;
@@ -169,11 +178,11 @@ public class ActionController : MonoBehaviourPun
                             }
                             else
                             {
+                                player.GetComponent<PlayerController>().EnableMove();
                                 actionText.gameObject.SetActive(true);
                                 actionText.text = "다른사람이 벨브를 돌리고 있습니다. ";
                             }
                         }
-
                     }
                 }
                 else
