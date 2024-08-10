@@ -13,6 +13,9 @@ public class DoorUseKeyUI : MonoBehaviourPun
     [SerializeField] Image image;     
     [SerializeField] TMP_Text text;
     public bool isDoor;
+    bool isPartient;
+    float currentTime = 0f;
+    bool checkCor;
     void Start()
     {
         image = transform.GetComponentInChildren<Image>();
@@ -41,11 +44,16 @@ public class DoorUseKeyUI : MonoBehaviourPun
         StartCoroutine(DoorUseKey(time));
     }
 
-    public void DoorUI(float totalTime, float currnetTime, bool isPartient)
+    public void DoorUI(float totalTime, float currentTime)
     {
         image.gameObject.SetActive(true);
         text.gameObject.SetActive(true);
-        StartCoroutine(UseValveUI(totalTime, currnetTime, isPartient));
+
+        image.fillAmount = currentTime / totalTime;
+
+        float progress = currentTime / totalTime;
+        int percentage = Mathf.FloorToInt(progress * 100); // 0% ~ 100%로 변환
+        text.text = string.Format("진행도\n{0}%", percentage);
     }
 
     IEnumerator DoorUseKey(float time)
@@ -56,7 +64,7 @@ public class DoorUseKeyUI : MonoBehaviourPun
         }
         else
         {
-            StartCoroutine(TankUseText(time));
+            /*StartCoroutine(TankUseText(time));*/
         }
 
         float duration = time;
@@ -71,42 +79,45 @@ public class DoorUseKeyUI : MonoBehaviourPun
         text.gameObject.SetActive(false);
     }
 
-    IEnumerator UseValveUI(float totalTime, float currentTime, bool isPartient)
+/*    IEnumerator UseValveUI(float totalTime)
     {
-        StartCoroutine(TankUseText(totalTime, currentTime, isPartient));
+        float progress;
+
+        checkCor = true;
+        image.gameObject.SetActive(true);
+        text.gameObject.SetActive(true);
 
         while (currentTime < totalTime && currentTime >= 0)
         {
-            if (isPartient)
+            if (this.isPartient)
             {
+                progress = currentTime / totalTime;
                 image.fillAmount = currentTime / totalTime;
                 currentTime += Time.deltaTime;
             }
             else
             {
+                progress = 1f - (currentTime / totalTime);
                 image.fillAmount = 1f - (currentTime / totalTime);
                 currentTime -= Time.deltaTime;
 
                 if (currentTime < 0f)
                 {
                     currentTime = 0f;
-                    image.fillAmount = 1f; 
+                    checkCor = false;
+                    image.fillAmount = 1f;
+                    text.text = "진행도\n0%";
                     yield break;
                 }
             }
+            int percentage = Mathf.FloorToInt(progress * 100); // 0% ~ 100%로 변환
+            text.text = string.Format("진행도\n{0}%", percentage);
 
             yield return null;
         }
 
-        if (isPartient)
-        {
-            image.fillAmount = 0f; 
-        }
-        else
-        {
-            image.fillAmount = 1f; 
-        }
-    }
+        checkCor = false;
+    }*/
 
 
     IEnumerator DoorUseKeyText(float time)
@@ -118,58 +129,5 @@ public class DoorUseKeyUI : MonoBehaviourPun
             text.text += ".";
             yield return new WaitForSeconds(textTime);
         }
-    }
-
-    IEnumerator TankUseText(float totalTime, float currentTime, bool isPartient)
-    {
-
-        while (currentTime >= 0 && currentTime <= totalTime)
-        {
-            // 진행도를 계산하여 %로 변환
-            float progress;
-
-            if (isPartient)
-            {
-                progress = currentTime / totalTime;
-            }
-            else
-            {
-                progress = 1f - (currentTime / totalTime);
-            }
-
-            int percentage = Mathf.FloorToInt(progress * 100); // 0% ~ 100%로 변환
-
-            // 텍스트를 "n%" 형식으로 표시
-            text.text = string.Format("진행도\n{0}%", percentage);
-
-            yield return new WaitForSeconds(1f);
-
-            // 현재 시간을 갱신
-            currentTime = isPartient ? currentTime + 1f : currentTime - 1f;
-
-        }
-
-        text.text = isPartient ? "진행도\n100%" : "진행도\n0%";
-    }
-
-    IEnumerator TankUseText(float time)
-    {
-        float totalTime = time;
-
-        while (time > 0)
-        {
-            // 진행도를 계산하여 %로 변환
-            float progress = 1f - (time / totalTime);
-            int percentage = Mathf.FloorToInt(progress * 100);
-
-            text.text += string.Format("{0}%", percentage);
-
-            yield return new WaitForSeconds(1f);
-
-            time -= 1f;
-        }
-
-
-        text.text = "100%";
     }
 }
