@@ -237,7 +237,7 @@ public class UseItemManager : MonoBehaviourPun
                                         if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
                                         {
                                             actionController.hitInfo.transform.GetComponent<FuseBox>().ClearPuseBox();
-                                            if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() == 3)
+                                            if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() == 2)
                                             {
                                                 actionController.hitInfo.transform.GetComponent<FuseBox>().UnlockLobbyDoor();
                                                 string text = "퓨즈박스 3개 다 넣었습니다.";
@@ -246,7 +246,7 @@ public class UseItemManager : MonoBehaviourPun
                                             }
                                             else
                                             {
-                                                string text = "남은 퓨즈박스 개수 : " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck()).ToString();
+                                                string text = "남은 퓨즈박스 개수 : " + (2 - actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck()).ToString();
                                                 StartCoroutine(TextAlert());
                                                 alertText.SetText(text);
                                             }
