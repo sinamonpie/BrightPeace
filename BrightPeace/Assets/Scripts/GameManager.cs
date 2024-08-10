@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadLobbyScene()
     {
+        SoundManager.instance.StopBGM();
         PhotonNetwork.AutomaticallySyncScene = false;
         SceneManager.LoadSceneAsync(1);
         SoundManager.instance.PlayBGM("·Îºñ");
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadRoomScene()
     {
+        SoundManager.instance.StopBGM();
         PhotonNetwork.LoadLevel(sceneName[2]);
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonChatManager.Instance.JoinRoomChannel(PhotonNetwork.CurrentRoom.Name);
@@ -80,6 +82,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadGamescene()
     {
+        SoundManager.instance.StopBGM();
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.LoadLevel(sceneName[3]);
     }
