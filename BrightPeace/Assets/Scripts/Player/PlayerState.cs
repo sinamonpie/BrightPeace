@@ -142,7 +142,7 @@ public class PlayerState : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void RPC_Stun(float duration)
+    void RPC_Stun(float duration)
     {
         StartCoroutine(ClientPlayerStun(duration));
     }

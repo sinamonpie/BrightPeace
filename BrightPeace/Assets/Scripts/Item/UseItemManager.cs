@@ -383,7 +383,7 @@ public class UseItemManager : MonoBehaviourPun
             // 조건 추가 경비원일때는 스턴 2초
             if (targetView.Owner.IsMasterClient)
             {
-                targetView.RPC("RPC_Stun", RpcTarget.MasterClient, stunTime);
+                targetView.RPC("RPC_Stun", RpcTarget.All, stunTime);
             }
             else
             {
