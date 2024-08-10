@@ -2768,6 +2768,7 @@ MonoBehaviour:
   role: 1
   isInCabinet: 0
   isDead: 0
+  isMentalSetting: 0
   hallucinAudioClips:
   - name: 
     volume: 0.3

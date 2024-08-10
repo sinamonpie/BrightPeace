@@ -276,17 +276,14 @@ public class UseItemManager : MonoBehaviourPun
                                     actionController.actionText.text = "락픽 사용 " + "<color=yellow>" + "E키" + "</color>";
                                     actionController.actionText.gameObject.SetActive(true);
 
-                                    if (Input.GetKey(KeyCode.E))
+                                    if (Input.GetKeyDown(KeyCode.E))
                                     {
-                                        if(!useLockPick)
-                                        {
-                                            GetComponent<PlayerController>().UnEnableMove();
-                                            animator.SetBool("IsSit", true);
-                                            startLockPickTime = Time.time;
-                                            useLockPick = true;
-                                        }
+                                        GetComponent<PlayerController>().UnEnableMove();
+                                        animator.SetBool("IsSit", true);
+                                        startLockPickTime = Time.time;
+                                        useLockPick = true;
                                     }
-                                    else
+                                    else if (Input.GetKeyUp(KeyCode.E))
                                     {
                                         GetComponent<PlayerController>().EnableMove();
                                         animator.SetBool("IsSit", false);

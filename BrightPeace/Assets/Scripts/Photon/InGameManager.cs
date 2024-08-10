@@ -313,6 +313,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
                             if (_player.GetComponent<PlayerState>().role == UserRole.Security)
                             {
                                 security = _player;
+                                break;
                             }
                         }
                         _playerList.Remove(security);
