@@ -1223,16 +1223,16 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1bfdeb1441c684f7f901af28283a8f25, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 3
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1267,7 +1267,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1994,8 +1994,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 24.08.06 21:40:35
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3238e6fc9f0281241bc09fa78a7f9207, type: 2}
+  m_sharedMaterial: {fileID: 7397424314100277007, guid: 3238e6fc9f0281241bc09fa78a7f9207, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9025,13 +9025,33 @@ PrefabInstance:
     m_TransformParent: {fileID: 654421772}
     m_Modifications:
     - target: {fileID: 2555901618460501660, guid: 8c8047718ef82bb43b96645c398b8019, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555901618460501660, guid: 8c8047718ef82bb43b96645c398b8019, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555901618460501660, guid: 8c8047718ef82bb43b96645c398b8019, type: 3}
       propertyPath: MaxDistance
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555901618460501660, guid: 8c8047718ef82bb43b96645c398b8019, type: 3}
+      propertyPath: MinDistance
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2555901618460501660, guid: 8c8047718ef82bb43b96645c398b8019, type: 3}
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: ca32420cbfcd048ed81a6c1bbd40a856, type: 3}
+    - target: {fileID: 2555901618460501660, guid: 8c8047718ef82bb43b96645c398b8019, type: 3}
+      propertyPath: rolloffMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555901618460501660, guid: 8c8047718ef82bb43b96645c398b8019, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0.99
+      objectReference: {fileID: 0}
     - target: {fileID: 3445612760516690625, guid: 8c8047718ef82bb43b96645c398b8019, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

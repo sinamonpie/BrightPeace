@@ -15,8 +15,7 @@ public class PlayerState : MonoBehaviourPun
     [SerializeField]
     private bool isDead;
 
-    public AudioClip hallucinAudioClips;
-    [Range(0, 1)] public float hallucinStepAudioVolume = 0.4f;
+    public Sound[] hallucinAudioClips;
 
     void Start()
     {
@@ -29,11 +28,13 @@ public class PlayerState : MonoBehaviourPun
 
     public void SetMetal()
     {
-        StartCoroutine(SetHearVoice());
+        if(photonView.IsMine)
+            StartCoroutine(SetHearVoice());
     }
 
     IEnumerator SetHearVoice()
     {
+        Debug.Log("SetHearVoice : " + System.DateTime.Now.ToString(("yyyy.MM.dd HH:mm:ss")));
         float time = Random.Range(60f, 120f);
         yield return new WaitForSeconds(time);
 
@@ -53,13 +54,17 @@ public class PlayerState : MonoBehaviourPun
                 }
             }
         }
-
         SetVoice(foundPlayer);
+        StartCoroutine(SetHearVoice());
     }
 
-    void SetVoice(GameObject obj)
+    private void SetVoice(GameObject obj)
     {
-        AudioSource.PlayClipAtPoint(hallucinAudioClips, transform.TransformPoint(obj.transform.position), hallucinStepAudioVolume);
+        int soundIdx = Random.Range(0, hallucinAudioClips.Length);
+        AudioSource.PlayClipAtPoint(hallucinAudioClips[soundIdx].clip, obj.transform.position, hallucinAudioClips[soundIdx].volume);
+
+        return;
+
     }
 
     void InitHp()
@@ -111,6 +116,13 @@ public class PlayerState : MonoBehaviourPun
             }
             InGameManager.Instance.GameEnding(0);
         }
+    }
+
+    [PunRPC]
+    void RPC_GetKill()
+    {
+        if (photonView.IsMine)
+            GameManager.Instance.playKill++;
     }
 
     public void SetRoleMental()

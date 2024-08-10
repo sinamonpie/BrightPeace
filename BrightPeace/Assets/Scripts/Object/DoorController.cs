@@ -55,11 +55,13 @@ public class DoorController : MonoBehaviour
             y = -y;
         }
         pivot.transform.Rotate(0, this.transform.rotation.y + y, 0);
+        SoundManager.instance.PlayEffectAtPoint("OpenDoor", transform.position);
         isClose = !isClose;
     }
 
     public bool UseableDoor()
     {
+        SoundManager.instance.PlayEffectAtPoint("CloseDoor", transform.position);
         return unlockDoor;
     }
 

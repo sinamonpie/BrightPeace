@@ -271,6 +271,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
                 isStart = false;
             }
         }
+
+        foreach (GameObject _speaker in GameObject.FindGameObjectsWithTag("Speaker"))
+        {
+            _speaker.GetComponent<AudioSource>().volume = 0;
+        }
+
         if (isStart)
         {
             StopAllCoroutines();

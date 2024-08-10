@@ -133,7 +133,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100154, guid: 6996385895b383749b266464bf872c69, type: 3}
       propertyPath: m_Name
-      value: SecurityGuard
+      value: SecurityGuard222
       objectReference: {fileID: 0}
     - target: {fileID: 100154, guid: 6996385895b383749b266464bf872c69, type: 3}
       propertyPath: m_TagString
@@ -247,10 +247,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d086a0162b7659b478d6d63d1bcf838b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 6208740100004820311}
   moveSpeed: 2
   SprintSpeed: 5.335
-  rataionSpeed: 100
+  cameraTransform: {fileID: 6208740100004820311}
+  pv: {fileID: 0}
+  rotaionSpeed: 3
+  FootstepAudioClips: []
+  FootstepAudioVolume: 0.5
+  ch_layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &1638771467280136009 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400154, guid: 6996385895b383749b266464bf872c69, type: 3}
