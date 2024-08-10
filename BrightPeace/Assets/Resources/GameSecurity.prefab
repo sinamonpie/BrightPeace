@@ -2707,6 +2707,7 @@ MonoBehaviour:
   ch_layerMask:
     serializedVersion: 2
     m_Bits: 0
+  swingRange: 2
 --- !u!114 &1520155454144629157
 MonoBehaviour:
   m_ObjectHideFlags: 0
