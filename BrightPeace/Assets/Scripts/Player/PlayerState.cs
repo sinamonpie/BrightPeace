@@ -15,6 +15,9 @@ public class PlayerState : MonoBehaviourPun
     [SerializeField]
     public bool isDead;
 
+    [SerializeField]
+    private bool isMentalSetting = false;
+
     public Sound[] hallucinAudioClips;
 
     void Start()
@@ -28,43 +31,45 @@ public class PlayerState : MonoBehaviourPun
 
     public void SetMetal()
     {
-        //if(photonView.IsMine)
-        //    StartCoroutine(SetHearVoice());
+        if(!isMentalSetting)
+        {
+            StartCoroutine(SetHearVoice());
+        }
     }
 
     IEnumerator SetHearVoice()
     {
-        Debug.Log("SetHearVoice : " + System.DateTime.Now.ToString(("yyyy.MM.dd HH:mm:ss")));
-        float time = Random.Range(60f, 120f);
-        yield return new WaitForSeconds(time);
+        isMentalSetting = true;
 
-        GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
-        float shortDis = Vector3.Distance(transform.position, _players[0].transform.position);
-
-        GameObject foundPlayer = _players[0];
-        foreach (GameObject found in _players)
+        while(!isDead)
         {
-            if (found != this)
+            float time = Random.Range(60f, 120f);
+            yield return new WaitForSeconds(time);
+
+            GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
+            float shortDis = Vector3.Distance(transform.position, _players[0].transform.position);
+
+            GameObject foundPlayer = _players[0];
+            foreach (GameObject found in _players)
             {
-                float Distance = Vector3.Distance(gameObject.transform.position, found.transform.position);
-                if (Distance < shortDis)
+                if (found != this)
                 {
-                    shortDis = Distance;
-                    foundPlayer = found;
+                    float Distance = Vector3.Distance(gameObject.transform.position, found.transform.position);
+                    if (Distance < shortDis)
+                    {
+                        shortDis = Distance;
+                        foundPlayer = found;
+                    }
                 }
             }
+            SetVoice(foundPlayer);
         }
-        SetVoice(foundPlayer);
-        StartCoroutine(SetHearVoice());
     }
 
     private void SetVoice(GameObject obj)
     {
         int soundIdx = Random.Range(0, hallucinAudioClips.Length);
         AudioSource.PlayClipAtPoint(hallucinAudioClips[soundIdx].clip, obj.transform.position, hallucinAudioClips[soundIdx].volume);
-
-        return;
-
     }
 
     void InitHp()
@@ -111,7 +116,12 @@ public class PlayerState : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            photonView.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+            currentHp -= damage;
+            if (currentHp <= 0)
+            {
+                Dead();
+            }
+            photonView.RPC("RPC_TakeDamage", RpcTarget.Others, damage);
         }
     }
 
@@ -119,10 +129,6 @@ public class PlayerState : MonoBehaviourPun
     void RPC_TakeDamage(int damage)
     {
         currentHp -= damage;
-        if (currentHp <= 0)
-        {
-            Dead();
-        }
     }
 
     [PunRPC]
@@ -134,19 +140,15 @@ public class PlayerState : MonoBehaviourPun
 
     public void SetRoleMental()
     {
-        if (photonView.IsMine)
-        {
-            photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
-
-        }
+        GameManager.Instance.SetRole(role);
+        SetMetal();
+        photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
     }
 
     [PunRPC]
     void RPC_SetRoleMental()
     {
         role = UserRole.Mental;
-        GameManager.Instance.SetRole(role);
-        SetMetal();
     }
 
     [PunRPC]

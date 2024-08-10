@@ -14,6 +14,7 @@ public class ButtonManager : MonoBehaviour
 
     public void JoinLobby()
     {
+        SoundManager.instance.PlaySoundEffect("ButtenClick");
         string nick = nickInput.text;
         if(!PhotonNetwork.IsConnectedAndReady)
         {
@@ -31,6 +32,7 @@ public class ButtonManager : MonoBehaviour
 
     public void CreateRoomBtn()
     {
+        SoundManager.instance.PlaySoundEffect("ButtenClick");
         selectWind.SetActive(false);
         selectSecurity.SetActive(true);
         PhotonManager.Instance.CreateRoom();
@@ -38,6 +40,7 @@ public class ButtonManager : MonoBehaviour
 
     public void MatchingBtn()
     {
+        SoundManager.instance.PlaySoundEffect("ButtenClick");
         selectWind.SetActive(false);
         selectMental.SetActive(true);
         PhotonManager.Instance.JoinMatching();
@@ -45,6 +48,7 @@ public class ButtonManager : MonoBehaviour
 
     public void CancleMatchBtn()
     {
+        SoundManager.instance.PlaySoundEffect("ButtenClick");
         selectMental.SetActive(false);
         selectWind.SetActive(true);
         PhotonManager.Instance.LeaveMatching();
@@ -52,17 +56,21 @@ public class ButtonManager : MonoBehaviour
 
     public void CancleAndSelectBtn()
     {
+        SoundManager.instance.PlaySoundEffect("ButtenClick");
         selectSecurity.SetActive(false);
         selectWind.SetActive(true);
     }
 
     public void LeaveRoomBtn()
     {
+        SoundManager.instance.PlaySoundEffect("ButtenClick");
         PhotonManager.Instance.LeaveRoom();
+
     }
 
     public void LeaveLobbyBtn()
     {
+        SoundManager.instance.PlaySoundEffect("ButtenClick");
         PhotonManager.Instance.LeaveLobby();
     }
 

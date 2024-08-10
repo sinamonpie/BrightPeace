@@ -18,7 +18,7 @@ public class ValveTank : MonoBehaviourPun
     [SerializeField] GameObject valve;
     [SerializeField] bool isvalve;
     public bool isUseValve;
-    public bool checkCor;
+    bool checkCor;
     void Start()
     {
         // 밸브 
@@ -63,11 +63,6 @@ public class ValveTank : MonoBehaviourPun
     [PunRPC]
     void RPC_OpenTheGate(bool isPartient)
     {
-        if (checkCor)
-        {
-            StartCoroutine(OpenTheWaitGate(time));
-        }
-
         if (isPartient)
         {
             isUseValve = true;
@@ -76,15 +71,19 @@ public class ValveTank : MonoBehaviourPun
         {
             isUseValve = false;
         }
+
+        if (!checkCor)
+        {
+            StartCoroutine(OpenTheWaitGate(time));
+        }
     }
 
     IEnumerator OpenTheWaitGate(float time)
     {
         // 0f
         checkCor = true;
-        GetComponentInChildren<DoorUseKeyUI>().DoorUI(time, this.currentTime, isUseValve);
 
-        // 활성화 상태에서 2분 지나면 지하실 문 열림
+        // 활성화 상태에서 2분 지나면 지하실 문 열림 
         while (currentTime < time)
         {
             if (isvalve)
@@ -106,6 +105,7 @@ public class ValveTank : MonoBehaviourPun
                         yield break;
                     }
                 }
+                GetComponentInChildren<DoorUseKeyUI>().DoorUI(time, currentTime);
                 yield return null;
             }
 

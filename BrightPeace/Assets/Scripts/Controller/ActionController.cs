@@ -84,7 +84,7 @@ public class ActionController : MonoBehaviourPun
                     if (!hitInfo.transform.GetComponent<ValveTank>().isUseValve)
                     {
                         // 실험체에 경우에만 밸브를 활성화 할 수 있음
-                        if(player.GetComponent<PlayerState>().role == UserRole.Patient)
+                        if(player.GetComponent<PlayerState>().role != UserRole.Security)
                         {
                             actionText.gameObject.SetActive(true);
                             actionText.text = "밸브 돌리기 " + "<color=yellow>" + "E Key" + "</color>";
@@ -100,6 +100,7 @@ public class ActionController : MonoBehaviourPun
                                 if (_holdTime >= holdTime)
                                 {
                                     actionImage.gameObject.SetActive(false);
+                                    actionText.gameObject.SetActive(false);
                                     _holdTime = 0f;
                                     UseValve(true);
                                 }
@@ -115,7 +116,7 @@ public class ActionController : MonoBehaviourPun
                     else
                     {
                         // 밸브가 활성화 되어 있을때, 경비원 과 배신자는 밸브를 돌릴 수 있음
-                        if (player.GetComponent<PlayerState>().role == UserRole.Mental || player.GetComponent<PlayerState>().role == UserRole.Security)
+                        if (player.GetComponent<PlayerState>().role != UserRole.Patient)
                         {
                             actionText.gameObject.SetActive(true);
                             actionText.text = "밸브 방해하기 " + "<color=yellow>" + "E Key" + "</color>";
@@ -131,6 +132,7 @@ public class ActionController : MonoBehaviourPun
                                 if (_holdTime >= holdTime)
                                 {
                                     actionImage.gameObject.SetActive(false);
+                                    actionText.gameObject.SetActive(false);
                                     _holdTime = 0f;
                                     UseValve(false);
                                 }
@@ -286,7 +288,18 @@ public class ActionController : MonoBehaviourPun
             {
                 if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
                 {
-                    Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                    if (GameManager.Instance.role == UserRole.Patient)
+                    {
+                        GameManager.Instance.SetEnding(UserEnding.WinEnding);
+                        PhotonNetwork.LeaveRoom();
+                        Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                    } 
+                    else if (GameManager.Instance.role == UserRole.Mental)
+                    {
+                        GameManager.Instance.SetEnding(UserEnding.NomalEnding);
+                        PhotonNetwork.LeaveRoom();
+                        Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                    }
                 }
                 else
                 {
@@ -309,9 +322,20 @@ public class ActionController : MonoBehaviourPun
     {
         if (hitInfo.transform != null && hitInfo.transform.GetComponent<EscapeEnding>())
         {
-            if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
+            if (hitInfo.transform.GetComponent<EscapeEnding>() != null && hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
             {
-                Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                if (GameManager.Instance.role == UserRole.Patient)
+                {
+                    GameManager.Instance.SetEnding(UserEnding.WinEnding);
+                    PhotonNetwork.LeaveRoom();
+                    Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                }
+                else if (GameManager.Instance.role == UserRole.Mental)
+                {
+                    GameManager.Instance.SetEnding(UserEnding.NomalEnding);
+                    PhotonNetwork.LeaveRoom();
+                    Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
+                }
             }
             else
             {

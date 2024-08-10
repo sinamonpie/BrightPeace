@@ -58,6 +58,8 @@ public class UseItemManager : MonoBehaviourPun
     [Header("락픽 시간")]
     [SerializeField]
     float lockPickTime = 50f;
+    [SerializeField]
+    float startLockPickTime = 0f;
 
     [SerializeField]
     RaycastHit hit;
@@ -277,21 +279,34 @@ public class UseItemManager : MonoBehaviourPun
 
                                     if (Input.GetKeyDown(KeyCode.E))
                                     {
-                                        if(!useLockPick)
-                                        {
-                                            GetComponent<PlayerController>().UnEnableMove();
-                                            animator.SetBool("IsSit", true);
-                                            StartCoroutine(LockPickAlert(lockPickTime, actionController.hitInfo.transform.GetComponent<DoorController>()));
-                                            useLockPick = true;
-                                        }
+                                        GetComponent<PlayerController>().UnEnableMove();
+                                        animator.SetBool("IsSit", true);
+                                        startLockPickTime = Time.time;
+                                        useLockPick = true;
                                     }
-
-                                    if(Input.GetKeyUp(KeyCode.E))
+                                    else if (Input.GetKeyUp(KeyCode.E))
                                     {
-                                        StopCoroutine(LockPickAlert(lockPickTime, actionController.hitInfo.transform.GetComponent<DoorController>()));
                                         GetComponent<PlayerController>().EnableMove();
                                         animator.SetBool("IsSit", false);
                                         useLockPick = false;
+                                    }
+
+                                    if(useLockPick)
+                                    {
+                                        float currentTime = Time.time - startLockPickTime;
+                                        float time = lockPickTime - currentTime;
+
+                                        int minutes = Mathf.FloorToInt(time / 60);
+                                        int seconds = Mathf.FloorToInt(time % 60);
+
+                                        alertText.text = string.Format("문 따는 중...{0:0}:{1:00}", minutes, seconds);
+                                        alertText.gameObject.SetActive(true);
+
+                                        if(time <= 0)
+                                        {
+                                            alertText.gameObject.SetActive(false);
+                                            actionController.hitInfo.transform.GetComponent<DoorController>().UnlockDoor();
+                                        }
                                     }
                                 }
                             }
@@ -299,7 +314,7 @@ public class UseItemManager : MonoBehaviourPun
                             {
                                 GetComponent<PlayerController>().EnableMove();
                                 animator.SetBool("IsSit", false);
-                                StopCoroutine(LockPickAlert(lockPickTime, actionController.hitInfo.transform.GetComponent<DoorController>()));
+                                useLockPick = false;
                             }
                         }
                         else if (inventory.currentSlot.item.itemName == "밸브")
@@ -409,23 +424,6 @@ public class UseItemManager : MonoBehaviourPun
 
         sensorCamera.SetCamera(false);
 
-    }
-
-    IEnumerator LockPickAlert(float time, DoorController door)
-    {
-        while(time > 0)
-        {
-            int minutes = Mathf.FloorToInt(time / 60);
-            int seconds = Mathf.FloorToInt(time % 60);
-
-            alertText.text = string.Format("문 따는 중...{0:0}:{1:00}", minutes, seconds);
-            alertText.gameObject.SetActive(true);
-            yield return new WaitForSeconds(1f);
-            time -= 1f;
-        }
-
-        alertText.gameObject.SetActive(false);
-        door.UnlockDoor();
     }
 
     IEnumerator TextAlert()

@@ -61,12 +61,12 @@ public class DoorController : MonoBehaviour
 
     public bool UseableDoor()
     {
-        SoundManager.instance.PlayEffectAtPoint("CloseDoor", transform.position);
         return unlockDoor;
     }
 
     public void UnlockDoor()
     {
+        SoundManager.instance.PlayEffectAtPoint("CloseDoor", transform.position);
         unlockDoor = true;
     }
 

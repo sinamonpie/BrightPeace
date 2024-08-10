@@ -29,7 +29,7 @@ public class SoundManager : MonoBehaviour
     }
     #endregion
 
-    public AudioSource[] audioSoundEffects;
+    public AudioSource audioSoundEffects;
     public AudioSource audioSourceBGM;
 
     public Sound[] soundEffects;
@@ -41,17 +41,8 @@ public class SoundManager : MonoBehaviour
         {
             if (_name == soundEffects[i].name)
             {
-                for (int j = 0; j < audioSoundEffects.Length; j++)
-                {
-                    if (!audioSoundEffects[j].isPlaying)
-                    {
-                        audioSoundEffects[j].clip = soundEffects[i].clip;
-                        audioSoundEffects[j].volume = bgmSounds[i].volume;
-                        audioSoundEffects[j].Play();
-                        return;
-                    }
-                }
-                Debug.Log("모든 AudioSource 재생 중");
+                audioSoundEffects.PlayOneShot(soundEffects[i].clip, soundEffects[i].volume);
+
                 return;
             }
         }
@@ -94,18 +85,9 @@ public class SoundManager : MonoBehaviour
         audioSourceBGM.clip = null;
     }
 
-    public void StopEverySoundEffects()
-    {
-        for (int i = 0; i < audioSoundEffects.Length; i++)
-        {
-            audioSoundEffects[i].Stop();
-        }
-    }
-
     public void StopAllSounds()
     {
         StopBGM();
-        StopEverySoundEffects();
     }
 }
 
