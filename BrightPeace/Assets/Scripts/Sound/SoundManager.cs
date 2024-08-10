@@ -89,6 +89,7 @@ public class SoundManager : MonoBehaviour
     public void StopBGM()
     {
         audioSourceBGM.Stop();
+        audioSourceBGM.clip = null;
     }
 
     public void StopEverySoundEffects()

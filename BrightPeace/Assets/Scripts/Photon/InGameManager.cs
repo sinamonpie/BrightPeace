@@ -349,7 +349,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void GameEnding(int endIdx)
+    public void GameEnding(UserEnding endIdx)
     {
         GameManager.Instance.SetEnding(endIdx);
         if (PhotonNetwork.IsMasterClient)
@@ -386,7 +386,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            GameManager.Instance.SetEnding(2);
+            GameManager.Instance.SetEnding(UserEnding.WinEnding);
             PhotonNetwork.LeaveRoom();
         }
     }
@@ -402,7 +402,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void MentalWin()
     {
-        GameManager.Instance.SetEnding(2);
+        GameManager.Instance.SetEnding(UserEnding.WinEnding);
 
         PhotonNetwork.LeaveRoom();
     }

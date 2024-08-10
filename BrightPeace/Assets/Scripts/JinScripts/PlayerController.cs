@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTransform;
     protected CharacterController characterController;
 
+    protected bool isMove = true;
+
     [SerializeField]
     protected PhotonView pv;
 
@@ -26,5 +28,15 @@ public class PlayerController : MonoBehaviour
     public void Awake()
     {
         pv = GetComponent<PhotonView>();
+    }
+
+    public void EnableMove()
+    {
+        isMove = true;
+    }
+
+    public void UnEnableMove()
+    {
+        isMove = false;
     }
 }

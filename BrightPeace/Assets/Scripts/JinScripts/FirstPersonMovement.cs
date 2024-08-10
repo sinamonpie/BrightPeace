@@ -56,7 +56,7 @@ public class FirstPersonMovement : PlayerController
             return;
 
         Cursor.visible = false;
-        if (!isSwing)
+        if (!isSwing && isMove)
         {
             Look();
             MoveTo();

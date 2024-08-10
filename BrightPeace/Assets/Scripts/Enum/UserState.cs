@@ -8,3 +8,11 @@ public enum UserRole
     Patient = 2,        //환자
     Mental = 3          //정신병자
 }
+
+public enum UserEnding
+{
+    DeadEnding = 0,
+    WinEnding = 1,
+    LoseEnding = 2,
+    NomalEnding = 3
+}
