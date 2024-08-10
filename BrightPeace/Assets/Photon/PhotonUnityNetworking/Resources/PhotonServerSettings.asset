@@ -74,6 +74,7 @@ MonoBehaviour:
   - SetPlayerCount
   - SetDeadMantal
   - RPC_GetKill
+  - AttackPaintient
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

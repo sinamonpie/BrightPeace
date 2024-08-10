@@ -27,6 +27,13 @@ public class FirstPersonMovement : PlayerController
 
     [SerializeField] private LayerMask ch_layerMask;
 
+    [SerializeField]
+    RaycastHit hit;
+    Ray ray;
+
+    [SerializeField]
+    float swingRange = 2.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -86,12 +93,21 @@ public class FirstPersonMovement : PlayerController
         { 
             animator.SetTrigger("isSwing");
             IsSwing();
-            if (Physics.Raycast(actionController.ray, out actionController.hitInfo, actionController.range, ch_layerMask))
+
+            ray = new Ray(transform.position + Vector3.up * 1f, transform.forward);
+
+            if (Physics.Raycast(ray, out hit, swingRange))
             {
-                pv.RPC("AttackPaintient", RpcTarget.All);
-                //actionController.hitInfo.transform.GetComponent<PlayerState>().TakeDamage(1);
-                Debug.Log(actionController.hitInfo.transform.tag);
-                Debug.Log("때리기 적용");
+                if(hit.transform.CompareTag("Player"))
+                {
+                    PlayerState playerState = hit.transform.GetComponent<PlayerState>();
+
+                    // 다른 플레이어가 맞았으면 
+                    if (playerState != null)
+                    {
+                        pv.RPC("AttackPaintient", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
+                    }
+                }
             }
             Invoke("IsSwing", 2f);
         }
