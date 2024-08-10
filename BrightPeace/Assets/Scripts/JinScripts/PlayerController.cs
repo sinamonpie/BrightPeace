@@ -17,6 +17,13 @@ public class PlayerController : MonoBehaviour
 
     protected bool isMove = true;
 
+    [Range(0, 1)] public float sitVolume;
+    [Range(0, 1)] public float walkVolume;
+    [Range(0, 1)] public float runVolume;
+
+    [SerializeField]
+    protected float currentVolume;
+
     [SerializeField]
     protected PhotonView pv;
 

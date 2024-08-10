@@ -19,7 +19,6 @@ public class FirstPersonMovement : PlayerController
     private Transform avatarup;
 
     public AudioClip[] FootstepAudioClips;
-    [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
     ActionController actionController;
 
@@ -37,6 +36,7 @@ public class FirstPersonMovement : PlayerController
     // Start is called before the first frame update
     void Start()
     {
+        currentVolume = walkVolume;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
         actionController = FindObjectOfType<ActionController>();
@@ -128,26 +128,31 @@ public class FirstPersonMovement : PlayerController
         {
             currentSpeed = 4;
             realSpeed = SprintSpeed;
+            currentVolume = runVolume;
         }
         else if (z > 0)
         {
             currentSpeed = 2;
             realSpeed = moveSpeed;
+            currentVolume = walkVolume;
         }
         else if (x > 0)
         {
             currentSpeed = 8;
             realSpeed = moveSpeed;
+            currentVolume = walkVolume;
         }
         else if (x < 0)
         {
             currentSpeed = 10;
             realSpeed = moveSpeed;
+            currentVolume = walkVolume;
         }
         else if (z < 0)
         {
             currentSpeed = -2;
             realSpeed = moveSpeed;
+            currentVolume = walkVolume;
         }
         else
         {
@@ -168,7 +173,7 @@ public class FirstPersonMovement : PlayerController
             if (FootstepAudioClips.Length > 0)
             {
                 var index = Random.Range(0, FootstepAudioClips.Length);
-                AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(characterController.center), FootstepAudioVolume);
+                AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(characterController.center), currentVolume);
             }
         }
     }

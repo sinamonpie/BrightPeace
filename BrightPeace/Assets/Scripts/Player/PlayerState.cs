@@ -160,16 +160,11 @@ public class PlayerState : MonoBehaviourPun
     IEnumerator ClientPlayerStun(float duration)
     {
         PlayerController playerController = GetComponent<PlayerController>();
-        float moveSpeed = playerController.moveSpeed;
-        float sprintSpeed = playerController.SprintSpeed;
-
-        playerController.moveSpeed = 0f;
-        playerController.SprintSpeed = 0f;
+        playerController.UnEnableMove();
 
         yield return new WaitForSeconds(duration);
 
-        playerController.moveSpeed = moveSpeed;
-        playerController.SprintSpeed = sprintSpeed;
+        playerController.EnableMove();
 
     }
 }

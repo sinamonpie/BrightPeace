@@ -18,7 +18,6 @@ public class ThirdPersonMovement : PlayerController
     private Transform avatarup;
 
     public AudioClip[] FootstepAudioClips;
-    [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
     //private Camera camera;
     public float cameraMaxDistance = 2f;
@@ -27,6 +26,7 @@ public class ThirdPersonMovement : PlayerController
     // Start is called before the first frame update
     void Start()
     {
+        currentVolume = walkVolume;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
@@ -96,11 +96,13 @@ public class ThirdPersonMovement : PlayerController
 
         if (Input.GetKey(KeyCode.LeftControl))
         {
+            currentVolume = sitVolume;
             animator.SetBool("IsSit", true);
             Debug.Log("SitSitSit");
         }
         else
         {
+            currentVolume = walkVolume;
             animator.SetBool("IsSit", false);
         }
 
@@ -143,6 +145,7 @@ public class ThirdPersonMovement : PlayerController
             {
                 currentSpeed = 4;
                 animator.SetFloat("Speed", currentSpeed);
+                currentVolume = runVolume;
                 realSpeed = SprintSpeed;
             }
             else
@@ -151,24 +154,28 @@ public class ThirdPersonMovement : PlayerController
                 {
                     currentSpeed = 2;
                     animator.SetFloat("Speed", currentSpeed);
+                    currentVolume = walkVolume;
                     realSpeed = moveSpeed;
                 }
                 else if (z < 0)
                 {
                     currentSpeed = -2;
                     animator.SetFloat("Speed", currentSpeed);
+                    currentVolume = walkVolume;
                     realSpeed = moveSpeed;
                 }
                 else if (x > 0)
                 {
                     currentSpeed = 8;
                     animator.SetFloat("Speed", currentSpeed);
+                    currentVolume = walkVolume;
                     realSpeed = moveSpeed;
                 }
                 else if (x < 0)
                 {
                     currentSpeed = 10;
                     animator.SetFloat("Speed", currentSpeed);
+                    currentVolume = walkVolume;
                     realSpeed = moveSpeed;
                 }
                 else
@@ -192,7 +199,7 @@ public class ThirdPersonMovement : PlayerController
             if (FootstepAudioClips.Length > 0)
             {
                 var index = Random.Range(0, FootstepAudioClips.Length);
-                AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(characterController.center), FootstepAudioVolume);
+                AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(characterController.center), currentVolume);
             }
         }
     }

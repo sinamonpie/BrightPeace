@@ -429,5 +429,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
         {
             _obj.volume = 1;
         }
+
+        SoundManager.instance.audioSourceBGM.volume = 0;
     }
 }

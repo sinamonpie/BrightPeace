@@ -60,6 +60,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBGM(string _name)
     {
+        audioSourceBGM.volume = 1;
         for (int i = 0; i < bgmSounds.Length; i++)
         {
             if (_name == bgmSounds[i].name)
@@ -88,6 +89,7 @@ public class SoundManager : MonoBehaviour
 
     public void StopBGM()
     {
+        audioSourceBGM.volume = 0;
         audioSourceBGM.Stop();
         audioSourceBGM.clip = null;
     }
