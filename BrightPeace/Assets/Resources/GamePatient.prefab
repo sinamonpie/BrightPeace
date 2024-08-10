@@ -2251,7 +2251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6011036417269610827}
   - component: {fileID: 6279916479295319391}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PatientCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
