@@ -215,6 +215,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     void btnReady()
     {
+        SoundManager.instance.PlaySoundEffect("ButtenClick");
         Ready = !Ready;
 
         if(Ready)
