@@ -207,6 +207,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     void btnStart()
     {
+        SoundManager.instance.PlaySoundEffect("ButtenClick");
         if (PhotonNetwork.IsMasterClient)
         {
             pv.RPC("ReceiveStart", RpcTarget.All);
