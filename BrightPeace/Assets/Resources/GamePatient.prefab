@@ -718,8 +718,8 @@ MonoBehaviour:
   SprintSpeed: 5.335
   cameraTransform: {fileID: 4654377753920380307}
   sitVolume: 0
-  walkVolume: 0
-  runVolume: 0
+  walkVolume: 0.2
+  runVolume: 0.4
   currentVolume: 0
   pv: {fileID: 0}
   rotaionSpeed: 3
