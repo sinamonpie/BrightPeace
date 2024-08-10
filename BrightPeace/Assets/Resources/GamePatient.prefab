@@ -912,7 +912,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: MotionSpeed
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isSwing
   - Type: 4
     SynchronizeType: 1

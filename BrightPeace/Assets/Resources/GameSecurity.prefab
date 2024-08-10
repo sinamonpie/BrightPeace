@@ -2707,6 +2707,7 @@ MonoBehaviour:
   ch_layerMask:
     serializedVersion: 2
     m_Bits: 0
+  swingRange: 2
 --- !u!114 &1520155454144629157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2845,7 +2846,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: MotionSpeed
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isSwing
   m_SynchronizeLayers:
   - SynchronizeType: 0

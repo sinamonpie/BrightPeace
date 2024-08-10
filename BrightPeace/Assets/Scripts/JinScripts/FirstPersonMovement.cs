@@ -37,16 +37,13 @@ public class FirstPersonMovement : PlayerController
     // Start is called before the first frame update
     void Start()
     {
-        if (!pv.IsMine)
-            return;
-        else
-        {
-            actionController = FindObjectOfType<ActionController>();
-        }
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
-
+        actionController = FindObjectOfType<ActionController>();
         avatarup = animator.GetBoneTransform(HumanBodyBones.Spine);
+
+        if (!pv.IsMine)
+            return;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
