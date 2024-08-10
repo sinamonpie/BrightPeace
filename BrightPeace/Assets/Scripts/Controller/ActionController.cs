@@ -320,7 +320,7 @@ public class ActionController : MonoBehaviourPun
     {
         if (hitInfo.transform != null)
         {
-            if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
+            if (hitInfo.transform.GetComponent<EscapeEnding>() != null && hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
             {
                 if (GameManager.Instance.role == UserRole.Patient)
                 {

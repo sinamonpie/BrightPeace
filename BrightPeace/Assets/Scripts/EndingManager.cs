@@ -24,6 +24,7 @@ public class EndingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = true;
         userRole = GameManager.Instance.role;
         userEnding = GameManager.Instance.endding;
         SetEnding();
