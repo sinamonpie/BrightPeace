@@ -214,12 +214,12 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
             PhotonNetwork.Instantiate(KeyItem.obj.name, spawnPosition, Quaternion.identity);
 
-            itemUnLockSpawn = RemoveTransformAt(itemUnLockSpawn, idx);
-            if (itemUnLockSpawn == null)
-            {
-                itemUnLock = true;
-                break;
-            }
+            //itemUnLockSpawn = RemoveTransformAt(itemUnLockSpawn, idx);
+            //if (itemUnLockSpawn == null)
+            //{
+            //    itemUnLock = true;
+            //    break;
+            //}
         }
 
         spawnedItemCount = 0;
@@ -230,32 +230,18 @@ public class InGameManager : MonoBehaviourPunCallbacks
             for (int j = 0; j < spwanItemCnt; j++)
             {
                 int spawnIdx = UnityEngine.Random.Range(0, 2);
-                if (itemUnLock)
-                    spawnIdx = 1;
-                else if (itemLock)
-                    spawnIdx = 0;
-                else if (itemUnLock && itemLock)
-                    break;
 
                 if (spawnIdx == 0)
                 {
                     int idx = UnityEngine.Random.Range(0, itemUnLockSpawn.Length);
                     Vector3 spawnPosition = itemUnLockSpawn[idx].position;
                     PhotonNetwork.Instantiate(itemObject.obj.name, spawnPosition, Quaternion.identity);
-
-                    itemUnLockSpawn = RemoveTransformAt(itemUnLockSpawn, idx);
-                    if (itemUnLockSpawn == null)
-                        itemUnLock = true;
                 }
                 else
                 {
                     int idx = UnityEngine.Random.Range(0, itemLockSpawn.Length);
                     Vector3 spawnPosition = itemLockSpawn[idx].position;
                     PhotonNetwork.Instantiate(itemObject.obj.name, spawnPosition, Quaternion.identity);
-
-                    itemLockSpawn = RemoveTransformAt(itemLockSpawn, idx);
-                    if (itemLockSpawn == null)
-                        itemLock = true;
                 }
             }
             spawnedItemCount += spwanItemCnt;
@@ -282,7 +268,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     Transform[] RemoveTransformAt(Transform[] _transforms, int idx)
     {
-        if (_transforms.Length <= 1)
+        if (_transforms.Length <= 0)
         {
             return null;
         }
