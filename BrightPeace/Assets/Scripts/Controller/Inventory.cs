@@ -25,9 +25,8 @@ public class Inventory : MonoBehaviour
     {
         currentSlotNum = 0;
 
-        pv = GetComponent<PhotonView>();
         settingInventory = false;
-
+        pv = GetComponent<PhotonView>();
         if (pv.IsMine)
         {
             SettingInventory();
@@ -36,6 +35,9 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
+        if (pv.IsMine)
+            return;
+
         if (settingInventory)
         {
             wheelInput = Input.GetAxis("Mouse ScrollWheel");
