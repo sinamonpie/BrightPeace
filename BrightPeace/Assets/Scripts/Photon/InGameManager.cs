@@ -384,9 +384,9 @@ public class InGameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void GameEnding(UserEnding endIdx)
+    public void GameEnding(UserRole _role, UserEnding _end)
     {
-        GameManager.Instance.SetEnding(endIdx);
+        GameManager.Instance.SetEnding(_role, _end);
         if (PhotonNetwork.IsMasterClient)
         {
             pv.RPC("MentalWin", RpcTarget.Others);
@@ -401,13 +401,25 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     public void DeadCountUp()
     {
-        deadCount++;
-        SecurityEnding();
+        pv.RPC("RPC_DeadCountUp", RpcTarget.All,deadCount+1);
     }
 
     public void AliveCountUp()
     {
-        aliveCount++;
+        pv.RPC("RPC_AliveCountUp", RpcTarget.All, aliveCount + 1);
+    }
+
+    [PunRPC]
+    void RPC_DeadCountUp(int _cnt)
+    {
+        deadCount = _cnt;
+        SecurityEnding();
+    }
+
+    [PunRPC]
+    void RPC_AliveCountUp(int _cnt)
+    {
+        aliveCount = _cnt;
         SecurityEnding();
     }
 
@@ -465,7 +477,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
         else if (patientCount == 0 && isDeadMental)
         {
             // °æºñ¿ø
-            GameManager.Instance.SetEnding(UserEnding.WinEnding);
+            GameManager.Instance.SetEnding(UserRole.Security, UserEnding.WinEnding);
             PhotonNetwork.LeaveRoom();
         }
     }
@@ -481,7 +493,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void MentalWin()
     {
-        GameManager.Instance.SetEnding(UserEnding.WinEnding);
+        GameManager.Instance.SetEnding(UserRole.Mental, UserEnding.WinEnding);
 
         PhotonNetwork.LeaveRoom();
     }

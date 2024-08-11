@@ -34,54 +34,46 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - AllowUseRadio
+  - AttackPaintient
+  - AttackPlayer
   - CantHearYou
   - ChangeColour
   - ClickRpc
   - DestroyRpc
-  - HeresWhy
   - DestroySpaceship
   - Fire
-  - RespawnSpaceship
-  - ReadyRPCChanged
-  - SetReadyCount
-  - SetStartGame
+  - GameStart
+  - HeresWhy
+  - MentalWin
   - ReceiveReady
   - ReceiveStart
-  - AllowUseRadio
   - ReleaseRadio
-  - RequestToUserRadio
-  - StopUsingRadio
-  - GameStart
   - RemoveSpawnPlayerList
-  - RPC_TakeDamage
-  - AttackPlayer
-  - RPC_Stun
+  - RequestToUserRadio
+  - RespawnSpaceship
   - RPC_DestroyItem
-  - RPC_DropItem
-  - ShowKnife
-  - RPC_ShowUI
   - RPC_DoorControl
-  - SetPlayerMental
-  - setNotice
-  - RPC_SetRoleMental
-  - RPC_OpenTheGate
   - RPC_DoorUI
-  - RPC_SetValve
-  - SwingAnim
-  - RPC_SetPuse
-  - GameEnd
-  - MentalWin
-  - SetPlayerCount
-  - SetDeadMantal
+  - RPC_DropItem
   - RPC_GetKill
-  - AttackPaintient
-  - SetMentalSpawn
-  - RPC_SetUseValve
-  - RPC_OpenEndingDoor
   - RPC_NotUseValve
+  - RPC_OpenEndingDoor
+  - RPC_OpenTheGate
+  - RPC_SetPuse
+  - RPC_SetRoleMental
+  - RPC_SetUseValve
+  - RPC_SetValve
+  - RPC_Stun
+  - RPC_TakeDamage
   - RPC_UnlockDoor
-  - RPC_NotWindow
-  - RPC_InsertPuse
+  - SetDeadMantal
+  - SetMentalSpawn
+  - setNotice
+  - SetPlayerCount
+  - SetReadyCount
+  - ShowKnife
+  - StopUsingRadio
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

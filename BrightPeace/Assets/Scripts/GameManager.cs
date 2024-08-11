@@ -45,13 +45,9 @@ public class GameManager : MonoBehaviour
         SoundManager.instance.PlayBGM("·Î±×ÀÎ");
     }
 
-    public void SetRole(UserRole _role)
+    public void SetEnding(UserRole _role, UserEnding endIdx)
     {
         role = _role;
-    }
-
-    public void SetEnding(UserEnding endIdx)
-    {
         isGameStart = false;
         endding = endIdx;
     }

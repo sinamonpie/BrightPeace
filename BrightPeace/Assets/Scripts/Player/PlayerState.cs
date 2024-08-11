@@ -82,8 +82,6 @@ public class PlayerState : MonoBehaviourPun
         {
             currentHp = maxHp;
         }
-
-        GameManager.Instance.SetRole(role);
     }
 
     public int GetPlayerHp()
@@ -110,7 +108,7 @@ public class PlayerState : MonoBehaviourPun
         }
 
         // Á×À¸¸é Dead ¿£µù
-        InGameManager.Instance.GameEnding(UserEnding.DeadEnding);
+        InGameManager.Instance.GameEnding(role, UserEnding.DeadEnding);
         InGameManager.Instance.DeadCountUp();
     }
 
@@ -143,7 +141,6 @@ public class PlayerState : MonoBehaviourPun
 
     public void SetRoleMental()
     {
-        GameManager.Instance.SetRole(role);
         SetMetal();
         photonView.RPC("RPC_SetRoleMental", RpcTarget.All);
     }

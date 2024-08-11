@@ -36,6 +36,9 @@ public class EscapeEnding : MonoBehaviourPun
     // 여기까지 필요없지만 다른데에서 참조해서 나중에 지우는게 나을듯
 
     public bool endingTrigger = false;
+    public int clearPuseBox = 0;
+    public bool isWindow = false;
+
 
     // 활성화되면 열림
     public void EndingOK()
@@ -43,11 +46,14 @@ public class EscapeEnding : MonoBehaviourPun
         endingTrigger = true;
     }
 
-    public int clearPuseBox = 0;
-
     public void ClearPuseBox()
     {
         clearPuseBox++;
+    }
+
+    public bool IsWindow()
+    {
+        return isWindow;
     }
 
     public int PuseBoxEndingCheck()
@@ -64,24 +70,6 @@ public class EscapeEnding : MonoBehaviourPun
     void RPC_OpenEndingDoor()
     {
         endingTrigger = true;
-    }
-
-    public bool isWindow = false;
-
-    public bool IsWindow()
-    {
-        return isWindow;
-    }
-
-    public void NotWindow()
-    {
-        photonView.RPC("RPC_NotWindow", RpcTarget.All);
-    }
-
-    [PunRPC]
-    void RPC_NotWindow()
-    {
         isWindow = false;
     }
-
 }
