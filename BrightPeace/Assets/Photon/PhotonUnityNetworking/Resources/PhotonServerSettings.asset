@@ -80,6 +80,7 @@ MonoBehaviour:
   - RPC_OpenEndingDoor
   - RPC_NotUseValve
   - RPC_UnlockDoor
+  - RPC_NotWindow
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

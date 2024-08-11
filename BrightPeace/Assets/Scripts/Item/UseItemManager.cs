@@ -106,35 +106,33 @@ public class UseItemManager : MonoBehaviourPun
                             case "열쇠":
                                 {
                                     // 잠기지 않은 문은 아이템 사용 불가
-                                    if (!actionController.canDoor)
-                                        goto exit;
-
-                                    if (!mainCamera.gameObject.GetComponent<ActionController>().IsLockDoor())
+                                    if (actionController.canDoor)
                                     {
-                                        if (mainCamera.gameObject.GetComponent<ActionController>().CanDoorAction(unlockTime))
+                                        if (!mainCamera.gameObject.GetComponent<ActionController>().IsLockDoor())
                                         {
-                                            StartCoroutine(UseKey(unlockTime));
+                                            if (mainCamera.gameObject.GetComponent<ActionController>().CanDoorAction(unlockTime))
+                                            {
+                                                StartCoroutine(UseKey(unlockTime));
+                                            }
                                         }
                                     }
+
                                     break;
                                 }
 
                             case "구급약":
                                 {
-                                    if (medikitRate < medikitUseRate)
+                                    if (medikitRate > medikitUseRate)
                                     {
-                                        goto exit;
+                                        int currnetPlayerHp = transform.GetComponent<PlayerState>().GetPlayerHp();
+
+                                        if (currnetPlayerHp <= 1)
+                                        {
+                                            transform.GetComponent<PlayerState>().Heal(1);
+                                            medikitUseRate++;
+                                        }
                                     }
 
-                                    int currnetPlayerHp = transform.GetComponent<PlayerState>().GetPlayerHp();
-
-                                    if (currnetPlayerHp > 1)
-                                    {
-                                        goto exit;
-                                    }
-
-                                    transform.GetComponent<PlayerState>().Heal(1);
-                                    medikitUseRate++;
                                     break;
                                 }
 
@@ -173,252 +171,246 @@ public class UseItemManager : MonoBehaviourPun
                         alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
                         inventory.currentSlot.ClearSlot();
                     }
-                exit:;
-
                 }
 
                 else if (inventory.currentSlot.item.itemType == ItemType.Equip)
                 {
-                    if (inventory.currentSlot.item.itemName == "칼")
+
+                    switch (inventory.currentSlot.item.itemName)
                     {
-                        ray = new Ray(transform.position + Vector3.up * 1f, transform.forward);
-                        Debug.DrawRay(ray.origin, ray.direction * swingRange, Color.red);
+                        case "칼":
 
-                        if (!knife.activeSelf)
-                        {
-                            pv.RPC("ShowKnife", RpcTarget.All, true);
-                        }
+                            ray = new Ray(transform.position + Vector3.up * 1f, transform.forward);
+                            Debug.DrawRay(ray.origin, ray.direction * swingRange, Color.red);
 
-                        rate += Time.deltaTime;
-                        isSwingReady = rate > swingDelay;
-
-                        if (Input.GetButtonDown("Fire1") && isSwingReady)
-                        {
-                            // 나이프 휘두르는 사운드 추가
-                            animator.SetTrigger("isSwing");
-                            rate = 0;
-
-                            if (Physics.Raycast(ray, out hit, swingRange))
+                            if (!knife.activeSelf)
                             {
-                                if (hit.transform.CompareTag("Player"))
+                                pv.RPC("ShowKnife", RpcTarget.All, true);
+                            }
+
+                            rate += Time.deltaTime;
+                            isSwingReady = rate > swingDelay;
+
+                            if (Input.GetButtonDown("Fire1") && isSwingReady)
+                            {
+                                // 나이프 휘두르는 사운드 추가
+                                animator.SetTrigger("isSwing");
+                                rate = 0;
+
+                                if (Physics.Raycast(ray, out hit, swingRange))
                                 {
-                                    PlayerState playerState = hit.transform.GetComponent<PlayerState>();
-
-                                    // 다른 플레이어가 맞았으면 
-                                    if (playerState != null)
+                                    if (hit.transform.CompareTag("Player"))
                                     {
-                                        pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
-                                      
-                                        inventory.currentSlot.ClearSlot();
-                                        inventory.getKnife = false;
-                                        pv.RPC("ShowKnife", RpcTarget.All, false);
-                                    }
+                                        PlayerState playerState = hit.transform.GetComponent<PlayerState>();
 
+                                        // 다른 플레이어가 맞았으면 
+                                        if (playerState != null)
+                                        {
+                                            pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
+
+                                            inventory.currentSlot.ClearSlot();
+                                            inventory.getKnife = false;
+                                            pv.RPC("ShowKnife", RpcTarget.All, false);
+                                        }
+
+                                    }
+                                }
+                                else
+                                {
+                                    //나이프 빗맞았을 떄
+                                    SoundManager.instance.PlaySoundEffect("KnifeMiss");
                                 }
                             }
-                            else
-                            {
-                                //나이프 빗맞았을 떄
-                                SoundManager.instance.PlaySoundEffect("KnifeMiss");
-                            }
-                        }
-
-
+                            break;
                     }
-
                 }
-
                 else if (inventory.currentSlot.item.itemType == ItemType.Escape)
                 {
                     // 다른 아이템 줍기 중복 제한
                     if (!actionController.isRayItem)
                     {
                         ray = actionController.ray;
-                        if (inventory.currentSlot.item.itemName == "퓨즈")
+
+                        switch(inventory.currentSlot.item.itemName)
                         {
-                            if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "FuseBox")
-                            {
-                                // 퓨즈박스라고 뜨는 문구 @@@@@@
-                                if (Input.GetKeyDown(KeyCode.E))
+                            case "퓨즈":
+                                if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "FuseBox")
                                 {
-                                    Debug.Log("퓨즈사용");
-                                    if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() < 3)
+                                    // 퓨즈박스라고 뜨는 문구 @@@@@@
+                                    if (Input.GetKeyDown(KeyCode.E))
                                     {
-                                        actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
-                                        if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
+                                        Debug.Log("퓨즈사용");
+                                        if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() < 3)
                                         {
-                                            actionController.hitInfo.transform.GetComponent<FuseBox>().ClearPuseBox();
-                                            if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() == 2)
+                                            actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
+                                            if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
                                             {
-                                                actionController.hitInfo.transform.GetComponent<FuseBox>().UnlockLobbyDoor();
-                                                string text = "퓨즈박스 3개 다 넣었습니다.";
-                                                StartCoroutine(TextAlert());
-                                                alertText.SetText(text);
+                                                actionController.hitInfo.transform.GetComponent<FuseBox>().ClearPuseBox();
+                                                if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() == 2)
+                                                {
+                                                    actionController.hitInfo.transform.GetComponent<FuseBox>().UnlockLobbyDoor();
+                                                    string text = "퓨즈박스 3개 다 넣었습니다.";
+                                                    StartCoroutine(TextAlert());
+                                                    alertText.SetText(text);
+                                                }
+                                                else
+                                                {
+                                                    string text = "남은 퓨즈박스 개수 : " + (2 - actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck()).ToString();
+                                                    StartCoroutine(TextAlert());
+                                                    alertText.SetText(text);
+                                                }
                                             }
                                             else
                                             {
-                                                string text = "남은 퓨즈박스 개수 : " + (2 - actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck()).ToString();
+                                                string text = "남은 퓨즈 개수 = " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum()).ToString();
                                                 StartCoroutine(TextAlert());
                                                 alertText.SetText(text);
                                             }
+                                            inventory.currentSlot.ClearSlot();
                                         }
                                         else
                                         {
-                                            string text = "남은 퓨즈 개수 = " + (3 - actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum()).ToString();
+                                            string text = "해당 퓨즈박스는 퓨즈를 다 채웠습니다.";
                                             StartCoroutine(TextAlert());
                                             alertText.SetText(text);
                                         }
+                                    }
+                                }
+                                break;
+
+                            case "락픽":
+
+                                if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "ExitDoor")
+                                {
+                                    if (!actionController.hitInfo.transform.GetComponent<DoorController>().UseableDoor())
+                                    {
+                                        actionController.actionText.text = "락픽 사용 " + "<color=yellow>" + "E키" + "</color>";
+                                        actionController.actionText.gameObject.SetActive(true);
+
+                                        if (Input.GetKeyDown(KeyCode.E))
+                                        {
+                                            GetComponent<PlayerController>().UnEnableMove();
+                                            animator.SetBool("IsSit", true);
+                                            startLockPickTime = Time.time;
+                                            useLockPick = true;
+                                        }
+                                        else if (Input.GetKeyUp(KeyCode.E))
+                                        {
+                                            GetComponent<PlayerController>().EnableMove();
+                                            animator.SetBool("IsSit", false);
+                                            useLockPick = false;
+                                        }
+
+                                        if (useLockPick)
+                                        {
+                                            float currentTime = Time.time - startLockPickTime;
+                                            float time = lockPickTime - currentTime;
+
+                                            int minutes = Mathf.FloorToInt(time / 60);
+                                            int seconds = Mathf.FloorToInt(time % 60);
+
+                                            alertText.text = string.Format("문 따는 중...{0:0}:{1:00}", minutes, seconds);
+                                            alertText.gameObject.SetActive(true);
+
+                                            if (time <= 0)
+                                            {
+                                                alertText.gameObject.SetActive(false);
+                                                actionController.hitInfo.transform.GetComponent<DoorController>().UnlockDoor();
+                                                GetComponent<PlayerController>().EnableMove();
+                                                inventory.currentSlot.ClearSlot();
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    GetComponent<PlayerController>().EnableMove();
+                                    animator.SetBool("IsSit", false);
+                                    useLockPick = false;
+                                }
+                                break;
+                            case "밧줄":
+
+                                if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "Ending" && actionController.hitInfo.transform.GetComponent<EscapeEnding>().IsWindow())
+                                {
+                                    if (!actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
+                                    {
+                                        actionController.actionText.text = "밧줄 사용 " + "<color=yellow>" + "E키" + "</color>";
+                                        actionController.actionText.gameObject.SetActive(true);
+
+                                        if (Input.GetKeyDown(KeyCode.E))
+                                        {
+                                            GetComponent<PlayerController>().UnEnableMove();
+                                            animator.SetBool("IsSit", true);
+                                            startLockPickTime2 = Time.time;
+                                            useLockPick2 = true;
+                                        }
+                                        else if (Input.GetKeyUp(KeyCode.E))
+                                        {
+                                            GetComponent<PlayerController>().EnableMove();
+                                            animator.SetBool("IsSit", false);
+                                            useLockPick2 = false;
+                                        }
+
+                                        if (useLockPick2)
+                                        {
+                                            float currentTime = Time.time - startLockPickTime2;
+                                            float time = lockPickTime2 - currentTime;
+
+                                            int minutes = Mathf.FloorToInt(time / 60);
+                                            int seconds = Mathf.FloorToInt(time % 60);
+
+                                            alertText.text = string.Format("밧줄 묶는 중...{0:0}:{1:00}", minutes, seconds);
+                                            alertText.gameObject.SetActive(true);
+
+                                            if (time <= 0)
+                                            {
+                                                alertText.gameObject.SetActive(false);
+                                                actionController.hitInfo.transform.GetComponent<EscapeEnding>().OpenEndingDoor();
+                                                actionController.hitInfo.transform.GetComponent<EscapeEnding>().NotWindow();
+                                                GetComponent<PlayerController>().EnableMove();
+                                                inventory.currentSlot.ClearSlot();
+                                                Debug.Log(actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger());
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    GetComponent<PlayerController>().EnableMove();
+                                    animator.SetBool("IsSit", false);
+                                    useLockPick2 = false;
+                                }
+                                break;
+
+                            case "밸브":
+
+                                if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "Tank")
+                                {
+                                    actionController.actionText.text = "밸브 넣기 " + "<color=yellow>" + "E키" + "</color>";
+                                    actionController.actionText.gameObject.SetActive(true);
+
+                                    if (Input.GetKeyDown(KeyCode.E))
+                                    {
+                                        StartCoroutine(TextAlert());
+                                        alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
+
+                                        SoundManager.instance.PlaySoundEffect("PutValve");
+
+                                        GameObject tank = actionController.hitInfo.transform.gameObject;
+                                        tank.GetComponent<ValveTank>().SetValve();
                                         inventory.currentSlot.ClearSlot();
                                     }
-                                    else
-                                    {
-                                        string text = "해당 퓨즈박스는 퓨즈를 다 채웠습니다.";
-                                        StartCoroutine(TextAlert());
-                                        alertText.SetText(text);
-                                    }
                                 }
-                            }
-                        }
-                        else if (inventory.currentSlot.item.itemName == "락픽")
-                        {
-                            if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "ExitDoor")
-                            {
-                                if (!actionController.hitInfo.transform.GetComponent<DoorController>().UseableDoor())
-                                {
-                                    actionController.actionText.text = "락픽 사용 " + "<color=yellow>" + "E키" + "</color>";
-                                    actionController.actionText.gameObject.SetActive(true);
-
-                                    if (Input.GetKeyDown(KeyCode.E))
-                                    {
-                                        GetComponent<PlayerController>().UnEnableMove();
-                                        animator.SetBool("IsSit", true);
-                                        startLockPickTime = Time.time;
-                                        useLockPick = true;
-                                    }
-                                    else if (Input.GetKeyUp(KeyCode.E))
-                                    {
-                                        GetComponent<PlayerController>().EnableMove();
-                                        animator.SetBool("IsSit", false);
-                                        useLockPick = false;
-                                    }
-
-                                    if(useLockPick)
-                                    {
-                                        float currentTime = Time.time - startLockPickTime;
-                                        float time = lockPickTime - currentTime;
-
-                                        int minutes = Mathf.FloorToInt(time / 60);
-                                        int seconds = Mathf.FloorToInt(time % 60);
-
-                                        alertText.text = string.Format("문 따는 중...{0:0}:{1:00}", minutes, seconds);
-                                        alertText.gameObject.SetActive(true);
-
-                                        if(time <= 0)
-                                        {
-                                            alertText.gameObject.SetActive(false);
-                                            actionController.hitInfo.transform.GetComponent<DoorController>().UnlockDoor();
-                                            GetComponent<PlayerController>().EnableMove();
-                                            inventory.currentSlot.ClearSlot();
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                GetComponent<PlayerController>().EnableMove();
-                                animator.SetBool("IsSit", false);
-                                useLockPick = false;
-                            }
-                        }
-                        else if (inventory.currentSlot.item.itemName == "밧줄")
-                        {
-                            if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "Ending" && actionController.hitInfo.transform.GetComponent<EscapeEnding>().IsWindow())
-                            {
-                                if (!actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
-                                {
-                                    actionController.actionText.text = "밧줄 사용 " + "<color=yellow>" + "E키" + "</color>";
-                                    actionController.actionText.gameObject.SetActive(true);
-
-                                    if (Input.GetKeyDown(KeyCode.E))
-                                    {
-                                        GetComponent<PlayerController>().UnEnableMove();
-                                        animator.SetBool("IsSit", true);
-                                        startLockPickTime2 = Time.time;
-                                        useLockPick2 = true;
-                                    }
-                                    else if (Input.GetKeyUp(KeyCode.E))
-                                    {
-                                        GetComponent<PlayerController>().EnableMove();
-                                        animator.SetBool("IsSit", false);
-                                        useLockPick2 = false;
-                                    }
-
-                                    if (useLockPick2)
-                                    {
-                                        float currentTime = Time.time - startLockPickTime2;
-                                        float time = lockPickTime2 - currentTime;
-
-                                        int minutes = Mathf.FloorToInt(time / 60);
-                                        int seconds = Mathf.FloorToInt(time % 60);
-
-                                        alertText.text = string.Format("밧줄 묶는 중...{0:0}:{1:00}", minutes, seconds);
-                                        alertText.gameObject.SetActive(true);
-
-                                        if (time <= 0)
-                                        {
-                                            alertText.gameObject.SetActive(false);
-                                            actionController.hitInfo.transform.GetComponent<EscapeEnding>().OpenEndingDoor();
-                                            actionController.hitInfo.transform.GetComponent<EscapeEnding>().NotWindow();
-                                            GetComponent<PlayerController>().EnableMove();
-                                            inventory.currentSlot.ClearSlot();
-                                            Debug.Log(actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger());
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                GetComponent<PlayerController>().EnableMove();
-                                animator.SetBool("IsSit", false);
-                                useLockPick2 = false;
-                            }
-                        }
-                        else if (inventory.currentSlot.item.itemName == "밸브")
-                        {
-                            if (actionController.hitInfo.transform != null && actionController.hitInfo.transform.tag == "Tank")
-                            {
-                                actionController.actionText.text = "밸브 넣기 " + "<color=yellow>" + "E키" + "</color>";
-                                actionController.actionText.gameObject.SetActive(true);
-
+                                break;
+                            case "카드키":
                                 if (Input.GetKeyDown(KeyCode.E))
                                 {
-                                    StartCoroutine(TextAlert());
-                                    alertText.text = inventory.currentSlot.item.itemName + " 을(를) 사용했습니다.";
-
-                                    SoundManager.instance.PlaySoundEffect("PutValve");
-
-                                    GameObject tank = actionController.hitInfo.transform.gameObject;
-                                    tank.GetComponent<ValveTank>().SetValve();
-                                    inventory.currentSlot.ClearSlot();
+                                    actionController.EndingLobbyAction();
                                 }
-                            }
-                            else
-                            {
-                                goto exit;
-                            }
-                            // 액션 컨트롤러로 옮기기 NULL 오류 
+                                break;
                         }
-                        else if(inventory.currentSlot.item.itemName == "카드키")
-                        {
-                            if (Input.GetKeyDown(KeyCode.E))
-                            {
-                                actionController.EndingLobbyAction();
-                            }
-
-                        }
-
                     }
-                exit:;
                 }
                 // 아이템 버리기
                 if (Input.GetKeyUp(KeyCode.G))
