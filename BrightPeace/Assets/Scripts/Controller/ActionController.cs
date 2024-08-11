@@ -108,8 +108,11 @@ public class ActionController : MonoBehaviourPun
 
             if (hitInfo.transform.tag == "Ending" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
-                canDoor = true;
-                EndigInfoAppear();
+                if (!hitInfo.transform.GetComponent<EscapeEnding>().IsWindow())
+                {
+                    canDoor = true;
+                    EndigInfoAppear();
+                }
             }
 
             if (hitInfo.transform.tag == "Cabinet" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
