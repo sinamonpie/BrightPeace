@@ -209,7 +209,6 @@ public class UseItemManager : MonoBehaviourPun
                                             pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
 
                                             inventory.currentSlot.ClearSlot();
-                                            inventory.getKnife = false;
                                             pv.RPC("ShowKnife", RpcTarget.All, false);
                                         }
 
@@ -425,7 +424,6 @@ public class UseItemManager : MonoBehaviourPun
 
                     if (inventory.currentSlot.item.itemName == "Į")
                     {
-                        inventory.getKnife = false;
                         pv.RPC("ShowKnife", RpcTarget.All, false);
                     }
 
