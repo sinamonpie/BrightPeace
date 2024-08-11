@@ -77,7 +77,7 @@ public class Aim : MonoBehaviour
         {
             if (hitInfo.transform.GetComponent<PlayerState>() != null)
             {
-                hitInfo.transform.GetComponent<PlayerState>().TakeDamage(1);
+                hitInfo.transform.GetComponent<PlayerState>().TakeDamage(1, UserRole.Mental);
                 Debug.Log("대상 남은 체력 : " + hitInfo.transform.GetComponent<PlayerState>().GetPlayerHp().ToString());
             }
         }

@@ -528,7 +528,7 @@ public class UseItemManager : MonoBehaviourPun
                 PlayerState playerHp = targetView.GetComponent<PlayerState>();
                 if (playerHp != null)
                 {
-                    playerHp.TakeDamage(1);
+                    playerHp.TakeDamage(1, GetComponent<PlayerState>().role) ;
                     Debug.Log("대상 남은 체력 : " + playerHp.GetPlayerHp().ToString());
                 }
             }
