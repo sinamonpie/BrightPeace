@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using UnityEngine.Animations;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine.UIElements;
 using Unity.VisualScripting;
 
 /// <summary>
@@ -76,7 +75,7 @@ public class UseItemManager : MonoBehaviourPun
     float normalFOV;
     float panDistance = 5f;
 
-    public Image zoomCrosshair;
+    public GameObject zoomCrosshair;
 
     [SerializeField]
     RaycastHit hit;
@@ -93,7 +92,8 @@ public class UseItemManager : MonoBehaviourPun
             actionController = FindObjectOfType<ActionController>();
             mainCamera = GetComponentInChildren<Camera>();
             sensorCamera = mainCamera.gameObject.GetComponentInChildren<SensorCamera>();
-
+            zoomCrosshair = InGameManager.Instance.CrossHairImage;
+            zoomCrosshair.SetActive(false);
             animator = transform.GetComponent<Animator>();
             rate = swingDelay;
             medikitUseRate = 0;
@@ -106,6 +106,18 @@ public class UseItemManager : MonoBehaviourPun
         {
             if (inventory.currentSlot != null && inventory.currentSlot.item != null)
             {
+                if (inventory.currentSlot.item.itemName != "ÃÑ")
+                {
+                    // ÁÜ Ç®·Á¾ßÇÔ
+                    if (isZoomed)
+                    {
+                        isZoomed = !isZoomed;
+                        mainCamera.fieldOfView = normalFOV;
+                        mainCamera.transform.localPosition = mainCamera.transform.localPosition + new Vector3(-panDistance, 0f, 0f);
+                        zoomCrosshair.gameObject.SetActive(false);
+                    }
+                }
+
                 if (inventory.currentSlot.item.itemType == ItemType.Used)
                 {
                     // ¾ÆÀÌÅÛ ÁÝ±â¶û »ç¿ë Áßº¹ Á¦ÇÑ
@@ -496,6 +508,7 @@ public class UseItemManager : MonoBehaviourPun
         }
         else { Debug.Log("°¨³ªºø"); }
 
+        // ÁÜ Ç®·Á¾ßÇÔ
         if (isZoomed)
         {
             isZoomed = !isZoomed;
@@ -505,7 +518,6 @@ public class UseItemManager : MonoBehaviourPun
         }
 
         inventory.currentSlot.ClearSlot();
-        this.gameObject.SetActive(false);
     }
 
     void Zooming()
@@ -534,12 +546,12 @@ public class UseItemManager : MonoBehaviourPun
             if (hit.transform.tag == "Player" && hit.transform != null)
             {
                 isAimPlayer = true;
-                zoomCrosshair.color = Color.red;
+                zoomCrosshair.GetComponent<Image>().color = Color.red;
             }
             else
             {
                 isAimPlayer = false;
-                zoomCrosshair.color = Color.white;
+                zoomCrosshair.GetComponent<Image>().color = Color.white;
             }
         }
     }

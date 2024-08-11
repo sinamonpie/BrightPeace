@@ -76,6 +76,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     public GameObject StunUIPrefab;
     public GameObject doorLockUI;
     public GameObject SlotParents;
+    public GameObject CrossHairImage;
     public TMP_Text alertText;
     public PhotonView pv;
 
