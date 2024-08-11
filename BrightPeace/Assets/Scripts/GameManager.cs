@@ -50,6 +50,22 @@ public class GameManager : MonoBehaviour
         role = _role;
         isGameStart = false;
         endding = endIdx;
+        if(endIdx == UserEnding.DeadEnding)
+        {
+            SoundManager.instance.PlayBGM("사망 엔딩");
+        }
+        else if(endIdx == UserEnding.WinEnding)
+        {
+            SoundManager.instance.PlayBGM("성공 엔딩");
+        }
+        else if(endIdx == UserEnding.LoseEnding)
+        {
+            SoundManager.instance.PlayBGM("실패 엔딩");
+        }
+        else
+        {
+            SoundManager.instance.PlayBGM("실패 엔딩");
+        }
     }
 
     public void LoadLoginScene()
