@@ -381,7 +381,7 @@ public class ActionController : MonoBehaviourPun
                     InGameManager.Instance.AliveCountUp();
                     if (player.transform.GetComponent<PlayerState>().role == UserRole.Patient)
                     {
-                        GameManager.Instance.SetEnding(UserEnding.WinEnding);
+                        GameManager.Instance.SetEnding(UserRole.Patient, UserEnding.WinEnding);
                         PhotonNetwork.LeaveRoom();
                         Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                     } 
@@ -389,7 +389,7 @@ public class ActionController : MonoBehaviourPun
                     // NormalEnding
                     else if (player.transform.GetComponent<PlayerState>().role == UserRole.Mental)
                     {
-                        GameManager.Instance.SetEnding(UserEnding.NomalEnding);
+                        GameManager.Instance.SetEnding(UserRole.Mental, UserEnding.NomalEnding);
                         PhotonNetwork.LeaveRoom();
                         Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                     }
@@ -424,7 +424,7 @@ public class ActionController : MonoBehaviourPun
                 InGameManager.Instance.AliveCountUp();
                 if (player.transform.GetComponent<PlayerState>().role == UserRole.Patient)
                 {
-                    GameManager.Instance.SetEnding(UserEnding.WinEnding);
+                    GameManager.Instance.SetEnding(UserRole.Patient, UserEnding.WinEnding);
                     PhotonNetwork.LeaveRoom();
                     Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                 }
@@ -432,7 +432,7 @@ public class ActionController : MonoBehaviourPun
                 // NormalEnding
                 else if (player.transform.GetComponent<PlayerState>().role == UserRole.Mental)
                 {
-                    GameManager.Instance.SetEnding(UserEnding.NomalEnding);
+                    GameManager.Instance.SetEnding(UserRole.Mental, UserEnding.NomalEnding);
                     PhotonNetwork.LeaveRoom();
                     Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                 }
