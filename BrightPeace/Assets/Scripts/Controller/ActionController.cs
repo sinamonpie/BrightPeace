@@ -35,11 +35,45 @@ public class ActionController : MonoBehaviourPun
     public bool canDoor = false;
     private bool isSetting = false;
 
+    Renderer renderers;
+    List<Material> materialList = new List<Material>();
+    Material outline;
+
+    void Start()
+    {
+        outline = new Material(Shader.Find("Draw/OutlineShader"));
+    }
+
     void Update()
     {
         if (isSetting)
         {
             CheckInteraction();
+        }
+    }
+
+    void OutlineItem(Transform _transform)
+    {
+        renderers = _transform.GetComponentInChildren<Renderer>();
+
+        materialList.Clear();
+        materialList.AddRange(renderers.materials);
+        materialList.Add(outline);
+
+        renderers.materials = materialList.ToArray();
+    }
+
+    void NotOutlineItem()
+    {
+        if(renderers != null)
+        {
+            materialList.Clear();
+            materialList.AddRange(renderers.materials);
+            materialList.Remove(outline);
+
+            renderers.materials = materialList.ToArray();
+
+            renderers = null;
         }
     }
 
@@ -50,10 +84,10 @@ public class ActionController : MonoBehaviourPun
 
         if (Physics.Raycast(ray, out hitInfo, range, layerMask))
         {
-
             if (hitInfo.transform.tag == "Item" && !PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
                 ItemInfoAppear();
+                OutlineItem(hitInfo.transform);
                 isRayItem = true;
             }
 
@@ -215,6 +249,7 @@ public class ActionController : MonoBehaviourPun
         }
         else
         {
+            NotOutlineItem();
             InfoDisapper();
         }
 
