@@ -209,7 +209,7 @@ public class UseItemManager : MonoBehaviourPun
                                             pv.RPC("AttackPlayer", RpcTarget.All, hit.transform.GetComponent<PhotonView>().ViewID);
 
                                             inventory.currentSlot.ClearSlot();
-                                           // inventory.getKnife = false;
+                                            inventory.getKnife = false;
                                             pv.RPC("ShowKnife", RpcTarget.All, false);
                                         }
 
@@ -240,7 +240,7 @@ public class UseItemManager : MonoBehaviourPun
                                     if (Input.GetKeyDown(KeyCode.E))
                                     {
                                         Debug.Log("Ç»Áî»ç¿ë");
-                                        if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() < 3)
+                                        if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() < 3)
                                         {
                                             actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
                                             if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
@@ -425,7 +425,7 @@ public class UseItemManager : MonoBehaviourPun
 
                     if (inventory.currentSlot.item.itemName == "Ä®")
                     {
-                        //inventory.getKnife = false;
+                        inventory.getKnife = false;
                         pv.RPC("ShowKnife", RpcTarget.All, false);
                     }
 

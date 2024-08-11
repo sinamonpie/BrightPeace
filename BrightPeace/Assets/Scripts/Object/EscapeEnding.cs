@@ -79,7 +79,7 @@ public class EscapeEnding : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void RPC_NotWindow()
+    void RPC_NotWindow()
     {
         isWindow = false;
     }
