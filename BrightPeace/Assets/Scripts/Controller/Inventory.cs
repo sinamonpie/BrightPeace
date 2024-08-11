@@ -35,9 +35,6 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
-        if (pv.IsMine)
-            return;
-
         if (settingInventory)
         {
             wheelInput = Input.GetAxis("Mouse ScrollWheel");
