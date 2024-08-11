@@ -82,7 +82,7 @@ public class ActionController : MonoBehaviourPun
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.cyan);
 
-        Vector3 boxHalfExtents = new Vector3(1f, 1f, 1f);
+        Vector3 boxHalfExtents = new Vector3(1f, 1f, 1f) / 2;
         if (Physics.BoxCast(ray.origin, boxHalfExtents, ray.direction, out hitInfo, Quaternion.identity, range, layerMask))
         {
             if (hitInfo.transform.tag == "Item" && !PhotonNetwork.IsMasterClient && photonView.IsMine)

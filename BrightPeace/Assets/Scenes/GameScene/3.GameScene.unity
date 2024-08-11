@@ -5920,7 +5920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bdba5c9dd6103d448b05b0cf55418cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 7
+  range: 5
   holdTime: 3
   layerMask:
     serializedVersion: 2
@@ -8421,6 +8421,7 @@ MonoBehaviour:
   isDeadMental: 0
   isSetting: 0
   deadCount: 0
+  catchCount: 0
   aliveCount: 0
 --- !u!114 &2037795857
 MonoBehaviour:
