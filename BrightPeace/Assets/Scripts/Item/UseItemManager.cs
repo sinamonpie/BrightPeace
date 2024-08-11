@@ -106,7 +106,7 @@ public class UseItemManager : MonoBehaviourPun
                             case "열쇠":
                                 {
                                     // 잠기지 않은 문은 아이템 사용 불가
-                                    if (actionController.canDoor && actionController.hitInfo.transform.GetComponent<DoorController>())
+                                    if (actionController.canDoor && !actionController.hitInfo.transform.GetComponent<DoorController>().UseableDoor())
                                     {
                                         if (!mainCamera.gameObject.GetComponent<ActionController>().IsLockDoor())
                                         {
