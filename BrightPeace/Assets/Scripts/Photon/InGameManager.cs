@@ -495,6 +495,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void RemoveSpawnPlayerList(int idx)
     {
+        if (idx >= patientSpawn.Length)
+            return;
         patientSpawn = RemoveTransformAt(patientSpawn, idx);
     }
 
