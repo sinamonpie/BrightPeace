@@ -74,6 +74,8 @@ MonoBehaviour:
   - SetReadyCount
   - ShowKnife
   - StopUsingRadio
+  - RPC_AliveCountUp
+  - RPC_DeadCountUp
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
