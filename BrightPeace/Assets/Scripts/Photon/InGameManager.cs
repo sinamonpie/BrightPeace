@@ -185,7 +185,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
             Camera.main.transform.localPosition = new Vector3(0, 0, -3);
             // ㄴ 2024.08.07 14:01 테스트로 넣어본 문장
 
-            pv.RPC("RemoveSpawnPlayerList", RpcTarget.AllBuffered, idx);
+            //pv.RPC("RemoveSpawnPlayerList", RpcTarget.AllBuffered, idx);
         }
     }
 
