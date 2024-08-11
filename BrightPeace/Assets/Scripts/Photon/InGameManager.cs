@@ -447,7 +447,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     public void SecurityEnding()
     {
         // 경비원 혼자 남았을때 엔딩
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1 && PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.CurrentRoom.PlayerCount <= 1 && isDeadMental)
         {
             if (catchCount >= patientCount/2) 
             {
@@ -464,12 +464,12 @@ public class InGameManager : MonoBehaviourPunCallbacks
                 PhotonNetwork.LeaveRoom();
             }
         }
-        else if(PhotonNetwork.CurrentRoom.PlayerCount == 1 && aliveCount <= patientCount / 2)
+        else if(PhotonNetwork.CurrentRoom.PlayerCount <= 1 && deadCount >= 0 && isDeadMental)
         {
             GameManager.Instance.SetEnding(UserRole.Mental, UserEnding.WinEnding);
             PhotonNetwork.LeaveRoom();
         }
-        else if(PhotonNetwork.CurrentRoom.PlayerCount == 2 && !isDeadMental)
+        else if(PhotonNetwork.CurrentRoom.PlayerCount <= 2 && !isDeadMental)
         {
             if(PhotonNetwork.IsMasterClient)
             {
