@@ -109,8 +109,9 @@ public class PlayerState : MonoBehaviourPun
             InGameManager.Instance.DeadMenetalPlayer();
         }
 
+        // Á×À¸¸é Dead ¿£µù
         InGameManager.Instance.GameEnding(UserEnding.DeadEnding);
-        // PhotonNetwork.LeaveRoom(); ??
+        InGameManager.Instance.DeadCountUp();
     }
 
     public void TakeDamage(int damage)

@@ -343,6 +343,7 @@ public class ActionController : MonoBehaviourPun
                 {
                     // 실험체 탈출 성공
                     // WinEnding
+                    InGameManager.Instance.AliveCountUp();
                     if (player.transform.GetComponent<PlayerState>().role == UserRole.Patient)
                     {
                         GameManager.Instance.SetEnding(UserEnding.WinEnding);
@@ -385,6 +386,7 @@ public class ActionController : MonoBehaviourPun
             {
                 // 실험체 탈출 성공
                 // WinEnding
+                InGameManager.Instance.AliveCountUp();
                 if (player.transform.GetComponent<PlayerState>().role == UserRole.Patient)
                 {
                     GameManager.Instance.SetEnding(UserEnding.WinEnding);
