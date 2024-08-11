@@ -380,24 +380,25 @@ public class InGameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
-    public void DeadMenetalPlayer()
-    {
-        pv.RPC("SetDeadMantal", RpcTarget.Others);
-    }
-
     public void CatchCountUp()
     {
         pv.RPC("RPC_CatchCountUp", RpcTarget.All, catchCount + 1);
     }
 
-    public void DeadCountUp()
+    public void DeadCountUp(UserRole _role)
     {
-        pv.RPC("RPC_DeadCountUp", RpcTarget.All, deadCount + 1);
+        if (_role == UserRole.Mental)
+            isDeadMental = true;
+
+        pv.RPC("RPC_DeadCountUp", RpcTarget.All, deadCount + 1, isDeadMental);
     }
 
-    public void AliveCountUp()
+    public void AliveCountUp(UserRole _role)
     {
-        pv.RPC("RPC_AliveCountUp", RpcTarget.All, aliveCount + 1);
+        if (_role == UserRole.Mental)
+            isDeadMental = true;
+
+        pv.RPC("RPC_AliveCountUp", RpcTarget.All, aliveCount + 1, isDeadMental);
     }
 
     public int GetAliveCount()
@@ -421,8 +422,9 @@ public class InGameManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void RPC_DeadCountUp(int _cnt)
+    void RPC_DeadCountUp(int _cnt, bool _isDeadMantal)
     {
+        isDeadMental = _isDeadMantal;
         deadCount = _cnt;
         SecurityEnding();
     }
@@ -435,8 +437,9 @@ public class InGameManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void RPC_AliveCountUp(int _cnt)
+    void RPC_AliveCountUp(int _cnt, bool _isDeadMantal)
     {
+        isDeadMental = _isDeadMantal;
         aliveCount = _cnt;
         SecurityEnding();
     }
@@ -446,7 +449,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
         // 경비원 혼자 남았을때 엔딩
         if (PhotonNetwork.CurrentRoom.PlayerCount == 1 && PhotonNetwork.IsMasterClient)
         {
-            if (aliveCount <= patientCount/2 && GetAllCount() == patientCount) 
+            if (catchCount >= patientCount/2) 
             {
                 // 경비원 Normal 엔딩 호출
                 Debug.Log("경비원 Normal");
@@ -473,12 +476,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
                 SpawnGun();
             }
         }
-    }
-
-    [PunRPC]
-    void SetDeadMantal()
-    {
-        isDeadMental = true;
     }
 
     [PunRPC]

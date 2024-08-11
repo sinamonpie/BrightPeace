@@ -100,7 +100,7 @@ public class PlayerState : MonoBehaviourPun
         this.transform.GetComponent<UseItemManager>().DieToDropItem();
 
         // Á×À¸¸é Dead ¿£µù
-        InGameManager.Instance.DeadCountUp();
+        InGameManager.Instance.DeadCountUp(role);
         InGameManager.Instance.GameEnding(role, UserEnding.DeadEnding);
     }
 
