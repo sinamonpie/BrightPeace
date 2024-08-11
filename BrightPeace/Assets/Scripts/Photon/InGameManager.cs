@@ -86,7 +86,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     [SerializeField]
     private int patientCount;
-    
+
     [SerializeField]
     private bool isDeadMental = true;
 
@@ -179,7 +179,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
             else
             {
                 int m = UnityEngine.Random.Range(0, 2);
-                if(m == 0)
+                if (m == 0)
                 {
                     player.GetComponent<PlayerState>().SetRoleMental();
                     pv.RPC("SetMentalSpawn", RpcTarget.AllBuffered);
@@ -202,7 +202,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     private void SpawnGun()
     {
-        if(itemUnLockSpawn != null)
+        if (itemUnLockSpawn != null)
         {
             int idx = UnityEngine.Random.Range(0, itemUnLockSpawn.Length);
             Vector3 spawnPosition = itemUnLockSpawn[idx].position;
@@ -211,7 +211,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
             itemUnLockSpawn = RemoveTransformAt(itemUnLockSpawn, idx);
         }
-        else if(itemLockSpawn != null)
+        else if (itemLockSpawn != null)
         {
             int idx = UnityEngine.Random.Range(0, itemLockSpawn.Length);
             Vector3 spawnPosition = itemLockSpawn[idx].position;
@@ -401,12 +401,27 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     public void DeadCountUp()
     {
-        pv.RPC("RPC_DeadCountUp", RpcTarget.All,deadCount+1);
+        pv.RPC("RPC_DeadCountUp", RpcTarget.All, deadCount + 1);
     }
 
     public void AliveCountUp()
     {
         pv.RPC("RPC_AliveCountUp", RpcTarget.All, aliveCount + 1);
+    }
+
+    public int GetAliveCount()
+    {
+        return aliveCount;
+    }
+
+    public int GetDeadCount()
+    {
+        return deadCount;
+    }
+
+    public int GetAliveAndDeadCount()
+    {
+        return aliveCount + deadCount;
     }
 
     [PunRPC]
@@ -428,21 +443,27 @@ public class InGameManager : MonoBehaviourPunCallbacks
         // 경비원 혼자 남았을때 엔딩
         if (_players.Length == 1 && PhotonNetwork.IsMasterClient)
         {
-            // 다른 실험체가 탈출하지 못함
-            if (aliveCount == 0)
-            {
-                // 경비원 Win 엔딩 호출
-                Debug.Log("경비원 Win");
-            }
-            else if (aliveCount != 0 && deadCount != 0) 
+            //// 다른 실험체가 탈출하지 못함
+            //if (aliveCount == 0)
+            //{
+            //    // 경비원 Win 엔딩 호출
+            //    Debug.Log("경비원 Win");
+            //    GameManager.Instance.SetEnding(UserRole.Security, UserEnding.WinEnding);
+            //    PhotonNetwork.LeaveRoom();
+            //}
+            if (aliveCount <= 2 && deadCount + aliveCount == 4) 
             {
                 // 경비원 Normal 엔딩 호출
                 Debug.Log("경비원 Normal");
+                GameManager.Instance.SetEnding(UserRole.Security, UserEnding.WinEnding);
+                PhotonNetwork.LeaveRoom();
             }
             else
             {
                 // 경비원 Lose 엔딩 호출
                 Debug.Log("경비원 Lose");
+                GameManager.Instance.SetEnding(UserRole.Security, UserEnding.LoseEnding);
+                PhotonNetwork.LeaveRoom();
             }
         }
     }

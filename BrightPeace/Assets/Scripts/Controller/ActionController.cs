@@ -426,7 +426,6 @@ public class ActionController : MonoBehaviourPun
                 {
                     GameManager.Instance.SetEnding(UserRole.Patient, UserEnding.WinEnding);
                     PhotonNetwork.LeaveRoom();
-                    Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                 }
                 // 미치광이 탈출 성공
                 // NormalEnding
