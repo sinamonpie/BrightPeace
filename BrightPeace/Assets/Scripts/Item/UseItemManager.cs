@@ -197,7 +197,8 @@ public class UseItemManager : MonoBehaviourPun
                                 animator.SetTrigger("isSwing");
                                 rate = 0;
 
-                                if (Physics.Raycast(ray, out hit, swingRange))
+                                Vector3 boxHalfExtents = new Vector3(1f, 1f, 1f);
+                                if (Physics.BoxCast(ray.origin, boxHalfExtents, ray.direction, out hit, Quaternion.identity, swingRange))
                                 {
                                     if (hit.transform.CompareTag("Player"))
                                     {
