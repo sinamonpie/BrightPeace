@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Voice.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -274,15 +275,18 @@ public class RoomManager : MonoBehaviourPunCallbacks
             }
         }
 
+        
         foreach (GameObject _speaker in GameObject.FindGameObjectsWithTag("Speaker"))
         {
             _speaker.GetComponent<AudioSource>().volume = 0;
         }
 
+        SoundManager.instance.StopBGM();
+
         if (isStart)
         {
             StopAllCoroutines();
-            //readyAnim.Play("Start");
+            readyAnim.Play("Start");
             StartCoroutine(SetStart());
         }
         else

@@ -76,6 +76,7 @@ MonoBehaviour:
   - StopUsingRadio
   - RPC_AliveCountUp
   - RPC_DeadCountUp
+  - RPC_CatchCountUp
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
