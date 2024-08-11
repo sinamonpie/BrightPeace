@@ -14,8 +14,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] public Slot[] slots;
     float wheelInput;
     int currentSlotNum;
-    int knifeSlotNum;
-    public bool getKnife = false;
+    //int knifeSlotNum;
+    //public bool getKnife = false;
     public bool settingInventory;
 
     //  ÇöÀç ½½·Ô
@@ -99,38 +99,17 @@ public class Inventory : MonoBehaviour
     {
         if (pv.IsMine)
         {
-            if (getKnife)
-            {
-                currentSlot = slots[knifeSlotNum];
-            }
-            else
-            {
-                currentSlot = slots[index];
-            }
+            currentSlot = slots[index];
 
             for (int i = 0; i < slots.Length; i++)
             {
-                if (!getKnife)
+                if (i == index)
                 {
-                    if (i == index)
-                    {
-                        slotsBg[i].SetSlot();
-                    }
-                    else
-                    {
-                        slotsBg[i].DisSlot();
-                    }
+                    slotsBg[i].SetSlot();
                 }
                 else
                 {
-                    if (i == knifeSlotNum)
-                    {
-                        slotsBg[i].SetSlot();
-                    }
-                    else
-                    {
-                        slotsBg[i].DisSlot();
-                    }
+                    slotsBg[i].DisSlot();
                 }
             }
         }
@@ -144,11 +123,6 @@ public class Inventory : MonoBehaviour
                 if (slots[i].item == null)
                 {
                     slots[i].AddItem(item);
-                    if (item.itemName == "Ä®")
-                    {
-                        getKnife = true;
-                        knifeSlotNum = i;
-                    }
                     return true;
                 }
             }
