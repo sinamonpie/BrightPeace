@@ -5675,8 +5675,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Are You Serious?
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 331c14968811f70488f628331f5ec453, type: 2}
-  m_sharedMaterial: {fileID: -56991619569412296, guid: 331c14968811f70488f628331f5ec453, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d2791a96b1dcf1c4396e9660dd5a3b92, type: 2}
+  m_sharedMaterial: {fileID: -56991619569412296, guid: d2791a96b1dcf1c4396e9660dd5a3b92, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
