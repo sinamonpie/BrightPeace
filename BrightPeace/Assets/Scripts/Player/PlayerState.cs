@@ -100,8 +100,8 @@ public class PlayerState : MonoBehaviourPun
         this.transform.GetComponent<UseItemManager>().DieToDropItem();
 
         // 죽으면 Dead 엔딩
-        InGameManager.Instance.GameEnding(role, UserEnding.DeadEnding);
         InGameManager.Instance.DeadCountUp();
+        InGameManager.Instance.GameEnding(role, UserEnding.DeadEnding);
     }
 
     public void Catch()
@@ -110,8 +110,8 @@ public class PlayerState : MonoBehaviourPun
         this.transform.GetComponent<UseItemManager>().DieToDropItem();
 
         // 잡히면 Lose 엔딩
-        InGameManager.Instance.GameEnding(role, UserEnding.LoseEnding);
         InGameManager.Instance.CatchCountUp();
+        InGameManager.Instance.GameEnding(role, UserEnding.LoseEnding);
     }
 
     public void TakeDamage(int damage, UserRole _HitRole)
@@ -137,8 +137,8 @@ public class PlayerState : MonoBehaviourPun
     [PunRPC]
     void RPC_TakeDamage(int damage)
     {
-        SoundManager.instance.PlayEffectAtPoint("PainSound", transform.position);
         currentHp -= damage;
+        SoundManager.instance.PlayEffectAtPoint("PainSound", transform.position);
     }
 
     [PunRPC]
