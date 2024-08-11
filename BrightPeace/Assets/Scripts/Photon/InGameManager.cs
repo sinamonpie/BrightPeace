@@ -175,7 +175,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
             if (_players.Length >= 4 && isDeadMental)
             {
                 player.GetComponent<PlayerState>().SetRoleMental();
-                pv.RPC("SetMentalSpawn", RpcTarget.All);
+                pv.RPC("SetMentalSpawn", RpcTarget.AllBuffered);
             }
             else
             {
@@ -183,7 +183,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
                 if(m == 0)
                 {
                     player.GetComponent<PlayerState>().SetRoleMental();
-                    pv.RPC("SetMentalSpawn", RpcTarget.All);
+                    pv.RPC("SetMentalSpawn", RpcTarget.AllBuffered);
                 }
             }
 
