@@ -347,7 +347,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        if (otherPlayer.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
             if (otherPlayer == masterClient)
             {
@@ -355,10 +355,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
                 return;
             }
         }
-        else
-        {
-            SecurityEnding();
-        }
+
+        SecurityEnding();
     }
 
     public void GameEnding(UserRole _role, UserEnding _end)
