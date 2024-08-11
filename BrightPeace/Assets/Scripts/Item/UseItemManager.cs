@@ -68,6 +68,16 @@ public class UseItemManager : MonoBehaviourPun
     [SerializeField]
     float startLockPickTime2 = 0f;
 
+    private bool isZoomed = false;
+    private bool isAimPlayer;
+
+    [SerializeField]
+    float zoomedFOV = 30f;
+    float normalFOV;
+    float panDistance = 5f;
+
+    public Image zoomCrosshair;
+
     [SerializeField]
     RaycastHit hit;
     Ray ray;
@@ -222,6 +232,21 @@ public class UseItemManager : MonoBehaviourPun
                                 }
                             }
                             break;
+
+                        case "ÃÑ":
+                        {
+                            Aimming();
+
+                            if (Input.GetMouseButtonDown(0))
+                            {
+                                Shoting();
+                            }
+                            else if (Input.GetMouseButtonDown(1))
+                            {
+                                Zooming();
+                            }
+                            break;
+                        }
                     }
                 }
                 else if (inventory.currentSlot.item.itemType == ItemType.Escape)
@@ -458,6 +483,67 @@ public class UseItemManager : MonoBehaviourPun
             }
         }
     }
+
+    void Shoting()
+    {
+        if (isAimPlayer)
+        {
+            if (hit.transform.GetComponent<PlayerState>() != null)
+            {
+                hit.transform.GetComponent<PlayerState>().TakeDamage(1, UserRole.Mental);
+                Debug.Log("´ë»ó ³²Àº Ã¼·Â : " + hit.transform.GetComponent<PlayerState>().GetPlayerHp().ToString());
+            }
+        }
+        else { Debug.Log("°¨³ªºø"); }
+
+        if (isZoomed)
+        {
+            isZoomed = !isZoomed;
+            mainCamera.fieldOfView = normalFOV;
+            mainCamera.transform.localPosition = mainCamera.transform.localPosition + new Vector3(-panDistance, 0f, 0f);
+            zoomCrosshair.gameObject.SetActive(false);
+        }
+
+        inventory.currentSlot.ClearSlot();
+        this.gameObject.SetActive(false);
+    }
+
+    void Zooming()
+    {
+        isZoomed = !isZoomed;
+        zoomCrosshair.gameObject.SetActive(isZoomed);
+
+        if (isZoomed)
+        {
+            mainCamera.fieldOfView = zoomedFOV;
+            mainCamera.transform.localPosition = mainCamera.transform.localPosition + new Vector3(panDistance, 0f, 0f);
+        }
+        else
+        {
+            mainCamera.fieldOfView = normalFOV;
+            mainCamera.transform.localPosition = mainCamera.transform.localPosition + new Vector3(-panDistance, 0f, 0f);
+        }
+    }
+
+    void Aimming()
+    {
+        ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            if (hit.transform.tag == "Player" && hit.transform != null)
+            {
+                isAimPlayer = true;
+                zoomCrosshair.color = Color.red;
+            }
+            else
+            {
+                isAimPlayer = false;
+                zoomCrosshair.color = Color.white;
+            }
+        }
+    }
+
 
     public Inventory GetInventory()
     {

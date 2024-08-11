@@ -18,7 +18,7 @@ public class Aim : MonoBehaviour
     float normalFOV;
     float panDistance = 5f;
 
-    private RaycastHit hitInfo;
+    private RaycastHit hit;
     private Ray ray;
 
     [SerializeField]
@@ -75,10 +75,10 @@ public class Aim : MonoBehaviour
     {
         if (isAimPlayer)
         {
-            if (hitInfo.transform.GetComponent<PlayerState>() != null)
+            if (hit.transform.GetComponent<PlayerState>() != null)
             {
-                hitInfo.transform.GetComponent<PlayerState>().TakeDamage(1, UserRole.Mental);
-                Debug.Log("대상 남은 체력 : " + hitInfo.transform.GetComponent<PlayerState>().GetPlayerHp().ToString());
+                hit.transform.GetComponent<PlayerState>().TakeDamage(1, UserRole.Mental);
+                Debug.Log("대상 남은 체력 : " + hit.transform.GetComponent<PlayerState>().GetPlayerHp().ToString());
             }
         }
         else { Debug.Log("감나빗"); }
@@ -115,10 +115,10 @@ public class Aim : MonoBehaviour
     void Aimming()
     {
         ray = camera.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(ray.origin, ray.direction * hitInfo.distance, Color.red);
-        if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, layerMask))
+        Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
-            if (hitInfo.transform.tag == "Player" && hitInfo.transform != null)
+            if (hit.transform.tag == "Player" && hit.transform != null)
             {
                 isAimPlayer = true;
                 zoomCrosshair.color = Color.red;
