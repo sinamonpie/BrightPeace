@@ -369,7 +369,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
             SpawnItem();
 
-            pv.RPC("GameStart", RpcTarget.All, _players.Length - 1);
+            pv.RPC("GameStart", RpcTarget.All, _players.Length);
         }
     }
 
@@ -441,7 +441,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     public void SecurityEnding()
     {
         // 경비원 혼자 남았을때 엔딩
-        if (_players.Length == 1 && PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1 && PhotonNetwork.IsMasterClient)
         {
             //// 다른 실험체가 탈출하지 못함
             //if (aliveCount == 0)
@@ -451,7 +451,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
             //    GameManager.Instance.SetEnding(UserRole.Security, UserEnding.WinEnding);
             //    PhotonNetwork.LeaveRoom();
             //}
-            if (aliveCount <= 2 && deadCount + aliveCount == 4) 
+            if (aliveCount <= patientCount/2 && GetAliveAndDeadCount() == patientCount) 
             {
                 // 경비원 Normal 엔딩 호출
                 Debug.Log("경비원 Normal");
@@ -465,6 +465,11 @@ public class InGameManager : MonoBehaviourPunCallbacks
                 GameManager.Instance.SetEnding(UserRole.Security, UserEnding.LoseEnding);
                 PhotonNetwork.LeaveRoom();
             }
+        }
+        else if(PhotonNetwork.CurrentRoom.PlayerCount == 1 && aliveCount <= patientCount / 2)
+        {
+            GameManager.Instance.SetEnding(UserRole.Mental, UserEnding.WinEnding);
+            PhotonNetwork.LeaveRoom();
         }
     }
 
@@ -482,20 +487,20 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
     public void DeadPatientPlayer()
     {
-        pv.RPC("SetPlayerCount", RpcTarget.Others, patientCount - 1);
+        pv.RPC("SetPlayerCount", RpcTarget.Others, deadCount + 1);
     }
 
     [PunRPC]
     void SetPlayerCount(int PlayerCnt)
     {
-        patientCount = PlayerCnt;
+        deadCount = PlayerCnt;
         // 경비원과 미치광이만 살아남았다면
-        if (patientCount == 0 && !isDeadMental && PhotonNetwork.IsMasterClient)
+        if (GetAliveAndDeadCount() >= patientCount && !isDeadMental && PhotonNetwork.IsMasterClient)
         {
             SpawnGun();
         }
         //경비원만 살아남았다면
-        else if (patientCount == 0 && isDeadMental)
+        else if (GetAliveAndDeadCount() >= patientCount && isDeadMental)
         {
             // 경비원
             GameManager.Instance.SetEnding(UserRole.Security, UserEnding.WinEnding);
