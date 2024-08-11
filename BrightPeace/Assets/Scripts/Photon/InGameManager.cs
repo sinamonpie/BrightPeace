@@ -88,7 +88,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
     private int patientCount;
     
     [SerializeField]
-    private bool isDeadMental;
+    private bool isDeadMental = true;
 
     [SerializeField]
     private bool isSetting;
@@ -107,7 +107,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
             _obj.volume = 0;
         }
 
-        isDeadMental = true;
         if (patientSpawn.Length == 0)
             patientSpawn = GetChild(patientTransform);
 
