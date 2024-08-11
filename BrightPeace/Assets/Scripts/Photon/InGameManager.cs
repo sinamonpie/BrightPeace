@@ -97,6 +97,9 @@ public class InGameManager : MonoBehaviourPunCallbacks
     private int deadCount = 0;
 
     [SerializeField]
+    private int catchCount = 0;
+
+    [SerializeField]
     private int aliveCount = 0;
 
     // Start is called before the first frame update
@@ -349,27 +352,10 @@ public class InGameManager : MonoBehaviourPunCallbacks
         if (_players.Length == PhotonNetwork.CurrentRoom.PlayerCount)
         {
             isSetting = true;
-            //List<GameObject> _playerList = new List<GameObject>(_players);
-            //GameObject security = null;
-            //foreach (GameObject _player in _playerList)
-            //{
-            //    if (_player.GetComponent<PlayerState>().role == UserRole.Security)
-            //    {
-            //        security = _player;
-            //        break;
-            //    }
-            //}
-            //_playerList.Remove(security);
-            //_players = _playerList.ToArray();
-
-            //int randIdx = UnityEngine.Random.Range(0, _players.Length);
-            //_players[randIdx].GetComponent<PlayerState>().SetRoleMental();
-
-            //isDeadMental = false;
 
             SpawnItem();
 
-            pv.RPC("GameStart", RpcTarget.All, _players.Length);
+            pv.RPC("GameStart", RpcTarget.All, PhotonNetwork.CurrentRoom.PlayerCount - 1);
         }
     }
 
@@ -399,6 +385,11 @@ public class InGameManager : MonoBehaviourPunCallbacks
         pv.RPC("SetDeadMantal", RpcTarget.Others);
     }
 
+    public void CatchCountUp()
+    {
+        pv.RPC("RPC_CatchCountUp", RpcTarget.All, catchCount + 1);
+    }
+
     public void DeadCountUp()
     {
         pv.RPC("RPC_DeadCountUp", RpcTarget.All, deadCount + 1);
@@ -419,15 +410,27 @@ public class InGameManager : MonoBehaviourPunCallbacks
         return deadCount;
     }
 
-    public int GetAliveAndDeadCount()
+    public int GetCatchCount()
     {
-        return aliveCount + deadCount;
+        return catchCount;
+    }
+
+    public int GetAllCount()
+    {
+        return aliveCount + deadCount + catchCount;
     }
 
     [PunRPC]
     void RPC_DeadCountUp(int _cnt)
     {
         deadCount = _cnt;
+        SecurityEnding();
+    }
+
+    [PunRPC]
+    void RPC_CatchCountUp(int _cnt)
+    {
+        catchCount = _cnt;
         SecurityEnding();
     }
 
@@ -443,15 +446,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
         // 경비원 혼자 남았을때 엔딩
         if (PhotonNetwork.CurrentRoom.PlayerCount == 1 && PhotonNetwork.IsMasterClient)
         {
-            //// 다른 실험체가 탈출하지 못함
-            //if (aliveCount == 0)
-            //{
-            //    // 경비원 Win 엔딩 호출
-            //    Debug.Log("경비원 Win");
-            //    GameManager.Instance.SetEnding(UserRole.Security, UserEnding.WinEnding);
-            //    PhotonNetwork.LeaveRoom();
-            //}
-            if (aliveCount <= patientCount/2 && GetAliveAndDeadCount() == patientCount) 
+            if (aliveCount <= patientCount/2 && GetAllCount() == patientCount) 
             {
                 // 경비원 Normal 엔딩 호출
                 Debug.Log("경비원 Normal");
@@ -471,6 +466,13 @@ public class InGameManager : MonoBehaviourPunCallbacks
             GameManager.Instance.SetEnding(UserRole.Mental, UserEnding.WinEnding);
             PhotonNetwork.LeaveRoom();
         }
+        else if(PhotonNetwork.CurrentRoom.PlayerCount == 2 && !isDeadMental)
+        {
+            if(PhotonNetwork.IsMasterClient)
+            {
+                SpawnGun();
+            }
+        }
     }
 
     [PunRPC]
@@ -483,29 +485,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
     void SetMentalSpawn()
     {
         isDeadMental = false;
-    }
-
-    public void DeadPatientPlayer()
-    {
-        pv.RPC("SetPlayerCount", RpcTarget.Others, deadCount + 1);
-    }
-
-    [PunRPC]
-    void SetPlayerCount(int PlayerCnt)
-    {
-        deadCount = PlayerCnt;
-        // 경비원과 미치광이만 살아남았다면
-        if (GetAliveAndDeadCount() >= patientCount && !isDeadMental && PhotonNetwork.IsMasterClient)
-        {
-            SpawnGun();
-        }
-        //경비원만 살아남았다면
-        else if (GetAliveAndDeadCount() >= patientCount && isDeadMental)
-        {
-            // 경비원
-            GameManager.Instance.SetEnding(UserRole.Security, UserEnding.WinEnding);
-            PhotonNetwork.LeaveRoom();
-        }
     }
 
     [PunRPC]

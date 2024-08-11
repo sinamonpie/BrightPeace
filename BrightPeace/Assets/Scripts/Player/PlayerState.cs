@@ -98,28 +98,37 @@ public class PlayerState : MonoBehaviourPun
     {
         isDead = true;
         this.transform.GetComponent<UseItemManager>().DieToDropItem();
-        if (role == UserRole.Patient)
-        {
-            InGameManager.Instance.DeadPatientPlayer();
-        }
-        else if (role == UserRole.Mental)
-        {
-            InGameManager.Instance.DeadMenetalPlayer();
-        }
 
         // 죽으면 Dead 엔딩
         InGameManager.Instance.GameEnding(role, UserEnding.DeadEnding);
         InGameManager.Instance.DeadCountUp();
     }
 
-    public void TakeDamage(int damage)
+    public void Catch()
+    {
+        isDead = true;
+        this.transform.GetComponent<UseItemManager>().DieToDropItem();
+
+        // 잡히면 Lose 엔딩
+        InGameManager.Instance.GameEnding(role, UserEnding.LoseEnding);
+        InGameManager.Instance.CatchCountUp();
+    }
+
+    public void TakeDamage(int damage, UserRole _HitRole)
     {
         if (photonView.IsMine)
         {
             currentHp -= damage;
             if (currentHp <= 0)
             {
-                Dead();
+                if(_HitRole == UserRole.Security)
+                {
+                    Catch();
+                }
+                else
+                {
+                    Dead();
+                }
             }
             photonView.RPC("RPC_TakeDamage", RpcTarget.Others, damage);
         }
