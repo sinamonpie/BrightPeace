@@ -160,21 +160,7 @@ public class InGameManager : MonoBehaviourPunCallbacks
 
             GameObject player = PhotonNetwork.Instantiate(patientObject.name, spawnPosition, Quaternion.identity, 0);
 
-            _players = GameObject.FindGameObjectsWithTag("Player");
-            List<GameObject> _playerList = new List<GameObject>(_players);
-            GameObject security = null;
-            foreach (GameObject _player in _playerList)
-            {
-                if (_player.GetComponent<PlayerState>().role == UserRole.Security)
-                {
-                    security = _player;
-                    break;
-                }
-            }
-            _playerList.Remove(security);
-            _players = _playerList.ToArray();
-
-            if (_players.Length >= 4 && isDeadMental)
+            if (PhotonNetwork.CurrentRoom.PlayerCount >= 3 && isDeadMental)
             {
                 player.GetComponent<PlayerState>().SetRoleMental();
                 pv.RPC("SetMentalSpawn", RpcTarget.AllBuffered);
@@ -366,7 +352,12 @@ public class InGameManager : MonoBehaviourPunCallbacks
             if (otherPlayer == masterClient)
             {
                 PhotonManager.Instance.MasterClientDisconnect();
+                return;
             }
+        }
+        else
+        {
+            SecurityEnding();
         }
     }
 
@@ -426,14 +417,12 @@ public class InGameManager : MonoBehaviourPunCallbacks
     {
         isDeadMental = _isDeadMantal;
         deadCount = _cnt;
-        SecurityEnding();
     }
 
     [PunRPC]
     void RPC_CatchCountUp(int _cnt)
     {
         catchCount = _cnt;
-        SecurityEnding();
     }
 
     [PunRPC]
@@ -441,7 +430,6 @@ public class InGameManager : MonoBehaviourPunCallbacks
     {
         isDeadMental = _isDeadMantal;
         aliveCount = _cnt;
-        SecurityEnding();
     }
 
     public void SecurityEnding()
