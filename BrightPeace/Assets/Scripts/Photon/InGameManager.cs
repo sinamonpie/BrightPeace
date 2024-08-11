@@ -356,6 +356,8 @@ public class InGameManager : MonoBehaviourPunCallbacks
             }
         }
 
+        Debug.Log(otherPlayer.NickName);
+        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
         SecurityEnding();
     }
 
@@ -369,9 +371,12 @@ public class InGameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
-    public void CatchCountUp()
+    public void CatchCountUp(UserRole _role)
     {
-        pv.RPC("RPC_CatchCountUp", RpcTarget.All, catchCount + 1);
+        if (_role == UserRole.Mental)
+            isDeadMental = true;
+
+        pv.RPC("RPC_CatchCountUp", RpcTarget.All, catchCount + 1, isDeadMental);
     }
 
     public void DeadCountUp(UserRole _role)
@@ -418,8 +423,9 @@ public class InGameManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void RPC_CatchCountUp(int _cnt)
+    void RPC_CatchCountUp(int _cnt, bool _isDeadMantal)
     {
+        isDeadMental = _isDeadMantal;
         catchCount = _cnt;
     }
 

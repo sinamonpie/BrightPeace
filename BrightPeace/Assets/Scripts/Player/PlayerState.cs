@@ -110,7 +110,7 @@ public class PlayerState : MonoBehaviourPun
         this.transform.GetComponent<UseItemManager>().DieToDropItem();
 
         // 잡히면 Lose 엔딩
-        InGameManager.Instance.CatchCountUp();
+        InGameManager.Instance.CatchCountUp(role);
         InGameManager.Instance.GameEnding(role, UserEnding.LoseEnding);
     }
 
