@@ -365,21 +365,29 @@ public class ActionController : MonoBehaviourPun
         alertText.gameObject.SetActive(false);
     }
 
+
+    // 지하실 밸브 탈출 엔딩
     public void EndingAction()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (hitInfo.transform != null)
             {
+                Debug.Log("엔딩 확인1");
                 if (hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
                 {
-                    if (GameManager.Instance.role == UserRole.Patient)
+                    // 실험체 탈출 성공
+                    // WinEnding
+                    InGameManager.Instance.AliveCountUp();
+                    if (player.transform.GetComponent<PlayerState>().role == UserRole.Patient)
                     {
                         GameManager.Instance.SetEnding(UserEnding.WinEnding);
                         PhotonNetwork.LeaveRoom();
                         Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                     } 
-                    else if (GameManager.Instance.role == UserRole.Mental)
+                    // 미치광이 탈출 성공
+                    // NormalEnding
+                    else if (player.transform.GetComponent<PlayerState>().role == UserRole.Mental)
                     {
                         GameManager.Instance.SetEnding(UserEnding.NomalEnding);
                         PhotonNetwork.LeaveRoom();
@@ -403,19 +411,26 @@ public class ActionController : MonoBehaviourPun
         EndingAction();
     }
 
+
+    // 로비에서 탈출 엔딩
     public void EndingLobbyAction()
     {
         if (hitInfo.transform != null && hitInfo.transform.GetComponent<EscapeEnding>())
         {
             if (hitInfo.transform.GetComponent<EscapeEnding>() != null && hitInfo.transform.GetComponent<EscapeEnding>().EndigTriiger())
             {
-                if (GameManager.Instance.role == UserRole.Patient)
+                // 실험체 탈출 성공
+                // WinEnding
+                InGameManager.Instance.AliveCountUp();
+                if (player.transform.GetComponent<PlayerState>().role == UserRole.Patient)
                 {
                     GameManager.Instance.SetEnding(UserEnding.WinEnding);
                     PhotonNetwork.LeaveRoom();
                     Debug.Log("엔딩조건 충족 / 엔딩씬 보여주기");
                 }
-                else if (GameManager.Instance.role == UserRole.Mental)
+                // 미치광이 탈출 성공
+                // NormalEnding
+                else if (player.transform.GetComponent<PlayerState>().role == UserRole.Mental)
                 {
                     GameManager.Instance.SetEnding(UserEnding.NomalEnding);
                     PhotonNetwork.LeaveRoom();

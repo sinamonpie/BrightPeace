@@ -23,10 +23,10 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
-  m_AmbientMode: 1
+  m_AmbientIntensity: 0
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 51b74d7bad397457d883c5940f7664d8, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.179
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.0016132793, g: 0.0023454118, b: 0.0036701427, a: 0.179}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5423,6 +5423,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2737829160205642548, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.541
+      objectReference: {fileID: 0}
+    - target: {fileID: 4292575639599202875, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -12.447
+      objectReference: {fileID: 0}
+    - target: {fileID: 4487762117215629932, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.59
+      objectReference: {fileID: 0}
     - target: {fileID: 7545551075677505036, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
       propertyPath: m_Name
       value: Spawn_
@@ -5431,9 +5443,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8446943125612582960, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 8596748541855795245, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.188
+      objectReference: {fileID: 0}
+    - target: {fileID: 9088011400673687532, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.519
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1066639453190532360, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
+    - {fileID: 6721528810954982404, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9002305af7e1ffb4c8bb23f1133f5f73, type: 3}
@@ -8346,6 +8371,9 @@ MonoBehaviour:
     minCount: 7
     maxCount: 13
   - obj: {fileID: 7782822512737329682, guid: 891f3fbcd18d5964a8d06fe695f45e3d, type: 3}
+    minCount: 1
+    maxCount: 2
+  - obj: {fileID: 815761469548504526, guid: b5dc8b66db4c66d4a9ea2d70739ae998, type: 3}
     minCount: 1
     maxCount: 2
   spawnedKeyCount: 0

@@ -4946,6 +4946,7 @@ MonoBehaviour:
   crowBar_Trigger: 0
   driver_Trigger: 0
   TEST_Trigger: 0
+  endingTrigger: 0
   clearPuseBox: 0
   isWindow: 0
 --- !u!1 &8604409324610155446
@@ -20808,8 +20809,8 @@ GameObject:
   - component: {fileID: 8602297728041099284}
   - component: {fileID: 8581911408204630904}
   - component: {fileID: 8591506087029167928}
-  - component: {fileID: 8613743416252746786}
   - component: {fileID: 2663347361181382976}
+  - component: {fileID: 5629635771863374706}
   m_Layer: 6
   m_Name: Window (3)
   m_TagString: Ending
@@ -20826,7 +20827,7 @@ Transform:
   m_GameObject: {fileID: 8604515701644425080}
   serializedVersion: 2
   m_LocalRotation: {x: -2.3698118e-16, y: 1, z: 0.000000037748947, w: 0}
-  m_LocalPosition: {x: -102.506355, y: 22.916277, z: -156.75238}
+  m_LocalPosition: {x: -102.506355, y: 28.91628, z: -156.75238}
   m_LocalScale: {x: 4.934597, y: 4.934596, z: 4.934597}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20882,8 +20883,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8613743416252746786
-MeshCollider:
+--- !u!114 &2663347361181382976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8604515701644425080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9bd76e97d9fc4b49a682e8425a7e02a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crowBar_Trigger: 0
+  driver_Trigger: 0
+  TEST_Trigger: 0
+  endingTrigger: 0
+  clearPuseBox: 0
+  isWindow: 1
+--- !u!65 &5629635771863374706
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -20900,27 +20919,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 4fb7b6ad085a0174dae2078cd871bbd5, type: 3}
---- !u!114 &2663347361181382976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8604515701644425080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9bd76e97d9fc4b49a682e8425a7e02a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  crowBar_Trigger: 0
-  driver_Trigger: 0
-  TEST_Trigger: 0
-  clearPuseBox: 0
-  isWindow: 1
+  serializedVersion: 3
+  m_Size: {x: 1.210501, y: 1.859496, z: 0.110579}
+  m_Center: {x: -0.0016385019, y: -0.4, z: 0.019159501}
 --- !u!1 &8604516355249169868
 GameObject:
   m_ObjectHideFlags: 0
@@ -152474,6 +152475,7 @@ MonoBehaviour:
   crowBar_Trigger: 0
   driver_Trigger: 0
   TEST_Trigger: 0
+  endingTrigger: 0
   clearPuseBox: 0
   isWindow: 0
 --- !u!1 &8605363944483561802
@@ -157685,6 +157687,7 @@ MonoBehaviour:
   crowBar_Trigger: 0
   driver_Trigger: 0
   TEST_Trigger: 0
+  endingTrigger: 0
   clearPuseBox: 0
   isWindow: 0
 --- !u!4 &8131582396737529253 stripped
@@ -157792,7 +157795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2136965965488691308, guid: ed7cda7ac99610d489cd4c74eedf017e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -22.592
+      value: -22.153
       objectReference: {fileID: 0}
     - target: {fileID: 2136965965488691308, guid: ed7cda7ac99610d489cd4c74eedf017e, type: 3}
       propertyPath: m_LocalPosition.y

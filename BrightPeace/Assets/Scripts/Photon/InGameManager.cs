@@ -93,6 +93,12 @@ public class InGameManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private bool isSetting;
 
+    [SerializeField]
+    private int deadCount = 0;
+
+    [SerializeField]
+    private int aliveCount = 0;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -394,6 +400,42 @@ public class InGameManager : MonoBehaviourPunCallbacks
         pv.RPC("SetDeadMantal", RpcTarget.Others);
     }
 
+    public void DeadCountUp()
+    {
+        deadCount++;
+        SecurityEnding();
+    }
+
+    public void AliveCountUp()
+    {
+        aliveCount++;
+        SecurityEnding();
+    }
+
+    public void SecurityEnding()
+    {
+        // 경비원 혼자 남았을때 엔딩
+        if (_players.Length == 1 && PhotonNetwork.IsMasterClient)
+        {
+            // 다른 실험체가 탈출하지 못함
+            if (aliveCount == 0)
+            {
+                // 경비원 Win 엔딩 호출
+                Debug.Log("경비원 Win");
+            }
+            else if (aliveCount != 0 && deadCount != 0) 
+            {
+                // 경비원 Normal 엔딩 호출
+                Debug.Log("경비원 Normal");
+            }
+            else
+            {
+                // 경비원 Lose 엔딩 호출
+                Debug.Log("경비원 Lose");
+            }
+        }
+    }
+
     [PunRPC]
     void SetDeadMantal()
     {
@@ -415,12 +457,14 @@ public class InGameManager : MonoBehaviourPunCallbacks
     void SetPlayerCount(int PlayerCnt)
     {
         patientCount = PlayerCnt;
+        // 경비원과 미치광이만 살아남았다면
         if(patientCount == 0 && !isDeadMental && PhotonNetwork.IsMasterClient)
         {
             SpawnGun();
         }
         else
         {
+            // 경비원 or 미치광이
             GameManager.Instance.SetEnding(UserEnding.WinEnding);
             PhotonNetwork.LeaveRoom();
         }

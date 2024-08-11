@@ -109,7 +109,9 @@ public class PlayerState : MonoBehaviourPun
             InGameManager.Instance.DeadMenetalPlayer();
         }
 
+        // Á×À¸¸é Dead ¿£µù
         InGameManager.Instance.GameEnding(UserEnding.DeadEnding);
+        InGameManager.Instance.DeadCountUp();
     }
 
     public void TakeDamage(int damage)

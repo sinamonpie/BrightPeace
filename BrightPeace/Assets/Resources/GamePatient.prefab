@@ -817,6 +817,8 @@ MonoBehaviour:
   wallHackTime: 3
   lockPickTime: 50
   startLockPickTime: 0
+  lockPickTime2: 20
+  startLockPickTime2: 0
 --- !u!114 &1736229247234760171
 MonoBehaviour:
   m_ObjectHideFlags: 0
