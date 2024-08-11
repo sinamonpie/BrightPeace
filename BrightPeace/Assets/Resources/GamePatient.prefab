@@ -791,7 +791,6 @@ MonoBehaviour:
   alertText: {fileID: 0}
   slotsBg: []
   slots: []
-  getKnife: 0
   settingInventory: 0
   currentSlot: {fileID: 0}
 --- !u!114 &6764564892972535885
