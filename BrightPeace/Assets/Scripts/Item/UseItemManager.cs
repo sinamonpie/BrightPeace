@@ -367,7 +367,7 @@ public class UseItemManager : MonoBehaviourPun
                                         if (time <= 0)
                                         {
                                             alertText.gameObject.SetActive(false);
-                                            actionController.hitInfo.transform.GetComponent<EscapeEnding>().EndingOK();
+                                            actionController.hitInfo.transform.GetComponent<EscapeEnding>().OpenEndingDoor();
                                             actionController.hitInfo.transform.GetComponent<EscapeEnding>().NotWindow();
                                             GetComponent<PlayerController>().EnableMove();
                                             inventory.currentSlot.ClearSlot();

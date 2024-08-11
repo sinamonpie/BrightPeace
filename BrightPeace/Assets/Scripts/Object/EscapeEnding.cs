@@ -75,6 +75,12 @@ public class EscapeEnding : MonoBehaviourPun
 
     public void NotWindow()
     {
+        photonView.RPC("RPC_NotWindow", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RPC_NotWindow()
+    {
         isWindow = false;
     }
 
