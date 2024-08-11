@@ -240,7 +240,7 @@ public class UseItemManager : MonoBehaviourPun
                                     if (Input.GetKeyDown(KeyCode.E))
                                     {
                                         Debug.Log("퓨즈사용");
-                                        if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() < 3)
+                                        if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() < 3)
                                         {
                                             actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
                                             if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)

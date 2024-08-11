@@ -20811,6 +20811,7 @@ GameObject:
   - component: {fileID: 8591506087029167928}
   - component: {fileID: 2663347361181382976}
   - component: {fileID: 5629635771863374706}
+  - component: {fileID: 5992865603867058529}
   m_Layer: 6
   m_Name: Window (3)
   m_TagString: Ending
@@ -20922,6 +20923,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.210501, y: 1.859496, z: 0.110579}
   m_Center: {x: -0.0016385019, y: -0.4, z: 0.019159501}
+--- !u!114 &5992865603867058529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8604515701644425080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8604516355249169868
 GameObject:
   m_ObjectHideFlags: 0
@@ -157645,6 +157668,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7793069743201563450, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8387849328708736072}
+    - targetCorrespondingSourceObject: {fileID: 7793069743201563450, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 387828006550938652}
   m_SourcePrefab: {fileID: 100100000, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}
 --- !u!1 &8131582396737501573 stripped
 GameObject:
@@ -157690,6 +157716,28 @@ MonoBehaviour:
   endingTrigger: 0
   clearPuseBox: 0
   isWindow: 0
+--- !u!114 &387828006550938652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8131582396737501573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &8131582396737529253 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7793069743201070874, guid: b9375c7c7cd65df47b4498f795ee68ff, type: 3}

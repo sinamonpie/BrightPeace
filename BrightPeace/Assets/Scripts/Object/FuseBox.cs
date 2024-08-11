@@ -16,7 +16,7 @@ public class FuseBox : MonoBehaviourPun
 
     public void InsertPuse()
     {
-        puseNum++;
+        photonView.RPC("RPC_InsertPuse", RpcTarget.All, puseNum);
         photonView.RPC("RPC_SetPuse", RpcTarget.All, puseNum);
     }
 
@@ -36,6 +36,12 @@ public class FuseBox : MonoBehaviourPun
                 break;
             default: break;
         }
+    }
+
+    [PunRPC]
+    void RPC_InsertPuse()
+    {
+        puseNum++;
     }
 
     public int GetPuseNum()
