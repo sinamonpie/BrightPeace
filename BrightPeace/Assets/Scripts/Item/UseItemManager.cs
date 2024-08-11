@@ -239,9 +239,10 @@ public class UseItemManager : MonoBehaviourPun
                                     if (Input.GetKeyDown(KeyCode.E))
                                     {
                                         Debug.Log("퓨즈사용");
-                                        if (actionController.hitInfo.transform.GetComponent<FuseBox>().PuseBoxCheck() < 3)
+                                        if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() < 3)
                                         {
                                             actionController.hitInfo.transform.GetComponent<FuseBox>().InsertPuse();
+                                            inventory.currentSlot.ClearSlot();
                                             if (actionController.hitInfo.transform.GetComponent<FuseBox>().GetPuseNum() == 3)
                                             {
                                                 actionController.hitInfo.transform.GetComponent<FuseBox>().ClearPuseBox();
@@ -265,7 +266,6 @@ public class UseItemManager : MonoBehaviourPun
                                                 StartCoroutine(TextAlert());
                                                 alertText.SetText(text);
                                             }
-                                            inventory.currentSlot.ClearSlot();
                                         }
                                         else
                                         {
