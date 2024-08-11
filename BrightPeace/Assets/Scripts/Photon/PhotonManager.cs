@@ -192,6 +192,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Player : " + PhotonNetwork.LocalPlayer.NickName + " Join Lobby");
 
+        if (SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[0]))
+            GameManager.Instance.LoadLobbyScene();
         if (isMatch)
             JoinMatching();
     }
@@ -247,7 +249,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         if (SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[3]))
             GameManager.Instance.LoadEndding();
-        else if (!SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[1]))
+        else if (SceneManager.GetActiveScene().name.Equals(GameManager.Instance.sceneName[2]))
             GameManager.Instance.LoadLobbyScene();
     }
 
